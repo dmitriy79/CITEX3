@@ -11,9 +11,9 @@
           <router-link to="/" tag="div">首页</router-link>
         </li>
         <li>
-          <router-link to="/" tag="div">交易中心</router-link>
+          <router-link to="/Transaction" tag="div">交易中心</router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link to="/" tag="div">C2C交易</router-link>
         </li>
         <li>
@@ -21,7 +21,7 @@
         </li>
         <li>
           <router-link to="/" tag="div">个人中心</router-link>
-        </li>
+        </li> -->
         <li>
           <router-link to="/" tag="div">渠道商</router-link>
         </li>
@@ -29,8 +29,10 @@
         
       </ul>
       <ul class="nav-right-wrapper">
+        <li class="nav-right-help">帮助中心</li>
+        <li class="nav-right-download">App下载</li>
         <li class="nav-right">注册</li>
-        <li class="split">|</li>
+        <li class="split">或</li>
         <li class="nav-right">登陆</li>
         <li class="change-btn" @click="selectLanguage">
           <i class="drop-icon" :class="{active:isActive}"></i>
@@ -82,13 +84,14 @@ export default {
   opacity: 0;
 }
 .header {
-  height: 90px;
-  background: #1e212f;
+  height: 50px;
+  background: #181F27;
+  opacity: 0.9;
   .content {
-    margin: 0 120px;
     height: 100%;
     display: flex;
     align-items: center;
+    font-family: SourceHanSansCN-Medium;
     .logo-wrapper {
       a {
         display: block;
@@ -97,31 +100,31 @@ export default {
     .nav-right-wrapper {
       display: flex;
       align-items: center;
+     li{ color:#8D9398; font-size: 12px; font-size: 12px;cursor: pointer;}
       .nav-right,
       .split {
-        opacity: 0.5;
-        font-family: PingFangTC-Regular;
-        font-size: 12px;
-        color: #ffffff;
         margin-left: 0;
       }
+      .nav-right-help,.nav-right-download{
+         margin-right: 10px
+      }
+      .nav-right-download{margin-right: 60px}
       .split {
         margin: 0 10px;
       }
       .change-btn {
-        width: 70px;
         margin-left: 20px;
         position: relative;
-        border: 1px solid #ffffff;
-          border-radius: 2px;
-          padding: 3px 0 3px 8px;
-          background: #1e2130;
-          opacity: 0.5;
-          color: #fff;
-          border-radius: 2px;
+          opacity: 0.8;
+background: #000000;
+    height: 50px;
+    padding: 0 29px 0 26px;
+ 
           cursor: pointer;
           div{
              font-size: 12px;
+             height: 50px;
+             line-height: 50px;
           }
         .dropdown{
           background: #1E2130;
@@ -149,7 +152,7 @@ export default {
           opacity: 0.5;
           position: absolute;
           right: 9px;
-          top: 8px;
+          top: 22px;
           transition: ease-in-out 0.2s;
         }
         .drop-icon.active{
@@ -165,19 +168,20 @@ export default {
       opacity: 0.8;
 
       .header-space {
-        width: 242px;
+        // width: 20%;
       }
       li {
         position: relative;
-        height: 90px;
-        line-height: 90px;
+        height: 50px;
+        line-height: 50px;
         margin-left: 38px;
         div {
-          font-family: PingFangTC-Medium;
+          font-family: SourceHanSansCN-Medium;
           font-size: 16px;
-          color: #fff;
+          color: #999EA4;
           letter-spacing: 0;
           cursor: pointer;
+
         }
       }
     }

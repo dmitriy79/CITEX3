@@ -1,0 +1,38 @@
+/*@font-face {*/
+    /*font-family: 'urw_din';*/
+    /*src: local("URWDIN-Bold"), local("URWDIN Bold"), url("../fonts/urw-din/urwdin-bold.eot");*/
+    /*src: url("../fonts/urw-din/urwdin-bold.eot?#iefix") format("embedded-opentype"), url("../fonts/urw-din/urwdin-bold.woff2") format("woff2"), url("../fonts/urw-din/urwdin-bold.woff") format("woff"), url("../fonts/urw-din/urwdin-bold.ttf") format("truetype"), url("../fonts/urw-din/urwdin-bold.svg#urw_dinbold") format("svg");*/
+    /*font-weight: 900;*/
+    /*font-style: normal;*/
+/*}*/
+
+/*@font-face {*/
+    /*font-family: 'urw_din';*/
+    /*src: url("../fonts/urw-din/urwdin-demi.eot");*/
+    /*src: local("URWDIN-Demi"), local("URWDIN Demi"), url("../urw-din/urwdin-demi.eot?#iefix") format("embedded-opentype"), url("../fonts/urw-din/urwdin-demi.woff2") format("woff2"), url("../fonts/urw-din/urwdin-demi.woff") format("woff"), url("../fonts/urw-din/urwdin-demi.ttf") format("truetype"), url("../fonts/urw-din/urwdin-demi.svg#urw_dindemi") format("svg");*/
+    /*font-weight: 700;*/
+    /*font-style: normal;*/
+/*}*/
+
+/*@font-face {*/
+    /*font-family: 'urw_din';*/
+    /*src: local("URWDIN-Medium"), local("URWDIN Medium"), url("../fonts/urw-din/urwdin-medium.eot");*/
+    /*src: url("../fonts/urw-din/urwdin-medium.eot?#iefix") format("embedded-opentype"), url("../fonts/urw-din/urwdin-medium.woff2") format("woff2"), url("../fonts/urw-din/urwdin-medium.woff") format("woff"), url("../fonts/urw-din/urwdin-medium.ttf") format("truetype"), url("../fonts/urw-din/urwdin-medium.svg#urw_dinmedium") format("svg");*/
+    /*font-weight: 400;*/
+    /*font-style: normal;*/
+/*}*/
+
+
+.group.space-single.header-group-fullscreen{
+    float: right
+}
+.group.space-single{float: left;}
+.group.space-single.header-group-properties,.group.space-single.header-group-indicators{float: none;}
+.group.space-single.header-group-indicators{display: none}
+.onchart-tv-logo.wrapper.expanded{display: none}
+.chart-page .header-chart-panel .group .button.selected{
+    background: #2c3b59;
+    color: #c7cce6;
+}
+.header-chart-panel .button{background: transparent;border: none}
+.header-chart-panel .button:hover{border: none!important}

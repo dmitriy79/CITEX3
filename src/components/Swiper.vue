@@ -78,11 +78,15 @@
 .wraper .swiper-pagination-bullet-active{
  background: #fff!important
 }
-
+.swiper-pagination-bullet{
+  width: 20px;
+  height: 10px;
+  border-radius: 10px
+}
 </style>
 
 <style lang="less" scoped>
-
+.swiper-img{width: 100%}
 
 
 </style>
