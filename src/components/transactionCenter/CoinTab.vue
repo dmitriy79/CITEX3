@@ -82,7 +82,7 @@
     }
     .coin-list-wrap{
         background: #292F37;
-        height: 537px;
+        height: 561px;
         padding: 0 16px 0 14px;
         .title{
             height: 30px;
@@ -134,7 +134,7 @@
 </style>
 
 <style>
-@media only screen and (max-width: 1400px){
+@media only screen and (max-width: 1920px) and (min-width: 1400px){
 #app .transaction-wrap .transaction-top .left{
         width:76%
 }

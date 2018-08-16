@@ -35,7 +35,7 @@
                     //loading_screen:{ backgroundColor: "#000000",foregroundColor: "#000000", }//todo:do it
                     interval: '60',
                     // timeframe:'',//todo: na koncu
-                    toolbar_bg: "#181F27",
+                    toolbar_bg: "#1e252d",
                     // saved_data: this_vue.savedData,
                     allow_symbol_change: true,
                     time_frames: [

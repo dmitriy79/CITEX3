@@ -93,6 +93,7 @@ export default {
     align-items: center;
     font-family: SourceHanSansCN-Medium;
     .logo-wrapper {
+          margin-left: 17px;
       a {
         display: block;
       }
