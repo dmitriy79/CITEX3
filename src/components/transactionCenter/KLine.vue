@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
   <div class="hello">
-    <div id="chart_container" class="f-fill" style="height:610px;display:block"></div>
+    <div id="chart_container" class="f-fill" style="height:610px;display:block;border:none"></div>
   </div>
 </template>
 

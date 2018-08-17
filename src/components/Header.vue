@@ -116,23 +116,24 @@ export default {
       .change-btn {
         margin-left: 20px;
         position: relative;
-          opacity: 0.8;
-background: #000000;
-    height: 50px;
-    padding: 0 29px 0 26px;
- 
-          cursor: pointer;
+        opacity: 0.8;
+        background: #000000;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 29px 0 26px;
+        width:96px;
+        cursor: pointer;
           div{
              font-size: 12px;
-             height: 50px;
-             line-height: 50px;
+            //  height: 50px;
+            //  line-height: 50px;
           }
         .dropdown{
           background: #1E2130;
           position: absolute;
-          top: 25px;
+          top: 50px;
           left: 0;
-          width:80px;
+          right: 0;
           padding: 4px 0 0 6px;
           div{
             line-height: 25px;

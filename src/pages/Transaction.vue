@@ -111,7 +111,47 @@ export default {
   }
 };
 </script>
+<style>
+@media only screen and (max-width: 1920px) and (min-width: 1400px){
+  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
+       width: 78.5%
+    }
+  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
+      width: 70%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
+      width:30%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-right{
+      width: 24%
+  }
+}
+@media only screen and (max-width: 1400px){
+  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
+       width: 78.5%
+    }
+  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
+      width: 64.5%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
+      width:35%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-right{
+      width: 24.4%;
+  }
+  #app .limit-price .penel .input-text input{
+      width: 69%
+  }
+  #app .entrust-panel dt span, #app .entrust-panel dd span{width: 19.2%}
+}
+@media only screen and (max-width: 1366px) and (min-width: 1300px){
+#app .transaction-wrap .transaction-middle .transaction-middle-right {
+    width: 25.2%;
+}
 
+}
+
+</style>
 <style lang="less" scoped>
 .transaction-wrap {
   background: #3b4249;
@@ -215,43 +255,4 @@ color: #DFE2E8;}
 }
 </style>
 
-<style>
-@media only screen and (max-width: 1920px) and (min-width: 1400px){
-  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
-       width: 76%
-    }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
-      width: 70%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
-      width:30%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-right{
-      width: 24%
-  }
-}
-@media only screen and (max-width: 1400px){
-  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
-       width: 78.5%
-    }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
-      width: 64.5%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
-      width:35%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-right{
-      width: 24.8%;
-  }
-  #app .limit-price .penel .input-text input{
-      width: 69%
-  }
-  #app .entrust-panel dt span, #app .entrust-panel dd span{width: 19.2%}
-}
-@media only screen and (max-width: 1366px) and (min-width: 1300px){
-#app .transaction-wrap .transaction-middle .transaction-middle-right {
-    width: 26.4%;
-}
-}
 
-</style>

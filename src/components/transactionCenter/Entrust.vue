@@ -12,6 +12,7 @@
                     <span>挂单（ADA）</span>
                     <span>操作</span>
                 </dt>
+                
                 <dd> 
                     <span>1</span>
                     <span>3</span>
@@ -88,7 +89,9 @@
                 </dd>
                
             </dl>
-        
+            <div class="noData" >
+                <span>暂无记录</span>
+            </div>
         </div>
     </div>
 </template>
@@ -115,13 +118,29 @@ export default {
                 this.active=index
                 tabCollection[index].style.display="block"
 			},
+    },
+    mounted(){
+       
     }
 }
 </script>
 
 <style lang="less" scoped>
 .entrust-wrapper{background:#292F37;
-    .entrust-list{    padding: 0 10px;}
+    .entrust-list{    padding: 0 10px;    position: relative;
+        .noData{background: url('~@/assets/images/icon-nodata.png') no-repeat center center;position: absolute;
+    text-align: center;
+    top: 25px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+        span{    margin-top: 160px;
+    display: block;
+    font-size: 13px;
+    color: #8D9398;
+        }
+    }
+    }
 }
 .tab-nav{
     height: 30px;
