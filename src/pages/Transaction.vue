@@ -81,7 +81,7 @@
          
 
          
-         <!-- <v-footer></v-footer>      -->
+          <v-footer></v-footer> 
 
        
      
@@ -89,14 +89,14 @@
 </template>
 <script>
 import VHeader from "../components/Header";
-// import VFooter from "../components/VFooter";
+import VFooter from "../components/Footer";
 import KLine from "../components/transactionCenter/KLine";
 import CoinTab from "../components/transactionCenter/CoinTab";
-import LimitedPrice from "../components/transactionCenter/LimitedPrice"
-import Entrust from '../components/transactionCenter/Entrust'
-import BuySell from '../components/transactionCenter/BuyOrSell'
-import TransactionPrice from '../components/transactionCenter/TransactionPrice'
-import DeepImg from '../components/transactionCenter/DeepImg'
+import LimitedPrice from "../components/transactionCenter/LimitedPrice";
+import Entrust from "../components/transactionCenter/Entrust";
+import BuySell from "../components/transactionCenter/BuyOrSell";
+import TransactionPrice from "../components/transactionCenter/TransactionPrice";
+import DeepImg from "../components/transactionCenter/DeepImg";
 export default {
   name: "Transaction",
   components: {
@@ -106,151 +106,198 @@ export default {
     LimitedPrice,
     Entrust,
     BuySell,
-    TransactionPrice,DeepImg
-    // VFooter
+    TransactionPrice,
+    DeepImg,
+     VFooter
   }
 };
 </script>
 <style>
-@media only screen and (max-width: 1920px) and (min-width: 1400px){
-  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
-       width: 78.5%
+@media only screen and (max-width: 1920px) and (min-width: 1400px) {
+  #app .transaction-wrap .transaction-middle .transaction-middle-left {
+    width: 78.5%;
+  }
+  #app
+    .transaction-wrap
+    .transaction-middle
+    .transaction-middle-left
+    .panel-left {
+    width: 70%;
+  }
+  #app
+    .transaction-wrap
+    .transaction-middle
+    .transaction-middle-left
+    .panel-right {
+    width: 30%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-right {
+    width: 27%;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  #app .transaction-wrap .transaction-middle .transaction-middle-left {
+    width: 75%;
+  }
+ #app .transaction-wrap .transaction-top .left{width: 75%}
+ #app .transaction-wrap .transaction-top .right{width:26% }
+  #app
+    .transaction-wrap
+    .transaction-middle
+    .transaction-middle-left
+    .panel-left {
+    width: 64.5%;
+  }
+  #app
+    .transaction-wrap
+    .transaction-middle
+    .transaction-middle-left
+    .panel-right {
+    width: 35%;
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-right {
+    width: 26%;
+  }
+  #app .limit-price .penel .input-text input {
+    width: 69%;
+  }
+  #app .entrust-panel dt span,
+  #app .entrust-panel dd span {
+    width: 19.2%;
+  }
+}
+@media only screen and (max-width: 1366px) and (min-width: 1300px) {
+  #app .transaction-wrap .transaction-middle .transaction-middle-right {
+    width: 28%;
+  }
+  #app .transaction-wrap .transaction-top .left{
+      width: 72%
+  }
+  #app .transaction-wrap .transaction-top .right{
+       width: 28%
+  }
+  #app .transaction-wrap .transaction-middle .transaction-middle-left {
+    width: 72%;
     }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
-      width: 70%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
-      width:30%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-right{
-      width: 24%
-  }
 }
-@media only screen and (max-width: 1400px){
-  #app  .transaction-wrap .transaction-middle .transaction-middle-left{
-       width: 78.5%
-    }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-left{
-      width: 64.5%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-left .panel-right{
-      width:35%;
-  }
-  #app .transaction-wrap .transaction-middle .transaction-middle-right{
-      width: 24.4%;
-  }
-  #app .limit-price .penel .input-text input{
-      width: 69%
-  }
-  #app .entrust-panel dt span, #app .entrust-panel dd span{width: 19.2%}
-}
-@media only screen and (max-width: 1366px) and (min-width: 1300px){
-#app .transaction-wrap .transaction-middle .transaction-middle-right {
-    width: 25.2%;
-}
-
-}
-
 </style>
 <style lang="less" scoped>
 .transaction-wrap {
   background: #3b4249;
   padding: 8px 0 9px 17px;
-  .transaction-top{
+  .transaction-top {
     overflow: hidden;
-    display:flex;
+    display: flex;
     margin-bottom: 8px;
-    .left{
-      width:78.5%;
-      .title{
+    .left {
+      width: 78.5%;
+      .title {
+        display: flex;
+        height: 50px;
+        background: #181f27;
+        .title-left {
           display: flex;
-          height: 50px;
-          background: #181F27;
-          .title-left{
+          height: 100%;
+          align-items: center;
+          .symbol {
+            background: #161c24;
+            width: 105px;
+            padding: 12px 13px 15px 12px;
+            margin-right: 22px;
+            color: #e4e5e7;
+          }
+          .price-wrap {
+            span {
+              font-size: 16px;
+            }
+            i {
+              font-style: normal;
+            }
+            .rate {
+              background: #1fc56d;
+              border-radius: 2px;
+              padding: 1px 7px;
+              font-family: PingFangSC-Semibold;
+              font-size: 13px;
+              color: #ffffff;
+              i {
+                font-size: 13px;
+                font-style: normal;
+              }
+            }
+            .price {
+              font-size: 16px;
+              color: #5dc176;
+            }
+            .price-val {
+              font-size: 16px;
+              color: #dfe2e8;
+            }
+          }
+        }
+        .title-right {
+          height: 100%;
+          flex: 1;
+          ul {
+            display: flex;
+            justify-content: flex-end;
+            height: 100%;
+            li {
               display: flex;
-              height:100%;
               align-items: center;
-              .symbol{
-                  background: #161C24;
-                  width: 105px;
-                  padding: 12px 13px 15px 12px;
-                  margin-right: 22px;
-                  color: #E4E5E7;
-              }
-              .price-wrap{
-                  span{font-size: 16px}
-                  i{font-style: normal}
-                  .rate{
-                    background: #1FC56D;
-                    border-radius: 2px; 
-                    padding: 1px 7px;
-                    font-family: PingFangSC-Semibold;
-                    font-size: 13px;
-                    color: #FFFFFF;
-                    i{
-                    font-size: 13px;
-                       font-style: normal;
-                    }
-                    }
-                .price{
-                    font-size: 16px;
-                    color: #5DC176;
+              margin-right: 40px;
+              .img-wrap {
+                width: 22px;
+                height: 22px;
+                margin-right: 7px;
+                img {
+                  width: 100%;
                 }
-                .price-val{font-size: 16px;
-color: #DFE2E8;}
               }
-          }
-          .title-right{
-              height:100%;
-              flex:1;
-              ul{
-                  display:flex;
-                  justify-content: flex-end;
-                  height: 100%;
-                  li{ display: flex;    align-items: center;    margin-right: 40px;
-                    .img-wrap{
-                      width: 22px;
-                      height: 22px;
-                      margin-right: 7px;
-                      img{width: 100%}
-                   }
-                   .ititle{
-                       font-size: 12px;
-                       color: #999EA4;
-                       font-family: PingFangSC-Regular;
-                       }
-                  }
-                  .result{
-                      font-family: PingFangSC-Semibold;
-                        font-size: 13px;
-                        color: #EBEFF3;
-                  }
-                  
+              .ititle {
+                font-size: 12px;
+                color: #999ea4;
+                font-family: PingFangSC-Regular;
               }
+            }
+            .result {
+              font-family: PingFangSC-Semibold;
+              font-size: 13px;
+              color: #ebeff3;
+            }
           }
+        }
       }
     }
-    .right{
-        width: 21.5%;
-        min-width: 328px
+    .right {
+      width: 21.5%;
+      min-width: 328px;
     }
   }
-  .transaction-middle{
-      margin-bottom: 8px;
+  .transaction-middle {
+    margin-bottom: 8px;
+    display: flex;
+
+    .transaction-middle-left {
       display: flex;
-      
-      .transaction-middle-left{
-          display:flex;
-          width: 78.5%;
-          .panel-left{
-              width: 74%;
-          }
-          .panel-center{width:20%;margin:0 8px 0 12px;background: #292F37;position: relative;}
-          .panel-right{  
-                width: 26%;
-        margin-left: 0.8%;}
+      width: 78.5%;
+      .panel-left {
+        width: 74%;
       }
-       .transaction-middle-right{    width: 21.5%;}
+      .panel-center {
+        width: 20%;
+        margin: 0 8px 0 12px;
+        background: #292f37;
+        position: relative;
+      }
+      .panel-right {
+        width: 26%;
+        margin-left: 0.8%;
+      }
+    }
+    .transaction-middle-right {
+      width: 21.5%;
+    }
   }
 }
 </style>

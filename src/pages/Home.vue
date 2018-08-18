@@ -23,26 +23,31 @@
 <script>
 import VHeader from "../components/Header";
 import VFooter from "../components/Footer";
-import HomeSwiper from '../components/Swiper'
+import HomeSwiper from "../components/Swiper";
 export default {
   name: "Home",
   components: {
     VHeader,
-    VFooter, 
+    VFooter,
     HomeSwiper
   },
   data() {
     return {
-      swiperList:[
-        {imgUrl:'https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg'},
-        {imgUrl:'https://www.oex.cn/hryfile/6/1/d60fb42e0a434e94ba9edd9404ed0f72.jpg'}
+      swiperList: [
+        {
+          imgUrl:
+            "https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg"
+        },
+        {
+          imgUrl:
+            "https://www.oex.cn/hryfile/6/1/d60fb42e0a434e94ba9edd9404ed0f72.jpg"
+        }
       ]
     };
   }
 };
 </script>
 <style lang="less" scoped>
-
 .block-dark {
   padding: 115px 206px;
   background: #282b38;
@@ -56,14 +61,14 @@ export default {
       line-height: 30px;
       margin-bottom: 28px;
     }
-    dd{
+    dd {
       font-size: 14px;
-      color: #FFFFFF;
+      color: #ffffff;
       line-height: 30px;
     }
-    .download-btn{
-      border:1px solid #fff;
-      opacity: .31;
+    .download-btn {
+      border: 1px solid #fff;
+      opacity: 0.31;
       display: inline-block;
       margin-top: 30px;
       width: 165px;
@@ -71,10 +76,9 @@ export default {
       height: 42px;
       line-height: 42px;
       border-radius: 2px;
-
     }
-    .download-btn:last-of-type{
-      margin-left: 20px
+    .download-btn:last-of-type {
+      margin-left: 20px;
     }
   }
 }

@@ -34,36 +34,51 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-             name:'TransactionPrice'
-        }
-    }
-   
-}
+  data() {
+    return {
+      name: "TransactionPrice"
+    };
+  }
+};
 </script>
 <style lang="less" scoped>
- .transaction-price{
-    background: #292F37;
-    height: 664px;
-    margin-left: 12px;
-    
-    span{flex: 1}
-    span:last-child{padding-right: 26px}
-    dd{display: flex;
-        span{font-size: 12px;
-color: #9E9FA6;    height: 26px;
-    line-height: 26px;}
-        span:first-child{padding-left: 16px}
+.transaction-price {
+  background: #292f37;
+  height: 664px;
+  margin-left: 12px;
+
+  span {
+    flex: 1;
+  }
+  span:last-child {
+    padding-right: 26px;
+  }
+  dd {
+    display: flex;
+    span {
+      font-size: 12px;
+      color: #9e9fa6;
+      height: 26px;
+      line-height: 26px;
     }
-     .title{height: 33px;background: #181F27;font-size: 12px;
-        color: #E4E5E7;padding-left: 16px;
-            display: flex;align-items: center;
-            span{cursor: pointer;flex: 1;
-              
-            }
-        }
- }
+    span:first-child {
+      padding-left: 16px;
+    }
+  }
+  .title {
+    height: 33px;
+    background: #181f27;
+    font-size: 12px;
+    color: #e4e5e7;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+    span {
+      cursor: pointer;
+      flex: 1;
+    }
+  }
+}
 </style>
 
 

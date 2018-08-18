@@ -65,107 +65,112 @@
 </template>
 <script>
 export default {
-    name:'LimitedPrice'
-}
+  name: "LimitedPrice"
+};
 </script>
 <style lang="less" scoped>
-.limit-price{
-    margin-bottom: 8px;
-   background: #292F37;
-    .title{
-         padding:0 28px 0 22px;
-        height: 30px;
-        background: #181F27;
-        display: flex;
-        align-items: center;
+.limit-price {
+  margin-bottom: 8px;
+  background: #292f37;
+  .title {
+    padding: 0 28px 0 22px;
+    height: 30px;
+    background: #181f27;
+    display: flex;
+    align-items: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 13px;
+    color: #ffffff;
+    .left {
+      flex: 1;
+    }
+  }
+  .penel {
+    padding-left: 22px;
+    display: flex;
+    .buy-panel {
+      width: 48%;
+      margin-right: 5.7%;
+      span.active {
+        background: #1fc56d;
+      }
+    }
+    .sell-panel {
+      width: 48%;
+      margin-right: 3.1%;
+      span.active {
+        background: #ef6e59;
+      }
+    }
+    .input-text {
+      .label {
         font-family: PingFangSC-Semibold;
-        font-size: 13px;
-        color: #FFFFFF;
-        .left{
-            flex: 1;
+        padding: 13px 0;
+        font-size: 15px;
+        color: #ebebeb;
+        display: block;
+        i {
+          font-style: normal;
         }
-    }
-    .penel{
-        padding-left: 22px;
+      }
+      input {
+        width: 74%;
+        text-indent: 4%;
+        font-size: 14px;
+        color: #ffffff;
+      }
+      span {
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #999ea4;
+        padding-left: 8px;
+      }
+      div {
+        margin-bottom: 19px;
+        height: 32px;
+        line-height: 32px;
+      }
+      .buy-price,
+      .buy-num,
+      .total-price {
+        background: #3b4249;
+      }
+      .buy-rate {
         display: flex;
-       .buy-panel{
-           width: 48%;
-           margin-right: 5.7%;
-           span.active{
-              background: #1FC56D;
-           }
-       } 
-       .sell-panel{
-           width: 48%;
-           margin-right: 3.1%;
-           span.active{
-              background: #EF6E59;;
-           }
-       }
-       .input-text{
-           .label{
-               font-family: PingFangSC-Semibold;
-               padding:13px 0 ;
-               font-size: 15px;
-                color: #EBEBEB;
-                display: block;
-                i{font-style: normal}
-            }
-            input{   
-                 width: 74%;
-                text-indent: 4%;
-                font-size: 14px;
-                color: #FFFFFF;
-                }
-            span{
-                font-family: PingFangSC-Regular;
-                font-size: 12px;
-                color: #999EA4;
-                padding-left: 8px;
-            }
-            div{
-                margin-bottom: 19px;
-                height: 32px;
-                line-height: 32px;
-            }
-            .buy-price,.buy-num,.total-price{
-                background: #3B4249;
-            }
-            .buy-rate{
-                display: flex;
-                margin: 0 -2% 19px;
-                height: 26px;
-                line-height: 26px;
-                text-align: center;
-                span{
-                    width: 24%;
-                    margin: 0 2%;
-                    border: 1px solid #999EA4;
-                    font-size: 12px;
-                    color: #999EA4;
-                    cursor: pointer;
-                  &.active{color: #FFFFFF;border: none}
-                }
-            }
-            .transaction-btn{
-                text-align:center;
-                font-size: 14px;
-                color: #FFFFFF;
-                 span{
-                    color: #fff;
-                    padding: 0;
-                }
-                
-            }
-            .buy-button{
-                    background: #1FC56D;
-                }
-                .sell-button{
-                    background: #EF6E59;
-                }
-            
-       }
+        margin: 0 -2% 19px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        span {
+          width: 24%;
+          margin: 0 2%;
+          border: 1px solid #999ea4;
+          font-size: 12px;
+          color: #999ea4;
+          cursor: pointer;
+          &.active {
+            color: #ffffff;
+            border: none;
+          }
+        }
+      }
+      .transaction-btn {
+        text-align: center;
+        font-size: 14px;
+        color: #ffffff;
+        span {
+          color: #fff;
+          padding: 0;
+        }
+      }
+      .buy-button {
+        background: #1fc56d;
+      }
+      .sell-button {
+        background: #ef6e59;
+      }
     }
+  }
 }
 </style>
 
