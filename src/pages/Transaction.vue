@@ -19,7 +19,8 @@
                         <ul>
                             <li>
                                 <div class="img-wrap">
-                                     <img src="../../src/assets/images/hours.png" alt="">
+                                     <!-- <img src="../../src/assets/images/hours.png" alt=""> -->
+                                     <span class="ico-hours"></span>
                                 </div>
                                
                                 <div>
@@ -29,7 +30,9 @@
                             </li>
                             <li>
                                  <div class="img-wrap">
-                                     <img src="../../src/assets/images/icon-hours-top.png" alt="">
+                                    <span class="ico-chart"></span>
+                                     <!-- <img src="../../src/assets/images/icon-hours-top.png" alt=""> -->
+                                     
                                 </div>
                                 <div>
                                     <p class="ititle">24h最高</p>
@@ -38,7 +41,8 @@
                             </li>
                             <li>
                                  <div class="img-wrap">
-                                     <img src="../../src/assets/images/icon-hours-low.png" alt="">
+                                   <span class="ico-chats"></span>
+                                     <!-- <img src="../../src/assets/images/icon-hours-low.png" alt=""> -->
                                 </div>
                                 <div>
                                     <p class="ititle">24h最低</p>
@@ -75,16 +79,16 @@
              </div>
          </div>
          <div class="transaction-bottom">
-             <deep-img></deep-img>
+           <div class="panel-left">
+             <type-info></type-info>
+           </div>
+            <div class="panel-right">
+               <deep-img></deep-img>
+            </div>
+           
          </div>
        </div>
-         
-
-         
-          <v-footer></v-footer> 
-
-       
-     
+        <v-footer></v-footer> 
     </div>
 </template>
 <script>
@@ -97,6 +101,7 @@ import Entrust from "../components/transactionCenter/Entrust";
 import BuySell from "../components/transactionCenter/BuyOrSell";
 import TransactionPrice from "../components/transactionCenter/TransactionPrice";
 import DeepImg from "../components/transactionCenter/DeepImg";
+import TypeInfo from "../components/transactionCenter/CoinTypeInfo"
 export default {
   name: "Transaction",
   components: {
@@ -108,6 +113,7 @@ export default {
     BuySell,
     TransactionPrice,
     DeepImg,
+    TypeInfo,
      VFooter
   }
 };
@@ -250,10 +256,13 @@ export default {
                 width: 22px;
                 height: 22px;
                 margin-right: 7px;
-                img {
-                  width: 100%;
-                }
+                span{color: #bababe;font-size: 22px}
+                // img {
+                //   width: 100%;
+                // }
+                &+div{margin-left: 4px}
               }
+
               .ititle {
                 font-size: 12px;
                 color: #999ea4;
@@ -298,6 +307,10 @@ export default {
     .transaction-middle-right {
       width: 21.5%;
     }
+  }
+  .transaction-bottom{display: flex;
+    .panel-left{width:51.7%}
+    .panel-right{  background: #292F37;  width: 27%;    margin: 0 9px 0 12px;width: 47.4%}
   }
 }
 </style>

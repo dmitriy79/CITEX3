@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2>深度图</h2>
-    <e-charts auto-resize :options="deptChartOption" @legendselectchanged="legendSelectChanged"></e-charts>
+    <e-charts auto-resize :options="deptChartOption" @legendselectchanged="legendSelectChanged" style="width:95%;"></e-charts>
   </div>
 </template>
 
@@ -16,7 +15,7 @@ export default {
   data() {
     return {
       deptChartOption: {
-        grid: { left: 10, top: 30, right: 10, bottom: 10 },
+        grid: { left: 80, top: 30, right: 50, bottom: 10 },
         tooltip: {
           confine: true,
           trigger: "axis",
@@ -41,22 +40,23 @@ export default {
           itemWidth: 10,
           itemHeight: 10,
           textStyle: { color: "#fff" },
-          pageIconColor: "#4CC453"
+          pageIconColor: "#4CC453",
+          show:false
         },
         xAxis: {
           type: "category",
-          axisLine: { show: false },
+          axisLine: { show: true },
           axisTick: { show: false },
-          axisLabel: { show: false },
+          axisLabel: { show: true },
           boundaryGap: false,
           data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
         yAxis: [
           {
             type: "value",
-            axisLine: { show: false },
+            axisLine: { show: true },
             axisTick: { show: false },
-            axisLabel: { show: false },
+            axisLabel: { show: true },
             splitLine: { show: false }
           }
         ],

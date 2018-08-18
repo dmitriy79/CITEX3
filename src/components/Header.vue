@@ -4,6 +4,7 @@
       <div class="logo-wrapper">
         <a href="/Home">
           <img src="../assets/images/logo.png" alt="">
+          <!-- <span class="ico-logo"></span> -->
         </a>
       </div>
       <ul class="header-nav">
@@ -29,8 +30,8 @@
         
       </ul>
       <ul class="nav-right-wrapper">
-        <li class="nav-right-help">帮助中心</li>
-        <li class="nav-right-download">App下载</li>
+        <!-- <li class="nav-right-help">帮助中心</li>
+        <li class="nav-right-download">App下载</li> -->
         <li class="nav-right">注册</li>
         <li class="split">或</li>
         <li class="nav-right">登陆</li>
@@ -98,6 +99,7 @@ export default {
       a {
         display: block;
       }
+      .ico-logo{color: #3CA0FF}
     }
     .nav-right-wrapper {
       display: flex;

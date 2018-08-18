@@ -1,7 +1,22 @@
 <template>
-  <div class="hello">
+  <div class="home">
     <v-header></v-header>  
-    <home-swiper :list="swiperList"></home-swiper>
+    <!-- <home-swiper :list="swiperList"></home-swiper> -->
+    <div class="wrap-bg">
+      <img src="../assets/images/home-bg.png" alt="">
+      <div class="bg-text">
+          <div class="text-top">IB数字资产交易所一站式解决方案</div>
+          <div class="text-bottom">助力项目方一键极速搭建自有交易所</div>
+          <div class="btn-wrap"><span class="btn">申请渠道商</span></div>
+      </div>
+    </div>
+    <div class="content">
+       <div class="title">
+         <span>公告：关于7月26日 BTC/USDT 交易对数据异常说明</span>
+         <span>更多</span>
+       </div>
+       <div><coin-type></coin-type></div>
+    </div>
     <div class="block-dark">
       <img src="../assets/images/phone.png" alt="">
       <div class="info download-info">
@@ -24,11 +39,14 @@
 import VHeader from "../components/Header";
 import VFooter from "../components/Footer";
 import HomeSwiper from "../components/Swiper";
+import CoinType from "../components/home/CoinType";
+
 export default {
   name: "Home",
   components: {
     VHeader,
     VFooter,
+    CoinType,
     HomeSwiper
   },
   data() {
@@ -48,6 +66,37 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.home{
+  .content{
+    background: #3b4249;
+    padding: 0 10.3%;
+  }
+  .wrap-bg{
+     height: 510px;
+     position: relative;
+     color: #FFFFFF;
+     img{
+       height: 100%;
+       width: 100%
+     }
+     .bg-text{
+       position: absolute;
+      top: 146px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family:"PingFangSC-Regular" ;
+      .text-top{
+        font-size: 41px;margin-bottom: 24px;
+      }
+      .text-bottom{font-size: 25px;}
+      .btn-wrap{margin-top:70px;
+        .btn{width: 172px;height: 48px;border: 1px solid #fff;padding: 10px 37px;font-size: 20px}
+      }
+      
+     }
+  }
+}
 .block-dark {
   padding: 115px 206px;
   background: #282b38;

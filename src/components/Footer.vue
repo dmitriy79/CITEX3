@@ -37,7 +37,7 @@
         </dl>
         <dl class="">
             <dt>
-                <img src="../assets/images/logo.png" alt="">
+                <img src="../assets/images/footer-logo.png" alt="">
             </dt>
         
             <dd class="copyright">© 2017-2018 IB.TOP All rights reserved</dd>

@@ -1,12 +1,12 @@
 <template>
     <div class="coin-tab">
         <div class="search-wrap">
-              <input type="text" placeholder="查询" class="search">
-              <span><img src="../../assets/images/icon-refresh.png" alt="" class="refresh"><i>CNY</i></span>
+              <input type="text" placeholder="查询" class="search"><div class="ico-search"></div>
+              <span class="change"><b class="ico-changecny"></b><i>CNY</i></span>
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)">{{item.name}}</li>
-            <li class="fr"><span class="check-icon"></span><i class="check">自选</i></li>
+            <li class="fr"><span class="ico-star-fill"></span><i class="check">自选</i></li>
         </ul>
         <div class="coin-list-wrap">
             <div class="title">
@@ -87,7 +87,7 @@ export default {
 .coin-tab {
   background: #161c24;
   margin: 0 9px 0 12px;
-  .search-wrap {
+  .search-wrap {   position: relative;
     input {
       width: 67.5%;
       background: #3b4249;
@@ -101,11 +101,15 @@ export default {
     i {
       padding-left: 15%;
     }
-    .search {
-      background: #3b4249 url("~@/assets/images/search.png") no-repeat 10px
-        center;
+   
+    .ico-search{
+      position: absolute;
+      left: 23px;
+      top: 27px;
     }
-    .refresh {
+    .change{margin-left: 5px}
+    .ico-changecny {
+      font-size: 15px;
       cursor: pointer;
     }
     span {
@@ -256,11 +260,12 @@ export default {
       float: left;
       font-family: PingFangTC-Semibold;
       font-size: 12px;
-      color: #ffffff;
+      color: #999EA4;;
       padding: 6.5px 5%;
       cursor: pointer;
       &.active {
         background: #292f37;
+        // color:#
       }
     }
     .fr {
@@ -270,13 +275,9 @@ export default {
       .check {
         font-size: 12px;
         margin-left: 3.7px;
+        color: #9E9FA6;
       }
-      .check-icon {
-        display: inline-block;
-        height: 13.6px;
-        width: 15.5px;
-        background: url("~@/assets/images/star.png") no-repeat center center;
-      }
+      .ico-star-fill{font-size: 15px;color:#65696e}
     }
   }
 }

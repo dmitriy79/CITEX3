@@ -6,6 +6,7 @@ import router from './router'
 
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css';
+import './assets/css/font.css'
 import axios from 'axios'
 
 
