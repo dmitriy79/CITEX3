@@ -47,7 +47,7 @@ export default {
           type: "category",
           axisLine: { show: true },
           axisTick: { show: false },
-          axisLabel: { show: true },
+          axisLabel: { show: true ,color:' #fff'},
           boundaryGap: false,
           data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
@@ -56,8 +56,8 @@ export default {
             type: "value",
             axisLine: { show: true },
             axisTick: { show: false },
-            axisLabel: { show: true },
-            splitLine: { show: false }
+            axisLabel: {  show: true ,color:' #94979b',formatter: '{value} k'},
+            splitLine: { show: false },
           }
         ],
         series: [
@@ -70,9 +70,10 @@ export default {
             symbolSize: 3,
             sampling: "average",
             itemStyle: { normal: { color: "#4cc453" } },
-            lineStyle: { normal: { color: "#243235" } },
-            areaStyle: { color: "#243235" },
+            lineStyle: { normal: { color: "#284e42" } },
+            areaStyle: { color: "#284e42" ,opacity:1},
             data: [10, 9, 8, 5, 1, "", "", "", "", ""]
+            
           },
           {
             name: "卖单",
@@ -83,8 +84,8 @@ export default {
             symbolSize: 3,
             sampling: "average",
             itemStyle: { normal: { color: "#e94c4c" } },
-            lineStyle: { normal: { color: "#392332" } },
-            areaStyle: { color: "#392332" },
+            lineStyle: { normal: { color: "#523c3e" } },
+            areaStyle: { color: "#523c3e",opacity:1 },
             data: ["", "", "", "", "", 0, 2, 3, 6, 8]
           }
         ]

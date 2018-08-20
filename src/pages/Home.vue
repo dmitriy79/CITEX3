@@ -12,25 +12,55 @@
     </div>
     <div class="content">
        <div class="title">
-         <span>公告：关于7月26日 BTC/USDT 交易对数据异常说明</span>
-         <span>更多</span>
+         <span>公告：<i>关于7月26日 BTC/USDT 交易对数据异常说明</i></span>
+         <span>更多<i></i></span>
        </div>
        <div><coin-type></coin-type></div>
+       <div>
+         <rise-drop></rise-drop>
+       </div>
+       
+       <tab-transaction></tab-transaction>
+       <div class="bottom">
+          <div class="bottom-title">最值得信赖的数字货币平台</div>
+          <div class="info-wrap">
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom.png" alt="">
+                  </div>
+                  <div class="item-title">全球化数字货币交易</div>
+                  <div class="info">
+                     <p>使用用户遍布全球</p>
+                     <p>支持多语言切换，多国家、地区使用</p>
+                     <p>多个国家、地区组建团队运营</p>
+                  </div>
+              </div>
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom2.png" alt="">
+                  </div>
+                  <div class="item-title">社群化平台管理用户</div>
+                  <div class="info">
+                     <p>社群留言区自由评论各大项目</p>
+                     <p>加强用户与渠道商之间的联系</p>
+                     <p>渠道商申请提供真实渠道，增加社群流量</p>
+                  </div>
+              </div>
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom3.png" alt="">
+                  </div>
+                  <div class="item-title">多样化公平申请上币</div>
+                  <div class="info">
+                     <p>多币种多交易对上币，满足用户的多样化需求</p>
+                     <p>使用上币指数进行公平上币</p>
+                     <p>人人都是渠道商，人人可上币</p>
+                  </div>
+              </div>
+          </div>
+       </div>
     </div>
-    <div class="block-dark">
-      <img src="../assets/images/phone.png" alt="">
-      <div class="info download-info">
-        <dl>
-          <dt>IB.TOP移动端支持</dt>
-          <dd>覆盖iOS、Android多个移动端平台，支持全业务功能</dd>
-          <dd>集多种灵活交易模式于一体，体验一站式数字货币交易服务，币财富，一手掌握</dd>
-          <dd>
-            <div class="download-btn">安卓移动端下载</div>
-            <div class="download-btn">IOS移动端下载</div>
-          </dd>
-        </dl>
-      </div>
-    </div>   
+     
     <v-footer></v-footer>     
   </div>
 </template>
@@ -40,13 +70,16 @@ import VHeader from "../components/Header";
 import VFooter from "../components/Footer";
 import HomeSwiper from "../components/Swiper";
 import CoinType from "../components/home/CoinType";
-
+import RiseDrop from "../components/home/RiseOrDrop"
+import TabTransaction from "../components/home/TabTransaction"
 export default {
   name: "Home",
   components: {
     VHeader,
     VFooter,
     CoinType,
+    RiseDrop,
+    TabTransaction,
     HomeSwiper
   },
   data() {
@@ -70,6 +103,41 @@ export default {
   .content{
     background: #3b4249;
     padding: 0 10.3%;
+    .title{
+      display: flex;
+      height: 82px;
+      align-items: center;
+      span{
+        font-family: PingFangSC-Medium;
+        font-size: 14px;
+      }
+      span:first-child{
+        flex: 1;
+        color: #999AA1;
+        i{
+          color: #C8CCD1;
+          font-family:"PingFangSC-Regular";
+        }
+      }
+      span:last-child{
+        color: #6F717A;
+        cursor: pointer;
+        i{
+          padding-left:10px; 
+              &::after{
+          content: '';
+          width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-left: 1px solid #6F717A;
+    border-top: 1px solid #6F717A;
+    transform: rotate(135deg);
+
+        }
+        }
+    
+      }
+    }
   }
   .wrap-bg{
      height: 510px;
@@ -97,38 +165,34 @@ export default {
      }
   }
 }
-.block-dark {
-  padding: 115px 206px;
-  background: #282b38;
-  display: flex;
-  .download-info {
-    display: flex;
-    padding-left: 128px;
-    dt {
-      font-size: 30px;
-      color: #ffffff;
-      line-height: 30px;
-      margin-bottom: 28px;
-    }
-    dd {
-      font-size: 14px;
-      color: #ffffff;
-      line-height: 30px;
-    }
-    .download-btn {
-      border: 1px solid #fff;
-      opacity: 0.31;
-      display: inline-block;
-      margin-top: 30px;
-      width: 165px;
+.bottom{
+  margin-top: 60px;
+  .bottom-title{
+     font-family: PingFangSC-Medium;
+      font-size: 26px;
+      color: #FFFFFF;
+      line-height: 37px;
       text-align: center;
-      height: 42px;
-      line-height: 42px;
-      border-radius: 2px;
+      margin-bottom:114px;
+  }
+  .info-wrap{display: flex;justify-content: center;text-align: center;padding-bottom:82px;
+    .item{flex: 1;
+    .item-title{text-align: center;font-family: "PingFangSC-Medium";
+font-size: 18px;
+color: #FFFFFF;margin-bottom: 5px;}
+     
+    .img-wrap{display: inline-block;margin-bottom:15px;
+      width: 65px;
+      height: 65px;
+      img{width: 100%;height: 100%;}
     }
-    .download-btn:last-of-type {
-      margin-left: 20px;
+    .info{
+      p{font-family: "PingFangSC-Regular";
+font-size: 12px;
+color: #9da0a4;line-height: 22px}
     }
   }
+  }
+ 
 }
 </style>
