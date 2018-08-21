@@ -4,22 +4,27 @@
             <div class="item">
                 <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
                 <div class="price" >0.21232 ≈$2.12</div>
-                <div>量：<span  class="num">1982382983</span></div>
+                <div  class="num">量：<span >1982382983</span></div>
             </div>
              <div class="item">
                 <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
                 <div class="price" >0.21232 ≈$2.12</div>
-                <div>量：<span  class="num">1982382983</span></div>
+                <div  class="num">量：<span >1982382983</span></div>
             </div>
              <div class="item">
                 <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
                 <div class="price" >0.21232 ≈$2.12</div>
-                <div>量：<span  class="num">1982382983</span></div>
+                <div  class="num">量：<span >1982382983</span></div>
             </div>
              <div class="item">
                 <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
                 <div class="price" >0.21232 ≈$2.12</div>
-                <div>量：<span  class="num">1982382983</span></div>
+                <div  class="num">量：<span >1982382983</span></div>
+            </div>
+            <div class="item">
+                <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                <div class="price" >0.21232 ≈$2.12</div>
+                <div  class="num">量：<span >1982382983</span></div>
             </div>
        </div>
     </div>
@@ -39,12 +44,22 @@ export default {
             width:25%;
             margin: 0 1%;
             padding:13px 0 0 9px;
+            height: 109px;
             .coin-type{
+                height: 17px;
+                line-height: 17px;
+                padding-right: 6%;
+                display: flex;
                 .type{
                     font-family: Helvetica-Bold;
                     font-size: 14px;
                     color: #EBEFF3;
+                    flex:1;
                 }
+            }
+            .price,.num{
+                font-size: 12px;
+                color: #C8CCD1;
             }
         }
     }
