@@ -51,7 +51,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .footer {
-  background: #292F37;
+  background: #181F27;
   padding: 70px 120px;
   display: -webkit-flex;
   font-family: "PingFangSC-Regular";

@@ -103,8 +103,8 @@ export default {
           "hide_left_toolbar_by_default"
         ],
         studies_overrides: {
-          "volume.volume.color.0": "#fe4761",
-          "volume.volume.color.1": "#3fcfb4",
+          "volume.volume.color.0": "#744442",
+          "volume.volume.color.1": "#226347",
           "volume.volume.transparency": 75
         },
         overrides: {
@@ -115,9 +115,9 @@ export default {
           "paneProperties.legendProperties.showStudyArguments": false,
           "paneProperties.legendProperties.showStudyValues": false,
           "symbolWatermarkProperties.color": "rgba(0,0,0, 0)",
-          "paneProperties.background": "#292f37",
-          "paneProperties.vertGridProperties.color": "#344568",
-          "paneProperties.horzGridProperties.color": "#344568",
+          "paneProperties.background": "#292f37",//背景色
+          "paneProperties.vertGridProperties.color": "#333940",//纵向分割线颜色
+          "paneProperties.horzGridProperties.color": "#333940",//横向分割线颜色
           "paneProperties.crossHairProperties.color": "#58637a",
           "paneProperties.crossHairProperties.style": 2,
 
@@ -155,8 +155,8 @@ export default {
           "scalesProperties.showLeftScale": false,
           "scalesProperties.showRightScale": true,
           "scalesProperties.backgroundColor": "#20334d",
-          "scalesProperties.lineColor": "#46587b",
-          "scalesProperties.textColor": "#8f98ad",
+          "scalesProperties.lineColor": "#333940",//横轴纵轴颜色
+          "scalesProperties.textColor": "#9E9FA6",//横轴纵轴文字颜色
           "scalesProperties.scaleSeriesOnly": false,
           "scalesProperties.fontSize": 13,
           "mainSeriesProperties.priceAxisProperties.autoScale": true,
@@ -176,16 +176,16 @@ export default {
           "mainSeriesProperties.candleStyle.wickUpColor": "#3fcfb4",
           "mainSeriesProperties.candleStyle.wickDownColor": "#fe4761",
           "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
-          "mainSeriesProperties.hollowCandleStyle.upColor": "#3fcfb4",
-          "mainSeriesProperties.hollowCandleStyle.downColor": "#fe4761",
+          "mainSeriesProperties.hollowCandleStyle.upColor": "#5DC176",//k线柱涨颜色
+          "mainSeriesProperties.hollowCandleStyle.downColor": "#EF6E59",//k线柱跌颜色
           "mainSeriesProperties.hollowCandleStyle.drawWick": true,
           "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
           "mainSeriesProperties.hollowCandleStyle.borderColor": "#3fcfb4",
           "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#3fcfb4",
-          "mainSeriesProperties.hollowCandleStyle.borderDownColor": "#fe4761",
+          "mainSeriesProperties.hollowCandleStyle.borderDownColor": "#EF6E59",
           "mainSeriesProperties.hollowCandleStyle.wickColor": "#737375",
-          "mainSeriesProperties.hollowCandleStyle.wickUpColor": "#3fcfb4",
-          "mainSeriesProperties.hollowCandleStyle.wickDownColor": "#fe4761",
+          "mainSeriesProperties.hollowCandleStyle.wickUpColor": "#5DC176",//k线柱竖线涨颜色
+          "mainSeriesProperties.hollowCandleStyle.wickDownColor": "#EF6E59",
           "mainSeriesProperties.haStyle.upColor": "#3fcfb4",
           "mainSeriesProperties.haStyle.downColor": "#fe4761",
           "mainSeriesProperties.haStyle.drawWick": true,
@@ -211,7 +211,8 @@ export default {
           "mainSeriesProperties.areaStyle.linestyle": 0,
           "mainSeriesProperties.areaStyle.linewidth": 1,
           "mainSeriesProperties.areaStyle.priceSource": "close",
-          "mainSeriesProperties.areaStyle.transparency": 80
+          "mainSeriesProperties.areaStyle.transparency": 80,
+         
         },
         custom_css_url: "chart.css"
       });
@@ -244,45 +245,55 @@ export default {
             chartType: 3
           },
           {
-            label: "1分",
+            label: "1分钟",
             resolution: "1"
           },
+           {
+            label: "3分钟",
+            resolution: "3"
+          },
           {
-            label: "5分",
+            label: "5分钟",
             resolution: "5"
           },
           {
-            label: "15分",
+            label: "15分钟",
             resolution: "15"
           },
           {
-            label: "30分",
+            label: "30分钟",
             resolution: "30"
           },
           {
             label: "1小时",
             resolution: "60"
           },
+           {
+            label: "2小时",
+            resolution: "120"
+          },
           {
             label: "4小时",
             resolution: "240"
           },
           {
-            label: "1天",
+            label: "4小时",
+            resolution: "360"
+          },
+          {
+            label: "12小时",
+            resolution: "720"
+          },
+          {
+            label: "日线",
             resolution: "1D"
           },
+          
           {
-            label: "5天",
-            resolution: "5D"
-          },
-          {
-            label: "1周",
+            label: "周线",
             resolution: "7D"
           },
-          {
-            label: "1个月",
-            resolution: "1M"
-          }
+          
         ];
         mas.forEach(item => {
           chart.createStudy(
@@ -365,8 +376,8 @@ export default {
         // this_vue.chart.chart().createStudy('MA Cross', false, false, [30, 120])
         //  this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#642d92'});
         // this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#5278a3'});
-        // this_vue.chart.chart().createStudy('Moving Average', false, false, [30], null, {'Plot.color': '#238031'});
-        // this_vue.chart.chart().createStudy('Moving Average', false, false, [60], null, {'Plot.color': '#850058'});
+        this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#238031'});
+        this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#850058'});
       });
     });
   },
@@ -735,26 +746,27 @@ export default {
         var url = `https://www.okcoin.com/api/v1/kline.do?symbol=btc_usd&type=1hour&size=${num}&since=${to}`;
         //    var url=`https://api.hadax.com/market/history/kline?period=5min&size=${num}&symbol=btcusdt`
         console.log(url);
-        this_vue.$http.get(url).then(response => {
-          console.log(response, "pppppppppp哈哈哈哈哈哈");
-          var d = response.data;
-          var dateStart = response.data[0][0];
-          var dateEnd = response.data[response.data.length - 1][0];
-          console.log(dateEnd, dateStart, "6767676");
+        // this_vue.$http.get(url).then(response => {
+        //   console.log(response, "pppppppppp哈哈哈哈哈哈");
+        //   var d = response.data;
+        //   var dateStart = response.data[0][0];
+        //   var dateEnd = response.data[response.data.length - 1][0];
+        //   console.log(dateEnd, dateStart, "6767676");
 
-          d.forEach(function(bar) {
-            this_vue.bars.push({
-              time: Number(bar[0]),
-              open: Number(bar[1]),
-              close: Number(bar[4]),
-              high: Number(bar[2]),
-              low: Number(bar[3]),
-              volume: Number(bar[5])
-            });
-          });
-          console.log(this_vue.bars);
-          onHistoryCallback(this_vue.bars);
-        });
+        //   d.forEach(function(bar) {
+        //     this_vue.bars.push({
+        //       time: Number(bar[0]),
+        //       open: Number(bar[1]),
+        //       close: Number(bar[4]),
+        //       high: Number(bar[2]),
+        //       low: Number(bar[3]),
+        //       volume: Number(bar[5])
+        //     });
+        //   });
+        //   console.log(this_vue.bars);
+        //   onHistoryCallback(this_vue.bars);
+        // });
+        onHistoryCallback(this_vue.bars);
         //onHistoryCallback([], { noData: true });
         //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
       };
@@ -812,42 +824,42 @@ export default {
       feed: null,
       last_price: 1234.2365,
       bars: [
-        //  {
-        //      time:1508313600000,
-        //      close:42.1,
-        //      open:41.0,
-        //      high:43.0,
-        //      low:40.4,
-        //      volume:12000
-        //  }, {
-        //      time:1508317200000,
-        //      close:43.4,
-        //      open:42.9,
-        //      high:44.1,
-        //      low:42.1,
-        //      volume:18500
-        //  }, {
-        //      time:1508320800000,
-        //      close:44.3,
-        //      open:43.7,
-        //      high:44.8,
-        //      low:42.8,
-        //      volume:24000
-        //  }, {
-        //      time:1508324400000,
-        //      close:42.8,
-        //      open:44.5,
-        //      high:44.5,
-        //      low:42.3,
-        //      volume:45000
-        //  }, {
-        //      time:1508328000000,
-        //      close:40.8,
-        //      open:47.5,
-        //      high:48.5,
-        //      low:42.3,
-        //      volume:35000
-        //  }
+         {
+             time:1508313600000,
+             close:42.1,
+             open:41.0,
+             high:43.0,
+             low:40.4,
+             volume:12000
+         }, {
+             time:1508317200000,
+             close:43.4,
+             open:42.9,
+             high:44.1,
+             low:42.1,
+             volume:18500
+         }, {
+             time:1508320800000,
+             close:44.3,
+             open:43.7,
+             high:44.8,
+             low:42.8,
+             volume:24000
+         }, {
+             time:1508324400000,
+             close:42.8,
+             open:44.5,
+             high:44.5,
+             low:42.3,
+             volume:45000
+         }, {
+             time:1508328000000,
+             close:40.8,
+             open:47.5,
+             high:48.5,
+             low:42.3,
+             volume:35000
+         }
       ]
     };
   }

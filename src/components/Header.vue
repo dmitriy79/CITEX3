@@ -98,7 +98,6 @@ export default {
 .header {
   height: 50px;
   background: #181f27;
-  opacity: 0.9;
   .content {
     height: 100%;
     display: flex;

@@ -51,6 +51,9 @@ module.exports={
             text: "",
             href: ""
         },
+        legend: {
+			enabled: false
+		},
         xAxis: {
             gridLineWidth: 0,
                 lineColor: "#2D3147",
@@ -66,7 +69,7 @@ module.exports={
                     return this.value
                 },
                 style: {
-                    color: "#575E7E"
+                    color: "#94979b"//
                 }
             }
         },
@@ -84,10 +87,10 @@ module.exports={
             },
             labels: {
                 formatter: function () {
-                    return this.value
+                    return this.value+'k'
                 },
                 style: {
-                    color: "#575E7E"
+                    color: "#94979b"
                 }
             },
             opposite:true
