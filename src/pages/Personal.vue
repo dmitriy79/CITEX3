@@ -1,18 +1,20 @@
 <template>
-<div>
+<div class="contanier">
+    <v-header></v-header>
+    <div class="personal-wrapper">
     <div class="tabs">
        <dl>
             <dt><span></span>账户中心</dt>
-            <dd @click="toggleTab('property')" :class="{active:this.currentTab==='property'}">我的资产</dd>
+            <dd @click="toggleTab('property')" :class="{active:this.currentTab==='property'}" class="border-bottom">我的资产</dd>
             <dt><span></span>交易记录</dt>
             <dd @click="toggleTab('entrust')"  :class="{active:this.currentTab==='entrust'}">我的委托</dd>
             <dd>交易记录</dd>
-            <dd>C2C记录</dd>
+            <dd class="border-bottom">C2C记录</dd>
             <dt><span></span>财产中心</dt>
             <dd>我要冲币</dd>
             <dd>我要提币</dd>
             <dd>银行卡管理</dd>
-            <dd>币账户</dd>
+            <dd class="border-bottom">币账户</dd>
             <dt><span></span>安全中心</dt>
             <dd>安全设置</dd>
             <dd>实名认证</dd>
@@ -22,46 +24,83 @@
             <dd>登录密码</dd>
         </dl>
     </div>
-  
-    <property :is="currentTab" keep-alive></property>
+    <div class="content">
+        <property :is="currentTab" keep-alive ></property>
+    </div>
+    
 </div>
+<v-footer></v-footer>
+</div>
+
 
 </template>
  
 <script>
 // 引入子组件
-import property from "../components/personal/MineProperty";
-import entrust from "../components/personal/MineEntrust";
+import VHeader from "../components/Header";
+import VFooter from "../components/Footer";
+import Property from "../components/personal/MineProperty";
+import Entrust from "../components/personal/MineEntrust";
 
 export default {
  name: 'app',
  data () {
   return {
-   currentTab: 'property' // currentTab 用于标识当前触发的子组件
+   currentTab: 'property', // currentTab 用于标识当前触发的子组件
+    showList:false
   };
  },
  components: { // 声明子组件
-    property,
-    entrust
+    Property,
+    Entrust,
+    VHeader,
+    VFooter
  },
  methods: {
   toggleTab: function(tab) {
-      console.log(tab)
-   this.currentTab = tab; // tab 为当前触发标签页的组件名
-  }
+
+        this.currentTab = tab;
+   
+    // tab 为当前触发标签页的组件名
+
+  },
+
  }
 }
 </script>
 
 <style lang="less" scoped>
-.tabs{
-    width: 190px;background:#292f37;font-family: PingFangSC-Regular;
-font-size: 16px;
-    dl{
-        dt,dd{
+.contanier{background: #3b4249;
+.personal-wrapper{margin: 90px 10% 240px;overflow: hidden;
+.tabs{border-radius: 4px;color: #fff;
+    width: 190px;background:#292f37;font-family:"PingFangSC-Regular" ;
+font-size: 16px;float: left;text-align:center;
+    dl{    padding-bottom: 200px;
+        dt,dd{cursor: pointer;
             height: 40px;line-height: 40px;
+        }
+        dt{font-size: 14px;}
+        .border-bottom{border-bottom:#3b4148 1px solid}
+        dd.active{background: #2286FF;position: relative;
+color: #FFFFFF;
+            &::after{
+                 border: solid transparent;
+                content: ' ';
+                height: 0;
+                left: 100%;    //根据三角形的位置，可以随意更改。
+                position: absolute;
+                width: 0;
+                 border-width: 10px;
+            border-left-color: #2286FF;
+            top: 10px;
+            }
         }
     }
 }
+.content{position: relative;margin-left: 200px;background: #292f37}
+}
+}
+
+
 </style>
 

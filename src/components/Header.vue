@@ -19,10 +19,10 @@
         </li>
         <li>
           <router-link to="/" tag="div">新闻资讯</router-link>
-        </li>
+        </li>-->
         <li>
-          <router-link to="/" tag="div">个人中心</router-link>
-        </li> -->
+          <router-link to="/personal" tag="div">个人中心</router-link>
+        </li> 
         <li @click="showli">
           <router-link to="/" tag="div" >渠道商</router-link>
         </li>

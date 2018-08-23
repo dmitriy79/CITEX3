@@ -10,6 +10,7 @@ import ApplyChannelText from  '@/components/channel/ApplyChannelText'
 import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
 import BasicInfo from '@/components/mountCoin/BasicInfo'
 import MineProperty from '@/components/personal/MineProperty'
+import CarryfullCoin from '@/components/personal/CarryfullCoin'
 
 Vue.use(Router)
 
@@ -72,6 +73,12 @@ export default new Router({
       path: '/mineProperty',
       name: 'MineProperty',
       component: MineProperty
+    },
+    {
+      
+      path: '/carryfullCoin',
+      name: 'CarryfullCoin',
+      component: CarryfullCoin
     }
   ]
 })

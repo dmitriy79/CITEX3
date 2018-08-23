@@ -28,10 +28,33 @@ body, html {
     min-width: 1300px;
     margin: 0;
 }
-table{width:100%;text-align:center;border-collapse:collapse;border-spacing:1;border-spacing:0; }
+table{width:100%;border-collapse:collapse;border-spacing:1;border-spacing:0; }
 
 
 table td{word-break: break-all; word-wrap:break-word;}
 *{
     box-sizing: border-box;
 }
+.el-table, .el-table__expanded-cell,.el-table th, .el-table tr {    color: #999EA4!important;
+    background: #292f37!important}
+    .el-table::before {
+    
+       height: 0px!important; 
+    }
+    .el-table td, .el-table th.is-leaf {
+        border-bottom: 1px solid #3b4148!important;
+    }
+  
+    .el-table--enable-row-hover .el-table__body tr:hover>td {
+        background-color: #1b222a!important;
+    }
+    .el-pagination.is-background .el-pager li:not(.disabled).active {
+        background-color: #333644;
+        color: #fff;
+    }
+    .el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{
+       background: #353c44;color: #9E9FA6
+    }
+    .el-pagination.is-background .el-pager li:not(.disabled):hover {
+        color: #fff;
+    }
