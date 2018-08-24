@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import {Table,TableColumn,Pagination
+import {Table,TableColumn,Pagination,Form,FormItem
 } from 'element-ui'
 
 import App from './App'
@@ -20,7 +20,8 @@ Vue.config.productionTip = false
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
-
+Vue.use(Form)
+Vue.use(FormItem)
 
 /* eslint-disable no-new */
 new Vue({

@@ -8,10 +8,10 @@
             <dd @click="toggleTab('property')" :class="{active:this.currentTab==='property'}" class="border-bottom">我的资产</dd>
             <dt><span></span>交易记录</dt>
             <dd @click="toggleTab('entrust')"  :class="{active:this.currentTab==='entrust'}">我的委托</dd>
-            <dd>交易记录</dd>
+            <dd @click="toggleTab('record')"  :class="{active:this.currentTab==='record'}">交易记录</dd>
             <dd class="border-bottom">C2C记录</dd>
             <dt><span></span>财产中心</dt>
-            <dd>我要冲币</dd>
+            <dd @click="toggleTab('full-coin')"  :class="{active:this.currentTab==='full-coin'}">我要冲币</dd>
             <dd>我要提币</dd>
             <dd>银行卡管理</dd>
             <dd class="border-bottom">币账户</dd>
@@ -41,6 +41,8 @@ import VHeader from "../components/Header";
 import VFooter from "../components/Footer";
 import Property from "../components/personal/MineProperty";
 import Entrust from "../components/personal/MineEntrust";
+import Record from "../components/personal/TransactionRecord";
+import FullCoin from "../components/personal/FullCoin";
 
 export default {
  name: 'app',
@@ -53,6 +55,8 @@ export default {
  components: { // 声明子组件
     Property,
     Entrust,
+   Record,
+   FullCoin,
     VHeader,
     VFooter
  },
@@ -71,7 +75,7 @@ export default {
 
 <style lang="less" scoped>
 .contanier{background: #3b4249;
-.personal-wrapper{margin: 90px 10% 240px;overflow: hidden;
+.personal-wrapper{margin: 90px 5% 240px;overflow: hidden;
 .tabs{border-radius: 4px;color: #fff;
     width: 190px;background:#292f37;font-family:"PingFangSC-Regular" ;
 font-size: 16px;float: left;text-align:center;

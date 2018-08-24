@@ -8,7 +8,7 @@
                  <span class="check-item"><i class="check"></i>隐藏小额资产</span>
                  <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span><span class="ico-hours"></span> </div> 
             </div>
-            <div class="info-right"><input type="text"><span @click="showRecord" >提币&充币记录</span></div>
+            <div class="info-right"><span @click="showRecord" >提币&充币记录</span></div>
         </div>
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
@@ -290,6 +290,7 @@ export default {
         height: 30px;
         display: inline-block;
         border: 1px solid #3b4148;
+        input{color: #fff;text-indent: 25px}
       }
       .search-item {
         position: relative;
