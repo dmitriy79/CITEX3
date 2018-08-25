@@ -5,8 +5,8 @@
               <span class="change"><b class="ico-changecny"></b><i>CNY</i></span>
         </div>
         <ul class="nav-bar">
-            <li v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)">{{item.name}}</li>
-            <li class="fr"><span class="ico-star-fill"></span><i class="check">自选</i></li>
+            <li v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)"><span class="ico-star-fill" v-if="index==3"></span>{{item.name}}</li>
+          
         </ul>
         <div class="coin-list-wrap">
             <div class="title">
@@ -43,12 +43,14 @@ export default {
       navs: [
         { id: 1, name: "ETH交易" },
         { id: 2, name: "IT交易" },
-        { id: 3, name: "BTC交易" }
+        { id: 3, name: "BTC交易" },
+        { id: 4, name: "自选" }
       ],
       coinList: [
         { id: 1, type: "TRUE", price: "400.12", rate: "-10%", num: 90012112 },
         { id: 2, type: "EOS", price: "123.12", rate: "+59%", num: 9002 },
-        { id: 3, type: "BCH", price: "5000.12", rate: "-19%", num: 90202 }
+        { id: 3, type: "BCH", price: "5000.12", rate: "-19%", num: 90202 },
+        { id: 4, type: "BTC", price: "5000.12", rate: "-19%", num: 90202 }
       ]
     };
   },
@@ -106,6 +108,7 @@ export default {
       position: absolute;
       left: 23px;
       top: 27px;
+          font-size: 14px;
     }
     .change{margin-left: 5px}
     .ico-changecny {
@@ -267,6 +270,7 @@ export default {
         background: #292f37;
         // color:#
       }
+      &:last-child{float:right}
     }
     .fr {
       float: right;

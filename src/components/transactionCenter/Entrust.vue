@@ -184,10 +184,12 @@ export default {
     background: #181f27;
     height: 25px;
     line-height: 25px;
+    display:flex;
   }
   dd {
     height: 25px;
     line-height: 25px;
+        display: flex;
   }
   dt,
   dd {

@@ -71,7 +71,7 @@ export default {
             padding: 10px 5px 11px 15px;
             li{
                 height: 50px;
-                width: 48.4%;
+                width: 48%;
                 float: left;
                 margin: 0 10px 4px 0;
                 display: flex;

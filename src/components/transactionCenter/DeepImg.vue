@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       deptChartOption: {
+      	chart:{height:500},
         grid: { left: 80, top: 30, right: 50, bottom: 10 },
         tooltip: {
           confine: true,
