@@ -72,6 +72,7 @@ import HomeSwiper from "../components/Swiper";
 import CoinType from "../components/home/CoinType";
 import RiseDrop from "../components/home/RiseOrDrop"
 import TabTransaction from "../components/home/TabTransaction"
+
 export default {
   name: "Home",
   components: {
@@ -80,6 +81,7 @@ export default {
     CoinType,
     RiseDrop,
     TabTransaction,
+
     HomeSwiper
   },
   data() {

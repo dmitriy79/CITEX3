@@ -39,6 +39,8 @@ module.exports={
         chart: {
             type: "area",
             backgroundColor: "#292f37",
+            height:418,
+            spacingTop:40,
             //renderTo: "chart_depth"
         },
         title: {
@@ -51,6 +53,9 @@ module.exports={
             text: "",
             href: ""
         },
+        legend: {
+			enabled: false
+		},
         xAxis: {
             gridLineWidth: 0,
                 lineColor: "#2D3147",
@@ -66,7 +71,7 @@ module.exports={
                     return this.value
                 },
                 style: {
-                    color: "#575E7E"
+                    color: "#94979b"//
                 }
             }
         },
@@ -84,10 +89,10 @@ module.exports={
             },
             labels: {
                 formatter: function () {
-                    return this.value
+                    return this.value+'k'
                 },
                 style: {
-                    color: "#575E7E"
+                    color: "#94979b"
                 }
             },
             opposite:true
@@ -132,5 +137,78 @@ module.exports={
                 name: '卖盘委托',
                 data: [[910, 8], [1000, 14], [1100, 29], [1200, 45], [1300, 59], [1400, 81.2]]
             }]
-    }
+    },
+    bar: {
+title: {
+text: '珠海猪场' // 指定图表标题
+},
+credits: {
+enabled: false
+},
+chart: {
+backgroundColor: 'black',
+type: 'bar'
+},
+plotOptions: {
+column: {
+colorByPoint: true
+},
+line: {
+dataLabels: {
+// 开启数据标签
+enabled: true
 }
+// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+// enableMouseTracking: false
+}
+},
+xAxis: {
+categories: ['今日已入场', '已交易单次', '已交易数量', '已缴费'] // 指定x轴分组
+},
+series: [{
+colorByPoint: true,
+data: [500, 235, 809, 5000],
+dataLabels: {
+enabled: true
+}
+}]
+}
+}
+
+//export const option2 = {
+//bar: {
+//title: {
+//text: '珠海猪场' // 指定图表标题
+//},
+//credits: {
+//enabled: false
+//},
+//chart: {
+//backgroundColor: 'black',
+//type: 'bar'
+//},
+//plotOptions: {
+//column: {
+//colorByPoint: true
+//},
+//line: {
+//dataLabels: {
+//// 开启数据标签
+//enabled: true
+//}
+//// 关闭鼠标跟踪，对应的提示框、点击事件会失效
+//// enableMouseTracking: false
+//}
+//},
+//xAxis: {
+//categories: ['今日已入场', '已交易单次', '已交易数量', '已缴费'] // 指定x轴分组
+//},
+//series: [{
+//colorByPoint: true,
+//data: [500, 235, 809, 5000],
+//dataLabels: {
+//enabled: true
+//}
+//}]
+//}
+//}

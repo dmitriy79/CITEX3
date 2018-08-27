@@ -17,16 +17,17 @@
                         </transition>
                    </div>
             </div>
-        <div class="list buy-list" v-if="buyList">
-            
-            <dl>
-                
-                <dt class="name">
+            <div class="top-title list">
+              <div class="name">
                     <span></span>
                     <span>价格（ETH）</span>
                     <span>数量（IOST)</span>
                     <span>累计（IOST）</span>
-                </dt>
+                </div>
+            </div>
+        <div class="list buy-list" v-if="buyList">
+            
+            <dl>
                 <dd>
                     <span>买1</span>
                     <span>0.005469</span>
@@ -55,6 +56,7 @@
         </div>
           <div class="list sell-list" v-if="sellList">
             <dl>
+                
                 <dd>
                     <span>卖1</span>
                     <span>0.005469</span>
@@ -217,6 +219,11 @@ export default {
       &:not(:first-child) {
         flex: 1;
       }
+    }
+  }
+  .top-title{margin-bottom: 0; 
+    div{
+      display: flex;padding-left:16px;
     }
   }
   .buy-list {

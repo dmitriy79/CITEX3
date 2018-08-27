@@ -18,7 +18,7 @@
                         众筹价格<span>约0.2USD</span>
                     </li>
                     <li>
-                        白皮书<span>https://ont.io/wp/Ontology-Introductory-White-Paper-EN.pdf</span>
+                        白皮书<span>https://ont.io/wp</span>
                     </li>
                      <li>
                         官网<span>https://ont.io/</span>
@@ -59,6 +59,7 @@ color: #FFFFFF;}
                 li{font-family: "PingFangSC-Regular";font-size: 12px;position: relative;
                     border-bottom: 1px solid #3f4449;height: 50px;line-height: 50px;color: #7f8287;
                     span{color: #e9eaeb;position: absolute;left: 80px;}
+                    &:last-child{border-bottom:none}
                 }
                 
                 }

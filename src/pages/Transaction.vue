@@ -83,6 +83,7 @@
              <type-info></type-info>
            </div>
             <div class="panel-right">
+            	 <div class="deepImg-title">深度图</div>
                <x-chart :id="id" :option="option"></x-chart>
                <!-- <deep-img></deep-img> -->
             </div>
@@ -103,9 +104,9 @@ import BuySell from "../components/transactionCenter/BuyOrSell";
 import TransactionPrice from "../components/transactionCenter/TransactionPrice";
 // import DeepImg from "../components/transactionCenter/DeepImg";
 import TypeInfo from "../components/transactionCenter/CoinTypeInfo"
-import XChart from '../components/chart/Bar.vue'
+import XChart from '../components/chart/DeepImg.vue'
 // 导入chart组件模拟数据
-import options from '../chart-options/bar'
+import options from '../chart-options/deepImg'
 export default {
   name: "Transaction",
   components: {
@@ -128,11 +129,11 @@ export default {
 //  options.deep.series[0].data.push(buy)
 // var buy=[[214, 99], [289, 78], [305, 59], [458, 36], [500, 45], [900, 12]]
 // options.deep.series[0].data.push(buy)
-// console.log(options.deep,'000000')
-let option = options.deep
+   console.log(options,'000000')
+//let option = options.option1
  return {
- id: 'test',
- option: option
+	 id: 'id',
+	 option: options.deep
  }
  },
 };
@@ -204,14 +205,12 @@ let option = options.deep
   #app .transaction-wrap .transaction-middle .transaction-middle-left {
     width: 72%;
     }
+  #app .transaction-wrap .transaction-bottom .panel-left{width:47.8%}
+  #app .transaction-wrap .transaction-bottom .panel-right{width:54%;    margin: 0 9px 0 7px;}
 }
 </style>
 <style lang="less" scoped>
-#test {
-//  width: 400px;
-//  height: 800px;
-//  margin: 40px auto;
-}
+
 .transaction-wrap {
   background: #3b4249;
   padding: 8px 0 9px 17px;
@@ -232,7 +231,7 @@ let option = options.deep
           .symbol {
             background: #161c24;
             width: 105px;
-            padding: 12px 13px 15px 12px;
+            padding: 0 13px 0 12px;
             margin-right: 22px;
             color: #e4e5e7;
           }
@@ -326,6 +325,7 @@ let option = options.deep
       .panel-right {
         width: 26%;
         margin-left: 0.8%;
+        
       }
     }
     .transaction-middle-right {
@@ -334,7 +334,14 @@ let option = options.deep
   }
   .transaction-bottom{display: flex;
     .panel-left{width:51.7%}
-    .panel-right{  background: #292F37;  width: 27%;    margin: 0 9px 0 12px;width: 47.4%}
+    .panel-right{  background: #292F37;  width: 27%;    margin: 0 9px 0 12px;width: 47.4%;
+    	.deepImg-title{ height: 30px;
+    line-height: 30px;
+    background: #181F27;
+    padding-left: 18px;
+    font-size: 13px;
+    color: #FFFFFF;}
+    }
   }
 }
 </style>

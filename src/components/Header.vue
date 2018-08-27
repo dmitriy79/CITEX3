@@ -8,10 +8,10 @@
         </a>
       </div>
       <ul class="header-nav">
-        <li>
+        <li v-if="showLi">
           <router-link to="/" tag="div">首页</router-link>
         </li>
-        <li>
+        <li v-if="showLi">
           <router-link to="/Transaction" tag="div">交易中心</router-link>
         </li>
         <!-- <li>
@@ -19,12 +19,18 @@
         </li>
         <li>
           <router-link to="/" tag="div">新闻资讯</router-link>
+        </li>-->
+        <li>
+          <router-link to="/personal" tag="div">个人中心</router-link>
+        </li> 
+        <li @click="showli">
+          <router-link to="/" tag="div" >渠道商</router-link>
         </li>
-        <li>
-          <router-link to="/" tag="div">个人中心</router-link>
-        </li> -->
-        <li>
-          <router-link to="/" tag="div">渠道商</router-link>
+        <li v-if="!showLi">
+          <router-link to="/" tag="div">项目评论区</router-link>
+        </li>
+        <li v-if="!showLi">
+          <router-link to="/ApplyMountCoin" tag="div">上币申请</router-link>
         </li>
         <li class="header-space"></li>
         
@@ -57,10 +63,14 @@ export default {
     return {
       isShow: false,
       currentLanguage: "中文",
-      isActive: false
+      isActive: false,
+      showLi:true
     };
   },
   methods: {
+    showli(){
+      this.showLi=false
+    },
     selectLanguage() {
       this.isShow = !this.isShow;
       if (this.isShow) {
@@ -88,7 +98,6 @@ export default {
 .header {
   height: 50px;
   background: #181f27;
-  opacity: 0.9;
   .content {
     height: 100%;
     display: flex;
