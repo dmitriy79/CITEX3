@@ -58,3 +58,16 @@ table td{word-break: break-all; word-wrap:break-word;}
     .el-pagination.is-background .el-pager li:not(.disabled):hover {
         color: #fff;
     }
+    .el-input__inner{background: rgba(255,255,255,0.06)!important;border: none}
+    .el-select-dropdown{background: #292f37!important;border: none}
+    .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{    background: #1b222a!important;}
+    .el-select-dropdown__item.selected{
+        color: #fff!important
+    }
+    .el-select{width: 50%!important}
+    .el-input{width: 50%!important;}
+    .el-form-item__label{float: inherit!important}
+    .el-form-item__content{margin-left: 0!important}
+    .el-select   .el-input{width: 100%!important}
+    .el-form-item::after,.el-form-item__content::after{clear: inherit!important}
+    .el-form-item{margin-bottom: 18px}

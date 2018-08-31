@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <v-header></v-header>  
-    <!-- <home-swiper :list="swiperList"></home-swiper> -->
-    <div class="wrap-bg">
+    <home-swiper :list="swiperList"></home-swiper>
+    <!-- <div class="wrap-bg">
       <img src="../assets/images/home-bg.png" alt="">
       <div class="bg-text">
           <div class="text-top">IB数字资产交易所一站式解决方案</div>
           <div class="text-bottom">助力项目方一键极速搭建自有交易所</div>
           <div class="btn-wrap"><span class="btn">申请渠道商</span></div>
       </div>
-    </div>
+    </div> -->
     <div class="content">
        <div class="title">
          <span>公告：<i>关于7月26日 BTC/USDT 交易对数据异常说明</i></span>
@@ -87,20 +87,42 @@ export default {
   data() {
     return {
       swiperList: [
-        {
-          imgUrl:
-            "https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg"
-        },
-        {
-          imgUrl:
-            "https://www.oex.cn/hryfile/6/1/d60fb42e0a434e94ba9edd9404ed0f72.jpg"
-        }
+        // {
+        //   img:
+        //     "https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg"
+        // },
+        // {
+        //   img:
+        //     "https://www.oex.cn/hryfile/6/1/d60fb42e0a434e94ba9edd9404ed0f72.jpg"
+        // }
       ]
     };
+  },
+  mounted(){
+    this.getbanner()
+  },
+  methods:{
+    getbanner(){
+        var url=`/api/banner/listByType`
+        this.$http.get(url,{
+                  params: {
+                    type: 1,
+                }
+            },
+        {
+      headers:{"Content-Type": "application/json"}}).then(res => {
+            console.log(res.data.datas,'2222')
+            this.swiperList=res.data.datas
+            // console.log(this.swiperList,'www')
+        })
+    }
   }
 };
 </script>
+
+
 <style lang="less" scoped>
+
 .home{
   .content{
     background: #3b4249;

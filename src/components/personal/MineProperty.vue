@@ -337,7 +337,7 @@ export default {
     }
     .info-right {
       color: #2286ff;
-      span{cursor: pointer;}
+      span{cursor: pointer;font-size: 16px;}
     }
   }
   .coin-info {
