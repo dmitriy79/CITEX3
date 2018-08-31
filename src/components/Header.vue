@@ -1,12 +1,11 @@
 <template>
   <div class="header">
-    <div class="content">
-      <div class="logo-wrapper">
-        <a href="/Home">
-          <img src="../assets/images/logo.png" alt="">
-          <!-- <span class="ico-logo"></span> -->
+    <div class="container">
+      <h1 class="header-logo">
+        <a href="/Home" class="ico-logo">
+          <span>ibtop.com</span>
         </a>
-      </div>
+      </h1>
       <ul class="header-nav">
         <li v-if="showLi">
           <router-link to="/" tag="div">首页</router-link>
@@ -30,10 +29,11 @@
         <li v-if="!showLi">
           <router-link to="/ApplyMountCoin" tag="div">上币申请</router-link>
         </li>
-        <li class="header-space"></li>
+
         
       </ul>
-      <ul class="nav-right-wrapper">
+
+      <ul class="header-nav-right">
         <!-- <li class="nav-right-help">帮助中心</li>
         <li class="nav-right-download">App下载</li> -->
         <li>
@@ -56,6 +56,7 @@
           </transition>
         </li>
       </ul>
+   
     </div>
   </div>
 </template>
@@ -151,9 +152,107 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+.logo{
+  font-size:100px;
+  display:block;
+}
+@h:50px;
+@c:#0D141C;
 .header {
-  height: 50px;
-  background: #181f27;
+  height:@h;
+  background:#181f27;
+  .container{
+  
+  }
+  li{
+  
+    line-height:@h;
+    display:inline-block;
+    div{
+      cursor: pointer;
+      font-size:14px;
+      transition:.3s;
+        color:lighten(#0D141C,80%);
+    }
+   
+  }
+  &-logo{
+  
+    color:#fff;
+    width:120px;
+    position:absolute;
+    text-align:center;
+    a{
+        font-size:30px;
+      color:#fff;
+      display:block;
+      height:30px;
+      line-height:50px;
+    }
+    span{
+      font-size:0;
+    }
+  }
+  &-nav{
+    flex-grow: 2;
+    height:50px;
+    padding-left:120px;
+    li{
+      display:inline-block;
+      height:50px;
+        color:lighten(#0D141C,94%);
+    }
+    div{
+      line-heigh:50px;
+      padding:0 20px;
+     &:hover{
+          color:lighten(#0D141C,80%);
+          background:@c;
+        }      
+
+    }
+    &-right{
+      position:absolute;
+       font-size:12px;
+      right:0;
+      top:0;
+      height:50px;
+      li{
+        div{
+          font-size:12px;
+          &:hover{
+              color:lighten(#0D141C,90%);
+            }              
+        }
+      }
+    }
+  }
+  .change{
+    &-btn{
+      padding:0 20px;
+      position:relative;
+    }
+  }
+  .dropdown{
+    position:absolute;
+    right:0;
+    top:100%;
+    z-index: 90;
+    background:#181f27;
+    width:120px;
+    text-align:center;
+    &>div{
+      text-align: left;
+      padding:14px 20px;
+      line-height:normal;
+      &:hover{
+        transition:.2s;
+        background:@c;
+      }
+      
+    }
+  }
+
   .content {
     height: 100%;
     display: flex;
@@ -164,7 +263,7 @@ export default {
       a {
         display: block;
       }
-      .ico-logo{color: #3CA0FF}
+      .ico-logo{color: #fff}
     }
     .nav-right-wrapper {
       display: flex;
@@ -174,6 +273,7 @@ export default {
         font-size: 12px;
         font-size: 12px;
         cursor: pointer;
+        line-height:50px;
       }
       .person-center{margin-right:80px;}
       .nav-right,
