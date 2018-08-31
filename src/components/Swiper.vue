@@ -3,7 +3,7 @@
 <div class="wraper">
   <swiper :options="swiperOption" ref="mySwiper" v-if="showSwiper">
     <swiper-slide v-for="item of list" :key="item.id">
-	    	<img class="swiper-img" :src="item.imgUrl"/>
+	      <a :href="item.url" target="_blank" class="link_"><img class="swiper-img" :src="item.img"/></a>	
 	    </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -88,5 +88,8 @@ export default {
 <style lang="less" scoped>
 .swiper-img {
   width: 100%;
+      height: 100%;
+    display: block;
 }
+.link_{display: block;cursor: pointer;}
 </style>

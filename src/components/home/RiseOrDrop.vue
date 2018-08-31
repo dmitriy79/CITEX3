@@ -43,6 +43,8 @@ export default {
     }
 }
 </script>
+
+
 <style lang="less" scoped>
 .riseOrDrop{
     display: flex;
@@ -69,9 +71,10 @@ export default {
         ul{
                 overflow: hidden;
             padding: 10px 5px 11px 15px;
+                
             li{
                 height: 50px;
-                width: 48%;
+                width: 48.5%;
                 float: left;
                 margin: 0 10px 4px 0;
                 display: flex;
@@ -99,5 +102,14 @@ background: #31373e;
             }
         }
     }
+}
+</style>
+<style>
+@media only screen and (max-width: 1366px) and (min-width: 1300px) {
+.riseOrDrop .list ul li{width:48%!important}
+
+}
+@media only screen and (max-width: 1300px) {
+.riseOrDrop .list ul li{width:47.9%!important}
 }
 </style>

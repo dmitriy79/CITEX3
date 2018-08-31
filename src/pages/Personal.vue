@@ -12,12 +12,12 @@
             <dd class="border-bottom">C2C记录</dd>
             <dt><span></span>财产中心</dt>
             <dd @click="toggleTab('full-coin')"  :class="{active:this.currentTab==='full-coin'}">我要冲币</dd>
-            <dd>我要提币</dd>
-            <dd>银行卡管理</dd>
-            <dd class="border-bottom">币账户</dd>
+            <dd @click="toggleTab('carry-coin')"  :class="{active:this.currentTab==='carry-coin'}">我要提币</dd>
+            <dd @click="toggleTab('bank-card')"  :class="{active:this.currentTab==='bank-card'}">银行卡管理</dd>
+            <dd @click="toggleTab('coin-count')"  :class="{active:this.currentTab==='coin-count'}"  class="border-bottom">币账户</dd>
             <dt><span></span>安全中心</dt>
-            <dd>安全设置</dd>
-            <dd>实名认证</dd>
+            <dd @click="toggleTab('phone-authentication')"  :class="{active:this.currentTab==='phone-authentication'}" >手机认证</dd>
+            <dd @click="toggleTab('real-authentication')"  :class="{active:this.currentTab==='real-authentication'}">实名认证</dd>
             <dd>我的消息</dd>
             <dd>谷歌验证</dd>
             <dd>推荐返佣</dd>
@@ -43,6 +43,12 @@ import Property from "../components/personal/MineProperty";
 import Entrust from "../components/personal/MineEntrust";
 import Record from "../components/personal/TransactionRecord";
 import FullCoin from "../components/personal/FullCoin";
+import CarryCoin from "../components/personal/CarryCoin";
+import BankCard from "../components/personal/BankCardManage";
+import CoinCount from "../components/personal/CoinCount";
+import PhoneAuthentication from "../components/personal/PhoneAuthentication";
+import RealAuthentication from "../components/personal/RealAuthentication";
+
 
 export default {
  name: 'app',
@@ -57,6 +63,11 @@ export default {
     Entrust,
    Record,
    FullCoin,
+   CarryCoin,
+   BankCard,
+   CoinCount,
+   PhoneAuthentication,
+   RealAuthentication,
     VHeader,
     VFooter
  },
@@ -101,7 +112,7 @@ color: #FFFFFF;
         }
     }
 }
-.content{position: relative;margin-left: 200px;background: #292f37}
+.content{position: relative;margin-left: 200px;background: #292f37;height: 920px;}
 }
 }
 

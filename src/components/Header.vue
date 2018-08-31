@@ -20,9 +20,7 @@
         <li>
           <router-link to="/" tag="div">新闻资讯</router-link>
         </li>-->
-        <li>
-          <router-link to="/personal" tag="div">个人中心</router-link>
-        </li> 
+        
         <li @click="showli">
           <router-link to="/" tag="div" >渠道商</router-link>
         </li>
@@ -38,9 +36,15 @@
       <ul class="nav-right-wrapper">
         <!-- <li class="nav-right-help">帮助中心</li>
         <li class="nav-right-download">App下载</li> -->
-        <li class="nav-right">注册</li>
-        <li class="split">或</li>
-        <li class="nav-right">登陆</li>
+        <li>
+          <router-link to="/personal" tag="div"  v-if="this.token">{{userName}}</router-link>
+        </li> 
+        <li v-if="this.token" @click="loginOut" class="login-out">
+          退出
+        </li> 
+        <li class="nav-right"><router-link to="/Register" tag="div" v-if="!this.token">注册 </router-link></li>
+        <li class="split" v-if="!this.token">或</li>
+        <li class="nav-right" v-if="!this.token"><router-link to="/Login" tag="div">登陆</router-link></li>
         <li class="change-btn" @click="selectLanguage">
           <i class="drop-icon" :class="{active:isActive}"></i>
           <div class="language" >{{currentLanguage}}</div>
@@ -64,10 +68,55 @@ export default {
       isShow: false,
       currentLanguage: "中文",
       isActive: false,
-      showLi:true
+      showLi:true,
+      token:'',
+      userName:''
     };
   },
   methods: {
+    //退出
+    loginOut(){
+        /*this.$confirm('确认退出登陆', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //确定
+          // this.$message({
+          //   type: 'success',
+          //   message: '退出成功!'
+          // });
+           var url=`/api/user/logout`
+            this.$http.get(url,
+            {
+		      headers:{"Content-Type": "application/json"}}).then(res => {
+                 var returnData= res.data.message
+                console.log(res)
+            
+                if(returnData=='成功'){
+                    //  localStorage.setItem("token",'')
+                }
+            })
+        }).catch(() => {
+          //取消
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // });          
+        });*/
+      
+           var url=`/api/user/logout`
+            this.$http.get(url,
+            {
+		      headers:{"Content-Type": "application/json"}}).then(res => {
+                 var returnData= res.data.message
+                console.log(res)
+            
+                if(returnData=='成功'){
+                    //  localStorage.setItem("token",'')
+                }
+            })
+    },
     showli(){
       this.showLi=false
     },
@@ -82,6 +131,12 @@ export default {
     changeLanguage(e) {
       this.currentLanguage = e.target.innerText;
     }
+  },
+  mounted(){
+    this.token = JSON.parse(localStorage.getItem("token"))
+    this.userName = localStorage.getItem("userName")
+    
+    console.log(this.token,this.userName,'999992202020200')
   }
 };
 </script>
@@ -119,6 +174,7 @@ export default {
         font-size: 12px;
         cursor: pointer;
       }
+      .person-center{margin-right:80px;}
       .nav-right,
       .split {
         margin-left: 0;
@@ -207,6 +263,7 @@ export default {
     }
   }
 }
+.login-out{margin-left: 20px;}
 </style>
 
 

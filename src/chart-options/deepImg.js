@@ -138,41 +138,346 @@ module.exports={
                 data: [[910, 8], [1000, 14], [1100, 29], [1200, 45], [1300, 59], [1400, 81.2]]
             }]
     },
-    bar: {
-title: {
-text: '珠海猪场' // 指定图表标题
-},
-credits: {
-enabled: false
-},
-chart: {
-backgroundColor: 'black',
-type: 'bar'
-},
-plotOptions: {
-column: {
-colorByPoint: true
-},
-line: {
-dataLabels: {
-// 开启数据标签
-enabled: true
-}
-// 关闭鼠标跟踪，对应的提示框、点击事件会失效
-// enableMouseTracking: false
-}
-},
-xAxis: {
-categories: ['今日已入场', '已交易单次', '已交易数量', '已缴费'] // 指定x轴分组
-},
-series: [{
-colorByPoint: true,
-data: [500, 235, 809, 5000],
-dataLabels: {
-enabled: true
-}
-}]
-}
+    area1:{
+        colors: ["#284e42", "#523c3e"],
+        chart: {
+            type: 'area',
+            height:43,
+            backgroundColor:'#2c323a',
+            spacingBottom:0,
+            spacingLeft:0,
+            spacingRight:0
+        },
+        title: {
+         
+           text:null
+        },
+        legend:{
+            enabled:false
+        },
+        xAxis: {
+            allowDecimals: false,
+            visible:false,
+        },
+        credits:{
+            enabled: false // 禁用版权信息
+       },
+        yAxis: {
+            visible:false,
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        plotOptions: {
+            area: {
+                // pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '美国',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                   1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                   27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                   26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                   24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                   22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                   10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }]
+    },
+    area2:{
+        colors: ["#523c3e"],
+        chart: {
+            type: 'area',
+            height:43,
+            backgroundColor:'#2c323a',
+            spacingBottom:0,
+            spacingLeft:0,
+            spacingRight:0
+        },
+        title: {
+         
+           text:null
+        },
+        legend:{
+            enabled:false
+        },
+        xAxis: {
+            allowDecimals: false,
+            visible:false,
+        },
+        credits:{
+            enabled: false // 禁用版权信息
+       },
+        yAxis: {
+            visible:false,
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        plotOptions: {
+            area: {
+                // pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '美国',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                   1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                   27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                   26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                   24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                   22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                   10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }]
+    },
+    area3:{
+        colors: ["#284e42"],
+        chart: {
+            type: 'area',
+            height:43,
+            backgroundColor:'#2c323a',
+            spacingBottom:0,
+            spacingLeft:0,
+            spacingRight:0
+        },
+        title: {
+         
+           text:null
+        },
+        legend:{
+            enabled:false
+        },
+        xAxis: {
+            allowDecimals: false,
+            visible:false,
+        },
+        credits:{
+            enabled: false // 禁用版权信息
+       },
+        yAxis: {
+            visible:false,
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        plotOptions: {
+            area: {
+                // pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '美国',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                   1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                   27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                   26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                   24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                   22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                   10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }]
+    },
+    area4:{
+        colors: ["#284e42", "#523c3e"],
+        chart: {
+            type: 'area',
+            height:43,
+            backgroundColor:'#2c323a',
+            spacingBottom:0,
+            spacingLeft:0,
+            spacingRight:0
+        },
+        title: {
+         
+           text:null
+        },
+        legend:{
+            enabled:false
+        },
+        xAxis: {
+            allowDecimals: false,
+            visible:false,
+        },
+        credits:{
+            enabled: false // 禁用版权信息
+       },
+        yAxis: {
+            visible:false,
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        plotOptions: {
+            area: {
+                // pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '美国',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                   1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                   27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                   26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                   24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                   22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                   10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }]
+    },
+    area5:{
+        colors: ["#523c3e"],
+        chart: {
+            type: 'area',
+            height:43,
+            backgroundColor:'#2c323a',
+            spacingBottom:0,
+            spacingLeft:0,
+            spacingRight:0
+        },
+        title: {
+         
+           text:null
+        },
+        legend:{
+            enabled:false
+        },
+        xAxis: {
+            allowDecimals: false,
+            visible:false,
+        },
+        credits:{
+            enabled: false // 禁用版权信息
+       },
+        yAxis: {
+            visible:false,
+            labels: {
+                formatter: function () {
+                    return this.value / 1000 + 'k';
+                }
+            }
+        },
+        tooltip: {
+            pointFormat: ''
+        },
+        plotOptions: {
+            area: {
+                // pointStart: 1940,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '美国',
+            data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                   1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                   27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                   26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                   24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                   22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                   10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+        }]
+    },
+//     bar: {
+// title: {
+// text: '珠海猪场' // 指定图表标题
+// },
+// credits: {
+// enabled: false
+// },
+// chart: {
+// backgroundColor: 'black',
+// type: 'bar'
+// },
+// plotOptions: {
+// column: {
+// colorByPoint: true
+// },
+// line: {
+// dataLabels: {
+// // 开启数据标签
+// enabled: true
+// }
+// // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+// // enableMouseTracking: false
+// }
+// },
+// xAxis: {
+// categories: ['今日已入场', '已交易单次', '已交易数量', '已缴费'] // 指定x轴分组
+// },
+// series: [{
+// colorByPoint: true,
+// data: [500, 235, 809, 5000],
+// dataLabels: {
+// enabled: true
+// }
+// }]
+// }
 }
 
 //export const option2 = {
