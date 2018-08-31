@@ -18,7 +18,7 @@ export default {
 
     this_vue.feed = this_vue.createFeed();
 
-    TradingView.onready(function(configurationData) {
+    // TradingView.onready(function(configurationData) {
       this_vue.chart = window.tvWidget = new TradingView.widget({
         fullscreen: false,
         autosize: true,
@@ -380,7 +380,7 @@ export default {
         this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#238031'});
         this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#850058'});
       });
-    });
+    // });
   },
   methods: {
        getChartData: function() {
