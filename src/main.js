@@ -39,7 +39,7 @@ axios.interceptors.request.use(
 		let token = localStorage.getItem("token");
 		token = JSON.parse(token)
 		if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
-			config.headers.USERTOKEN = `${token}`;
+			config.headers['USER-TOKEN'] = `${token}`;
 		}
 		// if (config.url.indexOf(url) === -1) {
 		// 	config.url = url + config.url;/*拼接完整请求路径*/
