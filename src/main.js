@@ -37,7 +37,7 @@ Vue.prototype.api = process.env.NODE_ENV === 'production' ? '' : '/api'
 axios.interceptors.request.use(
 	config => {
 		let token = localStorage.getItem("token");
-		token = JSON.parse(token)
+		// token = JSON.parse(token)
 		if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
 			config.headers['USER-TOKEN'] = `${token}`;
 		}

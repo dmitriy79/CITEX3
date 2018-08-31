@@ -112,8 +112,9 @@ export default {
                  var returnData= res.data.message
                 console.log(res)
             
-                if(returnData=='成功'){
-                    //  localStorage.setItem("token",'')
+                if(returnData=='用户登出'){
+                    this.token=localStorage.setItem("token",'')
+                   console.log(this.token) 
                 }
             })
     },
@@ -133,7 +134,7 @@ export default {
     }
   },
   mounted(){
-    this.token = JSON.parse(localStorage.getItem("token"))
+    this.token = localStorage.getItem("token")
     this.userName = localStorage.getItem("userName")
     
     console.log(this.token,this.userName,'999992202020200')
