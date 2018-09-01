@@ -1,5 +1,6 @@
 <template>
     <div class="coin-type-wrapper">
+           <div class="container">
         <div class="coin-block">
             <div class="item">
                 <div class="top-wrapper">
@@ -41,6 +42,7 @@
                 </div>
                <x-chart :id="id5" :option="option5"></x-chart>
             </div>
+       </div>
        </div>
     </div>
 </template>

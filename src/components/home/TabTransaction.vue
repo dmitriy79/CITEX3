@@ -1,5 +1,7 @@
 <template>
+           <div class="container">
     <div class="tab-transaction">
+ 
         <div class="tab" >
             <span v-for="(item,index) of navs" :class="{active:active==index}"  @click="tabs(index)">{{item.name}}</span>
         </div>
@@ -26,6 +28,7 @@
                 
           
             </dl>
+        </div>
         </div>
     </div>
 </template>

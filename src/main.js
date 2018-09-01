@@ -11,6 +11,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.css';
 import './assets/css/font.css'
+import './assets/css/common.less'
 import axios from 'axios'
 
 

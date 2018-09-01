@@ -1,7 +1,8 @@
 
 <template>
    <div class="riseOrDrop">
-       <div class="list list-rise">
+    <div class="container">
+       <div class="list">
            <div class="title"><div>涨幅排行榜</div></div>
            <ul>
                <li><div class="type">EOS/BTC</div><div class="rate">+30%<i class="ico-uos"></i></div></li>
@@ -16,7 +17,7 @@
                <li><div class="type">EOS/BTC</div><div class="rate">+30%<i class="ico-uos"></i></div></li>
            </ul>
        </div>
-       <div class="list list-drop">
+       <div class="list">
            <div class="title"><div>跌幅排行榜</div></div>
            <ul>
                <li><div class="type">EOS/BTC</div><div class="rate">+30%<i class="ico-downs"></i></div></li>
@@ -33,6 +34,7 @@
            </ul>
        </div>
     </div>   
+    </div>
 </template>
 <script>
 export default {
@@ -43,7 +45,6 @@ export default {
     }
 }
 </script>
-
 
 <style lang="less" scoped>
 .riseOrDrop{

@@ -1,93 +1,134 @@
 <template>
     <div class="footer">
-        <dl  >
-            <dt>关于</dt>
-            <dd>关于我们</dd>
-            <dd>加入我们</dd>
-            <dd>使用条款</dd>
-            <dd>隐私政策</dd>
-        </dl>
-         <dl>
-            <dt>帮助</dt>
-            <dd>新手指引</dd>
-            <dd>币种资料</dd>
-            <dd>常见问题</dd>
-            <dd>法律文件</dd>
-        </dl>
-         <dl >
-            <dt>资讯</dt>
-            <dd>最新动态</dd>
-            <dd>新闻资讯</dd>
-            <dd>行业动态</dd>
-            <dd>币种新闻</dd>
-       </dl>
-         <dl>
-            <dt>服务</dt>
-            <dd>帮助中心</dd>
-            <dd>新手攻略</dd>
-            <dd>API 文档</dd>
-            <dd>条款说明</dd>
-        </dl>
-        <dl>
-            <dt>联系我们</dt>
-            <dd>客服  support@ib.top</dd>
-            <dd>商务  business@ib.top</dd>
-            <dd>上币  listingcn@ib.top</dd>
-            <dd>QQ: 交流群3：300035855</dd>
-        </dl>
-        <dl class="">
-            <dt>
-                <img src="../assets/images/footer-logo.png" alt="">
-            </dt>
-        
-            <dd class="copyright">© 2017-2018 IB.TOP All rights reserved</dd>
-        </dl>
+        <div class="container">
+          <div class="footer-nav">
+            <dl v-for='(item,index) in footLink'>
+              <dt>{{links[index]}}</dt>
+                <dd v-for="item in item">{{item.title}}</dd>
+            </dl>
+            <dl class="footer-nav-block">
+                <dt>联系我们</dt>
+                <dd>客服  support@ib.top</dd>
+                <dd>商务  business@ib.top</dd>
+                <dd>上币  listingcn@ib.top</dd>
+                <dd>QQ: 交流群3：300035855</dd>
+            </dl>
+          </div>
+          <div class="footer-bar">
+              <div class="footer-bar-nav">
+                <div v-for="(item, index) in ico">
+                    <i :class="'ico-'+item.name" @mouseover="showCode" :data-index="index"></i>
+                    <div v-if="currentCode == index">
+                      <img :src="item.img" alt="">
+                    </div>
+                </div>
+              </div>
+              <div class="copyright">© 2017-2018 IBtop.com All rights reserved</div>
+          </div>
+        </div>
     </div>
 </template>
 <script>
 export default {
-  name: "VFooter"
+  name: "VFooter",
+  data(){
+    return {
+      ico:[
+        {name:'weibo',img:'../assets/images/logo.png'},
+        {name:'telegram',img:'http://sdlf.jpg'},
+        {name:'facebook',img:'http://sdlf.jpg'},
+        {name:'wechat',img:'http://sdlf.jpg'},
+        {name:'twitter',img:'http://sdlf.jpg'},
+        {name:'qq',img:'http://sdlf.jpg'},
+      ],
+
+      links:['关于','帮助','资讯','服务'],
+      footLink:[[
+       {title:'关于我们',id:1},
+        {title:'加入我们',id:2},
+        {title:'使用条款',id:3},
+        {title:'隐私政策',id:4},
+     ],
+        [
+         {title:'新手指引',id:1},
+         {title:'币种资料',id:1},
+         {title:'常见问题',id:1},
+         {title:'法律文件',id:1},
+       ],
+      [
+         {title:'最新动态',id:1},
+         {title:'新闻资讯',id:1},
+         {title:'行业动态',id:1},
+         {title:'币种新闻',id:1}
+       ],[
+         {title:'帮助中心',id:1},
+         {title:'新手攻略',id:1},
+         {title:'API 文档',id:1},
+         {title:'条款说明',id:1},
+      ]],
+      currentCode:null,
+    }
+  },
+   methods: {
+    showCode(e){
+      this.currentCode = e.target.dataset.index
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 .footer {
   background: #181F27;
-  padding: 70px 120px;
-  display: -webkit-flex;
-  font-family: "PingFangSC-Regular";
-  display: flex;
-  dl {
-    padding: 0 45px;
+  padding:80px 0 90px;
 
-    dt {
-      font-size: 14px;
-      color: #ffffff;
-      margin-bottom: 5px;
-      font-family:"PingFangSC-Regular";
+  .container{
+        display:flex;
+        align-items:center;
+  }
+  &-nav{
+    display:flex;
+    flex-grow: 2;
+    margin-right:90px;
+    dl{
+       width:20%;
     }
-    .copyright{font-size: 10px}
-    dd {
-      font-size: 12px;
-      color: #686a74;
-      letter-spacing: 0.93px;
-      line-height: 24px;
+    &-nav{
+
+    }
+    dt{
+      color:#fff;
+      font-size:16px;
+      margin-bottom:15px;
+    }
+    dd{
+      font-size:13px;
+      line-height:2.3;
+      cursor: pointer;
+      &:hover{
+        color:#fff;
+      }
+      
     }
   }
-  dl:last-of-type {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    padding: 0;
-    flex: 1;
-    justify-content: center;
-    dt {
-      padding-top: 10px;
+  &-bar{
+    font-size:12px;
+    text-align:right;
+    &-nav{
+      margin-bottom:15px;
+      div{
+        display:inline-block;
+        font-size:28px;
+        margin-left:14px;
+        transition:.3s;
+        &:hover{
+          color:#fff;
+        }
+      }
     }
   }
-  .border-right {
-    opacity: 0.31;
-    width: 1px;
-    border-right: 1px solid #686a74;
+  .copyright{
+    opacity:.5;
+    font-size:11px;
   }
 }
 </style>
