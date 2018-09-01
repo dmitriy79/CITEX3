@@ -4,6 +4,8 @@ import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
+import FindPassword from '@/pages/FindPassword'
+
 import Transaction from '@/pages/Transaction'
 import ApplyChannel from  '@/components/channel/ApplyChannel'
 import ApplyChannelText from  '@/components/channel/ApplyChannelText'
@@ -73,6 +75,12 @@ const router =  new Router({
         requireAuth: true
       }
     },{
+      
+      path: '/findPassword',
+      name: 'FindPassword',
+      component: FindPassword
+    },
+    {
       
       path: '/mineProperty',
       name: 'MineProperty',

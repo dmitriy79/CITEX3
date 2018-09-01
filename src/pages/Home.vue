@@ -10,6 +10,7 @@
           <div class="btn-wrap"><span class="btn">申请渠道商</span></div>
       </div>
     </div> -->
+<<<<<<< HEAD
     <div class="container title">
       <span>公告：<i>关于7月26日 BTC/USDT 交易对数据异常说明</i></span>
       <span>更多<i></i></span>
@@ -36,6 +37,56 @@
         <div class="item">
           <div class="img-wrap">
             <img src="../assets/images/bottom2.png" alt="">
+=======
+    <div class="wrapper">
+          <div class="content">
+       <div class="title">
+         <span>公告：<i>关于7月26日 BTC/USDT 交易对数据异常说明</i></span>
+         <span>更多<i></i></span>
+       </div>
+       <div><coin-type></coin-type></div>
+       <div>
+         <rise-drop></rise-drop>
+       </div>
+       
+       <tab-transaction></tab-transaction>
+       <div class="bottom">
+          <div class="bottom-title">最值得信赖的数字货币平台</div>
+          <div class="info-wrap">
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom.png" alt="">
+                  </div>
+                  <div class="item-title">全球化数字货币交易</div>
+                  <div class="info">
+                     <p>使用用户遍布全球</p>
+                     <p>支持多语言切换，多国家、地区使用</p>
+                     <p>多个国家、地区组建团队运营</p>
+                  </div>
+              </div>
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom2.png" alt="">
+                  </div>
+                  <div class="item-title">社群化平台管理用户</div>
+                  <div class="info">
+                     <p>社群留言区自由评论各大项目</p>
+                     <p>加强用户与渠道商之间的联系</p>
+                     <p>渠道商申请提供真实渠道，增加社群流量</p>
+                  </div>
+              </div>
+              <div class="item">
+                  <div class="img-wrap">
+                    <img src="../assets/images/bottom3.png" alt="">
+                  </div>
+                  <div class="item-title">多样化公平申请上币</div>
+                  <div class="info">
+                     <p>多币种多交易对上币，满足用户的多样化需求</p>
+                     <p>使用上币指数进行公平上币</p>
+                     <p>人人都是渠道商，人人可上币</p>
+                  </div>
+              </div>
+>>>>>>> ecacb2db3f1a11a8de1a2de27434ca684bfb7ee5
           </div>
           <div class="item-title">社群化平台管理用户</div>
           <div class="info">
@@ -57,8 +108,15 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
   </div>
   <v-footer></v-footer>
+=======
+    </div>
+
+     
+    <v-footer></v-footer>     
+>>>>>>> ecacb2db3f1a11a8de1a2de27434ca684bfb7ee5
   </div>
 </template>
 <script>
@@ -117,6 +175,7 @@ export default {
 
 </script>
 <style lang="less" scoped>
+<<<<<<< HEAD
 html {
   background: #3B4249;
 }
@@ -126,6 +185,14 @@ html {
     background: #3b4249;
     padding: 0 10.3%;
     .title {
+=======
+.wrapper{background: #3b4249;}
+.home{
+  .content{
+    
+    width: 1200px;margin:0 auto;
+    .title{
+>>>>>>> ecacb2db3f1a11a8de1a2de27434ca684bfb7ee5
       display: flex;
       height: 82px;
       align-items: center;

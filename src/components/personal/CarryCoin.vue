@@ -74,16 +74,16 @@ export default {
         
     }
     .form-wrapper{padding: 0 20px;
-      .bottom-btn{
-              width: 132px;margin-top: 40px;
-    height: 42px;
-    line-height: 42px;
-    background: #2286FF;
-    text-align: center;
-    border-radius: 2px;
-    font-size: 16px;
-    color: #FFFFFF;
-      }
+    //   .bottom-btn{
+    //           width: 132px;margin-top: 40px;
+    // height: 42px;
+    // line-height: 42px;
+    // background: #2286FF;
+    // text-align: center;
+    // border-radius: 2px;
+    // font-size: 16px;
+    // color: #FFFFFF;
+    //   }
     }
 }
 </style>

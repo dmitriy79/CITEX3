@@ -17,11 +17,13 @@
             <dd @click="toggleTab('coin-count')"  :class="{active:this.currentTab==='coin-count'}"  class="border-bottom">币账户</dd>
             <dt><span></span>安全中心</dt>
             <dd @click="toggleTab('phone-authentication')"  :class="{active:this.currentTab==='phone-authentication'}" >手机认证</dd>
+            <dd @click="toggleTab('email-authenticator')"  :class="{active:this.currentTab==='email-authenticator'}">邮箱认证</dd>
+
             <dd @click="toggleTab('real-authentication')"  :class="{active:this.currentTab==='real-authentication'}">实名认证</dd>
-            <dd>我的消息</dd>
-            <dd>谷歌验证</dd>
-            <dd>推荐返佣</dd>
-            <dd>登录密码</dd>
+            <dd @click="toggleTab('mine-info')"  :class="{active:this.currentTab==='mine-info'}">我的消息</dd>
+            <dd @click="toggleTab('google-authenticator')"  :class="{active:this.currentTab==='google-authenticator'}">谷歌验证</dd>
+            <dd @click="toggleTab('recommed')"  :class="{active:this.currentTab==='recommed'}">推荐返佣</dd>
+            <dd  @click="toggleTab('modify-password')"  :class="{active:this.currentTab==='modify-password'}">登录密码</dd>
         </dl>
     </div>
     <div class="content">
@@ -48,6 +50,11 @@ import BankCard from "../components/personal/BankCardManage";
 import CoinCount from "../components/personal/CoinCount";
 import PhoneAuthentication from "../components/personal/PhoneAuthentication";
 import RealAuthentication from "../components/personal/RealAuthentication";
+import GoogleAuthenticator from "../components/personal/GoogleAuthenticator";
+import Recommed from "../components/personal/Recommed";
+import ModifyPassword from "../components/personal/ModifyPassword";
+import MineInfo from "../components/personal/MineInfo";
+import EmailAuthenticator from "../components/personal/EmailAuthenticator";
 
 
 export default {
@@ -68,6 +75,11 @@ export default {
    CoinCount,
    PhoneAuthentication,
    RealAuthentication,
+   GoogleAuthenticator,
+   EmailAuthenticator,
+   ModifyPassword,
+   Recommed,
+   MineInfo,
     VHeader,
     VFooter
  },
@@ -84,10 +96,12 @@ export default {
 }
 </script>
 
+
 <style lang="less" scoped>
 .contanier{background: #3b4249;
-.personal-wrapper{margin: 90px 5% 240px;overflow: hidden;
-.tabs{border-radius: 4px;color: #fff;
+.personal-wrapper{overflow: hidden;    width: 1200px;
+    margin: 47px auto;
+.tabs{border-radius: 4px;color: #fff;    height: 920px;
     width: 190px;background:#292f37;font-family:"PingFangSC-Regular" ;
 font-size: 16px;float: left;text-align:center;
     dl{    padding-bottom: 200px;
@@ -119,3 +133,16 @@ color: #FFFFFF;
 
 </style>
 
+<style>
+.bottom-btn{
+        width: 132px;
+    margin-top: 40px;
+    height: 42px;
+    line-height: 42px;
+    background: #2286FF;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 16px;
+    color: #FFFFFF;cursor: pointer;display: inline-block;
+}
+</style>
