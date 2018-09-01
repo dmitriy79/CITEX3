@@ -89,9 +89,9 @@
                 </dd>
                
             </dl>
-            <div class="noData" >
+          <!--  <div class="noData" >
                 <span>暂无记录</span>
-            </div>
+            </div>-->
         </div>
     </div>
 </template>

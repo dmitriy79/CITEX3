@@ -10,7 +10,8 @@
           <div class="btn-wrap"><span class="btn">申请渠道商</span></div>
       </div>
     </div> -->
-    <div class="content">
+    <div class="wrapper">
+          <div class="content">
        <div class="title">
          <span>公告：<i>关于7月26日 BTC/USDT 交易对数据异常说明</i></span>
          <span>更多<i></i></span>
@@ -60,6 +61,8 @@
           </div>
        </div>
     </div>
+    </div>
+
      
     <v-footer></v-footer>     
   </div>
@@ -122,11 +125,11 @@ export default {
 
 
 <style lang="less" scoped>
-
+.wrapper{background: #3b4249;}
 .home{
   .content{
-    background: #3b4249;
-    padding: 0 10.3%;
+    
+    width: 1200px;margin:0 auto;
     .title{
       display: flex;
       height: 82px;

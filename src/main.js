@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import {Table,TableColumn,Pagination,Form,FormItem,Select,Option,Input,Message,MessageBox,
+import {Table,TableColumn,Pagination,Form,FormItem,Select,Option,Input,Message,MessageBox,Button
 } from 'element-ui'
 
 import App from './App'
@@ -25,6 +25,7 @@ Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Input)
+Vue.use(Button)
 // Vue.use(MessageBox)
 
 Vue.prototype.$message = Message

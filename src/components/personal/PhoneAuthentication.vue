@@ -64,17 +64,17 @@ canClick: true,
 </script>
 
 <style lang="less" scoped>
-.bottom-btn{
-        width: 132px;
-    margin-top: 40px;
-    height: 42px;
-    line-height: 42px;
-    background: #2286FF;
-    text-align: center;
-    border-radius: 2px;
-    font-size: 16px;
-    color: #FFFFFF;cursor: pointer;
-}
+// .bottom-btn{
+//         width: 132px;
+//     margin-top: 40px;
+//     height: 42px;
+//     line-height: 42px;
+//     background: #2286FF;
+//     text-align: center;
+//     border-radius: 2px;
+//     font-size: 16px;
+//     color: #FFFFFF;cursor: pointer;
+// }
  .title{
         height: 40px;
         background: #1b222a;
@@ -105,7 +105,7 @@ canClick: true,
         .el-input{
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            width:36.2%!important;margin-left:-5px;
+            width:37.5%!important;margin-left:-5px;
         }
         span{
 

@@ -32,6 +32,10 @@ table{width:100%;border-collapse:collapse;border-spacing:1;border-spacing:0; }
 
 
 table td{word-break: break-all; word-wrap:break-word;}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #1c222a inset !important;color:#fff!important
+  }
+  
 *{
     box-sizing: border-box;
 }
