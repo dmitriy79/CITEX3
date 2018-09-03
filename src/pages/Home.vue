@@ -122,7 +122,7 @@ export default {
     initIndex() {
       this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20 }), this.$api.listByType({ type: 1 })])
         .then(res => {
-          console.log(res)
+          console.log(res,'wwwww')
           this.notice = res[0].data.datas.list
           this.swiperList = res[1].data.datas
           this.rodAd()

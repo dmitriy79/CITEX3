@@ -2,9 +2,12 @@
     <div class="buyOrSell-wrapper">
         <div class="title">
                    <div class="wrap-img">
-                       <img src="../../assets/images/icon-line.png" alt="" @click="showAll">
-                       <img src="../../assets/images/icon-line2.png" alt="" @click="showBuy">
-                       <img src="../../assets/images/icon-line1.png" alt="" @click="showSell">
+                       <!-- <img src="../../assets/images/icon-line.png" alt="" > -->
+                       <span class="ico-col" @click="showAll"></span>
+                       <span class="ico-colsp" @click="showBuy"></span>
+                       <span class="ico-cols" @click="showSell"></span>
+                       <!-- <img src="../../assets/images/icon-line2.png" alt="" @click="showBuy">
+                       <img src="../../assets/images/icon-line1.png" alt="" @click="showSell"> -->
                    </div>
                    <div class="concat-deep-wrap">
                        <div class="concat-deep" @click="showDeep">合并深度<span>{{currentDeep}}</span><i  :class="{active:isActive}"></i></div>
@@ -179,10 +182,16 @@ export default {
       .wrap-img {
         flex: 1;
         line-height: 33px;
-        img {
-          margin-right: 7px;
-          cursor: pointer;
+        .ico-colsp{
+        color: #1fc56d;
         }
+        .ico-cols{
+        color: #ef6e59;
+        }
+        span{    font-size: 18px;margin-right: 7px;
+          cursor: pointer;
+    font-weight: bold;}
+       
       }
       span {
         cursor: pointer;

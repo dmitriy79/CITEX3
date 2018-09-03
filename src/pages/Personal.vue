@@ -4,25 +4,25 @@
     <div class="personal-wrapper">
     <div class="tabs">
        <dl>
-            <dt><span></span>账户中心</dt>
+            <dt><span class="iconfont">&#xe624;</span>账户中心</dt>
             <dd @click="toggleTab('property')" :class="{active:this.currentTab==='property'}" class="border-bottom">我的资产</dd>
-            <dt><span></span>交易记录</dt>
+            <dt><span class="iconfont">&#xe626;</span>交易记录</dt>
             <dd @click="toggleTab('entrust')"  :class="{active:this.currentTab==='entrust'}">我的委托</dd>
             <dd @click="toggleTab('record')"  :class="{active:this.currentTab==='record'}">交易记录</dd>
-            <dd class="border-bottom">C2C记录</dd>
-            <dt><span></span>财产中心</dt>
-            <dd @click="toggleTab('full-coin')"  :class="{active:this.currentTab==='full-coin'}">我要冲币</dd>
+            <!-- <dd class="border-bottom">C2C记录</dd> -->
+            <dt><span class="iconfont">&#xe602;</span>财产中心</dt>
+            <dd @click="toggleTab('full-coin')"  :class="{active:this.currentTab==='full-coin'}">我要充币</dd>
             <dd @click="toggleTab('carry-coin')"  :class="{active:this.currentTab==='carry-coin'}">我要提币</dd>
             <dd @click="toggleTab('bank-card')"  :class="{active:this.currentTab==='bank-card'}">银行卡管理</dd>
             <dd @click="toggleTab('coin-count')"  :class="{active:this.currentTab==='coin-count'}"  class="border-bottom">币账户</dd>
-            <dt><span></span>安全中心</dt>
+            <dt><span class="iconfont">&#xe623;</span>安全中心</dt>
             <dd @click="toggleTab('phone-authentication')"  :class="{active:this.currentTab==='phone-authentication'}" >手机认证</dd>
             <dd @click="toggleTab('email-authenticator')"  :class="{active:this.currentTab==='email-authenticator'}">邮箱认证</dd>
 
             <dd @click="toggleTab('real-authentication')"  :class="{active:this.currentTab==='real-authentication'}">实名认证</dd>
             <dd @click="toggleTab('mine-info')"  :class="{active:this.currentTab==='mine-info'}">我的消息</dd>
             <dd @click="toggleTab('google-authenticator')"  :class="{active:this.currentTab==='google-authenticator'}">谷歌验证</dd>
-            <dd @click="toggleTab('recommed')"  :class="{active:this.currentTab==='recommed'}">推荐返佣</dd>
+            <!-- <dd @click="toggleTab('recommed')"  :class="{active:this.currentTab==='recommed'}">推荐返佣</dd> -->
             <dd  @click="toggleTab('modify-password')"  :class="{active:this.currentTab==='modify-password'}">登录密码</dd>
         </dl>
     </div>
@@ -98,6 +98,9 @@ export default {
 
 
 <style lang="less" scoped>
+.iconfont{
+    margin:0 8px 0 -29px;
+}
 .contanier{background: #3b4249;
 .personal-wrapper{overflow: hidden;    width: 1200px;
     margin: 47px auto;

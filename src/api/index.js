@@ -6,13 +6,16 @@ let apiList = {
     '/banner/listByType', //公告列表
     '/notice/list', //公告列表
     '/trade/getTradeInfoByZone',
+    'user/login'
   ],
   //管理 :10320
   "coin": [
     '/coin/info/all', //GET 查询全部币种列表
   ],
   //支付管理 :13030
-  "payment": [],
+  "payment": [
+    '/userProperty/listByUserId'
+  ],
 
   //交易管理 :10340
   "trade": [

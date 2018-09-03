@@ -38,7 +38,7 @@
               <div>
               <i :class="{active:this.agree}" @click="handleAgree" ref="isAgree"></i>我已仔细阅读并同意<span>《注册协议》</span>
               </div>
-               <router-link to="/login" tag="div">登陆</router-link>
+               <router-link to="/login" tag="div" class="login-btn">登陆</router-link>
             </div>          
 
         </div>
@@ -301,7 +301,7 @@ export default {
 .register-yzm {
   margin-bottom: 20px
 }
-
+.login-btn{cursor: pointer;}
 
 .register {
   background: #292f37;

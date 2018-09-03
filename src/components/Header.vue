@@ -18,8 +18,16 @@
         <!-- <li class="nav-right-help">帮助中心</li>
         <li class="nav-right-download">App下载</li> -->
         <li>
-          <router-link to="/personal" tag="div"  v-if="this.token">{{userName}}</router-link>
+          <router-link to="/personal" tag="div"  v-if="this.token" >个人中心</router-link>
         </li> 
+        <li><router-link to="/personal" tag="div"  >帮助中心</router-link></li>
+        <li><router-link to="/personal" tag="div"  >公告中心</router-link></li>
+        <li v-if="this.token">
+         {{userName}}
+        </li> 
+        <!-- <li>
+          <router-link to="/personal" tag="div"  v-if="this.token">{{userName}}</router-link>
+        </li>  -->
         <li v-if="this.token" @click="loginOut" class="login-out">
           退出
         </li> 
@@ -127,6 +135,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.header-nav-right{
+  li{margin-right: 20px}
+}
   @h: 50px;
   @c: #0D141C;
   .header {

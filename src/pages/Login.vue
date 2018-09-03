@@ -15,7 +15,8 @@
           <div id="register_yanzhengma" class="register-yzm"></div>
 
       <div class="input-bar">
-            <a class="find-password">忘记密码？</a>
+            <!-- <a class="find-password">忘记密码？</a> -->
+             <router-link to="/FindPassword" tag="a" class="find-password">忘记密码？</router-link>
             <router-link to="/register" tag="a">注册</router-link>
           </div>          
           <div class="button" @click="login">登录</div>
@@ -157,8 +158,28 @@ export default {
         });
         return
       }
-      var url = `/api/user/login`
-      this.$http.get(url, {
+      // var url = `/api/user/login`
+       this.$api.login({userName: this.userName,
+          passWord: this.passWord,
+          NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
+            console.log(res)
+             var returnData = res.data.message
+        let token = JSON.stringify(res.data.datas)
+        localStorage.setItem("token", token)
+        localStorage.setItem("userName", this.userName)
+        if (returnData !== '成功') {
+          this.$message({
+            message: returnData,
+            type: 'warning'
+          });
+          this.loadYanzhengma()
+        }
+
+        if (returnData == '成功') {
+          this.$router.push({ path: "/" });
+        }
+          })
+     /* this.$http.get(url, {
         params: {
           userName: this.userName,
           passWord: this.passWord,
@@ -185,7 +206,7 @@ export default {
         }
 
 
-      })
+      })*/
     }
   },
   components: {

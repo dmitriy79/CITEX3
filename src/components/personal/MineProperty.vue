@@ -6,7 +6,7 @@
             <div class="info-left">
                 <span>总资产折合：0.00048100 BTC<i>≈<b>21.23</b>CNY</i></span>
                  <span class="check-item"><i class="check"></i>隐藏小额资产</span>
-                 <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span><span class="ico-hours"></span> </div> 
+                 <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span><span class="iconfont">&#xe627;</span> </div> 
             </div>
             <div class="info-right"><span @click="showRecord" >提币&充币记录</span></div>
         </div>
@@ -173,7 +173,17 @@ export default {
           }]
     };
   },
+  mounted(){
+    this.myproperty();
+  },
   methods:{
+    //我的资产列表
+      myproperty(){
+        
+         this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
+           console.log(res,'eeee8888')
+         })
+      },
       carryCoin(){
           this.isShow=!this.isShow
            this.isShow1=false
@@ -286,11 +296,10 @@ export default {
         margin-right: 42px;
       }
       .input-text {
-        width: 140px;
         height: 30px;
         display: inline-block;
-        border: 1px solid #3b4148;
-        input{color: #fff;text-indent: 25px}
+        // border: 1px solid #3b4148;
+        input{color: #fff;text-indent: 25px;    height: 30px;}
       }
       .search-item {
         position: relative;
@@ -302,10 +311,11 @@ export default {
           color: #e5e7e8;
           top: 8px;
         }
-        .ico-hours {
+        .iconfont {
           position: absolute;
           right: 9px;
           top: 6px;
+          cursor: pointer;
         }
       }
       .check-item {

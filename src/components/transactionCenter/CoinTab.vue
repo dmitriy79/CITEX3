@@ -20,7 +20,9 @@
                 <span class="price">{{item.price}}</span>
                 <span class="rate" >{{item.rate}}</span>
                 <span class="num">{{item.num}}</span>
-                <span class="icon-save" @click="checkCoin" :class="{select:isSelect}">
+                <span class="ico-star" @click="checkCoin" v-if="!isSelect"></span>
+                <span class="ico-star-fill" @click="checkCoin" v-if="isSelect">
+             
 
                 </span>
             </div>
@@ -87,6 +89,7 @@ export default {
 
 <style lang="less" scoped>
 .coin-tab {
+  .ico-star-fill{font-size:17px;}
   background: #161c24;
   margin: 0 9px 0 12px;
   .search-wrap {   position: relative;
@@ -107,7 +110,7 @@ export default {
     .ico-search{
       position: absolute;
       left: 23px;
-      top: 27px;
+      top: 30px;
           font-size: 14px;
     }
     .change{margin-left: 5px}
@@ -237,11 +240,8 @@ export default {
         display: inline-block;
         font-size: 11px;
       }
-      .icon-save {
-        height: 13.6px;
-        width: 15.5px;
-        background: url("~@/assets/images/star-default.png") no-repeat center
-          center;
+      .ico-star,.ico-star-fill {
+       font-size: 16px;
         margin-left: 3%;
         cursor: pointer;
       }
@@ -266,6 +266,7 @@ export default {
       color: #999EA4;;
       padding: 6.5px 5%;
       cursor: pointer;
+      height:30px;
       &.active {
         background: #292f37;
         // color:#

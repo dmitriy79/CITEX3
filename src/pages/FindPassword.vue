@@ -1,7 +1,8 @@
 <template>
     <div class="login-wrapper">
         <v-header></v-header>
-        <div class="content" ref="content">
+        <div class="findpassword">
+            <div class="container" ref="content">
             <div class="left">
                 <div class="title">找回密码</div>
                 <div class="input-item">
@@ -18,13 +19,15 @@
                        <input type="password" placeholder="确认密码" v-model="passWord" >
                    </div>
                 </div>
-                <div class="reset-btn" >重置</div>
+                <div class="button" >重置</div>
                
             </div>
             <div class="right">
                 <img src="../assets/images/login-bg.png" alt="">
             </div>
         </div>
+        </div>
+        
         <div class="footer">
              <v-footer></v-footer>
         </div>
@@ -97,7 +100,7 @@ export default {
   
       changeFixed(clientHeight){                        //动态修改样式
         console.log(clientHeight,'w9999999');
-        this.$refs.content.style.height = (clientHeight-311)+'px';
+        this.$refs.content.style.height = (clientHeight-480)+'px';
 
       },
 
@@ -112,25 +115,34 @@ export default {
 .register-yzm{
 margin-bottom: 20px
 }
+.findpassword{
+      padding: 60px 0;
+    background-color: #292f37 !important;display:flex;
+    .button{width:100%}
+  }  
 .input-btn{
     background: #33383f;
-    position: absolute;
-    right: 0;
     padding: 0 15px;
     cursor: pointer;
     border: none;
     outline: none;
-    height: 48px;
+    width: 120px;
     color: #fff;
-    width: 114px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
-.content{
-    background: #292f37;
-    padding: 0 20% 0 15%;
+.container{ 
+   
     display: flex;
+
     align-items: center;
-//    background:#292f37 url("~@/assets/images/login-bg.png") no-repeat 74% center;
-    .left{margin-right: 10.4%;
+    padding: 40px 0;
+
+    justify-content: space-between;
+    
+    .left{       margin-right: 10.4%;
         .title{
             display: flex;position: relative;cursor: pointer;
             opacity: 0.8;
@@ -143,9 +155,9 @@ margin-bottom: 20px
     bottom: 9px;}
         }
         .input-item{
-            .input-wrapper{width: 510px;height: 48px;background: rgba(25,31,39,0.80);    position: relative;
-box-shadow: inset 0 1px 3px 0 rgba(34,134,255,0.10);line-height: 48px;padding-left: 8px;
-border-radius: 2px;margin-bottom: 19px;
+            .input-wrapper{width: 500px;position: relative;
+
+border-radius: 2px;    margin: 20px 0;
 
     input{
         font-size: 14px;
