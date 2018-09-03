@@ -12,7 +12,7 @@
           <div class="input-wrapper">
             <input type="password" placeholder="请输入密码" v-model="passWord">
           </div>
-          <!-- <div id="register_yanzhengma" class="register-yzm"></div> -->
+          <div id="register_yanzhengma" class="register-yzm"></div>
 
       <div class="input-bar">
             <a class="find-password">忘记密码？</a>
@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    // this.loadYanzhengma()
+     this.loadYanzhengma()
     // 获取浏览器可视区域高度
     this.clientHeight = `${document.documentElement.clientHeight}` //document.body.clientWidth;
     //console.log(self.clientHeight);
@@ -93,29 +93,29 @@ export default {
           
         },*/
     //登陆滑动验证码
-    // loadYanzhengma() {
-    //   initNECaptcha({
-    //     captchaId: '1ea48dc26ca240218216696392578acf',
-    //     element: '#register_yanzhengma',
-    //     mode: 'float',
-    //     width: 400,
-    //     onVerify: function(err, ret) {
-    //       if (!err) {
-    //         console.log(ret)
-    //         localStorage.setItem('registerYanzhengma', ret.validate)
-    //         // ret['validate'] 获取二次校验数据
-    //       }
-    //     }
-    //   }, function onload(instance) {
-    //     localStorage.setItem('registerYanzhengma', '')
-    //     // 初始化成功后，用户输入对应用户名和密码，以及完成验证后，直接点击登录按钮即可
-    //   }, function onerror(err) {
+    loadYanzhengma() {
+      initNECaptcha({
+        captchaId: '1ea48dc26ca240218216696392578acf',
+        element: '#register_yanzhengma',
+        mode: 'float',
+        width: 400,
+        onVerify: function(err, ret) {
+          if (!err) {
+            console.log(ret)
+            localStorage.setItem('registerYanzhengma', ret.validate)
+            // ret['validate'] 获取二次校验数据
+          }
+        }
+      }, function onload(instance) {
+        localStorage.setItem('registerYanzhengma', '')
+        // 初始化成功后，用户输入对应用户名和密码，以及完成验证后，直接点击登录按钮即可
+      }, function onerror(err) {
 
-    //     localStorage.setItem('registerYanzhengma', '')
-    //     // 验证码初始化失败处理逻辑，例如：提示用户点击按钮重新初始化
-    //   })
+        localStorage.setItem('registerYanzhengma', '')
+        // 验证码初始化失败处理逻辑，例如：提示用户点击按钮重新初始化
+      })
 
-    // },
+    },
     // changeFixed(clientHeight){                        //动态修改样式
     //   console.log(clientHeight,'w9999999');
     //   this.$refs.content.style.height = (clientHeight-311)+'px';
