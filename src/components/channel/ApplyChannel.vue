@@ -2,7 +2,7 @@
     <div>
         <v-header></v-header>
         <div class="apply-channel">
-        <div class="wrapper">
+        <div class="wrapper container">
             <div class="title">申请成为渠道商</div>
             <div class="top-info">
                 <p>IB.TOP平台渠道商申请条件、渠道商协议、渠道商权益：</p>
@@ -53,8 +53,6 @@ export default {
 .apply-channel{background:#3b4249;padding:60px 0 87px;
     .wrapper{
         background: #292F37;
-        width: 86%;
-        margin: 0 7% 0;
         padding: 50px;
         .title{
             font-size: 28px;

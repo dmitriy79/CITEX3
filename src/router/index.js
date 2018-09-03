@@ -15,7 +15,6 @@ import MineProperty from '@/components/personal/MineProperty'
 import CarryfullCoin from '@/components/personal/CarryfullCoin'
 
 Vue.use(Router)
-
 const router =  new Router({
   linkActiveClass: "active",
   linkExactActiveClass:"link",

@@ -17,7 +17,7 @@
           <div class="footer-bar">
               <div class="footer-bar-nav">
                 <div v-for="(item, index) in ico">
-                    <i :class="'ico-'+item.name" @mouseover="showCode" :data-index="index"></i>
+                    <i :class="'ico-'+item.name" :data-index="index"></i>  <!-- @mouseover="showCode" @mouseout="hideCode"--> 
                     <div v-if="currentCode == index">
                       <img :src="item.img" alt="">
                     </div>
@@ -88,22 +88,20 @@ export default {
   &-nav{
     display:flex;
     flex-grow: 2;
-    margin-right:90px;
     dl{
-       width:20%;
+       margin-right:100px;
     }
-    &-nav{
 
-    }
     dt{
       color:#fff;
       font-size:16px;
       margin-bottom:15px;
     }
     dd{
-      font-size:13px;
+      font-size:12px;
       line-height:2.3;
       cursor: pointer;
+      transition:.4s;
       &:hover{
         color:#fff;
       }
@@ -115,11 +113,12 @@ export default {
     text-align:right;
     &-nav{
       margin-bottom:15px;
-      div{
+      &>div{
         display:inline-block;
         font-size:28px;
         margin-left:14px;
         transition:.3s;
+        cursor: pointer;
         &:hover{
           color:#fff;
         }

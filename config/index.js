@@ -1,32 +1,33 @@
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
-
 const path = require('path')
 const APIHOST = "http://47.93.194.146"
+const apiPort = {
+  13020:"coin",//管理
+  13030:"payment", //支付管理
+  13040:"trade",//交易管理
+  13010:"user", //用户管理
+}
+let proxys = {}
+for (let i in apiPort) {
+  //console.log(apiPort[i])
+  let reqName = apiPort[i].toUpperCase()
+  proxys[`/${reqName}`] = {
+    target: `${APIHOST}:${i}`,
+    changeOrigin: true,
+    pathRewrite: {
+      [`^/${reqName}`]: ""
+    }
+  }
+}
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/api': {
-        target: `${APIHOST}:13010`, //设置你调用的接口域名和端口号 别忘了加
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
-      },
-      '/apis': {
-        target: `${APIHOST}:13040`, //设置你调用的接口域名和端口号 别忘了加
-        changeOrigin: true,
-        pathRewrite: {
-          '^/apis': '/'
-        }
-      },
-    },
+    proxyTable:proxys,
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -34,8 +35,6 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-
-
     /**
      * Source Maps
      */

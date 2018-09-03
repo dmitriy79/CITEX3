@@ -134,6 +134,15 @@ export default {
       .buy-num,
       .total-price {
         background: #3b4249;
+        display:flex;
+        align-items: center;
+        input{
+          padding:4px 0;
+          font-size:12px;
+          &:focus{
+            border-color:transparent;
+          }
+        }
       }
       .buy-rate {
         display: flex;
@@ -144,7 +153,7 @@ export default {
         span {
           width: 24%;
           margin: 0 2%;
-          border: 1px solid #999ea4;
+          border: 1px dashed #999ea4;
           font-size: 12px;
           color: #999ea4;
           cursor: pointer;

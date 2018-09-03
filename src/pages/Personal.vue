@@ -116,7 +116,7 @@ color: #FFFFFF;
                  border: solid transparent;
                 content: ' ';
                 height: 0;
-                left: 100%;    //根据三角形的位置，可以随意更改。
+                left: 100%;    
                 position: absolute;
                 width: 0;
                  border-width: 10px;

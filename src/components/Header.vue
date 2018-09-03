@@ -127,18 +127,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
-  }
-
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-  }
-
-
-
   @h: 50px;
   @c: #0D141C;
   .header {
