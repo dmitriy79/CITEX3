@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
+import Notice from '@/pages/Notice'
 
 import Transaction from '@/pages/Transaction'
 import ApplyChannel from  '@/components/channel/ApplyChannel'
@@ -78,6 +79,12 @@ const router =  new Router({
       path: '/findPassword',
       name: 'FindPassword',
       component: FindPassword
+    },
+    {
+      
+      path: '/notice',
+      name: 'Notice',
+      component: Notice
     },
     {
       

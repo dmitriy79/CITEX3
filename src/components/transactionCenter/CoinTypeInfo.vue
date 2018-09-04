@@ -3,13 +3,13 @@
         <div class="title">币种资料</div>
         <div class="info-wrapper">
             <div class="left">
-                <div class="left-title">IOST</div>
+                <div class="left-title">{{coinName}}</div>
                 <ul class="list">
                     <li>
-                        发行时间<span>2018年2月26日</span>
+                        发行时间<span>{{createTime}}</span>
                     </li>
                     <li>
-                        发行总量<span>1,000,000,000</span>
+                        发行总量<span>{{circulation}}</span>
                     </li>
                     <li>
                         流通总量<span>53.75%</span>
@@ -18,10 +18,10 @@
                         众筹价格<span>约0.2USD</span>
                     </li>
                     <li>
-                        白皮书<span>https://ont.io/wp</span>
+                        白皮书<span>{{wihtePaperUrl}}</span>
                     </li>
                      <li>
-                        官网<span>https://ont.io/</span>
+                        官网<span>{{coinPortal}}</span>
                     </li>
                      <li>
                         区块查询<span>https://explorer.ont.io/</span>
@@ -41,8 +41,29 @@
 export default {
     data(){
         return{
-            name:'coinTypeInfo'
+            name:'coinTypeInfo',
+            coinName:'',
+            createTime:'',
+            circulation:'',//发行总量
+            wihtePaperUrl:'',//白皮书
+            coinPortal:'',//币种官网
         }
+    },
+    mounted () {
+        this.coinInfo()
+    },
+    methods: {
+        //币种资料
+        coinInfo(){
+            this.$http("/COIN/coin/info/8").then(res=>{
+             var coinInfo=res.data.datas
+             this.coinName=coinInfo.name
+             this.createTime=coinInfo.createTime
+             this.circulation=coinInfo.circulation
+             this.wihtePaperUrl=coinInfo.wihtePaperUrl
+             this.coinPortal=coinInfo.coinPortal
+            })
+        },
     }
 }
 </script>

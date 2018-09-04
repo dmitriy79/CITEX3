@@ -21,7 +21,7 @@
           <router-link to="/personal" tag="div"  v-if="this.token" >个人中心</router-link>
         </li> 
         <li><router-link to="/personal" tag="div"  >帮助中心</router-link></li>
-        <li><router-link to="/personal" tag="div"  >公告中心</router-link></li>
+        <li><router-link to="/notice" tag="div"  >公告中心</router-link></li>
         <li v-if="this.token">
          {{userName}}
         </li> 

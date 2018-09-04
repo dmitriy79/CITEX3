@@ -1,13 +1,13 @@
 <template>
     <div class="record-wrapper">
         <div class="tabs">
-            <span class="active" >当前委托</span>
+            <span class="active" >交易记录</span>
         </div>
         <div class="content">
             <div class="items" v-if="this.currentTab==='current'">
                 <div class="condition">
                     <div class="left">
-                        方向：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
+                        类型：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
                     </div>
                     <div class="right">交易对：<input type="text">&nbsp;/&nbsp;
                         <div>

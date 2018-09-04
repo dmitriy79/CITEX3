@@ -7,7 +7,7 @@
       <div class="container notice">
         <div class="notice-title">公告：</div>
         <transition name="fade">
-          <a>
+          <a @click="noticeDetail">
               {{notice[noticeIndex].title}}
             </a>
         </transition>
@@ -93,21 +93,25 @@ export default {
     };
   },
   mounted() {
-    this.getbanner()
+    // this.getbanner()
     this.initIndex()
 
   },
   methods: {
-    getbanner() {
-      var url = `/api/banner/listByType`
-      this.$http.get(url, {
-        params: {
-          type: 1,
-        }
-      }, {
-        headers: { "Content-Type": "application/json" }
-      })
+    //公告详情
+    noticeDetail(){
+      
     },
+    // getbanner() {
+    //   var url = `/api/banner/listByType`
+    //   this.$http.get(url, {
+    //     params: {
+    //       type: 1,
+    //     }
+    //   }, {
+    //     headers: { "Content-Type": "application/json" }
+    //   })
+    // },
     rodAd() {
       var currindex = 0
       let rod = setInterval(() => {
@@ -120,10 +124,11 @@ export default {
     },
 
     initIndex() {
-      this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20 }), this.$api.listByType({ type: 1 })])
+      this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20 ,n_language:'zh_CN'	}), this.$api.listByType({ type: 1 })])
         .then(res => {
-          console.log(res,'wwwww')
+          
           this.notice = res[0].data.datas.list
+          console.log(this.notice,'wwwww')
           this.swiperList = res[1].data.datas
           this.rodAd()
           this.pageLoading = false

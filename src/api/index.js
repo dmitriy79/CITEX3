@@ -5,6 +5,7 @@ let apiList = {
   "user": [
     '/banner/listByType', //公告列表
     '/notice/list', //公告列表
+    '/noticeType/typeList',//公告类型
     '/trade/getTradeInfoByZone',
     'user/login',//登陆
     'user/logout',//退出
@@ -15,6 +16,7 @@ let apiList = {
   //管理 :10320
   "coin": [
     '/coin/info/all', //GET 查询全部币种列表
+    // '/coin/info',//币种资料
   ],
   //支付管理 :13030
   "payment": [
@@ -26,6 +28,7 @@ let apiList = {
     '/trade/getTopTradeCoinPairs', //GET 主要币种模块展示  
     '/trade/getTradeInfoByZone', //交易区列表(根据交易区ID查询)
     '/trade/getKDatas', //启用获取k线  GET
+    '/dealOrder/getUserTransactionRecord',//交易记录
   ],
 }
 

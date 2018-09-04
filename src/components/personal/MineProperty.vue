@@ -5,25 +5,25 @@
         <div class="top-info">
             <div class="info-left">
                 <span>总资产折合：0.00048100 BTC<i>≈<b>21.23</b>CNY</i></span>
-                 <span class="check-item"><i class="check"></i>隐藏小额资产</span>
+                 <span class="check-item"><i class="check" :class="{active:this.checked}" @click="handleChecked"></i>隐藏小额资产</span>
                  <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span><span class="iconfont">&#xe627;</span> </div> 
             </div>
             <div class="info-right"><span @click="showRecord" >提币&充币记录</span></div>
         </div>
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
-            <dd class="list">
-                <span><span class="wrap-img"><img src="../../assets/images/hours.png" alt=""></span>USDT</span>
-                <span>1</span>
-                <span>1</span>
-                <span>1</span>
+            <dd class="list" v-for="(item, index) in propertyList">
+                <span><span class="wrap-img"><img src="../../assets/images/hours.png" alt=""></span>{{item.coinId}}</span>
+                <span>{{item.coinId}}</span>
+                <span>{{item.total}}</span>
+                <span>{{item.frozen}}</span>
                 <span class="txt-right">
-                    <i @click="fullCoin">充币</i>
-                    <i @click="carryCoin">提币</i>
+                    <i @click="fullCoin(index)">充币</i>
+                    <i @click="carryCoin(index)">提币</i>
                     <i><router-link to="/Transaction" tag="span">交易</router-link></i>
                 </span>
                 <transition name="fade">
-                <div class="carry-coin coin-item" v-if="isShow">
+                <div class="carry-coin coin-item" ref="child" style="display:none" >
                     <div class="item">
                         <label class="name">提币地址</label>
                         <input type="text">
@@ -60,7 +60,7 @@
                 </div>
                 </transition>
                 <transition name="fade">
-                <div class="full-coin coin-item" v-if="isShow1">
+                <div class="full-coin coin-item" ref="child1" style="display:none" >
                     <div class="item">
                         <label class="name">提币地址</label>
                         <div class="address-wrapper"><span class="address">ef82ba3200444a6494af10c56b54e967</span><span class="copy">复制</span><span class="ewm" @click="showEwm">二维码</span></div>
@@ -141,10 +141,14 @@ export default {
     return {
         current:'full',
         isShow:false,
+        checked:false,//隐藏小额资产
         isShow1:false,
         isshowEwm:false,
         showProperty:true,
         showList:false,
+        logoUrl:'',
+        activeIndex:'',
+        propertyList:[],
         tableData1: [{
             date: '2016-05-02',
             name: 'USDT',
@@ -175,22 +179,65 @@ export default {
   },
   mounted(){
     this.myproperty();
+    this.coinInfo()
   },
   methods:{
+    //隐藏小额资产
+    handleChecked(){
+      this.checked=!this.checked
+    },
+    //获取币种
+    coinInfo(){
+      this.$http("/COIN/coin/info/20").then(res=>{
+        console.log(res,'88888888888==========')
+      })
+    },
     //我的资产列表
       myproperty(){
         
          this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
-           console.log(res,'eeee8888')
+          var list=res.data.datas.list
+         this.propertyList=res.data.datas.list
+          const  that= this;
+          list.forEach(function(list){
+            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
+              that.logoUrl=res.data.datas.logoUrl
+              console.log(res.data.datas.logoUrl,'wo我随时随刻')
+           
+            })
+               console.log(that.logoUrl,'我是地下')
+           
+
+          })
+      
+
          })
       },
-      carryCoin(){
-          this.isShow=!this.isShow
-           this.isShow1=false
+      carryCoin(index){
+         this.$refs.child1[index].style.display = 'none'
+        if (this.$refs.child[index].style.display === 'none') {
+        this.$refs.child[index].style.display = 'block'
+       
+      } else {
+        this.$refs.child[index].style.display = 'none'
+      
+      }
+        // this.activeIndex=index
+        //   this.isShow=!this.isShow
+        //    this.isShow1=false
       },
-      fullCoin(){
-          this.isShow1=!this.isShow1
-          this.isShow=false
+      fullCoin(index){
+        // this.activeIndex=index
+        //   this.isShow1=!this.isShow1
+        //   this.isShow=false
+             this.$refs.child[index].style.display = 'none'
+         if (this.$refs.child1[index].style.display === 'none') {
+        this.$refs.child1[index].style.display = 'block'
+       
+      } else {
+        this.$refs.child1[index].style.display = 'none'
+      
+      }
 
       },
       showEwm(){
@@ -331,7 +378,7 @@ export default {
           margin-right: 10px;
           border: 1px solid #fff;
 
-          &::after {
+          &.active::after {
             content: "";
             height: 7px;
             left: 4px;
@@ -361,11 +408,13 @@ export default {
     }
 
     .coin-item {
+     z-index: 999;
       border: 1px solid #898c91;
       padding: 20px 30px 100px;
       border-radius: 2px;
       position: absolute;
       top: 48px;
+      background: #181f27;
       width: 100%;
       .item {
         margin-bottom: 20px;
@@ -424,7 +473,7 @@ color: #FFFFFF;}
     }
 
     .carry-coin{
-       
+       background: #181f27;
       &::before,
       &::after {
         border: solid transparent;
