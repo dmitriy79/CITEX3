@@ -96,18 +96,27 @@ export default {
           // });          
         });*/
       
-           var url=`/api/user/logout`
-            this.$http.get(url,
-            {
-		      headers:{"Content-Type": "application/json"}}).then(res => {
-                 var returnData= res.data.message
-                console.log(res)
-            
-                if(returnData=='用户登出'){
-                    this.token=localStorage.setItem("token",'')
-                   console.log(this.token) 
+      this.$api.logout().then(res=>{
+        var returnData= res.data.message
+        console.log(res,'wosSJJSJWW999')
+        if(returnData=='用户登出'){
+          this.token=localStorage.removeItem("token")
+          this.$router.push({ path: "/" });
+                   console.log(this.token,'09090990') 
                 }
-            })
+      })
+          //  var url=`/api/user/logout`
+          //   this.$http.get(url,"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MjM2QSIsInN1YiI6IntcImlkXCI6MjAwMDg0fSIsImlhdCI6MTUzNTk3NTU3NywiZXhwIjoxNTM2MDYxOTc3fQ.RVZabi8iOvlIP6SXwsWej50jVRAu82hbjCfQJzY7fq4"
+          //   {
+		      // headers:{"Content-Type": "application/json"}}).then(res => {
+          //        var returnData= res.data.message
+          //       console.log(res)
+            
+          //       if(returnData=='用户登出'){
+          //           this.token=localStorage.removeItem("token")
+          //          console.log(this.token,'09090990') 
+          //       }
+          //   })
     },
     showli(){
       this.showLi=false
@@ -245,7 +254,7 @@ export default {
   }
 
   .login-out {
-    margin-left: 20px;
+    margin-left: 20px;cursor: pointer;
   }
 
 </style>

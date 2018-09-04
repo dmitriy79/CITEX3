@@ -6,7 +6,11 @@ let apiList = {
     '/banner/listByType', //公告列表
     '/notice/list', //公告列表
     '/trade/getTradeInfoByZone',
-    'user/login'
+    'user/login',//登陆
+    'user/logout',//退出
+    'user/emailCode',//获取邮箱验证码
+    'user/register',//注册
+    'user/forgetPassword',//忘记密码
   ],
   //管理 :10320
   "coin": [

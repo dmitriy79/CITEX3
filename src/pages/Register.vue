@@ -121,16 +121,8 @@ export default {
       } else {
         this.$refs.sendEmail.setAttribute('disabled', 'disabled')
         this.$refs.sendEmail.style.cursor = "not-allowed"
-
-        var url = `/api/user/emailCode`
-        this.$http.get(url, {
-          params: {
-            email: this.email,
-          }
-        }, {
-          headers: { "Content-Type": "application/json" }
-        }).then(res => {
-          if (res.data.message == '成功') {
+        this.$api.emailCode({email: this.email}).then(res=>{
+           if (res.data.message == '成功') {
             //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
             if (!this.canClick) return
             this.canClick = false
@@ -147,6 +139,31 @@ export default {
             }, 1000)
           }
         })
+        // var url = `/api/user/emailCode`
+        // this.$http.get(url, {
+        //   params: {
+        //     email: this.email,
+        //   }
+        // }, {
+        //   headers: { "Content-Type": "application/json" }
+        // }).then(res => {
+        //   if (res.data.message == '成功') {
+        //     //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
+        //     if (!this.canClick) return
+        //     this.canClick = false
+        //     this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
+        //     let clock = window.setInterval(() => {
+        //       this.wait--
+        //         this.content = this.wait + 's后重新发送'
+        //       if (this.wait < 0) { //当倒计时小于0时清除定时器
+        //         window.clearInterval(clock)
+        //         this.content = '获取邮箱验证码'
+        //         this.wait = 60
+        //         this.canClick = true
+        //       }
+        //     }, 1000)
+        //   }
+        // })
       }
 
     },
@@ -266,8 +283,17 @@ export default {
       //     // 初始化失败后触发该函数，err对象描述当前错误信息
       //     localStorage.setItem('registerYanzhengma', '')
       //   })
-
-      var url = `/api/user/register`
+      this.$api.register({email: this.email,
+          passWord: this.passWord,
+          code: this.code,
+          inviteCode: this.inviteCode,
+          NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
+            var returnData = res.data.message
+             if (returnData == '成功') {
+              this.$router.push({ path: "/Login" });
+            }
+          })
+    /*  var url = `/api/user/register`
       this.$http.get(url, {
         params: {
           email: this.email,
@@ -288,7 +314,7 @@ export default {
         if (returnData == '成功') {
           this.$router.push({ path: "/Login" });
         }
-      })
+      })*/
     }
   },
   mounted() {
