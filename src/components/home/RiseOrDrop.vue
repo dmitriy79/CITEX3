@@ -12,39 +12,39 @@
           </li>
           <li><i class="ranking">2</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+20%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">3</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">4</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">5</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">6</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">7</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">8</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">9</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
           <li><i class="ranking">10</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
+            <div class="rate">+10%<i class="ico-uos"></i></div>
           </li>
         </ul>
       </div>
@@ -55,43 +55,43 @@
         <ul>
           <li><i class="ranking">1</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-30%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">2</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-20%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">3</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">4</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">5</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">6</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">7</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">8</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">9</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
           <li><i class="ranking">10</i>
             <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-downs"></i></div>
+            <div class="rate red">-10%<i class="ico-downs"></i></div>
           </li>
         </ul>
       </div>
@@ -169,6 +169,9 @@ export default {
         }
         .rate {
           color: #1FC56D;
+        }
+        .red{
+              color: #FF6442;
         }
       }
     }

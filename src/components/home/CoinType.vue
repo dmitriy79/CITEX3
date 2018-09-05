@@ -4,7 +4,7 @@
         <div class="coin-block">
             <div class="item">
                 <div class="top-wrapper">
-                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate green">+32%</span></div>
                     <div class="price" >0.21232 ≈$2.12</div>
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>
@@ -12,7 +12,7 @@
             </div>
             <div class="item">
                 <div class="top-wrapper">
-                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate red">-12%</span></div>
                     <div class="price" >0.21232 ≈$2.12</div>
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>
@@ -20,7 +20,7 @@
             </div>
              <div class="item">
                 <div  class="top-wrapper">
-                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate green">+32%</span></div>
                     <div class="price" >0.21232 ≈$2.12</div>
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>
@@ -28,7 +28,7 @@
             </div>
              <div class="item">
                 <div  class="top-wrapper">
-                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate red">-32%</span></div>
                     <div class="price" >0.21232 ≈$2.12</div>
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>
@@ -36,7 +36,7 @@
             </div>
              <div class="item">
                 <div  class="top-wrapper">
-                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate">+32%</span></div>
+                    <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate green">+32%</span></div>
                     <div class="price" >0.21232 ≈$2.12</div>
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>

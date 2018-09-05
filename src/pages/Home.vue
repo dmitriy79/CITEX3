@@ -80,6 +80,7 @@ export default {
   },
   data() {
     return {
+      title:'',
       swiperList: [{
           img: "https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg"
         },

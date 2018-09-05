@@ -18,7 +18,7 @@
                     <dd v-for="(item,index) of List" >
                         <div class="transaction-list-title"> <i class="ico-star"></i><img src="../../assets/images/b.png" alt="" /><span>{{item.type}}</span></div>
                         <div>{{item.newprice}}</div>
-                        <div class="red" :class="{green : index == 1}">{{item.riseprice}}%</div>
+                        <div class="red" :class="{green : item.riseprice >0}">{{item.riseprice}}%</div>
                         <div>{{item.low}}</div>
                         <div>{{item.high}}</div>
                         <div>{{item.close}}</div>
@@ -47,7 +47,7 @@ export default {
                 { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '+120', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
                 { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-11', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
                 { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+                { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '+21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
                 { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
                 { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
                 { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },

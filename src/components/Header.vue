@@ -10,20 +10,20 @@
       <div class="header-nav">
           <router-link  v-if="showLi" to="/" tag="div">首页</router-link>
           <router-link  v-if="showLi" to="/Transaction" tag="div">交易中心</router-link>
-          <router-link  @click="showli" to="/ApplyChannel" tag="div" >渠道商</router-link>
+          <!-- <router-link  @click="showli" to="/ApplyChannel" tag="div" >渠道商</router-link> -->
           <router-link  v-if="!showLi" to="/" tag="div">项目评论区</router-link>
           <router-link  v-if="!showLi" to="/ApplyMountCoin" tag="div">上币申请</router-link>
       </div>
       <ul class="header-nav-right">
         <!-- <li class="nav-right-help">帮助中心</li>
         <li class="nav-right-download">App下载</li> -->
-        <li>
+        <!-- <li>
           <router-link to="/personal" tag="div"  v-if="this.token" >个人中心</router-link>
-        </li> 
-        <li><router-link to="/personal" tag="div"  >帮助中心</router-link></li>
+        </li>  -->
+        <li><router-link to="/" tag="div"  >帮助中心</router-link></li>
         <li><router-link to="/notice" tag="div"  >公告中心</router-link></li>
         <li v-if="this.token">
-         {{userName}}
+         <router-link to="/personal" tag="div"  v-if="this.token" >{{userName}} </router-link>
         </li> 
         <!-- <li>
           <router-link to="/personal" tag="div"  v-if="this.token">{{userName}}</router-link>

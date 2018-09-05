@@ -5,7 +5,7 @@
       <div class="container">
         <div class="login-form">
 
-          <h1>欢迎登陆</h1>
+          <h1>欢迎登录</h1>
           <div class="input-wrapper">
             <input type="text" placeholder="请输入邮箱" v-model="userName" v-on:blur="blurUserName">
           </div>

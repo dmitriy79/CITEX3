@@ -13,7 +13,7 @@
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
             <dd class="list" v-for="(item, index) in propertyList">
-                <span><span class="wrap-img"><img src="../../assets/images/hours.png" alt=""></span>{{item.coinId}}</span>
+                <span v-cloak><span class="wrap-img"><img :src="logoUrl" alt=""></span>{{coinName}}</span>
                 <span>{{item.coinId}}</span>
                 <span>{{item.total}}</span>
                 <span>{{item.frozen}}</span>
@@ -134,6 +134,7 @@ export default {
     props:{
         currentTab:{
             type:Boolean,
+           
         }
     },
     
@@ -147,6 +148,7 @@ export default {
         showProperty:true,
         showList:false,
         logoUrl:'',
+         coinName:'',
         activeIndex:'',
         propertyList:[],
         tableData1: [{
@@ -179,7 +181,7 @@ export default {
   },
   mounted(){
     this.myproperty();
-    this.coinInfo()
+    //this.coinInfo()
   },
   methods:{
     //隐藏小额资产
@@ -187,30 +189,33 @@ export default {
       this.checked=!this.checked
     },
     //获取币种
-    coinInfo(){
-      this.$http("/COIN/coin/info/20").then(res=>{
-        console.log(res,'88888888888==========')
-      })
-    },
+    // coinInfo(){
+    //   this.$http("/COIN/coin/info/20").then(res=>{
+    //     console.log(res,'88888888888==========')
+    //   })
+    // },
     //我的资产列表
       myproperty(){
-        
          this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
+           console.log(res,'我是第一个res')
           var list=res.data.datas.list
          this.propertyList=res.data.datas.list
           const  that= this;
+          var logoUrl;
+          var coinName;
           list.forEach(function(list){
             that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
-              that.logoUrl=res.data.datas.logoUrl
-              console.log(res.data.datas.logoUrl,'wo我随时随刻')
-           
+            console.log(res,'我是第二个res')
+              if(res.data.message=='success'){
+              logoUrl=res.data.datas.logoUrl
+              coinName==res.data.datas.name;
+              }
+              
+              console.log(res.data.datas.name,'woshi')
             })
-               console.log(that.logoUrl,'我是地下')
-           
-
           })
-      
 
+          console.log(logoUrl,'999999')
          })
       },
       carryCoin(index){

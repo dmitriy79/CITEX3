@@ -7,56 +7,54 @@
         <div class="penel">
           <div class="buy-panel">
             <div class="input-text">
+               <p class="islogin"  v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
                 <span class="label">买入<i >IOST</i></span>
                 <div class="buy-price">
-                    <span>价格</span>
+                    <span class="name">价格</span>
                     <input type="text">
-                    <span>ETH</span>
+                    <span class="unit">ETH</span>
                 </div>
-                <div class="buy-num">
-                    <span>数量</span>
+               <div class="buy-num">
+                    <span class="name">数量</span>
                     <input type="text">
-                    <span>IOST</span>
+                    <span class="unit">IOST</span>
                 </div>
                 <div class="buy-rate">
-                    <span class="active">25%</span>
-                    <span>50%</span>
-                    <span>75%</span>
-                    <span>100%</span>
+                    <button :class="{active:isActive1==index,Allowed:isAllowed}" v-for="(item,index) in buttons" @click="tabRate1(index)" :disabled="isDisabled">{{item.value}}</button>
+                  
                 </div>
                 <div class="total-price">
-                    <span>金额</span>
+                    <span class="name">金额</span>
                     <input type="text">
-                    <span>ETH</span>
+                    <span class="unit">ETH</span>
                 </div>
-                <div class="buy-button transaction-btn">买入<span>IOST</span></div>
+                <button class="buy-button transaction-btn" :class="{Allowed:isAllowed}" :disabled="isDisabled">买入<span>IOST</span></button> 
             </div>
         </div>
         <div class="sell-panel">
             <div class="input-text">
+               <p class="islogin"   v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
                 <span class="label">卖出<i>IOST</i></span>
                 <div class="buy-price">
-                    <span>价格</span>
+                    <span  class="name">价格</span>
                     <input type="text">
-                    <span>ETH</span>
+                    <span class="unit">ETH</span>
                 </div>
                 <div class="buy-num">
-                    <span>数量</span>
+                    <span  class="name">数量</span>
                     <input type="text">
-                    <span>IOST</span>
+                    <span class="unit">IOST</span>
                 </div>
                 <div class="buy-rate">
-                    <span class="active">25%</span>
-                    <span>50%</span>
-                    <span>75%</span>
-                    <span>100%</span>
+                    <button :class="{active:isActive==index,Allowed:isAllowed1}" v-for="(item,index) in buttons" @click="tabRate(index)" ref="rateBtn" :disabled="isDisabled">{{item.value}}</button>
+                    
                 </div>
                 <div class="total-price">
-                    <span>金额</span>
+                    <span  class="name">金额</span>
                     <input type="text">
-                    <span>ETH</span>
+                    <span class="unit">ETH</span>
                 </div>
-                <div class="sell-button transaction-btn">卖出<span>IOST</span></div>
+                <div class="sell-button transaction-btn" :class="{Allowed:isAllowed}" :disabled="isDisabled">卖出<span>IOST</span></div>
             </div>
         </div>
         </div>
@@ -65,13 +63,64 @@
 </template>
 <script>
 export default {
-  name: "LimitedPrice"
+  name: "LimitedPrice",
+  data(){
+    return{
+      isActive:0,
+      isActive1:0,
+      token:'',
+      isAllowed:false,
+      isAllowed1:false,
+      isDisabled:false,
+      buttons:[{value:'25%'},{value:'50%'},{value:'75%'},{value:'100%'}]
+    }
+  },
+  mounted () {
+    this.token = localStorage.getItem("token")
+    
+    if(this.token==null){
+       this.isAllowed=true
+       this.isAllowed1=true
+       this.isDisabled=true
+    }
+    else{
+      this.isAllowed=false
+       this.isAllowed1=false
+       this.isDisabled=false
+    }
+  },
+  methods: {
+    tabRate(index){
+      this.isActive=index
+    },
+    tabRate1(index){
+      this.isActive1=index
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
+.Allowed{cursor: not-allowed!important;}
+.islogin{margin-top: 10px}
+.buy-price,.buy-num,.total-price{position: relative;
+  .name{position: absolute;left: 0px;}
+  .unit{position: absolute;right: 10px;top: 0}
+  input{
+    &:focus{
+            border-color:#1fc56d;
+          }
+  }
+}
+.sell-panel{
+  input{
+     &:focus{
+     border-color:#ef6e59}
+  }
+}
 .limit-price {
   margin-bottom: 8px;
   background: #292f37;
+
   .title {
     padding: 0 28px 0 22px;
     height: 30px;
@@ -91,15 +140,15 @@ export default {
     .buy-panel {
       width: 48%;
       margin-right: 5.7%;
-      span.active {
-        background: #1fc56d;
+      .active {
+        background: #1fc56d!important;
       }
     }
     .sell-panel {
       width: 48%;
       margin-right: 3.1%;
-      span.active {
-        background: #ef6e59;
+      .active {
+        background: #ef6e59!important;
       }
     }
     .input-text {
@@ -114,8 +163,9 @@ export default {
         }
       }
       input {
-        width: 74%;
-        text-indent: 4%;
+        width: 100%;
+        height: 32px;
+            text-indent: 30px;
         font-size: 14px;
         color: #ffffff;
       }
@@ -130,18 +180,18 @@ export default {
         height: 32px;
         line-height: 32px;
       }
-      .buy-price,
+      
       .buy-num,
       .total-price {
         background: #3b4249;
-        display:flex;
+        // display:flex;
         align-items: center;
         input{
-          padding:4px 0;
-          font-size:12px;
-          &:focus{
-            border-color:transparent;
-          }
+          // padding:4px 0;
+          // font-size:12px;
+          // &:focus{
+          //   border-color:transparent;
+          // }
         }
       }
       .buy-rate {
@@ -150,13 +200,15 @@ export default {
         height: 26px;
         line-height: 26px;
         text-align: center;
-        span {
+        button {
           width: 24%;
           margin: 0 2%;
           border: 1px dashed #999ea4;
           font-size: 12px;
           color: #999ea4;
+          background: transparent;
           cursor: pointer;
+              border-radius: 2px;
           &.active {
             color: #ffffff;
             border: none;
@@ -167,16 +219,20 @@ export default {
         text-align: center;
         font-size: 14px;
         color: #ffffff;
+        width: 100%;
+        height: 32px;line-height: 32px;
         span {
           color: #fff;
           padding: 0;
         }
       }
       .buy-button {
-        background: #1fc56d;
+        background: #1fc56d;border-radius: 2px;
+
       }
       .sell-button {
-        background: #ef6e59;
+        background: #ef6e59;border-radius: 2px;
+   
       }
     }
   }

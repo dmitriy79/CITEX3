@@ -1,5 +1,5 @@
 <template>
-    <div class="transaction-price">
+    <div class="transaction-price" ref="wrapper">
          <div class="list buy-list">
             <dl>
                 <dt class="title">
@@ -38,13 +38,20 @@ export default {
     return {
       name: "TransactionPrice"
     };
-  }
+  },
+  mounted () {
+     this.token = localStorage.getItem("token")
+     if(this.token!==null){
+       this.$refs.wrapper.style.height='664px'
+     }
+    
+  },
 };
 </script>
 <style lang="less" scoped>
 .transaction-price {
   background: #292f37;
-  height: 664px;
+     height: 695px;
   margin-left: 12px;
 
   span {

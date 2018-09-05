@@ -36,7 +36,7 @@ export default {
   },
   methods:{
       getNoticeList(){
-          this.$api.typeList({pageNum:1,pageSize:8}).then(res=>{
+          this.$api.listType({pageNum:1,pageSize:8,n_language:'zh_CN'}).then(res=>{
               console.log(res,'99999')
           })
       }

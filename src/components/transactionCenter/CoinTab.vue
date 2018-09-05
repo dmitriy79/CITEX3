@@ -2,7 +2,7 @@
     <div class="coin-tab">
         <div class="search-wrap">
               <input type="text" placeholder="查询" class="search"><div class="ico-search"></div>
-              <span class="change"><b class="ico-changecny"></b><i>CNY</i></span>
+              <span class="change" :class="{active:isShow}" @click="changeType"><b class="ico-changecny"></b><i>CNY</i></span>
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)"><span class="ico-star-fill" v-if="index==3"></span>{{item.name}}</li>
@@ -42,6 +42,7 @@ export default {
       isActive1: false,
       isActive2: false,
       isSelect: false,
+      isShow:false,
       navs: [
         { id: 1, name: "ETH交易" },
         { id: 2, name: "IT交易" },
@@ -57,6 +58,10 @@ export default {
     };
   },
   methods: {
+    changeType(){
+ 
+      this.isShow=!this.isShow
+    },
     tabs(index) {
       this.num = index;
       this.active = index;
@@ -102,18 +107,21 @@ export default {
       font-size: 13px;
       color: #b6b7b7;
       text-indent: 30px;
+      &:focus{
+         border-color:#1fc56d;
+      }
     }
     i {
       padding-left: 15%;
     }
-   
+   .active{color:#1fc56d }
     .ico-search{
       position: absolute;
       left: 23px;
       top: 30px;
           font-size: 14px;
     }
-    .change{margin-left: 5px}
+    .change{margin-left: 5px;cursor: pointer;}
     .ico-changecny {
       font-size: 15px;
       cursor: pointer;
@@ -242,7 +250,7 @@ export default {
       }
       .ico-star,.ico-star-fill {
        font-size: 16px;
-        margin-left: 3%;
+        margin-left: 2%;
         cursor: pointer;
       }
       .select.icon-save {
@@ -269,7 +277,7 @@ export default {
       height:30px;
       &.active {
         background: #292f37;
-        // color:#
+           color: #1fc56d;
       }
       &:last-child{float:right}
     }

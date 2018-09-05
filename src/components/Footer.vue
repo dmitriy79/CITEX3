@@ -17,10 +17,12 @@
           <div class="footer-bar">
               <div class="footer-bar-nav">
                 <div v-for="(item, index) in ico">
+                  <a :href="item.href" target="_blank">
                     <i :class="'ico-'+item.name" :data-index="index"></i>  <!-- @mouseover="showCode" @mouseout="hideCode"--> 
                     <div v-if="currentCode == index">
                       <img :src="item.img" alt="">
                     </div>
+                  </a>
                 </div>
               </div>
               <div class="copyright">© 2017-2018 IBtop.com All rights reserved</div>
@@ -34,15 +36,15 @@ export default {
   data(){
     return {
       ico:[
-        {name:'weibo',img:'../assets/images/logo.png'},
-        {name:'telegram',img:'http://sdlf.jpg'},
-        {name:'facebook',img:'http://sdlf.jpg'},
-        {name:'wechat',img:'http://sdlf.jpg'},
-        {name:'twitter',img:'http://sdlf.jpg'},
-        {name:'qq',img:'http://sdlf.jpg'},
+        // {name:'weibo',img:'../assets/images/logo.png'},
+        {name:'telegram',img:'http://sdlf.jpg',href:'https://t.me/ibtopofficial'},
+        {name:'facebook',img:'http://sdlf.jpg',href:'https://www.facebook.com/ibtopofficial/'},
+        // {name:'wechat',img:'http://sdlf.jpg'},
+        {name:'twitter',img:'http://sdlf.jpg',href:'https://twitter.com/ibtopofficial'},
+        // {name:'qq',img:'http://sdlf.jpg'},
       ],
 
-      links:['关于','帮助','资讯','服务'],
+      links:['关于','帮助','服务'],
       footLink:[[
        {title:'关于我们',id:1},
         {title:'加入我们',id:2},
@@ -50,21 +52,22 @@ export default {
         {title:'隐私政策',id:4},
      ],
         [
-         {title:'新手指引',id:1},
+        //  {title:'新手指引',id:1},
          {title:'币种资料',id:1},
          {title:'常见问题',id:1},
          {title:'法律文件',id:1},
        ],
-      [
+     /* [
          {title:'最新动态',id:1},
          {title:'新闻资讯',id:1},
          {title:'行业动态',id:1},
          {title:'币种新闻',id:1}
-       ],[
+       ],*/
+       [
          {title:'帮助中心',id:1},
-         {title:'新手攻略',id:1},
+         {title:'问题反馈',id:1},
          {title:'API 文档',id:1},
-         {title:'条款说明',id:1},
+         {title:'公告',id:1},
       ]],
       currentCode:null,
     }

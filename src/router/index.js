@@ -14,6 +14,8 @@ import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
 import BasicInfo from '@/components/mountCoin/BasicInfo'
 import MineProperty from '@/components/personal/MineProperty'
 import CarryfullCoin from '@/components/personal/CarryfullCoin'
+import BuyOrSellDetail from '@/components/transactionCenter/BuyOrSellDetail'
+
 
 Vue.use(Router)
 const router =  new Router({
@@ -97,6 +99,12 @@ const router =  new Router({
       path: '/carryfullCoin',
       name: 'CarryfullCoin',
       component: CarryfullCoin
+    },
+    {
+      path: '/buyOrSellDetail',
+      name: 'BuyOrSellDetail',
+      component: BuyOrSellDetail
+      
     }
   ],
   

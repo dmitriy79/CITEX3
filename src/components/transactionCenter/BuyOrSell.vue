@@ -1,5 +1,5 @@
 <template>
-    <div class="buyOrSell-wrapper">
+    <div class="buyOrSell-wrapper" ref="wrapper">
         <div class="title">
                    <div class="wrap-img">
                        <!-- <img src="../../assets/images/icon-line.png" alt="" > -->
@@ -81,7 +81,8 @@
             </dl>
         </div>
         <div class="list-bottom">
-            <span class="left">0.1009447</span><span class="right">&nbsp;≈&nbsp;<i>8000.12 </i>CNY</span>
+           <span :class="{'ico-uos':isShow,'ico-downs':isShow1}"></span> <span class="left" :class="{red:isShow1,green:isShow}">0.1009447</span><span class="right" >&nbsp;≈&nbsp;<i>8000.12 </i>CNY</span><span></span>
+           <router-link to="/BuyOrSellDetail" tag="span" class="more">更多</router-link>
         </div>
     </div>
 </template>
@@ -94,8 +95,17 @@ export default {
       isActive: false,
       sellList:true,
       buyList:true,
-      currentDeep: 0.000001
+      currentDeep: 0.000001,
+      isShow:false,
+      isShow1:false
     };
+  },
+  mounted () {
+     this.token = localStorage.getItem("token")
+     if(this.token!==null){
+       this.$refs.wrapper.style.height='664px'
+     }
+    
   },
   methods: {
     showDeep() {
@@ -113,10 +123,14 @@ export default {
     showBuy(){
         this.buyList=true
         this.sellList=false
+        this.isShow=true
+        this.isShow1=false
     },
     showSell(){
         this.buyList=false
         this.sellList=true
+         this.isShow=false
+        this.isShow1=true
     }
   }
 };
@@ -130,8 +144,11 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+.more{float: right;padding-right: 10px;font-size: 13px;cursor: pointer;}
+.ico-uos{color: #1fc56d}
+.ico-downs,.red{color:#ef6e59!important}
 .buyOrSell-wrapper {
-  height: 664px;
+    height: 695px;
   position: relative;
   background: #292f37;
       .title {

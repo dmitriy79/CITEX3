@@ -5,7 +5,7 @@ let apiList = {
   "user": [
     '/banner/listByType', //公告列表
     '/notice/list', //公告列表
-    '/noticeType/typeList',//公告类型
+    '/noticeType/listType',//公告类型
     '/trade/getTradeInfoByZone',
     'user/login',//登陆
     'user/logout',//退出

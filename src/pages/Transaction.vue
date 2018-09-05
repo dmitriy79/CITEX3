@@ -90,6 +90,7 @@
            
          </div>
        </div>
+       
         <v-footer></v-footer> 
     </div>
 </template>
@@ -161,6 +162,11 @@ export default {
     width: 27%;
   }
 }
+@media only screen and (max-width: 1425px) {
+#app .transaction-wrap .transaction-bottom .panel-left{
+  width: 52%
+}
+}
 @media only screen and (max-width: 1400px) {
   #app .transaction-wrap .transaction-middle .transaction-middle-left {
     width: 75%;
@@ -192,6 +198,7 @@ export default {
     width: 19.2%;
   }
 }
+
 @media only screen and (max-width: 1366px) and (min-width: 1300px) {
   #app .transaction-wrap .transaction-middle .transaction-middle-right {
     width: 28%;
@@ -334,7 +341,7 @@ export default {
   }
   .transaction-bottom{display: flex;
     .panel-left{width:51.7%}
-    .panel-right{  background: #292F37;  width: 27%;    margin: 0 9px 0 12px;width: 47.4%;
+    .panel-right{  background: #292F37;  width: 27%;    margin: 0 9px;width: 47%;
     	.deepImg-title{ height: 30px;
     line-height: 30px;
     background: #181F27;
