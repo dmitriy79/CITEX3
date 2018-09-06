@@ -67,7 +67,7 @@ export default {
         //币种资料
         coinInfo(){
             this.$http("/COIN/coin/info/12").then(res=>{
-                console.log(res,'9999')
+            console.log(res,'9999')
              var coinInfo=res.data.datas
              this.coinName=coinInfo.name
              this.circulation=coinInfo.circulation

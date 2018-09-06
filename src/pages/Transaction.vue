@@ -52,7 +52,7 @@
                         </ul>
                     </div>
                     </div>
-                    <k-line></k-line>
+                    <!-- <k-line></k-line> -->
              </div>
              <div class="right">
                  <coin-tab></coin-tab>

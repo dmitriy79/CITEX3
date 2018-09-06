@@ -44,8 +44,16 @@ export default {
      if(this.token!==null){
        this.$refs.wrapper.style.height='664px'
      }
-    
+    this.getDealOrders()
   },
+  methods: {
+    getDealOrders(){
+      this.$api.getDealOrdersByTradeCoinPairId({id:6}).then(res=>{
+       console.log(res,'我是')
+    })
+    }
+    
+  }
 };
 </script>
 <style lang="less" scoped>
