@@ -130,7 +130,7 @@ export default {
     .form-wrapper{padding: 0 20px;
    
    
-        .el-form-item{display:inline-block;width: 29.4%;margin-right:2%;
+        .el-form-item{display:inline-block;width: 29.4%;margin-right:1.5%;
         &:first-child{width: 20%}
             .el-input,.el-select{width: 100%!important}
         }

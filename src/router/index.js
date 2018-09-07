@@ -15,6 +15,7 @@ import BasicInfo from '@/components/mountCoin/BasicInfo'
 import MineProperty from '@/components/personal/MineProperty'
 import CarryfullCoin from '@/components/personal/CarryfullCoin'
 import BuyOrSellDetail from '@/components/transactionCenter/BuyOrSellDetail'
+import NoticeDetail from '@/components/notice/NoticeDetail'
 
 
 Vue.use(Router)
@@ -104,6 +105,12 @@ const router =  new Router({
       path: '/buyOrSellDetail',
       name: 'BuyOrSellDetail',
       component: BuyOrSellDetail
+      
+    },
+    {
+      path: '/noticeDetail',
+      name: 'NoticeDetail',
+      component: NoticeDetail
       
     }
   ],

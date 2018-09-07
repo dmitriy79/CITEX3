@@ -42,14 +42,14 @@ export default {
   mounted () {
      this.token = localStorage.getItem("token")
      if(this.token!==null){
-       this.$refs.wrapper.style.height='664px'
+       this.$refs.wrapper.style.height='700px'
      }
     this.getDealOrders()
   },
   methods: {
     getDealOrders(){
       this.$api.getDealOrdersByTradeCoinPairId({id:6}).then(res=>{
-       console.log(res,'我是')
+       console.log(res,'我是实时交易')
     })
     }
     

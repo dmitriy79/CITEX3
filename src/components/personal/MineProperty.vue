@@ -198,24 +198,24 @@ export default {
       myproperty(){
          this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
            console.log(res,'我是第一个res')
-          var list=res.data.datas.list
-         this.propertyList=res.data.datas.list
-          const  that= this;
-          var logoUrl;
-          var coinName;
-          list.forEach(function(list){
-            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
-            console.log(res,'我是第二个res')
-              if(res.data.message=='success'){
-              logoUrl=res.data.datas.logoUrl
-              coinName==res.data.datas.name;
-              }
+        //   var list=res.data.datas.list
+        //  this.propertyList=res.data.datas.list
+        //   const  that= this;
+        //   var logoUrl;
+        //   var coinName;
+        //   list.forEach(function(list){
+        //     that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
+        //     console.log(res,'我是第二个res')
+        //       if(res.data.message=='success'){
+        //       logoUrl=res.data.datas.logoUrl
+        //       coinName==res.data.datas.name;
+        //       }
               
-              console.log(res.data.datas.name,'woshi')
-            })
-          })
+        //       console.log(res.data.datas.name,'woshi')
+        //     })
+        //   })
 
-          console.log(logoUrl,'999999')
+          // console.log(logoUrl,'999999')
          })
       },
       carryCoin(index){

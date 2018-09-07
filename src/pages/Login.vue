@@ -162,7 +162,7 @@ export default {
        this.$api.login({userName: this.userName,
           passWord: this.passWord,
           NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
-            console.log(res)
+            console.log(res,'我是登录')
              var returnData = res.data.message
         let token = JSON.stringify(res.data.datas)
         localStorage.setItem("token", token)

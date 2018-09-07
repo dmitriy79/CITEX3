@@ -103,7 +103,7 @@ export default {
   mounted () {
      this.token = localStorage.getItem("token")
      if(this.token!==null){
-       this.$refs.wrapper.style.height='664px'
+       this.$refs.wrapper.style.height='700px'
      }
     
   },

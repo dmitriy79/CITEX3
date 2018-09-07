@@ -2,12 +2,13 @@
     <div class="limit-price">
         <div class="title">
             <div class="left">限价</div>
-            <div class="right"><span class="type">ETH</span>可用 <span class="available">192321.92</span> / 冻结<span class="frozen">921111.00</span></div>
+            <!-- <div class="right"><span class="type">ETH</span>可用 <span class="available">192321.92</span> / 冻结<span class="frozen">921111.00</span></div> -->
         </div>
         <div class="penel">
           <div class="buy-panel">
             <div class="input-text">
                <p class="islogin"  v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
+                <p class="useable" v-if="this.token">可用：<span class="num">192321.92</span><span class="type">IOST</span></p>
                 <span class="label">买入<i >IOST</i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
@@ -34,6 +35,8 @@
         <div class="sell-panel">
             <div class="input-text">
                <p class="islogin"   v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
+                <p class="useable" v-if="this.token">可用：<span class="num">192321.92</span><span class="type">ETH</span></p>
+               
                 <span class="label">卖出<i>IOST</i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
@@ -100,6 +103,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.useable{margin-top: 15px;color: #fff;
+
+ span{font-size:16px!important;padding-left: 0!important;color: #fff!important}
+}
 .Allowed{cursor: not-allowed!important;}
 .islogin{margin-top: 10px}
 .buy-price,.buy-num,.total-price{position: relative;

@@ -10,7 +10,7 @@
                  <input type="text"><span class="ico-search"></span>
              </div>
             <div class="content" >
-                <div class="item" v-for="item in list">
+                <div class="item" v-for="(item,index) in list" @click="noticeDetail(item.id,index)">
                     <div class="title">{{item.title}}</div>
                     <div class="text"><span class="keyword">关键字：{{item.key_word}}</span> <span class="date">发布时间：{{create_time}}</span></div>
                     <div class="detail">{{item.content}}</div>
@@ -30,6 +30,7 @@ export default {
             currentIndex:0,
             datalists:[],
             create_time:'',
+            noticeId:'',
             noticeList:[
                 {id:1,name:'官方公告'},
                 {id:2,name:'活动公告'},
@@ -42,8 +43,16 @@ export default {
   },
   mounted () {
       this.getNoticeList()
+    //   this.noticeDetail()
+   
   },
   methods:{
+      //查看公告详情
+      noticeDetail(id,index){
+          console.log(index, this.list,'我是index')
+          this.$router.push({name:'NoticeDetail',params:{id:id,index:index,allList:this.list,prelist:this.list[index-1],nextlist:this.list[index+1]}})
+        
+      },
     //时间戳转时间
        timestampToTime(timestamp) {
         var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -66,6 +75,7 @@ export default {
                 // console.log(res,'我是公告内容tabs')
                 var  content=res.data.datas
                 content.list.forEach(item=>{
+                    console.log(item.id,'我是公告id')
                    this.create_time=this.timestampToTime(item.create_time);
                    console.log(this.create_time,'00000')
                     this.list=content.list
@@ -88,8 +98,9 @@ export default {
                         var  content=res.data.datas
                         content.list.forEach(item=>{
                             this.create_time=this.timestampToTime(item.create_time);
-                            console.log(this.create_time,'00000')
+                          
                                 this.list=content.list
+                                  console.log(this.list[0],'00000')
                             })
                         // this.list =content.list
                         // console.log(content,'我是公告内容11111')
@@ -104,9 +115,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.detail{
+        overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .notice{margin: 47px auto;    background: #292f37;}
 .content{padding: 0 30px;
-    .item{color: #686d72;font-size: 14px;
+    .item{color: #686d72;font-size: 14px;cursor: pointer;
             border-top: 1px solid #3B4249;padding: 20px 0 40px;
     }
     .title{color: #fff;font-size: 16px;margin-bottom: 5px;}
