@@ -101,7 +101,9 @@ export default {
   methods: {
     //公告详情
     noticeDetail(){
-      
+         var id= this.notice[this.noticeIndex].id
+        var index=this.noticeIndex
+         this.$router.push({name:'NoticeDetail',params:{id:id,index:index,allList:this.notice,prelist:this.notice[index-1],nextlist:this.notice[index+1]}})
     },
     // getbanner() {
     //   var url = `/api/banner/listByType`

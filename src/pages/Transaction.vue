@@ -130,13 +130,28 @@ export default {
 //  options.deep.series[0].data.push(buy)
 // var buy=[[214, 99], [289, 78], [305, 59], [458, 36], [500, 45], [900, 12]]
 // options.deep.series[0].data.push(buy)
-   console.log(options,'000000')
+   console.log(options.deep.series,'000000')
 //let option = options.option1
  return {
 	 id: 'id',
 	 option: options.deep
  }
  },
+ mounted () {
+   this.getDeepImg()
+   options.deep.series[0].data[0][0]=999
+   console.log(options.deep.series[0].data[0][0],'ss我是深度图')
+   console.log(options.deep.series[0],'ss我是深度图22222')
+ },
+ methods: {
+   getDeepImg(){
+    this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:100}).then(res=>{
+      console.log(res.data.datas.bid_list,'99303039')
+    })
+   }
+     
+   
+ }
 };
 </script>
 <style>

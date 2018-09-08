@@ -1,18 +1,19 @@
 <template>
     <div class="transaction-price" ref="wrapper">
          <div class="list buy-list">
-            <dl>
-                <dt class="title">
+            <div class="title">
                     <span>成交价格(ETH)	</span>
                     <span>数量(IOST)</span>
                     <span>时间</span>
-                </dt>
-                <dd>
-                    <span>0.005469</span>
-                    <span>192.898131</span>
-                    <span>12:12:11</span>
+                </div>
+            <dl>
+               
+                <dd v-for="item in dataList">
+                    <span>{{item.dealPrice}}</span>
+                    <span>{{item.dealAmount}}</span>
+                    <span>{{item.dealTime}}</span>
                 </dd>
-                <dd>
+                <!-- <dd>
                     <span>7342.62</span>
                     <span>192.898131</span>
                     <span>12:12:11</span>
@@ -26,17 +27,21 @@
                     <span>7342.62</span>
                     <span>192.898131</span>
                     <span>12:12:11</span>
-                </dd>
+                </dd> -->
             </dl>
         </div>
 
     </div>
 </template>
 <script>
+import date from '../../assets/js/date'
 export default {
   data() {
     return {
-      name: "TransactionPrice"
+      name: "TransactionPrice",
+      dataList:[],
+      websock: null,
+      dealTime:''
     };
   },
   mounted () {
@@ -48,9 +53,34 @@ export default {
   },
   methods: {
     getDealOrders(){
-      this.$api.getDealOrdersByTradeCoinPairId({id:6}).then(res=>{
-       console.log(res,'我是实时交易')
-    })
+      /*this.$api.getDealOrdersByTradeCoinPairId({id:2}).then(res=>{
+       console.log(res.data.datas.dealTime, date.timestampToTime(1536305419000),'我是实时交易')
+       date.timestampToTime(1536305419000)
+       var content=res.data.datas
+       content.forEach(element => {
+         this.dealTime=date.timestampToTime_(element.dealTime) 
+       });
+       this.dataList=content
+    })*/
+     let ws = new WebSocket('ws://192.168.0.108:8088/websocket?pairId=2')
+         ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('Holle')
+              console.log('数据发送中...')
+          }
+          ws.onmessage = evt => {
+            
+             this.dataList=JSON.parse(evt.data)
+              console.log(this.dataList,'数据已接收...')
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
     }
     
   }
@@ -68,6 +98,19 @@ export default {
   span:last-child {
     padding-right: 26px;
   }
+  dl{    overflow-y: auto;
+    max-height: 667px;
+    &::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+&::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.05);
+    background-color:#3B4249
+}
+    }
   dd {
     display: flex;
     span {

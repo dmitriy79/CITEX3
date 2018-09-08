@@ -29,7 +29,9 @@ let apiList = {
     '/trade/getTradeInfoByZone', //交易区列表(根据交易区ID查询)
     '/trade/getKDatas', //启用获取k线  GET
     '/dealOrder/getUserTransactionRecord',//交易记录
-    'trade/getDealOrdersByTradeCoinPairId',//实时成交
+    '/trade/getDealOrdersByTradeCoinPairId',//实时成交
+    'trade/getTradeInfoByTradeCoinPairId',//买卖盘挂单
+    '/trade/bid-ask-order/listBidOrders'//历史/当前委托订单
   ],
 }
 

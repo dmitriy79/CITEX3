@@ -28,56 +28,27 @@
                     <span>累计（IOST）</span>
                 </div>
             </div>
-        <div class="list buy-list" v-if="buyList">
+        <div class="list buy-list" v-if="buyList" ref="buyList">
             
             <dl>
-                <dd>
-                    <span>买1</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
-                <dd>
-                    <span>买2</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
-                <dd>
-                    <span>买3</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
-                <dd>
-                    <span>买4</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
+                <dd v-for="(item,index) in buyLists">
+                    <span>买{{index+1}}</span>
+                    <span>{{item.price}}</span>
+                    <span>{{item.amount}}</span>
+                    <span>{{item.total}}</span>
                 </dd>
             </dl>
         </div>
-          <div class="list sell-list" v-if="sellList">
+        <div class="line" v-if="isShowLine"></div>
+          <div class="list sell-list" v-if="sellList" ref="sellList">
             <dl>
+                <dd v-for="(item,index) in sellLists">
+                    <span>卖{{index+1}}</span>
+                    <span>{{item.price}}</span>
+                    <span>{{item.amount}}</span>
+                    <span>{{item.total}}</span>
+                </dd>
                 
-                <dd>
-                    <span>卖1</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
-                <dd>
-                    <span>卖2</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
-                <dd>
-                    <span>卖3</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                    <span>0.005469</span>
-                </dd>
             </dl>
         </div>
         <div class="list-bottom">
@@ -97,7 +68,10 @@ export default {
       buyList:true,
       currentDeep: 0.000001,
       isShow:false,
-      isShow1:false
+      isShow1:false,
+      buyLists:[],
+      sellLists:[],
+      isShowLine:true
     };
   },
   mounted () {
@@ -105,9 +79,18 @@ export default {
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
      }
-    
+    this.getInfo()
   },
   methods: {
+    //买卖盘挂单
+    getInfo(){
+      this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:22}).then(res=>{
+        console.log(res,'w我是买卖盘')
+        this.buyLists=res.data.datas.bid_list 
+        this.sellLists=res.data.datas.ask_list 
+      })
+      
+    },
     showDeep() {
       this.isShow = !this.isShow;
       this.isActive = !this.isActive;
@@ -123,14 +106,19 @@ export default {
     showBuy(){
         this.buyList=true
         this.sellList=false
-        this.isShow=true
+        this.$refs.buyList.style.height="84%"
+
         this.isShow1=false
+        this.isShowLine=false
     },
     showSell(){
         this.buyList=false
         this.sellList=true
-         this.isShow=false
+        this.$refs.sellList.style.height="84%"
+   
         this.isShow1=true
+        this.isShowLine=false
+
     }
   }
 };
@@ -147,6 +135,7 @@ export default {
 .more{float: right;padding-right: 10px;font-size: 13px;cursor: pointer;}
 .ico-uos{color: #1fc56d}
 .ico-downs,.red{color:#ef6e59!important}
+.line{    border-bottom: 1px solid #3f4449;    margin: 10px 14px;}
 .buyOrSell-wrapper {
     height: 695px;
   position: relative;
@@ -252,14 +241,14 @@ export default {
       display: flex;padding-left:16px;
     }
   }
-  .buy-list {
+  .buy-list {height: 40%;
     dd {
       span:first-child {
         color: #5dc176;
       }
     }
   }
-  .sell-list {
+  .sell-list {height: 40%;
     dd {
       span:first-child {
         color: #ff7758;

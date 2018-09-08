@@ -18,6 +18,7 @@ import {
 import App from './App'
 import router from './router'
 import api from './api'
+import ws from 'ws'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.css'
@@ -27,6 +28,7 @@ import './assets/css/iconfont.css'
 import './assets/css/common.less'
 import axios from 'axios'
 
+// Vue.use(ws)
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$http = axios
 Vue.prototype.$api = api

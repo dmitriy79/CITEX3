@@ -107,6 +107,7 @@ export default {
         // var preId=this.allList[this.index-1].id
      
         if(this.index==0){
+        
             var preId=this.allList[0].id
               this.showPre=true
            this.showNext=false
@@ -161,6 +162,7 @@ export default {
           console.log(this.index+1,this.allList.length-1)
           var nextId=this.allList[this.index].id
         if((this.index)==(this.allList.length-1)){
+           
             this.nextTitle=''
             this.showNext=true
         }

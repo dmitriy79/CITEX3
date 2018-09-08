@@ -101,6 +101,7 @@ export default {
     return {
       name: "Entrust",
       active: 0,
+      token:'',
       navs: [
         { id: 1, name: "当前委托" },
         { id: 2, name: "历史委托" },
@@ -117,9 +118,18 @@ export default {
       }
       this.active = index;
       tabCollection[index].style.display = "block";
+    },
+    //获取当前历史委托
+    getEntrust(){
+
+    this.$api.listBidOrders({type:1,pageNum:1,pageSize:100,bidOrAsk:0}).then(res=>{
+      console.log(res,'历史委托')
+    })
     }
   },
-  mounted() {}
+  mounted() {
+    this.getEntrust()
+  }
 };
 </script>
 
