@@ -34,8 +34,8 @@
                 <dd v-for="(item,index) in buyLists">
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
-                    <span>{{item.amount}}</span>
-                    <span>{{item.total}}</span>
+                    <span>{{item.count}}</span>
+                    <span>{{item.totalCount}}</span>
                 </dd>
             </dl>
         </div>
@@ -45,8 +45,8 @@
                 <dd v-for="(item,index) in sellLists">
                     <span>卖{{index+1}}</span>
                     <span>{{item.price}}</span>
-                    <span>{{item.amount}}</span>
-                    <span>{{item.total}}</span>
+                    <span>{{item.count}}</span>
+                    <span>{{item.totalCount}}</span>
                 </dd>
                 
             </dl>
@@ -61,6 +61,7 @@
 export default {
   data() {
     return {
+         websock: null,
       name: "BuySell",
       isShow: false,
       isActive: false,
@@ -71,6 +72,8 @@ export default {
       isShow1:false,
       buyLists:[],
       sellLists:[],
+      buyListsAll:[],
+      sellListsAll:[],
       isShowLine:true
     };
   },
@@ -84,12 +87,40 @@ export default {
   methods: {
     //买卖盘挂单
     getInfo(){
-      this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:22}).then(res=>{
-        console.log(res,'w我是买卖盘')
-        this.buyLists=res.data.datas.bid_list 
-        this.sellLists=res.data.datas.ask_list 
-      })
-      
+      // this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:22}).then(res=>{
+      //   console.log(res,'w我是买卖盘')
+      //   this.buyLists=res.data.datas.bid_list 
+      //   this.sellLists=res.data.datas.ask_list 
+      // })
+      let ws= new WebSocket('ws://47.93.194.146:13080/websocketAskBid?pairId=1')
+       ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('ws')
+              console.log('数据发送中8888...')
+          }
+          ws.onmessage = evt => {
+           var content=JSON.parse(evt.data)
+           this.buyListsAll=content.bid
+           this.sellListsAll=content.ask
+           this.buyLists=content.bid.slice(0,11)
+           this.sellLists=content.ask.slice(0,11)
+            //  content.forEach(element => {
+            //   element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
+            //   console.log(element.dealTime,'99999999')
+            //  });
+
+            //  console.log(content,'我是content')
+            //  this.dataList=content
+              console.log(content,'数据已接收8888++++++...')
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
     },
     showDeep() {
       this.isShow = !this.isShow;
@@ -99,19 +130,18 @@ export default {
       this.currentDeep = e.target.innerText;
       this.isShow = false;
     },
-    showAll(){
-        this.buyList=true
-        this.sellList=true
-    },
-    showBuy(){
+        showBuy(){
+          console.log(this.buyLists,'999990000000')
+  
         this.buyList=true
         this.sellList=false
         this.$refs.buyList.style.height="84%"
-
+  this.buyLists=this.buyListsAll.slice(0,23)
         this.isShow1=false
         this.isShowLine=false
     },
     showSell(){
+     this.sellLists=this.sellListsAll.slice(0,23)
         this.buyList=false
         this.sellList=true
         this.$refs.sellList.style.height="84%"
@@ -119,7 +149,19 @@ export default {
         this.isShow1=true
         this.isShowLine=false
 
-    }
+    },
+    showAll(){
+       this.sellLists=this.sellListsAll.slice(0,11)
+             this.buyLists=this.buyListsAll.slice(0,11)
+        this.buyList=true
+        this.sellList=true
+        this.isShowLine=true
+        console.log( this.$refs.sellLists,'9我是全部单子')
+        this.$refs.sellList.style.height="40%"
+        this.$refs.buyList.style.height="40%"
+
+    },
+
   }
 };
 </script>

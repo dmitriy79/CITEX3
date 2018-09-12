@@ -6,13 +6,16 @@
                 <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="原始登录密码">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.name" type="password"></el-input>
                     </el-form-item>
                     <el-form-item label="新登录密码">
-                        <el-input v-model="form.name" type=""></el-input>
+                        <el-input v-model="form.name" type="password"></el-input>
                     </el-form-item>
                      <el-form-item label="再次输入新密码">
-                        <el-input v-model="form.name" type=""></el-input>
+                        <el-input v-model="form.name" type="password"></el-input>
+                    </el-form-item>
+                    <el-form-item label="谷歌验证码">
+                        <el-input v-model="form.name" type="password"></el-input>
                     </el-form-item>
                     <div  class="bottom-btn">启用</div>
                 </el-form >

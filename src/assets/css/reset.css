@@ -153,3 +153,14 @@ input:-webkit-autofill {
 .el-form-item {
   margin-bottom: 18px
 }
+ 
+  .el-table__body-wrapper::-webkit-scrollbar {
+width: 10px;
+background-color: transparent;
+}
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+width: 10px;
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.05);
+background-color:#3B4249
+}

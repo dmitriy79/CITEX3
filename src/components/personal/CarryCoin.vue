@@ -19,15 +19,15 @@
                      <el-form-item label="转出手续费">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
-                     <el-form-item label="身份验证" placeholder="请输入注册时的证件号码后四位">
+                     <el-form-item label="谷歌验证" placeholder="请输入注册时的证件号码后四位">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
                     <el-form-item label="交易密码">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="短信验证码" class="message-validate"> 
+                    <!-- <el-form-item label="短信验证码" class="message-validate"> 
                         <el-input v-model="form.name"></el-input><span>获取手机验证码</span><i>+86 133****5467（接受验证码）</i>
-                    </el-form-item>
+                    </el-form-item> -->
                 </el-form>
                 <div class="bottom-btn">立即转出</div>
             </div>

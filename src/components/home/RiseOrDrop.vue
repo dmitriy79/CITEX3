@@ -6,45 +6,9 @@
           <div>涨幅排行榜</div>
         </div>
         <ul>
-          <li><i class="ranking">1</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+30%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">2</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+20%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">3</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">4</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">5</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">6</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">7</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">8</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">9</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
-          </li>
-          <li><i class="ranking">10</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate">+10%<i class="ico-uos"></i></div>
+          <li v-for="(item,index) in topList"><i class="ranking">{{index+1}}</i>
+            <div class="type">{{item.name}}</div>
+            <div class="rate">{{item.rate}}%<i class="ico-uos"></i></div>
           </li>
         </ul>
       </div>
@@ -53,46 +17,11 @@
           <div>跌幅排行榜</div>
         </div>
         <ul>
-          <li><i class="ranking">1</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-30%<i class="ico-downs"></i></div>
+           <li v-for="(item,index) in lastList"><i class="ranking">{{index+1}}</i>
+            <div class="type">{{item.name}}</div>
+            <div class="rate red">{{item.rate}}%<i class="ico-downs"></i></div>
           </li>
-          <li><i class="ranking">2</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-20%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">3</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">4</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">5</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">6</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">7</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">8</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">9</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
-          <li><i class="ranking">10</i>
-            <div class="type">EOS/BTC</div>
-            <div class="rate red">-10%<i class="ico-downs"></i></div>
-          </li>
+         
         </ul>
       </div>
     </div>
@@ -102,7 +31,21 @@
 export default {
   data() {
     return {
-      name: 'RiseOrDrop'
+      name: 'RiseOrDrop',
+      topList:[],
+      lastList:[]
+    }
+  },
+  mounted () {
+    this.getDealOrderUpDownTen()
+  },
+  methods: {
+    getDealOrderUpDownTen(){
+      this.$api.getDealOrderUpDownTen().then(res=>{
+        console.log(res,'涨跌幅排行榜')
+        this.topList=res.data.datas.top
+        this.lastList=res.data.datas.last
+      })
     }
   }
 }

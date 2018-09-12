@@ -2,22 +2,25 @@
     <div>
         <div class="title"><span>邮箱认证</span></div>
         <div class="wrapper">
-             <div class="text-o">您已绑定邮箱，如果更换邮箱请先绑定现有邮箱！</div>
+             <!-- <div class="text-o">您已绑定邮箱，如果更换邮箱请先绑定现有邮箱！</div> -->
               <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
-                    <el-form-item label="已绑定邮箱">
+                     <el-form-item label="已绑定邮箱" >
+                        <el-input v-model="this.emailAddress" type="text" class="yzm-input" readonly="readonly"></el-input>
+                    </el-form-item>
+                        <!-- <el-form-item label="已绑定邮箱">
                         <el-input v-model="form.name"></el-input><button class="input-btn" @click="sendEmail" :plain="true" ref="sendEmail">获取邮箱验证码</button>
                     </el-form-item>
                     <el-form-item label="邮箱验证码">
                         <el-input v-model="form.name" type="" class="yzm-input"></el-input>
                     </el-form-item>
-                     <el-form-item label="新邮箱">
+                 <el-form-item label="新邮箱">
                         <el-input v-model="form.name" type=""></el-input><button class="input-btn" @click="sendEmail" :plain="true" ref="sendEmail">获取邮箱验证码</button>
                     </el-form-item>
                      <el-form-item label="邮箱验证码">
                         <el-input v-model="form.name" type="" class="yzm-input"></el-input>
                     </el-form-item>
-                    <div  class="bottom-btn">确定</div>
+                    <div  class="bottom-btn">确定</div> -->
                 </el-form >
                 
             </div>
@@ -60,16 +63,17 @@ color: #FF9535;}
 export default {
     data(){
         return{
+            emailAddress:'',
             form:{
                 name:''
             }
         }
     },
+    mounted () {
+    this.emailAddress=localStorage.getItem("userName")
+    },
     methods:{
-        sendEmail(){
-
-        }
-        
+      
     }
 }
 </script>

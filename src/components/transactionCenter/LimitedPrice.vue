@@ -12,12 +12,12 @@
                 <span class="label">买入<i >IOST</i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
-                    <input type="text">
+                    <input type="text" v-model="buyPrice">
                     <span class="unit">ETH</span>
                 </div>
                <div class="buy-num">
                     <span class="name">数量</span>
-                    <input type="text">
+                    <input type="text" v-model="buyNum">
                     <span class="unit">IOST</span>
                 </div>
                 <div class="buy-rate">
@@ -25,8 +25,8 @@
                   
                 </div>
                 <div class="total-price">
-                    <span class="name">金额</span>
-                    <input type="text">
+                    <span class="name">交易额</span>
+                    <span class="value">88888</span>
                     <span class="unit">ETH</span>
                 </div>
                 <button class="buy-button transaction-btn" :class="{Allowed:isAllowed}" :disabled="isDisabled">买入<span>IOST</span></button> 
@@ -53,8 +53,8 @@
                     
                 </div>
                 <div class="total-price">
-                    <span  class="name">金额</span>
-                    <input type="text">
+                    <span  class="name">交易额</span>
+                    <span class="value"></span>
                     <span class="unit">ETH</span>
                 </div>
                 <div class="sell-button transaction-btn" :class="{Allowed:isAllowed}" :disabled="isDisabled">卖出<span>IOST</span></div>
@@ -75,6 +75,8 @@ export default {
       isAllowed:false,
       isAllowed1:false,
       isDisabled:false,
+      buyPrice:'',
+      buyNum:'',
       buttons:[{value:'25%'},{value:'50%'},{value:'75%'},{value:'100%'}]
     }
   },
@@ -112,6 +114,7 @@ export default {
 .buy-price,.buy-num,.total-price{position: relative;
   .name{position: absolute;left: 0px;}
   .unit{position: absolute;right: 10px;top: 0}
+  .value{position: relative;left: 50px;}
   input{
     &:focus{
             border-color:#1fc56d;
@@ -187,10 +190,16 @@ export default {
         height: 32px;
         line-height: 32px;
       }
-      
+  .total-price{
+    .name{
+      position: initial;padding-left: 0
+    }
+    .value,.unit{ position: initial;padding-left: 2px}
+
+  }
       .buy-num,
       .total-price {
-        background: #3b4249;
+   
         // display:flex;
         align-items: center;
         input{

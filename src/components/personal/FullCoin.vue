@@ -4,23 +4,27 @@
             <div class="title"><span>我要充币</span></div>
             <div class="select-coin">
                 <el-form ref="form" :model="form" label-width="80px" :inline="true"> 
-                    <el-form-item label="OEX币：">
-                        <el-select v-model="form.region" placeholder="OEX币">
-                        <el-option label="OEX币" value="0"></el-option>
-                        <el-option label="ETH币" value="1"></el-option>
+                    <el-form-item label="OEX：">
+                        <el-select v-model="value" placeholder="请选择" @change="selectCoin">
+                        <el-option v-for="item in list" :label="item.name"  :value="item.id" 
+     :key="item.id"></el-option>
+                       
                         </el-select>
                     </el-form-item>
                 </el-form>
             </div>
+            <!-- <div id="qrcode"></div> -->
             <div class="address-wrapper">
                 <div class="tips">这是您的钱包地址，请将您的OEX币转入此地址</div>
                 <div class="address">
-                    钱包地址：<span>https://www.oex.cn/regcode/ef82ba3200444a6494af10c56b54e</span> <div class="copy-btn btn">复制</div><div class="ewm-btn btn" @click="showEwm">二维码</div>
-                    <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm">
+                    
+                    钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>
+                    <!-- <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm"> -->
+                    <div id="qrcode" class="ewm-img"></div>
                 </div>
             </div>
             
-             <div class="full-coin-wrapper">
+             <!-- <div class="full-coin-wrapper">
                  <el-table :data="tableData1"  style="width: 100%">
                     <el-table-column prop="date" label="转入时间" >
 
@@ -39,15 +43,21 @@
                     <el-table-column prop="num" label="类型"></el-table-column>
                     <el-table-column prop="num" label="状态"></el-table-column>
                 </el-table>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 <script>
+import QRCode from 'qrcodejs2'
 export default {
     data(){
         return{
             isshowEwm:false,
+            value:'',
+            coinId:'',
+            list:[],
+            address:'',
+            copyData: '',
             form: {
       
           region: '',
@@ -59,9 +69,57 @@ export default {
           }]
         }
     },
+    mounted () {
+        this.getFullcoinList()
+    },
     methods:{
+        //下拉选择币种
+        selectCoin(val){
+            this.$api.allotRechargeAddr({coinId:val}).then(res=>{
+                if(res.data.message=='成功'){
+                     this.address=res.data.datas
+                     this.copyData=res.data.datas
+                         this.$refs.btns.removeAttribute('disabled')
+                  this.$refs.btns.style.cursor = ""
+                  
+                }
+                else{
+                   this.$refs.btns.setAttribute('disabled', 'disabled')
+                  this.$refs.btns.style.cursor = "not-allowed"
+                  this.address=res.data.message  
+                }
+                   })
+            // this.address=val
+        },
+    qrcode () {
+      let qrcode = new QRCode('qrcode', {
+        width: 100,
+        height: 100, // 高度
+        text: this.address, // 二维码内容
+        render:'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
+        background: '#f0f',
+        foreground: '#ff0'
+      })
+
+      console.log(qrcode,'0999999')
+    },
+      
         showEwm(){
+            console.log('wos我是二维码')
             this.isshowEwm=!this.isshowEwm
+            this.qrcode()
+        },
+        getFullcoinList(){//
+            this.$api.all().then(res=>{
+               var content=res.data.datas
+               content.forEach(element => {
+                   this.coinId=element.id
+                   this.$api.allotRechargeAddr({coinId:this.coinId}).then(res=>{
+                       console.log(res,'w我是返回的0000')
+                   })
+               });
+               this.list=content
+            })
         }
     }
 }
@@ -85,7 +143,7 @@ display: flex;
     }
     .btn{
         margin: 0 10px;cursor: pointer;font-size: 14px;
-        height: 30px;padding:0 17px;background: #D8D8D8;
+        height: 30px;padding:0 17px;background: #D8D8D8;color: #fff;
 border-radius: 4px;
     }
     .ewm-btn{background:#2286FF}

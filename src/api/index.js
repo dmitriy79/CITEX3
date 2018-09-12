@@ -7,11 +7,19 @@ let apiList = {
     '/notice/list', //公告列表
     '/noticeType/listType',//公告类型
     '/trade/getTradeInfoByZone',
-    'user/login',//登陆
-    'user/logout',//退出
-    'user/emailCode',//获取邮箱验证码
-    'user/register',//注册
-    'user/forgetPassword',//忘记密码
+    '/user/login',//登陆
+    '/user/logout',//退出
+    '/user/emailCode',//获取邮箱验证码
+    '/user/register',//注册
+    '/user/forgetPassword',//忘记密码
+    '/user/allotRechargeAddr',//获取钱包地址
+    '/user/setTradePassword',//设置交易密码
+    '/user/info',//用户信息
+    '/user/setGooleAutu',//生成谷歌验证码
+    '/user/getValidateById',//获取用户信息
+    '/user/reset',//修改邮箱 或者 登录密码 或者 交易密码
+    '/user/audit',//实名认证
+    '/user/enableGooleAutu',//启用谷歌验证码
   ],
   //管理 :10320
   "coin": [
@@ -31,7 +39,9 @@ let apiList = {
     '/dealOrder/getUserTransactionRecord',//交易记录
     '/trade/getDealOrdersByTradeCoinPairId',//实时成交
     'trade/getTradeInfoByTradeCoinPairId',//买卖盘挂单
-    '/trade/bid-ask-order/listBidOrders'//历史/当前委托订单
+    '/trade/bid-ask-order/listBidOrders',//历史/当前委托订单
+    'trade/getDealOrderUpDownTen',//涨跌幅排行榜
+    'dealOrder/getUserTransactionRecord',//交易记录
   ],
 }
 

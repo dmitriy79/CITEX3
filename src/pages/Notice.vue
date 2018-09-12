@@ -100,7 +100,7 @@ export default {
                             this.create_time=this.timestampToTime(item.create_time);
                           
                                 this.list=content.list
-                                  console.log(this.list[0],'00000')
+                                  console.log(this.list,'00000我是999922')
                             })
                         // this.list =content.list
                         // console.log(content,'我是公告内容11111')

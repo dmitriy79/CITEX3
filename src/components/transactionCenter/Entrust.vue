@@ -4,7 +4,7 @@
             <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="tabs(index)">{{item.name}}</li>
         </ul>
         <div class="entrust-list" >
-            <dl class="entrust-panel" style="display:block">
+            <dl class="entrust-panel" style="display:block" v-if="this.token">
                 <dt>
                     <span>日期</span>
                     <span>类型</span>
@@ -42,7 +42,7 @@
                     <span>5</span>
                 </dd>
             </dl>
-            <dl class="entrust-panel">
+            <dl class="entrust-panel" v-if="this.token">
                 <dt>
                     <span>日期</span>
                     <span>类型</span>
@@ -72,7 +72,7 @@
                 </dd>
 
             </dl>
-            <dl class="entrust-panel">
+            <dl class="entrust-panel" v-if="this.token">
                 <dt>
                     <span>日期</span>
                     <span>类型</span>
@@ -89,9 +89,9 @@
                 </dd>
                
             </dl>
-          <!--  <div class="noData" >
+           <div class="noData" v-if="!this.token">
                 <span>暂无记录</span>
-            </div>-->
+            </div>
         </div>
     </div>
 </template>
@@ -128,6 +128,7 @@ export default {
     }
   },
   mounted() {
+        this.token = localStorage.getItem("token")
     this.getEntrust()
   }
 };
@@ -139,6 +140,7 @@ export default {
   .entrust-list {
     padding: 0 10px;
     position: relative;
+        background: #292f37;    height: 293px;
     .noData {
       background: url("~@/assets/images/icon-nodata.png") no-repeat center
         center;

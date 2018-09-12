@@ -7,20 +7,36 @@
             <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="姓氏">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.surname"></el-input>
                     </el-form-item>
                     <el-form-item label="名字">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
+                    <el-form-item label="国籍">
+                        <el-select v-model="form.country" placeholder="请选择" @change="selectCountry" >
+                        <el-option label="中国" value="1"></el-option>
+                        <el-option label="新加坡" value="2"></el-option>
+                        <el-option label="美国" value="3"></el-option>
+                        <el-option label="印度" value="4"></el-option>
+                        <el-option label="德国" value="5"></el-option>
+                        <el-option label="韩国" value="6"></el-option>
+                        <el-option label="日本" value="7"></el-option>
+                        <el-option label="巴西" value="8"></el-option>
+                        <el-option label="越南" value="9"></el-option>
+                        <el-option label="巴基斯坦" value="10"></el-option>
+                        <el-option label="其他" value="11"></el-option>
+                        </el-select>
+                    </el-form-item>
+
                     <el-form-item label="证件类型">
-                        <el-select v-model="form.region" placeholder="请选择">
-                        <el-option label="身份证" value="shanghai"></el-option>
-                        <el-option label="护照" value="beijing"></el-option>
+                        <el-select v-model="form.type" placeholder="请选择" @change="selectType">
+                        <el-option label="身份证" value="1"></el-option>
+                        <el-option label="护照" value="2"></el-option>
                         </el-select>
                     </el-form-item>
                    
                     <el-form-item label="证件号码">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.number"></el-input>
                     </el-form-item>
                     
                     <div  class="bottom-btn" @click="next">下一步</div>
@@ -38,26 +54,34 @@
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
             <div class="content">
                 <div  class="content-item">
-                    <div class="default-wrapper"><i class="ico-hours"></i><span>身份证正面</span></div>
+                    <div class="default-wrapper"><i class="plus-icon"></i><span>身份证正面</span></div>
                     <div class="case">示例</div>
-                    <div  class="default-wrapper"></div>
+                    <div  class="default-wrapper">
+                        <img src="../../assets/images/sfzz.png" alt="">
+                    </div>
                 </div>
                 
             </div>
             <div class="content content_">
                 <div  class="content-item">
-                     <div  class="default-wrapper"><i class="ico-hours"></i><span>身份证反面</span></div>
+                     <div  class="default-wrapper"><i class="plus-icon"></i><span>身份证反面</span></div>
                     <div class="case">示例</div>
-                    <div  class="default-wrapper"></div>
+                    <div  class="default-wrapper">
+                        <img src="../../assets/images/sfzf.png" alt="">
+                        
+                    </div>
                 </div>
                
             </div>
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
             <div class="content content_">
                 <div class="content-item">
-                    <div  class="default-wrapper"><i class="ico-hours"></i><span>手持身份证正面和个人签字</span></div>
+                    <div  class="default-wrapper"><i class="plus-icon"></i><span>手持身份证正面和个人签字</span></div>
                     <div class="case">示例</div>
-                    <div  class="default-wrapper"></div>
+                    <div  class="default-wrapper">
+                        <img src="../../assets/images/scsfz.png" alt="">
+
+                    </div>
                 </div>
                 
             </div>
@@ -66,8 +90,32 @@
     </div>
 </template>
 <style lang="less" scoped>
-.mark{font-size: 13px;margin-bottom: 18px;
-color: #9E9FA6;}
+.plus-icon {
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  margin-top: -11px;
+  height: 22px;
+
+  width: 2px;
+}
+.plus-icon:after {
+  background: #fff;
+  content: "";
+  height: 22px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 2px;
+  transform: rotateZ(90deg);
+}
+.mark {
+  font-size: 13px;
+  margin-bottom: 18px;
+  color: #9e9fa6;
+}
 // .bottom-btn{
 //         width: 132px;
 //     margin-top: 40px;
@@ -79,60 +127,167 @@ color: #9E9FA6;}
 //     font-size: 16px;
 //     color: #FFFFFF;cursor: pointer;
 // }
- .title{
-        height: 40px;
-        background: #1b222a;
-            margin-bottom: 13px;
-        span{
-            background: #292f37;
-            font-size: 15px;
-            width: 144px;
-            display: block;
-            height: 40px;
-            line-height: 40px;
-            color: #ffffff;
-            text-align: center;
-        }
-        
-    }
-    .identity-wrapper{position:relative;
-    .tips{position:absolute;right:2%;top: 40px;font-size: 13px;    width: 46%;
-color: #9E9FA6;}}
-        .form-wrapper,.upload-wrapper{padding: 0 20px;}
-        .content-item{
-            display: flex;align-items: center;font-size: 14px;margin-bottom: 40px;
-color: #40434F;
-.ico-hours{position:absolute;left:50%;top:50%;font-size: 26px;margin-left: -13px;margin-top: -13px;cursor: pointer;}
-span{position: absolute;height: 30px;line-height: 30px;bottom: 0;text-align: center;left: 0;right: 0;background: #F5F5F5;}
-         }
-         .content_{
-             .content-item{
-            margin-bottom: 18px;
-             }
-             
-             }
-         .default-wrapper{border: 2px solid #EAEAEB;width: 318px;height: 204px;position: relative;
-border-radius: 2px;}
-.case{margin: 0 19px;}
+.title {
+  height: 40px;
+  background: #1b222a;
+  margin-bottom: 13px;
+  span {
+    background: #292f37;
+    font-size: 15px;
+    width: 144px;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    color: #ffffff;
+    text-align: center;
+  }
+}
+.identity-wrapper {
+  position: relative;
+  .tips {
+    position: absolute;
+    right: 2%;
+    top: 40px;
+    font-size: 13px;
+    width: 46%;
+    color: #9e9fa6;
+  }
+}
+.form-wrapper,
+.upload-wrapper {
+  padding: 0 20px;
+}
+.content-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 40px;
+  color: #40434f;
+  .ico-hours {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 26px;
+    margin-left: -13px;
+    margin-top: -13px;
+    cursor: pointer;
+  }
+  span {
+    position: absolute;
+    height: 30px;
+    line-height: 30px;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+    background: #9e9fa6;
+    color: #fff;
+  }
+}
+.content_ {
+  .content-item {
+    margin-bottom: 18px;
+  }
+}
+.default-wrapper {
+  border: 1px solid #9e9fa6;
+  width: 348px;
+  height: 198px;
+  position: relative;
+  border-radius: 2px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.case {
+  margin: 0 19px;
+  color: #fff;
+}
 </style>
 <script>
 export default {
-    data(){
-        return{
-            isShow:true,
-                 form: {
-          name: '',
-          region: '',
-        
-        
-        }
-        }
+  data() {
+    return {
+      isShow: true,
+      countryType:0,
+      type:0,
+      realName:'',
+      form: {
+        number: "",
+        surname:'',
+        name:'',
+        type:'',
+        country:''
+      }
+    };
+  },
+  methods: {
+      //选择国籍
+      selectCountry(val){
+          this.countryType=val
+      },
+    //选择证件类型
+    selectType(val){
+       this.type=val
     },
-    methods:{
-        next(){
-            this.isShow=false
-            this.$refs.title.innerHTML="证件上传"
-        }
+    next() {
+        console.log(this.type,'type00000')
+      var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      
+     
+      if (!regIdNo.test(this.form.number)) {
+        this.$message({
+          message: "身份证号填写有误",
+          type: "warning"
+        });
+          if(this.form.number==''){
+          this.$message({
+          message: "身份证号不能为空",
+          type: "warning"
+        });
+      }
+       if(this.form.name==''){
+          this.$message({
+          message: "名字不能为空",
+          type: "warning"
+        });
+      }
+      if(this.form.surname==''){
+          this.$message({
+          message: "姓氏不能为空",
+          type: "warning"
+        });
+      }
+     if(this.countryType==0){
+          this.$message({
+          message: "请选择国籍",
+          type: "warning"
+        });
+     }
+      if(this.type==0){
+          this.$message({
+          message: "请选择证件类型",
+          type: "warning"
+        });
+     }
+      }
+      this.realName=this.form.surname+this.form.name
+     this.$api.audit(
+         {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.number,document_type:this.type}
+         ).then(res=>{
+             console.log(res,'我是实名认证1111')
+              if(res.data.message=='成功'){
+                this.$message({
+                message: "谷歌验证成功",
+                type: "success"
+                }); 
+                setTimeout(this.isShow=false,1000)
+           }
+         })
+      // this.isShow=false
+      // this.$refs.title.innerHTML="证件上传"
     }
-}
+  }
+};
 </script>

@@ -162,11 +162,18 @@ export default {
        this.$api.login({userName: this.userName,
           passWord: this.passWord,
           NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
-            console.log(res,'我是登录')
+          
              var returnData = res.data.message
-        let token = JSON.stringify(res.data.datas)
-        localStorage.setItem("token", token)
+             var datasList=res.data.datas.split("|")
+             var token=datasList[0]
+             var userId=datasList[1]
+            localStorage.setItem("userId", userId)
+                    localStorage.setItem("token", token)
         localStorage.setItem("userName", this.userName)
+        localStorage.setItem("loginPassword", this.passWord)
+              console.log(res.data.datas.split("|"),'我是登录userId')
+        // let token = JSON.stringify(res.data.datas)                                            
+
         if (returnData !== '成功') {
           this.$message({
             message: returnData,

@@ -13,7 +13,7 @@
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
             <dd class="list" v-for="(item, index) in propertyList">
-                <span v-cloak><span class="wrap-img"><img :src="logoUrl" alt=""></span>{{coinName}}</span>
+              {{propertyList}}  <span><span class="wrap-img"><img :src="logoUrl" alt=""></span>{{item.coinName}}</span>
                 <span>{{item.coinId}}</span>
                 <span>{{item.total}}</span>
                 <span>{{item.frozen}}</span>
@@ -197,25 +197,25 @@ export default {
     //我的资产列表
       myproperty(){
          this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
-           console.log(res,'我是第一个res')
-        //   var list=res.data.datas.list
-        //  this.propertyList=res.data.datas.list
-        //   const  that= this;
-        //   var logoUrl;
-        //   var coinName;
-        //   list.forEach(function(list){
-        //     that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
-        //     console.log(res,'我是第二个res')
-        //       if(res.data.message=='success'){
-        //       logoUrl=res.data.datas.logoUrl
-        //       coinName==res.data.datas.name;
-        //       }
-              
-        //       console.log(res.data.datas.name,'woshi')
-        //     })
-        //   })
-
-          // console.log(logoUrl,'999999')
+        console.log(res,'我是第一个res')
+          var list=res.data.datas.list
+         this.propertyList=res.data.datas.list
+         console.log(this.propertyList,'8888888888888')
+          const  that= this;
+          list.forEach(function(list){
+           that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
+            console.log(res,'我是第二个res')
+              if(res.data.message=='success'){
+                that.propertyList.forEach (function (item) {
+                  if (item.coinId === res.data.datas.id) {
+                    item.coinName = res.data.datas.name;
+                    item.logoUrl = res.data.datas.logoUrl
+                  }
+                })
+                    console.log( res.data.datas.name,'cheng成功')
+              }
+            })
+          })
          })
       },
       carryCoin(index){

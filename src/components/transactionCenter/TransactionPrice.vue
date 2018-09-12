@@ -52,6 +52,7 @@ export default {
     this.getDealOrders()
   },
   methods: {
+    
     getDealOrders(){
       /*this.$api.getDealOrdersByTradeCoinPairId({id:2}).then(res=>{
        console.log(res.data.datas.dealTime, date.timestampToTime(1536305419000),'我是实时交易')
@@ -62,15 +63,22 @@ export default {
        });
        this.dataList=content
     })*/
-     let ws = new WebSocket('ws://192.168.0.108:8088/websocket?pairId=2')
+     let ws = new WebSocket('ws://47.93.194.146:13080/websocketSSCJ?pairId=1')
+     
          ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('Holle')
               console.log('数据发送中...')
           }
           ws.onmessage = evt => {
-            
-             this.dataList=JSON.parse(evt.data)
+             var content=JSON.parse(evt.data)
+             content.forEach(element => {
+              element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
+              console.log(element.dealTime,'99999999')
+             });
+
+             console.log(content,'我是content')
+             this.dataList=content
               console.log(this.dataList,'数据已接收...')
           }
           ws.onclose = function () {

@@ -10,13 +10,13 @@
             <dd @click="toggleTab('entrust')"  :class="{active:this.currentTab==='entrust'}">我的委托</dd>
             <dd @click="toggleTab('record')"  :class="{active:this.currentTab==='record'}">交易记录</dd>
             <!-- <dd class="border-bottom">C2C记录</dd> -->
-            <dt><span class="iconfont">&#xe602;</span>财产中心</dt>
+            <!-- <dt><span class="iconfont">&#xe602;</span>财产中心</dt> -->
             <dd @click="toggleTab('full-coin')"  :class="{active:this.currentTab==='full-coin'}">我要充币</dd>
             <dd @click="toggleTab('carry-coin')"  :class="{active:this.currentTab==='carry-coin'}">我要提币</dd>
-            <dd @click="toggleTab('bank-card')"  :class="{active:this.currentTab==='bank-card'}">银行卡管理</dd>
+            <!-- <dd @click="toggleTab('bank-card')"  :class="{active:this.currentTab==='bank-card'}">银行卡管理</dd> -->
             <dd @click="toggleTab('coin-count')"  :class="{active:this.currentTab==='coin-count'}"  class="border-bottom">币账户</dd>
             <dt><span class="iconfont">&#xe623;</span>安全中心</dt>
-            <dd @click="toggleTab('phone-authentication')"  :class="{active:this.currentTab==='phone-authentication'}" >手机认证</dd>
+            <!-- <dd @click="toggleTab('phone-authentication')"  :class="{active:this.currentTab==='phone-authentication'}" >手机认证</dd> -->
             <dd @click="toggleTab('email-authenticator')"  :class="{active:this.currentTab==='email-authenticator'}">邮箱认证</dd>
 
             <dd @click="toggleTab('real-authentication')"  :class="{active:this.currentTab==='real-authentication'}">实名认证</dd>
@@ -24,6 +24,7 @@
             <dd @click="toggleTab('google-authenticator')"  :class="{active:this.currentTab==='google-authenticator'}">谷歌验证</dd>
             <!-- <dd @click="toggleTab('recommed')"  :class="{active:this.currentTab==='recommed'}">推荐返佣</dd> -->
             <dd  @click="toggleTab('modify-password')"  :class="{active:this.currentTab==='modify-password'}">登录密码</dd>
+            <dd  @click="toggleTab('transaction-password')"  :class="{active:this.currentTab==='transaction-password'}">交易密码</dd>
         </dl>
     </div>
     <div class="content">
@@ -55,6 +56,7 @@ import Recommed from "../components/personal/Recommed";
 import ModifyPassword from "../components/personal/ModifyPassword";
 import MineInfo from "../components/personal/MineInfo";
 import EmailAuthenticator from "../components/personal/EmailAuthenticator";
+import TransactionPassword from "../components/personal/TransactionPassWord"
 
 
 export default {
@@ -78,6 +80,7 @@ export default {
    GoogleAuthenticator,
    EmailAuthenticator,
    ModifyPassword,
+   TransactionPassword,
    Recommed,
    MineInfo,
     VHeader,
@@ -87,7 +90,7 @@ export default {
   toggleTab: function(tab) {
 
         this.currentTab = tab;
-   
+       
     // tab 为当前触发标签页的组件名
 
   },

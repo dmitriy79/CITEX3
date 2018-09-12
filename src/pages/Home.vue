@@ -11,7 +11,7 @@
               {{notice[noticeIndex].title}}
             </a>
         </transition>
-        <div class="notice-more">更多</div>
+        <div class="notice-more"><router-link to="/notice">更多</router-link>  </div>
       </div>
       <coin-type></coin-type>
       <rise-drop></rise-drop>

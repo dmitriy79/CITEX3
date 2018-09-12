@@ -27,7 +27,9 @@ import './assets/css/iconfont.css'
 
 import './assets/css/common.less'
 import axios from 'axios'
+import VueClipboards from 'vue-clipboards';
 
+Vue.use(VueClipboards);
 // Vue.use(ws)
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$http = axios
@@ -52,7 +54,8 @@ Vue.prototype.$confirm = MessageBox.confirm;
 // 请求拦截
 axios.interceptors.request.use(
 	config => {
-		let token =JSON.parse(localStorage.getItem("token")) ;
+		let token =localStorage.getItem("token") ;
+		// let token =JSON.parse(localStorage.getItem("token")) ;
 		// token = JSON.parse(token)
 		if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
 			config.headers['USER-TOKEN'] = `${token}`;

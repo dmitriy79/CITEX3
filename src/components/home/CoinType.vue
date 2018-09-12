@@ -67,7 +67,18 @@ export default {
     },
      components: {
    	XChart
-  	},
+      },
+      mounted () {
+         this.getTopTradeCoinPairs()
+      },
+      methods: {
+          //获取主要币种
+          getTopTradeCoinPairs(){
+              this.$api.getTopTradeCoinPairs().then(res=>{
+                  console.log(res,'主要币种')
+              })
+          }
+      }
 }
 </script>
 <style lang="less" scoped>
