@@ -7,6 +7,11 @@
 
 <script>
 export default {
+  data(){
+    return{
+      websock: null,
+    }
+  },
   name: "KLine",
   mounted: function() {
     const this_vue = this;
@@ -714,6 +719,25 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
+        // this.$api.getKDatas({start:,end:,step:,})
+        let ws= new WebSocket('ws://192.168.1.107:13080/websocketKline?pairId=2&uuid=1&step=60&initlength=1000')
+       ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('ws')
+              console.log('数据发送中8888++++++...')
+          }
+          ws.onmessage = evt => {
+           var content=JSON.parse(evt.data)
+           console.log(content,'我是k线图')
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
         console.log("我被加载了。。。。。。。。。。。。。");
         console.log(resolution, "我是resolution");
         console.log(from, to);
@@ -771,7 +795,7 @@ export default {
            console.log(this_vue.bars,'888888');
            onHistoryCallback(this_vue.bars);
          });*/
-        onHistoryCallback(this_vue.bars);
+        // onHistoryCallback(this_vue.bars);  我在这里显示
         //onHistoryCallback([], { noData: true });
         //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
       };

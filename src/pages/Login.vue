@@ -171,7 +171,7 @@ export default {
                     localStorage.setItem("token", token)
         localStorage.setItem("userName", this.userName)
         localStorage.setItem("loginPassword", this.passWord)
-              console.log(res.data.datas.split("|"),'我是登录userId')
+              console.log(res.data.datas,'我是登录userId')
         // let token = JSON.stringify(res.data.datas)                                            
 
         if (returnData !== '成功') {

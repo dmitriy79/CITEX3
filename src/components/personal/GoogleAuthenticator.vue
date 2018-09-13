@@ -1,11 +1,18 @@
 <template>
 <div>
      <div class="title"><span>谷歌验证</span></div>
-     <div class="wrapper" v-if="!show">
+     <div v-show="show" class="validate">您已绑定过谷歌验证码</div>
+     <div class="wrapper" v-show="!show">
        
         <div class="step">第一步: 根据您的手机系统类型，下载并安装谷歌验证器</div>
         <div class="img-wrapper">
-            <span class="item"></span> <span class="item_"></span>
+           <a class="item" target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">
+               
+           </a>
+           <a class="item_" target="_blank" href="https://itunes.apple.com/cn/app/google-authenticator/id388497605">
+   
+           </a>
+           
         </div>
        
         <!-- <div id="qrcode"></div> -->
@@ -32,24 +39,24 @@
                 
             </div>
     </div>
-    <div class="wrapper" v-if="show">
+    <!-- <div class="wrapper" v-if="show">
        
         
        <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     
                     
-                    <el-form-item label="登录证码">
+                    <el-form-item label="登录密码">
                         <el-input v-model="form.loginPassword" type="password"></el-input>
                     </el-form-item>
                     <el-form-item label="谷歌验证码">
-                        <el-input v-model="form.code" type="text" ></el-input>
+                        <el-input v-model="form.code" type="text" placeholder="请输入程序上显示的6位数谷歌验证码"></el-input>
                     </el-form-item>
                     <div  class="bottom-btn" @click="close">停用</div>
                 </el-form >
                 
             </div>
-    </div>
+    </div> -->
 </div>
    
 </template>
@@ -75,6 +82,10 @@ export default {
 
   },
   methods: {
+      //停用谷歌验证码
+      close(){
+        
+      },
       //启用谷歌验证码
     open(){
         this.$api.enableGooleAutu({secret:this.password,tradePassword:this.form.tradePassword,code:this.form.code}).then(res=>{
@@ -84,8 +95,15 @@ export default {
                 message: "谷歌验证成功",
                 type: "success"
                 }); 
+                this.show=true
+                // this.form.code=''
            }
-           
+           else{
+                this.$message({
+                message: res.data.message,
+                type: "warning"
+                });  
+           }
            
            console.log(res,'我是启用谷歌验证码')
         })
@@ -135,7 +153,8 @@ export default {
 </style>
 
 <style lang="less" scoped>
-#qrcode{margin-bottom:20px;}
+.validate{margin: 0 20px;}
+#qrcode{margin:20px 0;}
 .secret-text {
   .secret,
   .refresh {
@@ -166,7 +185,7 @@ export default {
   border-bottom-right-radius: 4px;
 }
 .img-wrapper {
-  span {
+  a {
     margin-right: 20px;
     background: url(../../assets/images/yza.png);
     display: inline-block;

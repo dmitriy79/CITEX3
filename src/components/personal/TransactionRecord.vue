@@ -46,7 +46,7 @@
             </div>
 
         </div>
-    </div>
+   
 </template>
 <script>
 import date from '../../assets/js/date'

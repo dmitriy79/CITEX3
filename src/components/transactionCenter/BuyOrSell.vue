@@ -10,7 +10,7 @@
                        <img src="../../assets/images/icon-line1.png" alt="" @click="showSell"> -->
                    </div>
                    <div class="concat-deep-wrap">
-                       <div class="concat-deep" @click="showDeep">合并深度<span>{{currentDeep}}</span><i  :class="{active:isActive}"></i></div>
+                       <!-- <div class="concat-deep" @click="showDeep">合并深度<span>{{currentDeep}}</span><i  :class="{active:isActive}"></i></div> -->
                        <transition name="fade">
                             <div class="dropdown" v-if="isShow">
                             <div @click="changeDeep">0.000001</div>
@@ -28,7 +28,7 @@
                     <span>累计（IOST）</span>
                 </div>
             </div>
-        <div class="list buy-list" v-if="buyList" ref="buyList">
+        <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
             
             <dl>
                 <dd v-for="(item,index) in buyLists">
@@ -40,7 +40,7 @@
             </dl>
         </div>
         <div class="line" v-if="isShowLine"></div>
-          <div class="list sell-list" v-if="sellList" ref="sellList">
+          <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
             <dl>
                 <dd v-for="(item,index) in sellLists">
                     <span>卖{{index+1}}</span>
@@ -65,6 +65,8 @@ export default {
       name: "BuySell",
       isShow: false,
       isActive: false,
+      isSelect:false,
+      isSelect_:false,
       sellList:true,
       buyList:true,
       currentDeep: 0.000001,
@@ -87,11 +89,7 @@ export default {
   methods: {
     //买卖盘挂单
     getInfo(){
-      // this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:22}).then(res=>{
-      //   console.log(res,'w我是买卖盘')
-      //   this.buyLists=res.data.datas.bid_list 
-      //   this.sellLists=res.data.datas.ask_list 
-      // })
+
       let ws= new WebSocket('ws://47.93.194.146:13080/websocketAskBid?pairId=1')
        ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
@@ -102,15 +100,9 @@ export default {
            var content=JSON.parse(evt.data)
            this.buyListsAll=content.bid
            this.sellListsAll=content.ask
+           console.log(content,'length')
            this.buyLists=content.bid.slice(0,11)
            this.sellLists=content.ask.slice(0,11)
-            //  content.forEach(element => {
-            //   element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
-            //   console.log(element.dealTime,'99999999')
-            //  });
-
-            //  console.log(content,'我是content')
-            //  this.dataList=content
               console.log(content,'数据已接收8888++++++...')
           }
           ws.onclose = function () {
@@ -135,7 +127,8 @@ export default {
   
         this.buyList=true
         this.sellList=false
-        this.$refs.buyList.style.height="84%"
+        this.isSelect=true
+
   this.buyLists=this.buyListsAll.slice(0,23)
         this.isShow1=false
         this.isShowLine=false
@@ -144,21 +137,19 @@ export default {
      this.sellLists=this.sellListsAll.slice(0,23)
         this.buyList=false
         this.sellList=true
-        this.$refs.sellList.style.height="84%"
-   
+        this.isSelect_=true
         this.isShow1=true
         this.isShowLine=false
 
     },
     showAll(){
+      this.isSelect=false
+      this.isSelect_=false
        this.sellLists=this.sellListsAll.slice(0,11)
              this.buyLists=this.buyListsAll.slice(0,11)
         this.buyList=true
         this.sellList=true
         this.isShowLine=true
-        console.log( this.$refs.sellLists,'9我是全部单子')
-        this.$refs.sellList.style.height="40%"
-        this.$refs.buyList.style.height="40%"
 
     },
 
@@ -289,12 +280,18 @@ export default {
         color: #5dc176;
       }
     }
+    &.active{
+      height: 84%
+    }
   }
   .sell-list {height: 40%;
     dd {
       span:first-child {
         color: #ff7758;
       }
+    }
+    &.active{
+      height: 84%
     }
   }
   .list-bottom {

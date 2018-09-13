@@ -24,13 +24,14 @@
                         <el-input v-model="form.newPassword" type="password"></el-input>
                     </el-form-item>
                      <el-form-item label="确认新密码">
-                        <el-input v-model="form.confirmPassword" type="password"></el-input>
+                        <el-input v-model="form.confirmPassword_" type="password"></el-input>
                     </el-form-item>
                      <el-form-item label="谷歌验证码">
-                        <el-input v-model="form.code"></el-input>
+                        <el-input v-model="form.code" placeholder="谷歌验证码为6位纯数字"></el-input>
                     </el-form-item>
                     
                     <div  class="bottom-btn" @click="reset">确定</div>
+                  
                 </el-form >
                 
             </div>
@@ -38,6 +39,8 @@
     </div>
 </template>
 <script>
+import validate  from '../../assets/js/validate'
+
 export default {
     data(){
         return{
@@ -50,6 +53,7 @@ form: {
           loginPassword:'',
           confirmPassword:'',
           confirmNewPassword:'',
+          confirmPassword_:'',
           newPassword:'',
           code:''
         }
@@ -57,24 +61,54 @@ form: {
     },
     mounted () {
         this.getUserInfo()
-       this.loginPassword=localStorage.getItem('loginPassword') 
+    //    this.loginPassword=localStorage.getItem('loginPassword') 
     },
     methods: {
         getUserInfo(){
             this.$api.getValidateById().then(res=>{
                 console.log(res,'我是用户信息')
                 var content =res.data.datas
-                this.tradePassword=content.user_password;
-                if( this.tradePassword==''){
+                // this.tradePassword=content.user_password;
+             
+                if(!content.trade_password){
                     this.show=false
                 }
                 else{
                    this.show=true 
                 }
-                if(res.data.message=='成功'){
-                    
-                }
+               
             })
+        },
+      validatePassword(ele){
+            var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+            if(!regExp.test(ele)){ 
+            this.prototype.$message({
+                message: '密码是数字和字母组合，不能小于6位',
+                type: 'warning'
+            });
+
+            }
+            else{
+                this.prototype.$message({
+                    message: '密码不能为空',
+                    type: 'warning'
+                });   
+            }
+    },
+        confirmPassword_(){
+        var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+
+            if (this.form.confirmPassword_ == '') {
+                this.$message({
+                message: '确认密码不能为空',
+                type: 'warning'
+                });
+            } else if ( this.form.confirmPassword_!== this.form.newPassword) {
+                this.$message({
+                message: '两次密码不匹配',
+                type: 'warning'
+                });
+            }
         },
          //密码确认验证
     ConfirmPassword() {
@@ -94,8 +128,12 @@ form: {
     },
         //提交交易密码
         setTradePassword(){
+          
               this.ConfirmPassword()
              var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+          
+           
+           
             if (!regExp.test(this.form.tranPassword)) {
                 this.$message({
                 message: '密码是数字和字母组合，不能小于6位',
@@ -103,17 +141,18 @@ form: {
                 });
 
             }
-             if (this.form.tranPassword == '') {
+            if (this.form.tranPassword == '') {
                 this.$message({
                 message: '交易密码不能为空',
                 type: 'warning'
                 });
             } 
-            if(this.form.loginPassword!==this.loginPassword){
-                 this.$message({
-                    message: '登录密码不正确',
-                    type: 'warning'
-                    });
+            if (!regExp.test(this.form.loginPassword)) {
+                this.$message({
+                message: '密码是数字和字母组合，不能小于6位',
+                type: 'warning'
+                });
+
             }
             if(this.form.loginPassword==''){
                    this.$message({
@@ -121,19 +160,39 @@ form: {
                     type: 'warning'
                     }); 
             }
-          
-           
 
            
-            
-            this.$api.setTradePassword({userPassword:this.form.loginPassword,tradePassword:this.form.tranPassword}).then(res=>{
-                console.log(res,'交易密码')
+            if(this.form.loginPassword&&this.form.tranPassword&&(this.form.confirmPassword==this.form.tranPassword)){
+                    this.$api.setTradePassword({userPassword:this.form.loginPassword,tradePassword:this.form.tranPassword}).then(res=>{
+                if(res.data.message=='成功'){
+                    this.$message({
+                    message: res.data.message,
+                    type: 'success'
+                    });
+                    this.show=true
+                
+                }
+                else{
+                    this.$message({
+                    message: res.data.message,
+                    type: 'warning'
+                    });
+                }
             })
+            }
+        
         },
         //重置交易密码
         reset(){
-                this.ConfirmPassword()
-            var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+            this.confirmPassword_()
+          
+           if (this.form.code == '') {
+                this.$message({
+                message: '谷歌验证码不能为空',
+                type: 'warning'
+                });
+            } 
+              var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
             if (!regExp.test(this.form.newPassword)) {
                 this.$message({
                 message: '密码是数字和字母组合，不能小于6位',
@@ -147,10 +206,29 @@ form: {
                 type: 'warning'
                 });
             } 
-           
-            this.$api.reset({tradePassword:this.form.newPassword,code:this.form.code}).then(res=>{
+            if(this.form.newPassword&&(this.form.newPassword==this.form.confirmPassword_)){
+                this.$api.reset({tradePassword:this.form.newPassword,code:this.form.code}).then(res=>{
                 console.log(res,'我是修改后的交易密码')
+                if(res.data.message=='成功'){
+                   this.$message({
+                message: '交易密码修改成功',
+                type: 'success'
+                }); 
+                this.form={
+                    newPassword:'',
+                    confirmPassword_:'',
+                    code:''
+                }
+                }
+                else{
+                    this.$message({
+                message: res.data.message,
+                type: 'warning'
+                });   
+                }
             })
+            }
+            
         }
     }
 }

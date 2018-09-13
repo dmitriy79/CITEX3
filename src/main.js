@@ -12,7 +12,9 @@ import {
 	Input,
 	Message,
 	MessageBox,
-	Button
+	Button,
+	Radio,
+  RadioGroup
 } from 'element-ui'
 
 import App from './App'
@@ -44,6 +46,10 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Input)
 Vue.use(Button)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+
+  
 // Vue.use(MessageBox)
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox;
