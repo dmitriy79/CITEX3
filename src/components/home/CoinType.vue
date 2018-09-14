@@ -9,6 +9,11 @@
                     <div  class="num">量：<span >1982382983</span></div>
                 </div>
                <x-chart :id="id1" :option="option1"></x-chart>
+               <!-- <x-chart :id="id2" :option="option2"></x-chart>
+               <x-chart :id="id3" :option="option3"></x-chart>
+               <x-chart :id="id4" :option="option4"></x-chart>
+               <x-chart :id="id5" :option="option5"></x-chart> -->
+               
             </div>
             <div class="item">
                 <div class="top-wrapper">

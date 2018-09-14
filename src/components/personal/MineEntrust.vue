@@ -10,15 +10,23 @@
                     <div class="left">
                         方向：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
                     </div>
-                    <div class="right">交易对：<input type="text">&nbsp;/&nbsp;
-                        <div>
-                            <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span>
-                            <ul v-if="showUl">
-                                <li>BTC</li>
-                                <li>ETH</li>
-                            </ul>
+                    <div class="right "><span>交易对：</span>
+                     <el-form ref="form" :model="form" label-width="80px" >
+                     <el-form-item >
+                        <el-input v-model="form.name"></el-input>
+                    </el-form-item><span>/</span>
+                 
+                            <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
+                           
+                              <el-form-item>
+                                  <el-select v-model="form.region" placeholder="BTC">
+                                  <el-option label="BTC" value="BTC"></el-option>
+                                  <el-option label="ETH" value="ETH"></el-option>
+                                  </el-select>
+                              </el-form-item>
+                            </el-form>
+                            
                         </div>
-                    </div>
                 </div>
                 <div class="table-wrapper">
                      <el-table :data="tableData1" style="width: 100%" :row-class-name="setClassName">
@@ -75,15 +83,23 @@
                     <div class="left">
                         方向：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
                     </div>
-                    <div class="right">交易对：<input type="text">&nbsp;/&nbsp;
-                        <div>
-                            <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span>
-                            <ul v-if="showUl">
-                                <li>BTC</li>
-                                <li>ETH</li>
-                            </ul>
+                     <div class="right "><span>交易对：</span>
+                     <el-form ref="form" :model="form" label-width="80px" >
+                     <el-form-item >
+                        <el-input v-model="form.name"></el-input>
+                    </el-form-item><span>/</span>
+                 
+                            <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
+                           
+                              <el-form-item>
+                                  <el-select v-model="form.region" placeholder="BTC">
+                                  <el-option label="BTC" value="BTC"></el-option>
+                                  <el-option label="ETH" value="ETH"></el-option>
+                                  </el-select>
+                              </el-form-item>
+                            </el-form>
+                            
                         </div>
-                    </div>
                 </div>
                                 <div class="table-wrapper">
                      <el-table :data="tableData1" style="width: 100%" >
@@ -145,7 +161,10 @@ export default {
       currentIndex: 0, //当前方向
       showUl: false,
       showDetails: false, //是否显示交易详情
-
+     form: {
+          name: '',
+          region: '',
+        },
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }],
       tableData1: [
         {
@@ -268,12 +287,13 @@ export default {
       .right {
         margin-left: 30px;
         display: flex;
-        ul {
-          li {
-            line-height: 24px;
-            padding-left: 5px;
-          }
-        }
+       .el-form{
+        display: flex
+
+       }
+     .el-input{
+    width: 100% !important;
+}
         .coin-type {
           position: relative;
           cursor: pointer;

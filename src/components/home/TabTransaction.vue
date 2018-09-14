@@ -36,10 +36,11 @@ export default {
             name: 'TabTransaction',
             active: 0,
             num: 0,
+            coinId:1,//币种id
             navs: [
-                { id: 1, name: 'ETH交易' },
-                { id: 2, name: 'IT交易' },
-                { id: 3, name: 'BTC交易' },
+                { id: 1, name: 'ETH交易',coinId:1 },
+                { id: 2, name: 'IT交易',coinId:'' },
+                { id: 3, name: 'BTC交易',coinId:10},
                 { id: 4, name: '自选市场' },
             ],
             List: [
@@ -59,11 +60,43 @@ export default {
             ]
         }
     },
+    mounted () {
+        this.getInfo()
+    },
     methods: {
         tabs(index) {
             console.log(index)
             this.num = index;
             this.active = index;
+        },
+        getInfo(){
+       var userId=localStorage.getItem("userId")
+       var wsUrl=`ws://47.93.194.146:13080/websocketDealPrice?unitPriceCoinId=${this.coinId}&uuid=1&userId=`+userId
+       let ws = new WebSocket(wsUrl)
+    
+     console.log(ws.readyState,'99999000000+++++++')
+         ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('Holle')
+              console.log('数据发送中+++++...')
+          }
+          ws.onmessage = evt => {
+             
+             var content=JSON.parse(evt.data)
+            
+             console.log(content,'我是content')
+             
+              console.log('数据已接收...')
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
         }
     },
 

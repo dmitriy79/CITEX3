@@ -181,27 +181,19 @@ export default {
   },
   mounted(){
     this.myproperty();
-    //this.coinInfo()
   },
   methods:{
     //隐藏小额资产
     handleChecked(){
       this.checked=!this.checked
     },
-    //获取币种
-    // coinInfo(){
-    //   this.$http("/COIN/coin/info/20").then(res=>{
-    //     console.log(res,'88888888888==========')
-    //   })
-    // },
+
     //我的资产列表
       myproperty(){
          this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
-        console.log(res,'我是第一个res')
           var list=res.data.datas.list
-         this.propertyList=res.data.datas.list
-         console.log(this.propertyList,'8888888888888')
           const  that= this;
+           
           list.forEach(function(list){
            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
             console.log(res,'我是第二个res')
@@ -211,8 +203,9 @@ export default {
                     item.coinName = res.data.datas.name;
                     item.logoUrl = res.data.datas.logoUrl
                   }
+                  // console.log(that.propertyList,'我的资产')
                 })
-                    console.log( res.data.datas.name,'cheng成功')
+                   
               }
             })
           })
@@ -227,14 +220,9 @@ export default {
         this.$refs.child[index].style.display = 'none'
       
       }
-        // this.activeIndex=index
-        //   this.isShow=!this.isShow
-        //    this.isShow1=false
+ 
       },
       fullCoin(index){
-        // this.activeIndex=index
-        //   this.isShow1=!this.isShow1
-        //   this.isShow=false
              this.$refs.child[index].style.display = 'none'
          if (this.$refs.child1[index].style.display === 'none') {
         this.$refs.child1[index].style.display = 'block'

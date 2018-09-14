@@ -2,8 +2,8 @@
     <div>
         <div class="title"  v-if="isShow"><span>身份认证</span></div>
         <div class="title"  v-if="!isShow"><span>证件上传</span></div>
-        <div class="identity-wrapper" v-if="isShow">
-            
+        <div v-if="isAssess">
+                    <div class="identity-wrapper" v-if="isShow"> 
             <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="选择地区" >
@@ -40,10 +40,10 @@
                     </el-form-item> -->
                    
                     <el-form-item label="证件号码" v-if="!show">
-                        <el-input v-model="form.number"></el-input>
+                        <el-input v-model="form.number" @keyup.native="proving"></el-input>
                     </el-form-item>
                     <el-form-item label="护照ID" v-if="show">
-                        <el-input v-model="form.number"></el-input>
+                        <el-input v-model="form.passportId" @keyup.native="proving"></el-input>
                     </el-form-item>
                     <div  class="bottom-btn" @click="next">下一步</div>
                 </el-form >
@@ -55,7 +55,8 @@
                 <p>第二步：证件上传，请准备身份证正反面照片以及手持身份证正面照和个人签字照</p>
             </div>
         </div>
-        <div class="upload-wrapper" v-if="!isShow">
+
+               <div class="upload-wrapper" v-if="!isShow">
           
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
             <div class="identity-wrapper" v-if="showImg">
@@ -107,6 +108,26 @@
             </div>
              <div  class="bottom-btn" >确定</div>
         </div>
+        </div>
+
+      <div  class="wrapper">
+          <div class="text-o">恭喜你通过实名认证</div>{{form.cardName}}
+           <el-form ref="form" :model="form" label-width="80px" >
+              <el-form-item label="姓名" >
+                  <el-input v-model="form.cardName" disabled ></el-input>
+              </el-form-item>
+              <el-form-item label="证件类型" >
+                  <el-select v-model="form.cardType"  disabled>
+                  <el-option label="身份证" value="1"></el-option>
+                  <el-option label="护照" value="2"></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item label="证件号码" >
+                  <el-input v-model="form.cardNum" disabled></el-input>
+              </el-form-item>
+           </el-form>
+      </div>
+ 
     </div>
 </template>
 
@@ -122,16 +143,44 @@ export default {
       type:0,
       realName:'',
       show:false,
+      isAssess:true,
+      
       form: {
+         cardName:'',
         number: "",
         surname:'',
         name:'',
-      
-        country:''
+      passportId:'',
+        country:'',
+       
       }
     };
   },
+  mounted () {
+    this.getUserInfo()
+  },
   methods: {
+      getUserInfo(){
+            this.$api.getValidateById().then(res=>{
+                console.log(res,'我是用户信息')
+                var content =res.data.datas
+                // this.tradePassword=content.user_password;
+             console.log(content.user_real_name,'999999')
+             this.form.cardName=content.user_real_name
+                if(content.user_real_name&&content.document_id&&content.document_type){
+                    this.isAssess=false
+                }
+                else{
+                   this.isAssess=true 
+                }
+               
+            })
+        },
+//      验证只能输入数字
+      proving(){
+        this.form.passportId=this.form.passportId.replace(/[^\d]/g,'');
+        
+      },
       //选择地区
       selectRegin(val){
         this.reginVal=val
@@ -140,7 +189,7 @@ export default {
           this.showImg=true
          }
          else{
-           this.showImg=true  
+           this.showImg=false  
    this.show=true
          }
       },
@@ -158,14 +207,20 @@ export default {
     next() {
         console.log(this.type,'type00000')
       var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-      
+       if(this.form.passportId==''){
+          this.$message({
+          message: "护照不能为空",
+          type: "warning"
+        });
+      }
      
-      if (!regIdNo.test(this.form.number)) {
+      if (!regIdNo.test(this.form.number)&&this.reginVal==1) {
         this.$message({
           message: "身份证号填写有误",
           type: "warning"
         });
-          if(this.form.number==''){
+      }
+          if(this.form.number==''&&this.reginVal==1){
           this.$message({
           message: "身份证号不能为空",
           type: "warning"
@@ -190,7 +245,7 @@ export default {
         });
      }
      
-      }
+     
       this.realName=this.form.surname+this.form.name
       if(this.reginVal==1){
         this.countryType=1
@@ -199,20 +254,39 @@ export default {
       else{
         this.type=2
       }
-      if(this.realName&&this.countryType&&this.form.number&&this.type){
+      if(this.reginVal==1){
+         if(this.realName&&this.countryType&&this.form.number&&this.type){
            this.$api.audit(
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.number,document_type:this.type}
          ).then(res=>{
              console.log(res,'我是实名认证1111')
               if(res.data.message=='成功'){
                 this.$message({
-                message: "我是实名认证成功",
+                message: "提交成功",
                 type: "success"
                 }); 
-                setTimeout(this.isShow=false,1000)
+               this.isShow=false,1000
            }
          })
       }
+      }
+      else{
+         if(this.realName&&this.countryType&&this.form.passportId&&this.type){
+           this.$api.audit(
+         {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.passportId,document_type:this.type}
+         ).then(res=>{
+             console.log(res,'我是实名认证1111')
+              if(res.data.message=='成功'){
+                this.$message({
+                message: "提交成功",
+                type: "success"
+                }); 
+               this.isShow=false,1000
+           }
+         })
+      }
+      }
+     
   
       // this.isShow=false
       // this.$refs.title.innerHTML="证件上传"
@@ -221,6 +295,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.wrapper{padding: 0 20px}
 .plus-icon {
   display: inline-block;
   position: absolute;
