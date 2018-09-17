@@ -4,51 +4,53 @@
             <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="币种">
-                        <el-select v-model="form.region" placeholder="">
-                        <el-option label="BTC" value="shanghai"></el-option>
-                        <el-option label="OKEX" value="beijing"></el-option>
+                        <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
+                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
+                        
                         </el-select>
                     </el-form-item>
                     <el-form-item label="提币地址">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.coinAddress"  onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"></el-input>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.mark"></el-input>
                     </el-form-item>
-                    <span  class="bottom-btn">添加</span>
+                    <span  class="bottom-btn" @click="add">添加</span>
                 </el-form >
                 
             </div>
             <div class="table-wrapper">
-                 <el-table :data="tableData1"  style="width: 100%" :row-class-name="setClassName">
-                    <el-table-column prop="date" label="币种" >
+                 <el-table :data="coinList"  style="width: 100%" :row-class-name="setClassName">
+                    <el-table-column prop="coinName" label="币种" >
 
                     </el-table-column>
                     
-                    <el-table-column prop="num" label="提币地址"></el-table-column>
-                    <el-table-column prop="num" label="备注"></el-table-column>
-                    <el-table-column prop="num" label="操作" width="100">
+                    <el-table-column prop="withdrawAddress" label="提币地址"></el-table-column>
+                      
+                    <el-table-column prop="comment" label="备注"></el-table-column>
+                    <el-table-column label="操作" width="100">
                          <template slot-scope="scope">
-                            <span @click="handleEdit(scope.row)" type="text" size="small" class="scope-btn">删除</span>
+                            <span @click="handleDelete(scope.row)" type="text" size="small" class="scope-btn">删除</span>
                             <span type="text" size="small" class="scope-btn">修改</span>
                         </template>
                     </el-table-column>
+                     <!-- <el-table-column prop="id" label="id" width="10"></el-table-column> -->
                  <el-table-column type="expand" >
       <template slot-scope="props">
-         <el-form ref="form" :model="form" label-width="80px" >
-                    <el-form-item label="币种" >
-                        <el-select v-model="form.region" placeholder="">
-                        <el-option label="BTC" value="shanghai"></el-option>
-                        <el-option label="OKEX" value="beijing"></el-option>
+         <el-form ref="form" :model="form_" label-width="80px" >
+                    <el-form-item label="币种">
+                        <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
+                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
+                        
                         </el-select>
                     </el-form-item>
                     <el-form-item label="提币地址">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.coinAddress_"></el-input>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.mark_"></el-input>
                     </el-form-item>
-                    <span  class="bottom-btn">确定</span>
+                    <span  class="bottom-btn" @click="update">确定</span>
                 </el-form >
     
       </template>
@@ -62,9 +64,20 @@
 export default {
     data(){
         return{
+            allCoin:[],//所有币种
+            coinList:[],//我的提币列表
+            code:'',//谷歌验证码
+            coinId:'',
+            coinName:'',
             form:{
-                name:'',
-                region:''
+                coinType:'',
+                coinAddress:'',
+                mark:'',
+                
+                mark_:'',
+            },
+            form_:{
+                coinAddress_:'',
             },
                   tableData1: [{
             date: '2016-05-02',
@@ -73,9 +86,83 @@ export default {
           }],
         }
     },
+    mounted () {
+       this.getCoin() 
+       this.getlistByUserId()
+    },
     methods:{
-        handleEdit(){
+        //根据用户获取提币地址列表
+        getlistByUserId(){
+            this.$api.walistByUserId().then(res=>{
+                console.log(res,'这是我的账户币种地址')
+                this.coinList=res.data.datas
+            })
+        },
+        //查询币种
+        getCoin(){
+            this.$api.all().then(res=>{
+                console.log(res,'查询币种')
+               this.allCoin=res.data.datas
+            })
+        },
+        //选择币种
+        getCoinId(val){
+            var coinInfo=val.toString().split(',')
+            this.coinId=coinInfo[0] 
+            this.coinName=coinInfo[1]
+            console.log(coinInfo[0],coinInfo[1],'999++++++')
+        },
+        //添加
+         add() {
+        this.$prompt('请输入谷歌验证码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',//replace(/[^\d]/g,'')
+          inputPattern: /^\d{6}$/,
+          inputErrorMessage: '请输入6位纯数字谷歌验证码'
+        }).then(({ value }) => {
+          this.code=value
+        //   this.coinList.push(this.coinName)
+          this.$api.add({coinId:this.coinId,withdrawAddress:this.form.coinAddress,code:this.code,coinName:this.coinName,comment:this.form.mark}).then(res=>{
+              console.log(res,'我是添加的一条')
+              if(res.data.message=="成功"){
+                 this.getlistByUserId()
+                this.form={
+                    coinType:'',
+                    coinAddress:'',
+                    mark:'',
+                }
+              }
+            //    this.getlistByUserId()
 
+            })
+          /*this.$message({
+            type: 'success',
+            message: '您的谷歌验证码是: ' + value
+          });*/
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
+ 
+    },
+    //修改
+       update(){
+           this.$api.update({withdrawAddress:this.form.coinAddress_,id:35,coinId:this.coinId},'POST').then(res=>{
+               console.log(res,'我是新增修改')
+           })
+       },
+        handleDelete(scope){
+            console.log(scope,'9999++++++')
+            this.$api.delete({id:scope.id}).then(res=>{
+                
+                if(res.data.message=="成功"){
+                    console.log(res,'删除一条')
+                 this.getlistByUserId()
+               
+              }
+            })
         },
         setClassName({ row, index }) {
       // 通过自己的逻辑返回一个class或者空
@@ -88,6 +175,8 @@ export default {
 }
 </script>
 <style>
+/* .el-table_1_column_5{display: none} */
+.el-message-box__input .el-input__inner{color:grey}
 .el-table__expanded-cell[class*="cell"] {
   padding: 0 10px !important;
 }

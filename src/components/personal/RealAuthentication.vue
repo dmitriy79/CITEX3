@@ -56,19 +56,35 @@
             </div>
         </div>
 
-               <div class="upload-wrapper" v-if="!isShow">
+               <div class="upload-wrapper" ><!--v-if="!isShow"-->
           
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
-            <div class="identity-wrapper" v-if="showImg">
-                         <div class="content">
+            <div class="identity-wrapper">  <!-- v-if="showImg"-->
+              <div class="content">
                 <div  class="content-item">
-                    <div class="default-wrapper"><i class="plus-icon"></i><span>身份证正面</span></div>
+                    <div class="default-wrapper">
+                    <img v-if="file" :src="imgUrl"/>
+                     
+                        <i class="plus-icon"  v-if="!file" ></i><span>身份证正面</span>
+                        <input type="file" class="file" @change="uploadChange"/>
+              
+                      
+                    </div>
+                    
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="../../assets/images/sfzz.png" alt="">
                     </div>
                 </div>
                 
+
+                <!-- <div v-if="!file">
+			  			<img src="../../../static/images/add-logo.png"/>
+			  		</div>
+			  		<div v-else>
+			  			<img :src="imgUrl"/>
+			  		</div>
+          	<input type="file" class="file" @change="uploadChange"/> -->
             </div>
             <div class="content content_">
                 <div  class="content-item">
@@ -97,10 +113,21 @@
             <div class="passport-wrapper" v-if="!showImg">
               <div class="content">
                 <div  class="content-item">
-                    <div class="default-wrapper"><i class="plus-icon"></i><span>身份证正面</span></div>
+                    <div class="default-wrapper"><i class="plus-icon"></i><span>护照正面</span></div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="../../assets/images/hz.png" alt="">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content content_">
+                <div class="content-item">
+                    <div  class="default-wrapper"><i class="plus-icon"></i><span>手持护照正面和个人签字</span></div>
+                    <div class="case">示例</div>
+                    <div  class="default-wrapper">
+                        <img src="../../assets/images/scsfz.png" alt="">
+
                     </div>
                 </div>
                 
@@ -111,7 +138,7 @@
         </div>
 
       <div  class="wrapper">
-          <div class="text-o">恭喜你通过实名认证</div>{{form.cardName}}
+          <div class="text-o">恭喜你通过实名认证</div>
            <el-form ref="form" :model="form" label-width="80px" >
               <el-form-item label="姓名" >
                   <el-input v-model="form.cardName" disabled ></el-input>
@@ -135,6 +162,8 @@
 export default {
   data() {
     return {
+      imgUrl:'',
+      	file:'',
       showImg:true,
         radio: '1',
       isShow: true,
@@ -144,11 +173,14 @@ export default {
       realName:'',
       show:false,
       isAssess:true,
-      
+      imgData: {
+            accept: 'image/gif, image/jpeg, image/png, image/jpg',
+       },
       form: {
          cardName:'',
         number: "",
         surname:'',
+        cardNum:'',
         name:'',
       passportId:'',
         country:'',
@@ -160,19 +192,60 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    //上传证件
+    uploadChange(event){
+      
+            let reader =new FileReader();  
+            let img1=event.target.files[0];
+            this.file=img1
+            console.log(img1,'上传文件')
+            let type=img1.type;//文件的类型，判断是否是图片  
+            let size=img1.size;//文件的大小，判断图片的大小  
+            if(this.imgData.accept.indexOf(type) == -1){  
+                this.$message({
+					          message: '请选择正确的图片格式！',
+					          type: 'warning'
+		        		});
+                return false;  
+            }  
+            if(size>3145728){  
+                 this.$message({
+					          message: '请选择3M以内的图片！',
+					          type: 'warning'
+		        		});
+                return false;  
+            }  
+           
+            let form = new FormData();   
+       
+            form.append('file',img1);  
+console.log(form,'98+++++++++++')
+
+            this.$api.upload({file:img1},'POST').then(res=>{
+              console.log(res,'99999我是上传')
+            })
+ 
+    },
+    //获取用户信息
       getUserInfo(){
             this.$api.getValidateById().then(res=>{
                 console.log(res,'我是用户信息')
                 var content =res.data.datas
-                // this.tradePassword=content.user_password;
-             console.log(content.user_real_name,'999999')
              this.form.cardName=content.user_real_name
-                if(content.user_real_name&&content.document_id&&content.document_type){
+             this.form.cardNum=content.document_id
+             if(content.document_type==1){
+               this.form.cardType='身份证'
+             }
+             if(content.document_type==2){
+               this.form.cardType='护照'
+             }
+            //  this.form.cardType=
+            /*    if(content.validate==1){
                     this.isAssess=false
                 }
                 else{
                    this.isAssess=true 
-                }
+                }*/
                
             })
         },
@@ -183,6 +256,7 @@ export default {
       },
       //选择地区
       selectRegin(val){
+        console.log(val,'地区')
         this.reginVal=val
          if(val==1){
           this.show=false
@@ -295,6 +369,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+ .file{width: 100%;position:absolute;left: 0;top: 0;bottom: 0;opacity: 0;}
 .wrapper{padding: 0 20px}
 .plus-icon {
   display: inline-block;

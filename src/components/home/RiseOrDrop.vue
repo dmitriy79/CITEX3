@@ -38,7 +38,7 @@ export default {
     }
   },
   mounted () {
-    this.getRankingList()
+    //this.getRankingList()
     // this.getDealOrderUpDownTen()
     //  window.InitSetInterval = setInterval(this.getDealOrderUpDownTen,2000)
   } ,
@@ -70,7 +70,7 @@ export default {
              clearInterval(window.InitSetInterval)
              var content=JSON.parse(evt.data)
             
-             console.log(content,'我是content')
+             console.log(JSON.parse(content.up),'我是content')
              
               console.log('数据已接收...')
           }

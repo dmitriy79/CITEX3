@@ -13,9 +13,10 @@
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
             <dd class="list" v-for="(item, index) in propertyList">
-              {{propertyList}}  <span><span class="wrap-img"><img :src="logoUrl" alt=""></span>{{item.coinName}}</span>
-                <span>{{item.coinId}}</span>
+     
+               <span>{{item.coinName}} </span>
                 <span>{{item.total}}</span>
+                <span>{{item.able}}</span>
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
                     <i @click="fullCoin(index)">充币</i>
@@ -188,22 +189,26 @@ export default {
       this.checked=!this.checked
     },
 
+
     //我的资产列表
       myproperty(){
-         this.$api.listByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
+         this.$api.uplistByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
+           console.log(res,'我的资产+++++')
           var list=res.data.datas.list
           const  that= this;
-           
+          var propertyList=res.data.datas.list
           list.forEach(function(list){
            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
             console.log(res,'我是第二个res')
               if(res.data.message=='success'){
-                that.propertyList.forEach (function (item) {
+                console.log(propertyList,'+++++,,,,00000')
+               propertyList.forEach (function (item) {
                   if (item.coinId === res.data.datas.id) {
                     item.coinName = res.data.datas.name;
                     item.logoUrl = res.data.datas.logoUrl
                   }
-                  // console.log(that.propertyList,'我的资产')
+                 console.log(propertyList,'我的资产****+++++')
+                 that.propertyList=propertyList
                 })
                    
               }
@@ -240,8 +245,16 @@ export default {
         this.showProperty=false
         this.showList=true   
       },
+      //充币记录,提币记录
       tabRecord(tab){
+        if(tab=='full'){
+
+        }
+        else{
+
+        }
           console.log(tab,'222299999')
+
           this.current=tab
       },
      goback(){

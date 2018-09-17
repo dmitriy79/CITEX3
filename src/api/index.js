@@ -20,6 +20,7 @@ let apiList = {
     '/user/reset',//修改邮箱 或者 登录密码 或者 交易密码
     '/user/audit',//实名认证
     '/user/enableGooleAutu',//启用谷歌验证码
+    '/s3/upload',//通用文件上传
   ],
   //管理 :10320
   "coin": [
@@ -28,7 +29,14 @@ let apiList = {
   ],
   //支付管理 :13030
   "payment": [
-    '/userProperty/listByUserId'
+    '/withdraw',//提币
+    '/userProperty/uplistByUserId',//我的资产
+    '/rechargeRecord/rrlistByUserId',//充币记录
+    '/withdrawRecord/wrlistByUserId',//提币记录
+    '/withdrawAddr/walistByUserId',//根据用户获取提币地址列表
+    '/withdrawAddr/add',//新增提币地址
+    '/withdrawAddr/update',//更新提币地址
+    '/withdrawAddr/delete',//删除提币地址
   ],
 
   //交易管理 :10340
@@ -38,9 +46,9 @@ let apiList = {
     '/trade/getKDatas', //启用获取k线  GET
     '/dealOrder/getUserTransactionRecord',//交易记录
     '/trade/getDealOrdersByTradeCoinPairId',//实时成交
-    'trade/getTradeInfoByTradeCoinPairId',//买卖盘挂单
+    '/trade/getTradeInfoByTradeCoinPairId',//买卖盘挂单
     '/trade/bid-ask-order/listBidOrders',//历史/当前委托订单
-    'trade/getDealOrderUpDownTen',//涨跌幅排行榜
+    '/trade/getDealOrderUpDownTen',//涨跌幅排行榜
     'dealOrder/getUserTransactionRecord',//交易记录
   ],
 }
@@ -58,7 +66,8 @@ for (let i in apiList) {
     let url = `/${reqName}${item[s]}`
     console.log(url)
     api[name] = (params, method) => {
-      let ajax = method || 'GET' ? axios.get(url, {params:params}) : axios.post(url, {params:params})
+      //console.log(params , method, method || 'GET'? true : false,"~~~~~~~~~~~~~ßßß")
+      let ajax = method != 'POST' ? axios.get(url, {params:params}) : axios.post(url, {params:params})
       return ajax
     }
   }
