@@ -85,7 +85,7 @@ for (let i in apiList) {
     //let url = process.env.NODE_ENV === 'production' ? `/${reqName}${item[s]}` : `/${reqName}${item[s]}`
     //console.log(url)
     api[name] = (params, method) => {
-      let ajax = method || 'GET' ? axios.get(url, { params: params }).then(res) : axios.post(url, { params: params }).then(res)
+      let ajax = method || 'GET' ? axios.get(url, { params: params }) : axios.post(url, { params: params })
       return ajax
     }
   }

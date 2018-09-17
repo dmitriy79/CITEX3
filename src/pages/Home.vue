@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-header></v-header>
-    <section v-if='pageLoading'>loading </section>
+    <section class="loading" v-if='pageLoading'><div class="ico-logo"></div> <div>loading...</div></section>
     <section v-else>
       <home-swiper :list="swiperList"></home-swiper>
       <div class="container notice">
@@ -215,7 +215,18 @@ export default {
 html {
   background: #3B4249;
 }
-
+.loading{
+  min-height:300rpx;
+  display:flex;
+  align-items:center;
+  text-align:center;
+      min-height: 450px;
+    justify-content: center;
+        flex-direction: column;
+        .ico-logo{
+          font-size:30px;
+        }
+}
 .notice {
   display: flex;
   justify-content: space-between;
