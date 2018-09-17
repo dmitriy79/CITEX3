@@ -5,7 +5,8 @@
               <span class="change" :class="{active:isShow}" @click="changeType"><b class="ico-changecny"></b><i>CNY</i></span>
         </div>
         <ul class="nav-bar">
-            <li v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)"><span class="ico-star-fill" v-if="index==3"></span>{{item.name}}</li>
+            <li v-for="(item,index) of coinNameList" :class="{active:active==index}" @click="tabs(index,item.id)">{{item.zoneName}}</li>
+            <li><span class="ico-star-fill" ></span>自选</li>
           
         </ul>
         <div class="coin-list-wrap">
@@ -15,11 +16,11 @@
                 <span class="rate">涨幅<b><i class="up" @click="rateUp" :class="{active:isActive1}"></i><i class="down" @click="rateDown"  :class="{active:isActive1}"></i></b></span>
                 <span class="num">24h交易量<b><i class="up" @click="numUp" :class="{active:isActive2}"></i><i class="down" @click="numDown"  :class="{active:isActive2}"></i></b></span>
             </div>
-            <div class="coin-list" v-for="(item,index) of coinList" v-show=" index == num">
-                <span class="coin-type">{{item.type}}</span>
-                <span class="price">{{item.price}}</span>
-                <span class="rate" >{{item.rate}}</span>
-                <span class="num">{{item.num}}</span>
+            <div class="coin-list" v-for="(item,index) of tradeList" >
+                <span class="coin-type">{{item.name}}</span>
+                <span class="price">{{item.deal_price}}</span>
+                <span class="rate" >{{item.increase_24H}}</span>
+                <span class="num">{{item.amount_24H}}</span>
                 <span class="ico-star" @click="checkCoin" v-if="!isSelect"></span>
                 <span class="ico-star-fill" @click="checkCoin" v-if="isSelect">
              
@@ -38,6 +39,7 @@ export default {
     return {
       active: 0,
       num: 0,
+      coinNameList:[],
       isActive: false,
       isActive1: false,
       isActive2: false,
@@ -49,22 +51,46 @@ export default {
         { id: 3, name: "BTC交易" },
         { id: 4, name: "自选" }
       ],
-      coinList: [
-        { id: 1, type: "TRUE", price: "400.12", rate: "-10%", num: 90012112 },
-        { id: 2, type: "EOS", price: "123.12", rate: "+59%", num: 9002 },
-        { id: 3, type: "BCH", price: "5000.12", rate: "-19%", num: 90202 },
-        { id: 4, type: "BTC", price: "5000.12", rate: "-19%", num: 90202 }
-      ]
+      tradeList:[]
+      // coinList: [
+      //   { id: 1, type: "TRUE", price: "400.12", rate: "-10%", num: 90012112 },
+      //   { id: 2, type: "EOS", price: "123.12", rate: "+59%", num: 9002 },
+      //   { id: 3, type: "BCH", price: "5000.12", rate: "-19%", num: 90202 },
+      //   { id: 4, type: "BTC", price: "5000.12", rate: "-19%", num: 90202 }
+      // ]
     };
   },
+  mounted () {
+    this.classificationList()
+  },
   methods: {
+    //获取交易区类型
+    classificationList(){
+      this.$api.websocketDealPrice().then(res=>{
+        console.log(res,'我是coket+++++')
+      })
+      // this.$api.classificationList().then(res=>{
+      //   console.log(res,'090999')
+      //   this.coinNameList=res.data.datas
+      //   if(this.coinNameList.length>0){
+      //     var id=this.coinNameList[0].id
+      //     this.tabs(0,id)
+  
+      //   }
+      // })
+    },
+    
     changeType(){
  
       this.isShow=!this.isShow
     },
-    tabs(index) {
+    tabs(index,id) {
       this.num = index;
       this.active = index;
+      this.$api.getTradeInfoByZone({id:id}).then(res=>{
+        console.log(res,'交易区++++')
+        this.tradeList=res.data.datas.list
+      })
     },
     checkCoin() {
       this.isSelect = !this.isSelect;

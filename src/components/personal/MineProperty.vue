@@ -19,7 +19,7 @@
                 <span>{{item.able}}</span>
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
-                    <i @click="fullCoin(index)">充币</i>
+                    <i @click="fullCoin(index,item.coinId,item.coinName)">充币</i>
                     <i @click="carryCoin(index)">提币</i>
                     <i><router-link to="/Transaction" tag="span">交易</router-link></i>
                 </span>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="tips">
                     <p>温馨提示：</p>
-                    <p>最小提币数量为：555 YEE</p>
+                    <p>最小提币数量为：555 {{coiname}}</p>
                     <p>为保障资金安全，当您账户安全策略变更、密码修改、使用新地址提币，我们会对提币进行人工审核</p>
                     <p>请耐心等待工作人员电话或邮件联系</p>
                     <p>请务必确认电脑及浏览器安全，防止信息被篡改或泄漏</p>
@@ -63,16 +63,17 @@
                 <transition name="fade">
                 <div class="full-coin coin-item" ref="child1" style="display:none" >
                     <div class="item">
-                        <label class="name">提币地址</label>
-                        <div class="address-wrapper"><span class="address">ef82ba3200444a6494af10c56b54e967</span><span class="copy">复制</span><span class="ewm" @click="showEwm">二维码</span></div>
+                        <label class="name">充币地址</label>
+                        <div class="address-wrapper"><span class="address">{{fullAddress}}</span><span class="copy" v-clipboard:copy="fullAddress"
+    @success="handleSuccess" v-if="able">复制</span><span class="ewm" @click="showEwm" v-if="able">二维码</span></div>
                         <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm">
                     </div>
                     <div class="item">
-                        查看<span class="record">充币记录</span>跟踪状态
+                        查看<span class="record" @click="fullCoinRecord">充币记录</span>跟踪状态
                     </div>
                     <div class="tips">
                     <p>温馨提示：</p>
-                    <p>最小提币数量为：555 YEE</p>
+                    <p>最小充值数量为：555 {{coiname}}</p>
                     <p>为保障资金安全，当您账户安全策略变更、密码修改、使用新地址提币，我们会对提币进行人工审核</p>
                     <p>请耐心等待工作人员电话或邮件联系</p>
                     <p>请务必确认电脑及浏览器安全，防止信息被篡改或泄漏</p>
@@ -93,8 +94,8 @@
         </div>
         <div class="content">
             <div class="full-coin-wrapper" v-if="this.current==='full'">
-                 <el-table :data="tableData1"  style="width: 100%">
-                    <el-table-column prop="date" label="时间" width=""></el-table-column>
+                 <el-table :data="fullCoinRecord"  style="width: 100%">
+                    <el-table-column prop="createTime" label="时间" width=""></el-table-column>
                     <el-table-column prop="name" label="币种" width="">
                         <template slot-scope="scope">
                             <span class="coinimg-wrapper"><img src="../../assets/images/hours.png" alt=""></span>
@@ -141,6 +142,10 @@ export default {
     
   data() {
     return {
+      coinId:'',
+      able:true,
+      coiname:'',
+      fullAddress:'',
         current:'full',
         isShow:false,
         checked:false,//隐藏小额资产
@@ -152,6 +157,7 @@ export default {
          coinName:'',
         activeIndex:'',
         propertyList:[],
+       fullCoinRecordList:[],
         tableData1: [{
             date: '2016-05-02',
             name: 'USDT',
@@ -182,14 +188,45 @@ export default {
   },
   mounted(){
     this.myproperty();
+   // this.fullCoinRecord()
   },
   methods:{
     //隐藏小额资产
     handleChecked(){
       this.checked=!this.checked
     },
-
-
+    //复制成功
+   handleSuccess(){
+    this.$message({
+        message: '复制成功',
+        type: 'success'
+		 });
+   },
+   //充币记录
+  fullCoinRecord(){
+    // this.$api.rrlistByUserId({pageNum:1,pageSize:12}).then(res=>{
+    //   console.log(res,'我是充币记录')
+    //   var fullCoinRecordList=res.data.datas.list
+    //   fullCoinRecord.forEach(function(list){
+    //     that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
+            
+    //           if(res.data.message=='success'){
+               
+    //            fullCoinRecord.forEach (function (item) {
+    //               if (item.coinId === res.data.datas.id) {
+    //                 item.coinName = res.data.datas.name;
+                    
+    //               }
+                  
+               
+    //              that.fullCoinRecord=fullCoinRecord
+    //             })
+                   
+    //           }
+    //         })
+    //   })
+    // })
+  },
     //我的资产列表
       myproperty(){
          this.$api.uplistByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
@@ -207,7 +244,8 @@ export default {
                     item.coinName = res.data.datas.name;
                     item.logoUrl = res.data.datas.logoUrl
                   }
-                 console.log(propertyList,'我的资产****+++++')
+                  that.coinId=item.coinId
+                 console.log(that.coinId,'我的资产****+++++')
                  that.propertyList=propertyList
                 })
                    
@@ -215,6 +253,7 @@ export default {
             })
           })
          })
+       
       },
       carryCoin(index){
          this.$refs.child1[index].style.display = 'none'
@@ -227,7 +266,24 @@ export default {
       }
  
       },
-      fullCoin(index){
+      fullCoin(index,id,name){
+        console.log(id,'w我是coinid+++++')
+         this.$api.allotRechargeAddr({coinId:id}).then(res=>{
+           if(res.data.message=='成功'){
+             console.log(res.data.datas,'成功')
+             this.fullAddress=res.data.datas
+            
+           }
+           else{
+             this.fullAddress=res.data.message
+             this.able=false
+             console.log( this.fullAddress,'失败')
+
+           }
+             this.coiname=name
+             
+            
+    })
              this.$refs.child[index].style.display = 'none'
          if (this.$refs.child1[index].style.display === 'none') {
         this.$refs.child1[index].style.display = 'block'

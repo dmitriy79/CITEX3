@@ -721,7 +721,7 @@ export default {
       ) {
         // this.$api.getKDatas({start:,end:,step:,})
        
-       let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+       let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
       
       ws.onopen = () => {
@@ -745,7 +745,7 @@ export default {
              });
               console.log(this_vue.bars,'999999')
            });
-          //onHistoryCallback(this_vue.bars)
+          onHistoryCallback(this_vue.bars)
           }
           ws.onclose = function () {
             // 关闭 websocket

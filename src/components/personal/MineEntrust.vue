@@ -199,7 +199,7 @@ export default {
     //我的委托记录
     getInfo(){
       var userId=localStorage.getItem('userId')
-      this.$api.listBidOrders({type:1,userId:200083,pageNum:1,pageSize:10}).then(res=>{
+      this.$api.listBidOrders({type:1,userId:200011,pageNum:1,pageSize:10}).then(res=>{
         console.log(res,'我的委托')
       })
     },

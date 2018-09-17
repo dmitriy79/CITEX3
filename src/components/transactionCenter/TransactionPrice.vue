@@ -63,7 +63,7 @@ export default {
        });
        this.dataList=content
     })*/
-     let ws = new WebSocket('ws://47.93.194.146:13080/websocketSSCJ?pairId=1')
+     let ws = new WebSocket('ws://47.94.213.6:13080/websocketSSCJ?pairId=1')
      
          ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据

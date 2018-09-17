@@ -2,7 +2,7 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 const path = require('path')
-const APIHOST = "http://47.94.213.6"
+const APIHOST = "http://47.93.194.146"
 const apiPort = {
   13020:"coin",//管理
   13030:"payment", //支付管理
@@ -21,7 +21,7 @@ for (let i in apiPort) {
     }
   }
 }
-console.log(proxys)
+
 module.exports = {
   dev: {
     // Paths

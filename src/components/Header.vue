@@ -47,6 +47,7 @@
           <div class="dropdown" v-if="isShow">
             <div @click="changeLanguage" v-for='(item,index) in lang' :data-id='index'>
               {{item}}
+
             </div>
           </div>
         </transition>

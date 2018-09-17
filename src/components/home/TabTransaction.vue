@@ -71,7 +71,7 @@ export default {
         },
         getInfo(){
        var userId=localStorage.getItem("userId")
-       var wsUrl=`ws://47.93.194.146:13080/websocketDealPrice?unitPriceCoinId=${this.coinId}&uuid=1&userId=`+userId
+       var wsUrl=`ws://47.94.213.6:13080/websocketDealPrice?unitPriceCoinId=${this.coinId}&uuid=1&userId=`+userId
        let ws = new WebSocket(wsUrl)
     
      console.log(ws.readyState,'99999000000+++++++')
