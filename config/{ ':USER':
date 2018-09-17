@@ -1,0 +1,39 @@
+{ '/USER':
+   { target: 'http://47.93.194.146:13010',
+     changeOrigin: true,
+     pathRewrite: { '^/USER': '' } },
+  '/COIN':
+   { target: 'http://47.93.194.146:13020',
+     changeOrigin: true,
+     pathRewrite: { '^/COIN': '' } },
+  '/PAYMENT':
+   { target: 'http://47.93.194.146:13030',
+     changeOrigin: true,
+     pathRewrite: { '^/PAYMENT': '' } },
+  '/TRADE':
+   { target: 'http://47.93.194.146:13040',
+     changeOrigin: true,
+     pathRewrite: { '^/TRADE': '' } } }
+
+
+
+location / {
+      proxy_pass http://ibweb;
+}
+
+location /USER {
+    rewrite ^/USER(.*)$ /$1 break; 
+    proxy_pass http://47.93.194.146:13010; 
+}
+location /COIN {
+    rewrite ^/COIN(.*)$ /$1 break; 
+    proxy_pass http://47.93.194.146:13020; 
+}        
+location /PAYMENT {
+    rewrite ^/PAYMENT(.*)$ /$1 break; 
+    proxy_pass http://47.93.194.146:13030',
+}        
+location /TRADE {
+    rewrite ^/TRADE(.*)$ /$1 break; 
+    proxy_pass http://47.93.194.146:13040; 
+}        

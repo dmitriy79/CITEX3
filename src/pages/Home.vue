@@ -11,13 +11,16 @@
               {{notice[noticeIndex].title}}
             </a>
         </transition>
-        <div class="notice-more"><router-link to="/notice">更多</router-link>  </div>
+        <div class="notice-more">
+          <router-link to="/notice">更多</router-link>
+        </div>
       </div>
       <coin-type></coin-type>
       <rise-drop></rise-drop>
       <tab-transaction></tab-transaction>
       <div class="bottom">
         <div class="container">
+          {{$t("home.title")}}
           <div class="bottom-title">最值得信赖的数字货币平台</div>
           <div class="info-wrap">
             <div class="item">
@@ -67,7 +70,7 @@ import HomeSwiper from "../components/Swiper";
 import CoinType from "../components/home/CoinType";
 import RiseDrop from "../components/home/RiseOrDrop"
 import TabTransaction from "../components/home/TabTransaction"
-
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: "Home",
   components: {
@@ -80,7 +83,7 @@ export default {
   },
   data() {
     return {
-      title:'',
+      title: '',
       swiperList: [{
           img: "https://www.oex.cn/hryfile/c/9/9fb480a485f54e3fb80e55bef20f59fa.jpg"
         },
@@ -93,79 +96,119 @@ export default {
       pageLoading: true,
     };
   },
-  mounted() {
-    // this.getbanner()
-    this.initIndex()
-
-  },
-  methods: {
-    //公告详情
-    noticeDetail(){
-         var id= this.notice[this.noticeIndex].id
-        var index=this.noticeIndex
-         this.$router.push({name:'NoticeDetail',params:{id:id,index:index,allList:this.notice,prelist:this.notice[index-1],nextlist:this.notice[index+1]}})
-    },
-    // getbanner() {
-    //   var url = `/api/banner/listByType`
-    //   this.$http.get(url, {
-    //     params: {
-    //       type: 1,
-    //     }
-    //   }, {
-    //     headers: { "Content-Type": "application/json" }
-    //   })
-    // },
-    rodAd() {
-      var currindex = 0
-      let rod = setInterval(() => {
-        let i = currindex++
-          this.noticeIndex = i
-        if (i == this.notice.length) {
-          currindex = 0
-        }
-      }, 5000)
-    },
-
-    initIndex() {
-      this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20 ,n_language:'zh_CN'	}), this.$api.listByType({ type: 1 })])
-        .then(res => {
-          
-          this.notice = res[0].data.datas.list
-          console.log(this.notice,'wwwww')
-          this.swiperList = res[1].data.datas
-          this.rodAd()
-          this.pageLoading = false
-        })
-      // this.$api.listByType({ type: 1 })
-      //   .then(res => {
-      //     console.log("banner", res.data.datas)
-      //     this.swiperList = res.data.datas
-      //     console.log(this.swiperList, 'banner')
-      //   })
-
-
-      // this.$api.list({ pageNum: 1, pageSize: 20 })
-      //   .then(res => {
-      //     console.log("ad", res.data)
-      //     if (res.data.status == '200') {
-      //       let notice = res.data.datas.list
-      //       this.notice = notice
-      //       this.rodAd()
-      //     }
-      //   })
-
-      // this.$api.all({})
-      //   .then(res => {
-      //     console.log(res)
-      //   })
-    },
-
-  },
+  // created() {
+  //   console.log("created")
+  //   console.log(this.$store)
+  //   this.$store.dispatch('cart','home/getCategory')
+  // },
+  // computed: mapGetters(['score', 'price']),
+  // methods:mapState('home',['pageLoading'])
+  // ...mapActions(['getScore', 'getPrice']);
+  // 
+  // computed() {
+  //   mapGetters(['score', 'price', 'alone'])
+  //   methods:mapState('home',['pageLoading'])
+  //   ...mapState({
+  //     products: state => state.products.all
+  //   }),
+  // }
+  // methods: mapActions('home', [
+  //   'toggleTrading'
+  // ]),
   created() {
-    console.log("created")
-  },
+    this.$store.dispatch('home/initHome')
+  }
+}
+//methods(){
+//公告详情
+// noticeDetail() {
+//   var id = this.notice[this.noticeIndex].id
+//   var index = this.noticeIndex
+//   this.$router.push({ name: 'NoticeDetail', params: { id: id, index: index, allList: this.notice, prelist: this.notice[index - 1], nextlist: this.notice[index + 1] } })
+// },
+// getbanner() {
+//   var url = `/api/banner/listByType`
+//   this.$http.get(url, {
+//     params: {
+//       type: 1,
+//     }
+//   }, {
+//     headers: { "Content-Type": "application/json" }
+//   })
+// },
+// rodAd() {
+//   var currindex = 0
+//   let rod = setInterval(() => {
+//     let i = currindex++
+//       this.noticeIndex = i
+//     if (i == this.notice.length) {
+//       currindex = 0
+//     }
+//   }, 5000)
+//},
 
-};
+// initIndex() {
+//   this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20, n_language: 'zh_CN' }), this.$api.listByType({ type: 1 })])
+//     .then(res => {
+//       console.log(res)
+//       this.notice = res[0].data.datas.list
+//       // console.log(this.notice,'wwwww')
+//       this.swiperList = res[1].data.datas
+//       //this.category = res[2].data.datas
+//       this.rodAd()
+//       this.pageLoading = false
+//     })
+//   // console.log(process.env)
+  // let ranking = new WebSocket(`${process.env.WS_API}/websocketRankingList`)
+  // ranking.onopen = () => {
+  //   // Web Socket 已连接上，使用 send() 方法发送数据
+  //   ranking.send('ws')
+  //   //  console.log('数据发送中8888...')
+  // }
+  // ranking.onmessage = evt => {
+  //   console.log("RANKING==>", evt)
+  //   var content = JSON.parse(evt.data)
+  //   console.log("res==>", content)
+  //   console.log(JSON.parse(content.up))
+  //   // this.buyListsAll=content.bid
+  //   // this.sellListsAll=content.ask
+  //   // console.log(content,'length')
+  //   // this.buyLists=content.bid.slice(0,11)
+  //   // this.sellLists=content.ask.slice(0,11)
+  // }
+  // ranking.onclose = function() {
+  //   // 关闭 websocket
+  //   // console.log('连接已关闭...')
+  // }
+  // // 组件销毁时调用，中断websocket链接
+  // this.over = () => {
+  //   ws.close()
+  // }
+// this.$api.listByType({ type: 1 })
+//   .then(res => {
+//     console.log("banner", res.data.datas)
+//     this.swiperList = res.data.datas
+//     console.log(this.swiperList, 'banner')
+//   })
+
+
+// this.$api.list({ pageNum: 1, pageSize: 20 })
+//   .then(res => {
+//     console.log("ad", res.data)
+//     if (res.data.status == '200') {
+//       let notice = res.data.datas.list
+//       this.notice = notice
+//       this.rodAd()
+//     }
+//   })
+
+// this.$api.all({})
+//   .then(res => {
+//     console.log(res)
+//   })
+//},
+
+//},
 
 </script>
 <style lang="less" scoped>
@@ -182,33 +225,33 @@ html {
     font-size: 13px;
     cursor: pointer;
     flex-grow: 2;
-    width:100%;
+    width: 100%;
     &:hover {
       color: #fff;
     }
   }
   &-title {
-    width:60px;
-    font-weight:800;
-     font-size:13px;
+    width: 60px;
+    font-weight: 800;
+    font-size: 13px;
   }
   &-more {
-    width:80px;
-    text-align:right;
+    width: 80px;
+    text-align: right;
     flex-grow: 1;
 
-      color: #6F717A;
-      cursor: pointer;
-      font-size:13px;
-        &::after {
-          content: '';
-          width: 6px;
-          height: 6px;
-          display: inline-block;
-          border-left: 1px solid #6F717A;
-          border-top: 1px solid #6F717A;
-          transform: rotate(135deg);
-        }
+    color: #6F717A;
+    cursor: pointer;
+    font-size: 13px;
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      display: inline-block;
+      border-left: 1px solid #6F717A;
+      border-top: 1px solid #6F717A;
+      transform: rotate(135deg);
+    }
   }
 }
 

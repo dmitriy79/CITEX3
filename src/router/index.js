@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/Home'
+//import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
 import Notice from '@/pages/Notice'
-
 import Transaction from '@/pages/Transaction'
 import ApplyChannel from  '@/components/channel/ApplyChannel'
 import ApplyChannelText from  '@/components/channel/ApplyChannelText'
@@ -26,7 +25,7 @@ const router =  new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import(/* webpackChunkName: "Home" */ '@/pages/Home')
     },
     {
       path: '/transaction',

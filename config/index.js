@@ -21,7 +21,7 @@ for (let i in apiPort) {
     }
   }
 }
-
+console.log(proxys)
 module.exports = {
   dev: {
     // Paths

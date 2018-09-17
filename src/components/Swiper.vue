@@ -1,17 +1,14 @@
-
 <template>
-<div class="wraper">
-  <swiper :options="swiperOption" ref="mySwiper" v-if="showSwiper">
-    <swiper-slide v-for="item of list" :key="item.id">
-	      <a :href="item.url" target="_blank" class="link_"><img class="swiper-img" :src="item.img"/></a>	
-	    </swiper-slide>
-    <!-- Optional controls -->
-    <div class="swiper-pagination"  slot="pagination"></div>
-  </swiper>
-</div>
-
+  <div class="wraper">
+    <swiper :options="swiperOption" ref="mySwiper" v-if="showSwiper">
+      <swiper-slide v-for="item of list" :key="item.id">
+        <a :href="item.url" target="_blank" class="link_"><img class="swiper-img" :src="item.img"/></a>
+      </swiper-slide>
+      <!-- Optional controls -->
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
+  </div>
 </template>
-
 <script>
 // swiper options example:
 export default {
@@ -31,17 +28,19 @@ export default {
         loop: true,
         autoplay: true,
         effect: "fade",
-        type: "bullets"
+        type: "bullets",
+        watchSlidesProgress:true,
+        clickable: true,
         // swiper configs 所有的配置同swiper官方api配置
         // autoplay: 1000,
         // direction : 'horizontal',
-        // loop:true,
-        // grabCursor : true,
-        // setWrapperSize :true,
+         loop:true,
+         grabCursor : true,
+        setWrapperSize: true,
         // autoHeight: true,
         // pagination : '.swiper-pagination',
-        // paginationClickable :true,
-        // mousewheelControl : true,
+        paginationClickable :true,
+         mousewheelControl : false,
         // observeParents:true,
         // if you need use plugins in the swiper, you can config in here like this
         // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
@@ -73,23 +72,37 @@ export default {
     // this.swiper.slideTo(3, 1000, false)
   }
 };
-</script>
-<style>
-.wraper .swiper-pagination-bullet-active {
-  background: #fff !important;
-}
-.swiper-pagination-bullet {
-  width: 20px;
-  height: 10px;
-  border-radius: 10px;
-}
-</style>
 
-<style lang="less" scoped>
-.swiper-img {
-  width: 100%;
-      height: 100%;
+</script>
+<style lang="less">
+.swiper {
+  height:500px;
+  background: red;
+  &-container{
+    height:500px;
+  }
+  a.link_ {
     display: block;
+    height:500rpx;
+    width:100%;
+  }
+  &-container-horizontal {}
+  &-pagination {
+    z-index: 10;
+    &-bullet {
+      cursor: pointer;
+      background: rgba(255, 255, 255, .5) !important;
+      ;
+      width:12px;
+      height: 12px;
+      &-active {
+        background: #fff !important;
+      }
+    }
+  }
+  &-img {
+    width:100%;
+  }
 }
-.link_{display: block;cursor: pointer;}
+
 </style>

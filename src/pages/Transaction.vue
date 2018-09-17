@@ -155,6 +155,7 @@ export default {
 };
 </script>
 <style>
+
 @media only screen and (max-width: 1920px) and (min-width: 1400px) {
   #app .transaction-wrap .transaction-middle .transaction-middle-left {
     width: 78.5%;
