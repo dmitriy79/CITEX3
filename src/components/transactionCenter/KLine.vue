@@ -720,15 +720,32 @@ export default {
         firstDataRequest
       ) {
         // this.$api.getKDatas({start:,end:,step:,})
-        let ws= new WebSocket('ws://192.168.1.107:13080/websocketKline?pairId=2&uuid=1&step=60&initlength=1000')
-       ws.onopen = () => {
+       
+       let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+       //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+      
+      ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('ws')
               console.log('数据发送中8888++++++...')
           }
+
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)
            console.log(content,'我是k线图')
+             content.list.forEach(function(bar) {
+              
+            this_vue.bars.push({
+             time: Number(bar.endTime),
+               open: Number(bar.openingPrice),
+               close: Number(bar.closeingPrice),
+               high: Number(bar.topPrice),
+               low: Number(bar.floorPrice),
+               volume: Number(bar.total)
+             });
+              console.log(this_vue.bars,'999999')
+           });
+          //onHistoryCallback(this_vue.bars)
           }
           ws.onclose = function () {
             // 关闭 websocket
@@ -744,13 +761,7 @@ export default {
         var num = parseInt((to - from) / (resolution * 60));
 
         console.log(num); //1440.0166666666667
-        function compare(property) {
-          return function(a, b) {
-            var value1 = a[property];
-            var value2 = b[property];
-            return value1 - value2;
-          };
-        }
+        
         // var url='https://api.fcoin.com/v2/market/candles/M3/btcusdt'
         // this_vue.$http.get(url).then(response => {
         // 	var d=response.data.data
@@ -853,42 +864,42 @@ export default {
       feed: null,
       last_price: 1234.2365,
       bars: [
-      {
-          time:1508313600000,
-          close:42.1,
-          open:41.0,
-          high:43.0,
-          low:40.4,
-          volume:12000
-      }, {
-          time:1508317200000,
-          close:43.4,
-          open:42.9,
-          high:44.1,
-          low:42.1,
-          volume:18500
-      }, {
-          time:1508320800000,
-          close:44.3,
-          open:43.7,
-          high:44.8,
-          low:42.8,
-          volume:24000
-      }, {
-          time:1508324400000,
-          close:42.8,
-          open:44.5,
-          high:44.5,
-          low:42.3,
-          volume:45000
-      }, {
-          time:1508328000000,
-          close:40.8,
-          open:47.5,
-          high:48.5,
-          low:42.3,
-          volume:35000
-      }
+      // {
+      //     time:1508313600000,
+      //     close:42.1,
+      //     open:41.0,
+      //     high:43.0,
+      //     low:40.4,
+      //     volume:12000
+      // }, {
+      //     time:1508317200000,
+      //     close:43.4,
+      //     open:42.9,
+      //     high:44.1,
+      //     low:42.1,
+      //     volume:18500
+      // }, {
+      //     time:1508320800000,
+      //     close:44.3,
+      //     open:43.7,
+      //     high:44.8,
+      //     low:42.8,
+      //     volume:24000
+      // }, {
+      //     time:1508324400000,
+      //     close:42.8,
+      //     open:44.5,
+      //     high:44.5,
+      //     low:42.3,
+      //     volume:45000
+      // }, {
+      //     time:1508328000000,
+      //     close:40.8,
+      //     open:47.5,
+      //     high:48.5,
+      //     low:42.3,
+      //     volume:35000
+      // }
       ]
     };
   }

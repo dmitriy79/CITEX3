@@ -62,6 +62,7 @@ Vue.use(RadioGroup)
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
 //为了方便打包后去除'/api',建议把'/api'设成全局，在main.js中添加
 //Vue.prototype.api = process.env.NODE_ENV === 'production' ? '' : '/api'
 //console.log(process.env.WS_API)

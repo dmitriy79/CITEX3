@@ -4,7 +4,7 @@
           <div class="footer-nav">
             <dl v-for='(item,index) in footLink'>
               <dt>{{links[index]}}</dt>
-                <dd v-for="item in item">{{item.title}}</dd>
+                <dd v-for="item in item"><router-link :to="item.path" v-if="item.path"   target="_blank">{{item.title}}</router-link></dd>
             </dl>
             <dl class="footer-nav-block">
                 <dt>联系我们</dt>
@@ -46,16 +46,16 @@ export default {
 
       links:['关于','帮助','服务'],
       footLink:[[
-       {title:'关于我们',id:1},
-        {title:'加入我们',id:2},
-        {title:'使用条款',id:3},
-        {title:'隐私政策',id:4},
+       {title:'关于我们',id:1,path:'/JoinUs'},
+        {title:'加入我们',id:2,path:'/'},
+        {title:'使用条款',id:3,path:'/'},
+        {title:'隐私政策',id:4,path:'/'},
      ],
         [
         //  {title:'新手指引',id:1},
-         {title:'币种资料',id:1},
-         {title:'常见问题',id:1},
-         {title:'法律文件',id:1},
+         {title:'币种资料',id:1,path:'/'},
+         {title:'常见问题',id:1,path:'/'},
+         {title:'法律文件',id:1,path:'/'},
        ],
      /* [
          {title:'最新动态',id:1},
@@ -64,10 +64,10 @@ export default {
          {title:'币种新闻',id:1}
        ],*/
        [
-         {title:'帮助中心',id:1},
-         {title:'问题反馈',id:1},
-         {title:'API 文档',id:1},
-         {title:'公告',id:1},
+         {title:'帮助中心',id:1,path:'/'},
+         {title:'问题反馈',id:1,path:'/'},
+         {title:'API 文档',id:1,path:'/'},
+         {title:'公告',id:1,path:'/'},
       ]],
       currentCode:null,
     }

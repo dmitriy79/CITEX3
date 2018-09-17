@@ -171,11 +171,15 @@ module.exports={
             }
         },
         tooltip: {
+            
+            enabled:false,
+            followPointer:false,
             pointFormat: ''
         },
         plotOptions: {
             area: {
                 // pointStart: 1940,
+                enableMouseTracking:false,
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -232,10 +236,14 @@ module.exports={
             }
         },
         tooltip: {
+            enabled:false,
+            followPointer:false,
             pointFormat: ''
         },
         plotOptions: {
+           
             area: {
+                enableMouseTracking:false,
                 // pointStart: 1940,
                 marker: {
                     enabled: false,
@@ -293,10 +301,13 @@ module.exports={
             }
         },
         tooltip: {
+            enabled:false,
+            followPointer:false,
             pointFormat: ''
         },
         plotOptions: {
             area: {
+                enableMouseTracking:false,
                 // pointStart: 1940,
                 marker: {
                     enabled: false,
@@ -354,11 +365,15 @@ module.exports={
             }
         },
         tooltip: {
+            enabled:false,
+            followPointer:false,
             pointFormat: ''
         },
         plotOptions: {
+           
             area: {
                 // pointStart: 1940,
+                enableMouseTracking:false,
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -415,11 +430,14 @@ module.exports={
             }
         },
         tooltip: {
+            enabled:false,
+            followPointer:false,
             pointFormat: ''
         },
         plotOptions: {
             area: {
                 // pointStart: 1940,
+                enableMouseTracking:false,
                 marker: {
                     enabled: false,
                     symbol: 'circle',

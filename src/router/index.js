@@ -6,6 +6,7 @@ import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
 import Notice from '@/pages/Notice'
+import JoinUs from '@/pages/JoinUs'
 import Transaction from '@/pages/Transaction'
 import ApplyChannel from  '@/components/channel/ApplyChannel'
 import ApplyChannelText from  '@/components/channel/ApplyChannelText'
@@ -31,6 +32,11 @@ const router =  new Router({
       path: '/transaction',
       name: 'Transaction',
       component: Transaction
+    },
+    {
+      path: '/joinUs',
+      name: 'JoinUs',
+      component: JoinUs
     },
     {
       path: '/applyChannel',

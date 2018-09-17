@@ -192,7 +192,17 @@ export default {
       ]
     };
   },
+  mounted () {
+    this.getInfo()
+  },
   methods: {
+    //我的委托记录
+    getInfo(){
+      var userId=localStorage.getItem('userId')
+      this.$api.listBidOrders({type:1,userId:200083,pageNum:1,pageSize:10}).then(res=>{
+        console.log(res,'我的委托')
+      })
+    },
     setClassName1({ row, index }) {
       // 通过自己的逻辑返回一个class或者空
       if (row.expand == true) {
