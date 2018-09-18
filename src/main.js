@@ -86,7 +86,6 @@ axios.interceptors.request.use(
 	});
 
 axios.interceptors.response.use(function(response) {
-	console.log(response,"-response++++++")
 	// token 已过期，重定向到登录页面
 	if (response.data.message == 'no login') {
 		// localStorage.clear()

@@ -1,6 +1,6 @@
 import api from '../../api'
 import axios from 'axios'
-console.log(api,'=====++++++=====')
+
 //import socket from '../../socket.js'
 const state = {
 	official: null, //公告

@@ -719,23 +719,20 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-        // this.$api.getKDatas({start:,end:,step:,})
-       
-       let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+       let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=10&step=60')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
-      
-      ws.onopen = () => {
+        ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('ws')
               console.log('数据发送中8888++++++...')
           }
-
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)
-           console.log(content,'我是k线图')
+           var kline=[]
+          //  console.log(content,'我是k线图')
              content.list.forEach(function(bar) {
               
-            this_vue.bars.push({
+            kline.push({
              time: Number(bar.endTime),
                open: Number(bar.openingPrice),
                close: Number(bar.closeingPrice),
@@ -743,9 +740,9 @@ export default {
                low: Number(bar.floorPrice),
                volume: Number(bar.total)
              });
-              console.log(this_vue.bars,'999999')
+              console.log(kline,'999999')
            });
-          onHistoryCallback(this_vue.bars)
+          onHistoryCallback(kline,noData = true)
           }
           ws.onclose = function () {
             // 关闭 websocket
