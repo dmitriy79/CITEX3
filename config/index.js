@@ -21,6 +21,14 @@ for (let i in apiPort) {
     }
   }
 }
+// proxys['/SOCKET'] = {
+//   target: `http://47.94.213.6:13080`,
+//   changeOrigin: true,
+//   pathRewrite: {
+//     [`^/SOCKET`]: ""
+//   }
+// }
+//proxys.push(ws)
 console.log(proxys)
 module.exports = {
   dev: {

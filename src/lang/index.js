@@ -1,4 +1,4 @@
 export default {
-    'en':require('./en.js'),
-    'zh_cn': require('./zh_cn.js')
+    'en':require('./en'),
+    'zh_cn': require('./zh_cn')
 }

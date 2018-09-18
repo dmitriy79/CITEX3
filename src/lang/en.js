@@ -1,24 +1,28 @@
-export default {
+module.exports =  {
 	message: {
 		hello: 'hello',
 		about: 'about',
 		welcome: "Welcome"
 	},
-	footer:{
-
+	footer: {
+		about:"About",
+		help:"Help",
+		service:"Service",
 	},
-	header:{
-		help:"help",
-		login:"sing in",
-		reg:"sign up",
+	header: {
+		help: "help",
+		login: "sing in",
+		reg: "sign up",
 	},
-	login:{
-		'username' : '请输入用户名',
-        'password' : '请输入密码',
-        'login' : '登录',
-        'language' : '请选择语言'
+	login: {
+		'username': 'please enter username',
+		'password': 'please enter password',
+		'login': 'Login',
+		'language': 'Language'
 	},
-	"home": {
-		"title": "home page"
+	home: {
+		"title": "home page",
+		col1title: "Global digital currency trading",
+		col1cont: "Use users across the world to support multi-language switching, and use multiple countries and regions to form teams and operate"
 	}
 }
