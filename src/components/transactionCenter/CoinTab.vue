@@ -66,18 +66,16 @@ export default {
   methods: {
     //获取交易区类型
     classificationList(){
-      this.$api.websocketDealPrice().then(res=>{
-        console.log(res,'我是coket+++++')
-      })
-      // this.$api.classificationList().then(res=>{
-      //   console.log(res,'090999')
-      //   this.coinNameList=res.data.datas
-      //   if(this.coinNameList.length>0){
-      //     var id=this.coinNameList[0].id
-      //     this.tabs(0,id)
+      
+      this.$api.classificationList().then(res=>{
+        console.log(res,'090999')
+        this.coinNameList=res.data.datas
+        if(this.coinNameList.length>0){
+          var id=this.coinNameList[0].id
+          this.tabs(0,id)
   
-      //   }
-      // })
+        }
+      })
     },
     
     changeType(){

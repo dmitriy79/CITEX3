@@ -1,6 +1,6 @@
 import api from '../../api'
 import axios from 'axios'
-console.log(api)
+console.log(api,'=====++++++=====')
 //import socket from '../../socket.js'
 const state = {
 	official: null, //公告
@@ -90,7 +90,7 @@ const mutations = {
 			api.listByType({ type: 1 }), //banner列表
 			api.list({ pageNum: 1, pageSize: 10 }), //公告列表
 			api.classificationList({}), //交易对列表
-			api.getTradeInfoByZone({id:0}) //交易对列表
+			api.getTradeInfoByZone({id:1}) //交易对列表
 		]
 		axios.all(indexData)
 			.then(res => {
