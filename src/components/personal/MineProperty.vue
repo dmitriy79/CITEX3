@@ -12,22 +12,21 @@
         </div>
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
-            <dd class="list" v-for="(item, index) in propertyList">
-     
+            <dd class="list" v-for="(item, index) in propertyLists">
                <span>{{item.coinName}} </span>
                 <span>{{item.total}}</span>
                 <span>{{item.able}}</span>
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
                     <i @click="fullCoin(index,item.coinId,item.coinName)">充币</i>
-                    <i @click="carryCoin(index)">提币</i>
+                    <i @click="carryCoin(index,item.coinId)">提币</i>
                     <i><router-link to="/Transaction" tag="span">交易</router-link></i>
                 </span>
                 <transition name="fade">
                 <div class="carry-coin coin-item" ref="child" style="display:none" >
                     <div class="item">
                         <label class="name">提币地址</label>
-                        <input type="text">
+                        <input type="text" v-model="coinAddress">
                     </div>
                     <div class="item">
                         <div class="item-num">
@@ -37,16 +36,16 @@
                                 <span>限额：<b>800000.0000</b></span>
                             </div>
                         </div>
-                        <input type="text">
+                        <input type="text" v-model="coinNum">
                     </div>
-                    <div class="item">
+                    <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label><span>范围：50.000000-50.000000</span></div>
-                            <input type="text">
+                            <input type="text" v-model="rate">
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
-                            <input type="text">
+                            <input type="text" v-model="realNum">
                         </div>
 
                     </div>
@@ -56,7 +55,7 @@
                     <p>为保障资金安全，当您账户安全策略变更、密码修改、使用新地址提币，我们会对提币进行人工审核</p>
                     <p>请耐心等待工作人员电话或邮件联系</p>
                     <p>请务必确认电脑及浏览器安全，防止信息被篡改或泄漏</p>
-                    <div class="tips-btn">提币</div>
+                    <div class="tips-btn" @click="carrycoins">提币</div>
                     </div>
                 </div>
                 </transition>
@@ -128,6 +127,21 @@
             </div>
         </div>
     </div>
+    <el-dialog title="提示"   :visible.sync="dialogAuditing" width="30%">
+      <el-form :model="form" class="dialog-wrapper" label-width="120px">
+        <el-form-item label="请输入交易密码：">
+          <el-input v-model="form.password" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入谷歌验证码：" >
+          <el-input v-model="form.code" auto-complete="off"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAuditing = false">取 消</el-button>
+        <el-button type="primary" @click="confirmFull" :plain="true" >确定</el-button>
+      </div>
+    </el-dialog>
     </div>
     
 </template>
@@ -142,9 +156,17 @@ export default {
     
   data() {
     return {
+      coinAddress:'',
+coinNum:'',rate:'',realNum:'',
       coinId:'',
       able:true,
       coiname:'',
+      coin_Id:'',
+      dialogAuditing:false,
+      form:{
+        code:'',
+        password:''
+      },
       fullAddress:'',
         current:'full',
         isShow:false,
@@ -156,7 +178,7 @@ export default {
         logoUrl:'',
          coinName:'',
         activeIndex:'',
-        propertyList:[],
+        propertyLists:[],
        fullCoinRecordList:[],
         tableData1: [{
             date: '2016-05-02',
@@ -191,6 +213,72 @@ export default {
    // this.fullCoinRecord()
   },
   methods:{
+    //确定提币
+    dialogAudit(){
+
+    },
+    carrycoins(){
+      if(this.coinAddress&&this.coinNum&&this.realNum&&this.rate){
+        this.dialogAuditing=true
+        
+      }
+      else{
+         if(this.realNum==''){
+           this.$message({
+                message: '到账数量不能为空',
+                type: 'warning'
+                });
+        }
+         if(this.rate==''){
+           this.$message({
+                message: '手续费不能为空',
+                type: 'warning'
+                });
+        }
+        if(this.coinNum==''){
+           this.$message({
+                message: '数量不能为空',
+                type: 'warning'
+                });
+        }
+        if(this.coinAddress==''){
+           this.$message({
+                message: '提币不能为空',
+                type: 'warning'
+                });
+        }
+       
+         
+        
+      }
+    },
+    //最终确定提币
+    confirmFull(){
+      if(this.form.password&&this.form.code){
+          this.$api.withdraw({coin_id:this.coin_Id,code:this.form.code,tradePassword:this.form.password,to:this.coinAddress,amount:this.coinNum,}).then(res=>{
+            console.log(res,'99999+++++w我呀提币')
+            if(res.data.message=='成功'){
+              this.dialogAuditing=false
+            }
+            else{
+              this.$message({
+                message: res.data.message,
+                type: 'warning'
+            });
+            }
+          })
+        }
+      //  this.$prompt('请输入交易密码', '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',//replace(/[^\d]/g,'')
+      //     inputPattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/ ,
+      //     inputErrorMessage: '请输入正确的密码'
+      //   }).then(({ value }) => {
+      //     // this.$api.withdraw({coin_id:,}).then(res=>{
+
+      //     // })
+      //   })
+    },
     //隐藏小额资产
     handleChecked(){
       this.checked=!this.checked
@@ -230,32 +318,30 @@ export default {
     //我的资产列表
       myproperty(){
          this.$api.uplistByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
-           console.log(res,'我的资产+++++')
-          var list=res.data.datas.list
           const  that= this;
           var propertyList=res.data.datas.list
-          list.forEach(function(list){
+          propertyList.forEach(function(list){
            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
             console.log(res,'我是第二个res')
               if(res.data.message=='success'){
-                console.log(propertyList,'+++++,,,,00000')
                propertyList.forEach (function (item) {
                   if (item.coinId === res.data.datas.id) {
                     item.coinName = res.data.datas.name;
                     item.logoUrl = res.data.datas.logoUrl
                   }
-                  that.coinId=item.coinId
-                 console.log(that.coinId,'我的资产****+++++')
-                 that.propertyList=propertyList
                 })
-                   
               }
             })
           })
+           this.propertyLists=propertyList
+          
+               console.log(this.propertyLists,'11++33+++44444')    
+
          })
        
       },
-      carryCoin(index){
+      carryCoin(index,id){
+        this.coin_Id=id
          this.$refs.child1[index].style.display = 'none'
         if (this.$refs.child[index].style.display === 'none') {
         this.$refs.child[index].style.display = 'block'
@@ -322,8 +408,18 @@ export default {
 };
 </script>
 
+<style>
+ .el-input input{color: #000!important
+
+    }
+</style>
 
 <style lang="less" scoped>
+
+.el-input {
+    width: 100%!important;
+   
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -529,7 +625,7 @@ export default {
           line-height: 30px;
         }
         .tips-btn{width: 132px;height: 42px;line-height: 42px;background: #2286FF;text-align: center;position: absolute;right: 0;bottom: 0;
-border-radius: 2px;font-size: 16px;
+border-radius: 2px;font-size: 16px;cursor: pointer;
 color: #FFFFFF;}
       }
     }

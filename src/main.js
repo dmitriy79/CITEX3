@@ -16,7 +16,8 @@ import {
 	MessageBox,
 	Button,
 	Radio,
-	RadioGroup
+	RadioGroup,
+	Dialog
 } from 'element-ui'
 
 import App from './App'
@@ -56,7 +57,7 @@ Vue.use(Input)
 Vue.use(Button)
 Vue.use(Radio)
 Vue.use(RadioGroup)
-
+Vue.use(Dialog);
 
 // Vue.use(MessageBox)
 Vue.prototype.$message = Message
@@ -87,7 +88,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(function(response) {
 	console.log(response,"-response++++++")
 	// token 已过期，重定向到登录页面
-	if (response.data.status == 400) {
+	if (response.data.message == 'no login') {
 		// localStorage.clear()
 		localStorage.removeItem('token')
 		router.replace({

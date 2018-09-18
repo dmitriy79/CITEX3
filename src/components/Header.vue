@@ -38,7 +38,7 @@
       </li>
       <li class="split" v-if="!this.token">或</li>
       <li class="nav-right" v-if="!this.token">
-        <router-link to="/Login" tag="div">登陆</router-link>
+        <router-link to="/Login" tag="div">登录</router-link>
       </li>
       <li class="change-btn" @click="selectLanguage">
         <i class="drop-icon" :class="{active:isActive}"></i>

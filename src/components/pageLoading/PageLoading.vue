@@ -7,7 +7,7 @@
 export default {
   name: "VFooter",
   data(){
-    }
+    
   },
    methods: {
     showCode(e){
