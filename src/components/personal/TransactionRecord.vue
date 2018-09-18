@@ -32,12 +32,12 @@
                      <el-table :data="recordList" style="width: 100%"   height="750">
                         <el-table-column prop="dealTime" label="交易时间" width="165"></el-table-column>
                         <el-table-column prop="type" label="方向" ></el-table-column>
-                        <el-table-column prop="type" label="交易币种" ></el-table-column>
+                        <el-table-column prop="tradeCoinShortName" label="交易币种" ></el-table-column>
                         <el-table-column prop="dealPrice" label="单价"></el-table-column>
                         <el-table-column prop="dealAmount" label="数量（个）"></el-table-column>
-                        <el-table-column prop="num" label="金额"></el-table-column>
-                        <el-table-column prop="duenum" label="手续费单位"></el-table-column>
-                        <el-table-column prop="avarage" label="手续费"></el-table-column>
+                        <el-table-column prop="dealTotal" label="金额"></el-table-column>
+                        
+                        <el-table-column prop="askRateAmountString" label="手续费"></el-table-column>
                     </el-table>
                   
                 
@@ -116,6 +116,24 @@ export default {
     },
     tabCondition(index) {
       this.currentIndex = index;
+      console.log(index,'0000+++(((((')
+      this.$api.getUserTransactionRecord({type:index}).then(res=>{
+        console.log(res,'交易记录9999')
+        if(res.data.message=='success'){
+          
+          var content=res.data.datas
+          content.forEach(element => {
+         
+         element.dealTime=date.timestampToTimeAll(element.dealTime) 
+
+        });
+         this.recordList=content
+        }
+       
+        
+
+      })
+
     },
     //是否显示交易对
     showCoinType() {

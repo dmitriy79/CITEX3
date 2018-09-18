@@ -18,7 +18,7 @@
                 <div class="tips">这是您的钱包地址，请将您的OEX币转入此地址</div>
                 <div class="address">
                     
-                    钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>
+                    钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns"   @success="handleSuccess">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>
                     <!-- <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm"> -->
                     <div id="qrcode" class="ewm-img"></div>
                 </div>
@@ -73,6 +73,7 @@ export default {
         this.getFullcoinList()
     },
     methods:{
+        
         //下拉选择币种
         selectCoin(val){
             this.$api.allotRechargeAddr({coinId:val}).then(res=>{
@@ -120,8 +121,15 @@ export default {
                });
                this.list=content
             })
+        },
+        //复制
+        handleSuccess(){
+            this.$message({
+                message: '复制成功',
+                type: 'success'
+                });
+        },
         }
-    }
 }
 </script>
 <style>

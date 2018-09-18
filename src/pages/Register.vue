@@ -257,33 +257,8 @@ export default {
 
       this.blurConfirmPassword()
 
-      //             var captchaIns;
-      //             initNECaptcha({
-      //                 element: '#login_yanzhengma',
-      //                 captchaId: '1ea48dc26ca240218216696392578acf',
-      //                 mode: 'float',
-      //                 width: '320px',
-      //                 onVerify: function (err, ret) {
-      //                     if (!err) {
-      //                         console.log(ret)
-      //                     localStorage.setItem('registerYanzhengma', ret.validate)
-
-      //                     // ret['validate'] 获取二次校验数据
-      //                     }
-      //                 }
-      //             }, function (instance) {
-
-      //     // 初始化成功后得到验证实例instance，可以调用实例的方法
-      //     captchaIns = instance
-      //     // captchaIns && captchaIns.popUp()
-      //     localStorage.setItem('registerYanzhengma', '')
-
-
-      //   }, function (err) {
-      //     // 初始化失败后触发该函数，err对象描述当前错误信息
-      //     localStorage.setItem('registerYanzhengma', '')
-      //   })
-      this.$api.register({email: this.email,
+      if(this.email&&this.code&&this.inviteCode&&this.$refs.isAgree.className){
+              this.$api.register({email: this.email,
           passWord: this.passWord,
           code: this.code,
           inviteCode: this.inviteCode,
@@ -293,6 +268,8 @@ export default {
               this.$router.push({ path: "/Login" });
             }
           })
+      }
+  
     /*  var url = `/api/user/register`
       this.$http.get(url, {
         params: {

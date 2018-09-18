@@ -164,6 +164,7 @@ export default {
           NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
           
              var returnData = res.data.message
+             console.log(res,'000====9999999+++++')
              var datasList=res.data.datas.split("|")
              var token=datasList[0]
              var userId=datasList[1]
@@ -173,7 +174,7 @@ export default {
         localStorage.setItem("loginPassword", this.passWord)
               console.log(res.data.datas,'我是登录userId')
         // let token = JSON.stringify(res.data.datas)                                            
-
+console.log(returnData !== '成功','0000++++*****')
         if (returnData !== '成功') {
           this.$message({
             message: returnData,

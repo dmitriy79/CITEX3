@@ -132,6 +132,12 @@ export default {
                     mark:'',
                 }
               }
+              else{
+                  this.$message({
+                    type: 'warning',
+                    message: res.data.message
+                });
+              }
             //    this.getlistByUserId()
 
             })

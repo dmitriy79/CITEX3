@@ -1,5 +1,6 @@
 import api from '../../api'
 import axios from 'axios'
+
 const state = {
 	banner: [], //banner
 	official: [], //公告
@@ -61,6 +62,7 @@ const mutations = {
 			api.list({ pageNum: 1, pageSize: 10 }), //公告列表
 			api.classificationList({}), //交易对列表
 			api.getTradeInfoByZone({ id: 1 }) //交易对列表
+
 		]
 		axios.all(indexData)
 			.then(res => {

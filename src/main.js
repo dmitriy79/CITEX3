@@ -16,13 +16,14 @@ import {
 	MessageBox,
 	Button,
 	Radio,
-	RadioGroup
+	RadioGroup,
+	Dialog
 } from 'element-ui'
 
 import App from './App'
 import router from './router'
 import api from './api'
-import ws from 'ws'
+// import ws from 'ws'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/dist/css/swiper.css'
@@ -56,7 +57,7 @@ Vue.use(Input)
 Vue.use(Button)
 Vue.use(Radio)
 Vue.use(RadioGroup)
-
+Vue.use(Dialog);
 
 // Vue.use(MessageBox)
 Vue.prototype.$message = Message
@@ -85,9 +86,11 @@ axios.interceptors.request.use(
 	});
 
 axios.interceptors.response.use(function(response) {
+	console.log(response,"-response++++++")
 	// token 已过期，重定向到登录页面
-	if (response.data.code == 403) {
-		localStorage.clear()
+	if (response.data.message == 'no login') {
+		// localStorage.clear()
+		localStorage.removeItem('token')
 		router.replace({
 			path: '/login'
 		})

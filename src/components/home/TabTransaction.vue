@@ -72,6 +72,7 @@ export default {
             this.num = index;
             this.active = index;
         },
+
         getInfo() {
             var userId = localStorage.getItem("userId")
             var wsUrl = `ws://47.93.194.146:13080/websocketDealPrice?unitPriceCoinId=${this.coinId}&uuid=1&userId=` + userId
@@ -100,6 +101,7 @@ export default {
             this.over = () => {
                 ws.close()
             }
+
         }
     },
 
