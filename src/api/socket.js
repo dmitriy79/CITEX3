@@ -4,20 +4,20 @@ var wsList = [
     "websocketSSCJ", //启用成交历史接口    POSTws://47.93.194.146:13080/
     "websocketKline", //启用K线    POSTws://47.93.194.146:13080/
     "websocketDealPrice", //启用主币区   POSTws://47.93.194.146:13080/
-    "websocketRankingList", //启用首页的涨跌排行榜  POSTws://47.93.194.146:13080/
+    "websocketRankingList", //启用首页的涨跌排行榜  POSTws://47.93.194.146:13080/ls
 ]
 export default {
     websock: null,
     global_callback: null,
     initWebSocket(socketUrl) { //初始化weosocket
         let wsUri = `${process.env.WS_API}/${socketUrl}`
+        console.log(wsUri)
         //ws地址
         this.websock = new WebSocket(wsUri)
         console.log(this.websock)
         this.websock.onmessage = (e) => {
-            console.log(e)
-            console.log(wsUri, "====>接收数据")
             this.onmessage(e)
+            console.log(wsUri, "====>接收数据")
         }
         this.websock.onclose = (e) => {
             this.close(e)
@@ -29,27 +29,24 @@ export default {
             this.open()
         }
         //连接发生错误的回调方法
-        this.websock.onerror = function() {
+        this.websock.onerror = (e) => {
+            console.log(e)
             console.log("WebSocket连接发生错误")
         }
     },
     // 实际调用的方法
     sendSocket(agentData, callback) {
         this.global_callback = callback
-       // console.log(callback)
         if (this.websock.readyState === this.websock.OPEN) {
             console.log("open状态")
-            //若是ws开启状态
             this.websocketSend(agentData)
         } else if (this.websock.readyState === this.websock.CONNECTING) {
-            // 若是 正在开启状态，则等待1s后重新调用
             console.log("开启状态")
             setTimeout(() => {
                 this.sendSocket(agentData, callback)
             }, 1000)
         } else {
             console.log("未开启状态")
-            // 若未开启 ，则等待1s后重新调用
             setTimeout(() => {
                 this.sendSocket(agentData, callback)
             }, 1000)
@@ -59,13 +56,16 @@ export default {
     //数据接收
     onmessage(e) {
         console.log(e)
-        global_callback(JSON.parse(e.data))
+        let data = JSON.parse(e.data);
+         console.log(JSON.parse(data.up))
+        // global_callback(JSON.parse(e.data))
     },
 
     //数据发送
     websocketSend(agentData) {
-        console.log(this)
-        this.websock.send(agentData)
+        console.log("数据发送", agentData)
+
+        this.websock.send(JSON.stringify(agentData))
     },
 
     //关闭
@@ -73,7 +73,7 @@ export default {
         console.log("connection closed (" + e.code + ")")
     },
 
-    open(e) {
+    open() {
         console.log("连接成功")
     }
 }
