@@ -70,7 +70,7 @@ export default {
           "header_symbol_search", //头部搜索
           "header_screenshot", //照相机
           "header_undo_redo", //左右箭头
-          "header_resolutions", //时间下拉框
+          //"header_resolutions", //时间下拉框
           // "header_settings",//设置（切换图标类型）
           "header_chart_type", //图表类型
           "header_interval_dialog_button",
@@ -252,15 +252,15 @@ export default {
           },
           {
             label: "1分钟",
-            resolution: "60"
+            resolution: "1"
           },
            {
             label: "3分钟",
-            resolution: "180"
+            resolution: "3"
           },
           {
             label: "5分钟",
-            resolution: "300"
+            resolution: "5"
           },
           {
             label: "15分钟",
@@ -628,9 +628,7 @@ export default {
             "360",
             "720",
             "1D",
-            "3D",
             "1W",
-            "1M"
           ],
           supports_marks: true,
           supports_timescale_marks: true,
@@ -697,7 +695,7 @@ export default {
           });
         }
       };
-
+     
       Datafeed.Container.prototype.resolveSymbol = function(
         symbolName,
         onSymbolResolvedCallback,
@@ -719,7 +717,7 @@ export default {
           );
           onSymbolResolvedCallback({
             name: this_vue.currency1 + "/" + this_vue.currency2,
-            timezone: "Europe/Warsaw",
+            timezone: "Asia/Shangha",
             pricescale: adjustScale(),
             minmov: 1,
             minmov2: 0,
@@ -745,6 +743,16 @@ export default {
       //     onDataCallback([], { noData: true });
       //     //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
       // };
+      //修改首屏默认加载数量
+      Datafeed.Container.prototype.calculateHistoryDepth = function(resolution, resolutionBack, intervalBack) {
+        console.log(resolution, resolutionBack, intervalBack,'历史深度+++++++）））（（（（（99999999')
+          if (resolution == "60") {
+              return {
+                  resolutionBack: 'D',
+                  intervalBack: 1
+              };
+          }
+      };
       Datafeed.Container.prototype.getBars = function(
         symbolInfo,
         resolution,
@@ -754,9 +762,11 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
- console.log(symbolInfo,resolution,from,to,firstDataRequest)
-         this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600,tradeCoinPariId:2}).then(res=>{
-        console.log(res,'我是历史数据++++++')
+
+        if(firstDataRequest) {
+        this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
+        // this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600000,tradeCoinPariId:2}).then(res=>{
+        //console.log(res,'我是历史数据++++++')
         var kline=[]
           res.datas.list.forEach(function(bar) {
             kline.push({
@@ -767,21 +777,22 @@ export default {
                low: Number(bar.floorPrice),
                volume: Number(bar.total)
              });
-            //console.log(kline,'999999++++我是我是历史上历史=====')
+            console.log(kline,'999999++++我是我是历史数据kline=====')
            });
          
-         if(firstDataRequest) {
-            onHistoryCallback(kline, {noData : false});
+         onHistoryCallback(kline)
+      })
         } else {
             onHistoryCallback([], {noData : true});
         }
-      })
-        console.log("我被加载了。。。。。。。。。。。。。");
-        console.log(resolution, "我是resolution");
-        console.log(from, to);
-        var num = parseInt((to - from) / (resolution * 60));
+ console.log(symbolInfo,resolution,from,to,firstDataRequest,"++++++000000+++++++)))((((********",1536810480000,1536810780000)
+   
+        // console.log("我被加载了。。。。。。。。。。。。。");
+        // console.log(resolution, "我是resolution");
+        // console.log(from, to);
+        // var num = parseInt((to - from) / (resolution * 60));
 
-        console.log(num); //1440.0166666666667
+        // console.log(num); //1440.0166666666667
         
         // var url='https://api.fcoin.com/v2/market/candles/M3/btcusdt'
         // this_vue.$http.get(url).then(response => {
@@ -803,7 +814,8 @@ export default {
 
         // })
         //var url = `https://www.okcoin.com/api/v1/kline.do?symbol=btc_usd&type=1hour&size=${num}&since=${to}`;
-/*          var url=`https://api.hadax.com/market/history/kline?period=5min&size=${num}&symbol=btcusdt`
+       // var url=`https://api.hadax.com/market/history/kline?period=60min&size=${num}&symbol=btcusdt`
+     /* var url="https://api.hadax.com/market/history/kline?period=60min&size=200&symbol=btcusdt"
         console.log(url);
          this_vue.$http.get(url).then(response => {
          
@@ -816,7 +828,7 @@ export default {
           d.forEach(function(bar) {
 //        	console.log(bar,'999999')
             this_vue.bars.push({
-             time: Number(bar.id),
+             time: Number(bar.id*1000),
                open: Number(bar.open),
                close: Number(bar.close),
                high: Number(bar.high),
@@ -825,7 +837,12 @@ export default {
              });
            });
            console.log(this_vue.bars,'888888');
-           onHistoryCallback(this_vue.bars);
+            if(firstDataRequest) {
+            onHistoryCallback(this_vue.bars, {noData : false});
+        } else {
+            onHistoryCallback([], {noData : true});
+        }
+           
          });*/
         // onHistoryCallback(this_vue.bars);  我在这里显示
         //onHistoryCallback([], { noData: true });
