@@ -22,6 +22,7 @@ module.exports =  {
 	},
 	home: {
 		"title": "home page",
+		adtitle:"The most trusted digital currency platform",
 		col1title: "Global digital currency trading",
 		col1cont: "Use users across the world to support multi-language switching, and use multiple countries and regions to form teams and operate"
 	}

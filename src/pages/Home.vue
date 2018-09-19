@@ -16,13 +16,12 @@
           <router-link to="/notice">更多</router-link>
         </div>
       </div>
-      <coin-type ></coin-type>
-      <rise-drop></rise-drop>
-      <tab-transaction :category="category" ></tab-transaction>
+      <coin-type :coinList="coinList"></coin-type>
+      <rise-drop :dealOrder="dealOrder"></rise-drop>
+      <tab-transaction :category="category" :tradingList="tradingList"></tab-transaction>
       <div class="bottom">
         <div class="container">
-          
-          <div class="bottom-title">最值得信赖的数字货币平台</div>
+          <div class="bottom-title">{{$t("home.adtitle")}}</div>
           <div class="info-wrap">
             <div class="item">
               <div class="img-wrap">
@@ -69,9 +68,9 @@ import VHeader from "../components/Header";
 import VFooter from "../components/Footer";
 import HomeSwiper from "../components/Swiper";
 import CoinType from "../components/home/CoinType";
-import RiseDrop from "../components/home/RiseOrDrop"
-import TabTransaction from "../components/home/TabTransaction"
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import RiseDrop from "../components/home/RiseOrDrop";
+import TabTransaction from "../components/home/TabTransaction";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -84,19 +83,19 @@ export default {
   },
   data() {
     return {
-      title: '',
+      title: ""
     };
   },
   created() {
-    this.$store.dispatch('home/initHome')
-    this.$store.dispatch('home/officaliCycle')
+    this.$store.dispatch("home/initHome");
+    this.$store.dispatch("home/officaliCycle");
   },
   methods: {
     noticeDetail() {
-      let index = this.officialIndex
-      let id = this.official[this.officialIndex].id
+      let index = this.officialIndex;
+      let id = this.official[this.officialIndex].id;
       this.$router.push({
-        name: 'NoticeDetail',
+        name: "NoticeDetail",
         params: {
           id: id,
           index: index,
@@ -104,98 +103,29 @@ export default {
           prelist: this.official[index - 1],
           nextlist: this.official[index + 1]
         }
-      })
-    },
+      });
+    }
   },
   computed: {
-    ...mapState(['pageLoading']),
-    ...mapState("home", ["banner", "official", "category","officialIndex"]),
-  },
-}
-
-
-
-// rodAd() {
-//   var currindex = 0
-//   let rod = setInterval(() => {
-//     let i = currindex++
-//       this.noticeIndex = i
-//     if (i == this.notice.length) {
-//       currindex = 0
-//     }
-//   }, 5000)
-//},
-
-// initIndex() {
-//   this.$http.all([this.$api.list({ pageNum: 1, pageSize: 20, n_language: 'zh_CN' }), this.$api.listByType({ type: 1 })])
-//     .then(res => {
-//       console.log(res)
-//       this.notice = res[0].data.datas.list
-//       // console.log(this.notice,'wwwww')
-//       this.swiperList = res[1].data.datas
-//       //this.category = res[2].data.datas
-//       this.rodAd()
-//       this.pageLoading = false
-//     })
-//   // console.log(process.env)
-// let ranking = new WebSocket(`${process.env.WS_API}/websocketRankingList`)
-// ranking.onopen = () => {
-//   // Web Socket 已连接上，使用 send() 方法发送数据
-//   ranking.send('ws')
-//   //  console.log('数据发送中8888...')
-// }
-// ranking.onmessage = evt => {
-//   console.log("RANKING==>", evt)
-//   var content = JSON.parse(evt.data)
-//   console.log("res==>", content)
-//   console.log(JSON.parse(content.up))
-//   // this.buyListsAll=content.bid
-//   // this.sellListsAll=content.ask
-//   // console.log(content,'length')
-//   // this.buyLists=content.bid.slice(0,11)
-//   // this.sellLists=content.ask.slice(0,11)
-// }
-// ranking.onclose = function() {
-//   // 关闭 websocket
-//   // console.log('连接已关闭...')
-// }
-// // 组件销毁时调用，中断websocket链接
-// this.over = () => {
-//   ws.close()
-// }
-// this.$api.listByType({ type: 1 })
-//   .then(res => {
-//     console.log("banner", res.data.datas)
-//     this.swiperList = res.data.datas
-//     console.log(this.swiperList, 'banner')
-//   })
-
-
-// this.$api.list({ pageNum: 1, pageSize: 20 })
-//   .then(res => {
-//     console.log("ad", res.data)
-//     if (res.data.status == '200') {
-//       let notice = res.data.datas.list
-//       this.notice = notice
-//       this.rodAd()
-//     }
-//   })
-
-// this.$api.all({})
-//   .then(res => {
-//     console.log(res)
-//   })
-//},
-
-//},
-
+    ...mapState(["pageLoading"]),
+    ...mapState("home", [
+      "banner",
+      "official",
+      "category",
+      "dealOrder",
+      "coinList",
+      "officialIndex",
+      "tradingList"
+    ])
+  }
+};
 </script>
 <style lang="less" scoped>
 html {
-  background: #3B4249;
+  background: #3b4249;
 }
-.fade{
-  animate:.4s fade;
+.fade {
+  animate: 0.4s fade;
 }
 .loading {
   min-height: 300rpx;
@@ -234,23 +164,23 @@ html {
     text-align: right;
     flex-grow: 1;
 
-    color: #6F717A;
+    color: #6f717a;
     cursor: pointer;
     font-size: 13px;
     &::after {
-      content: '';
+      content: "";
       width: 6px;
       height: 6px;
       display: inline-block;
-      border-left: 1px solid #6F717A;
-      border-top: 1px solid #6F717A;
+      border-left: 1px solid #6f717a;
+      border-top: 1px solid #6f717a;
       transform: rotate(135deg);
     }
   }
 }
 
 .bottom {
-  background: rgba(22, 22, 22, .1);
+  background: rgba(22, 22, 22, 0.1);
   padding: 90px 0;
   margin-top: 50px;
   display: flex;
@@ -259,9 +189,9 @@ html {
   }
   &-title {
     font-size: 26px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-bottom: 60px;
   }
   .info-wrap {
@@ -300,5 +230,4 @@ html {
     }
   }
 }
-
 </style>

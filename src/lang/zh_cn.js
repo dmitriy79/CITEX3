@@ -22,6 +22,7 @@ module.exports = {
 	},
 	home: {
 		title: "首页",
+		adtitle:"最值得信赖的数字货币平台",
 		col1title:"全球化数字货币交易",
 		col1cont:"使用用户遍布全球 支持多语言切换，多国家、地区使用多个国家、地区组建团队运营"
 	}

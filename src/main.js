@@ -36,10 +36,6 @@ import VueI18n from 'vue-i18n'
 import lang from './lang'
 import store from './store'
 
-//webSocket
-import * as socketApi from './api/socket'
-Vue.prototype.socketApi = socketApi
-
 Vue.use(VueI18n)
 Vue.use(VueClipboards);
 // Vue.use(ws)
@@ -86,7 +82,6 @@ axios.interceptors.request.use(
 	});
 
 axios.interceptors.response.use(function(response) {
-	console.log(response,"-response++++++")
 	// token 已过期，重定向到登录页面
 	if (response.data.message == 'no login') {
 		// localStorage.clear()

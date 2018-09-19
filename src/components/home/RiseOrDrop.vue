@@ -1,14 +1,14 @@
 <template>
   <div class="rise">
     <div class="container">
-      <div class="rise-list">
+      <div class="rise-list" v-if="dealOrder">
         <div class="title">
           <div>涨幅排行榜</div>
         </div>
         <ul>
-          <li v-for="(item,index) in topList"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type">{{item.name}}</div>
-            <div class="rate">{{item.rate}}%<i class="ico-uos"></i></div>
+      <li v-for="(item,index) in dealOrder.fall" v:if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+            <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
+            <div class="rate green">+{{item.range}}%<i class="ico-downs"></i></div>
           </li>
         </ul>
       </div>
@@ -17,9 +17,9 @@
           <div>跌幅排行榜</div>
         </div>
         <ul>
-           <li v-for="(item,index) in lastList"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type">{{item.name}}</div>
-            <div class="rate red">{{item.rate}}%<i class="ico-downs"></i></div>
+           <li v-for="(item,index) in dealOrder.up" v:if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+            <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
+            <div class="rate red">-{{item.range}}%<i class="ico-downs"></i></div>
           </li>
          
         </ul>
@@ -36,6 +36,9 @@ export default {
        websock: null,
       lastList:[]
     }
+  },
+ props: {
+    dealOrder: Object
   },
   mounted () {
     //this.getRankingList()
@@ -105,15 +108,18 @@ export default {
   }
   .ranking {
     &.active{
-      color: #2286ff
+      color: #fff;
+      background:#FF6442;
     }
-    background: #d4d5d7;
+    background: #fff;
     width: 20px;
     height: 20px;
     display: inline-block;
-    border-radius: 2px;
+    border-radius:90px;
     text-align: center;
-    margin-right: 4px;
+    margin-right:8px;
+    border:none;
+    color:#292F37;
   }
   &-list {
     width: 50%;
@@ -150,6 +156,8 @@ export default {
         font-family: "PingFangSC-Semibold";
         font-size: 14px;
         background: #31373e;
+        display:flex;
+        align-items:center;
         .type {
           color: #d4d5d7;
           flex: 1;

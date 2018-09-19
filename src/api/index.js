@@ -84,6 +84,8 @@ let ajax = (url, params, method) => {
 let res =  (res) => {
   if (res.status == '200') {
     return res.data
+  }else{
+    console.log(res.statusText)
   }
 }
 for (let i in apiList) {

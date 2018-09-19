@@ -2,7 +2,7 @@
     <div class="container">
         <div class="tab-transaction">
             <div class="tab">
-                <span v-for="(item,index) of navs" :class="{active:active==index}" @click="tabs(index)">{{item.name}}</span>
+                <span v-for="(item,index) of category" :class="{active:active==index}" data-id="item.id" @click='$store.dispatch("home/getTrading", item.id)'>{{item.zoneName}}</span>
             </div>
             <div class="content">
                 <dl class="transaction-list">
@@ -15,14 +15,14 @@
                         <div>昨日收盘价</div>
                         <div>24h交易量</div>
                     </dt>
-                    <dd v-for="(item,index) of List">
+                    <dd v-for="(item,index) of tradingList.list" v-if="tradingList.list">
                         <div class="transaction-list-title"> <i class="ico-star"></i><img src="../../assets/images/b.png" alt="" /><span>{{item.type}}</span></div>
-                        <div>{{item.newprice}}</div>
-                        <div class="red" :class="{green : item.riseprice >0}">{{item.riseprice}}%</div>
-                        <div>{{item.low}}</div>
-                        <div>{{item.high}}</div>
-                        <div>{{item.close}}</div>
-                        <div>{{item.num}}</div>
+                        <div>{{item.deal_price}}</div>
+                        <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
+                        <div>{{item.minPrice_24H}}</div>
+                        <div>{{item.maxPrice_24H}}</div>
+                        <div>{{item.yesterdayDealPrice}}</div>
+                        <div>{{item.amount_24H}}</div>
                     </dd>
                 </dl>
             </div>
@@ -30,79 +30,51 @@
     </div>
 </template>
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
     props: {
-        cat: Array
+        category: Array,
+        list:Array,
+        tradingList:Object
     },
-    data() {
-        return {
-            name: 'TabTransaction',
-            active: 0,
-            num: 0,
-            coinId: 1, //币种id
-            navs: [
-                { id: 1, name: 'ETH交易', coinId: 1 },
-                { id: 2, name: 'IT交易', coinId: '' },
-                { id: 3, name: 'BTC交易', coinId: 10 },
-                { id: 4, name: '自选市场' },
-            ],
-            List: [
-                { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-0.1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '+120', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-11', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '+21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-                { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-
-            ]
-        }
-    },
-    mounted() {
-        // this.getInfo()
-    },
+    // data() {
+    //     return {
+    //         name: 'TabTransaction',
+    //         active: 0,
+    //         num: 0,
+    //         coinId: 1, //币种id
+    //         navs: [
+    //             { id: 1, name: 'ETH交易', coinId: 1 },
+    //             { id: 2, name: 'IT交易', coinId: '' },
+    //             { id: 3, name: 'BTC交易', coinId: 10 },
+    //             { id: 4, name: '自选市场' },
+    //         ],
+    //         List: [
+    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-0.1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '+120', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-11', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '+21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
+    //         ]
+    //     }
+    // },
     methods: {
-        tabs(index) {
-            console.log(index)
-            this.num = index;
-            this.active = index;
-        },
-
-        getInfo() {
-            var userId = localStorage.getItem("userId")
-            var wsUrl = `ws://47.93.194.146:13080/websocketDealPrice?unitPriceCoinId=${this.coinId}&uuid=1&userId=` + userId
-            let ws = new WebSocket(wsUrl)
-
-            console.log(ws.readyState, '99999000000+++++++')
-            ws.onopen = () => {
-                // Web Socket 已连接上，使用 send() 方法发送数据
-                ws.send('Holle')
-                console.log('数据发送中+++++...')
-            }
-            ws.onmessage = evt => {
-
-                var content = JSON.parse(evt.data)
-
-                console.log(content, '我是content')
-
-                console.log('数据已接收...')
-            }
-            ws.onclose = function() {
-                // 关闭 websocket
-                console.log('连接已关闭...')
-
-            }
-            // 组件销毁时调用，中断websocket链接
-            this.over = () => {
-                ws.close()
-            }
-
-        }
+        // tabs(index) {
+        //     console.log(index)
+        //     this.num = index;
+        //     this.active = index;
+        // },
+    },
+    computed:mapGetters(['home/tradingList']),
+    mounted(){
+       // this.getInfo()
     },
 
 }
