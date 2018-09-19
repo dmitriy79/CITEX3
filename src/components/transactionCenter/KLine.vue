@@ -252,15 +252,15 @@ export default {
           },
           {
             label: "1分钟",
-            resolution: "1"
+            resolution: "60"
           },
            {
             label: "3分钟",
-            resolution: "3"
+            resolution: "180"
           },
           {
             label: "5分钟",
-            resolution: "5"
+            resolution: "300"
           },
           {
             label: "15分钟",
@@ -754,8 +754,8 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
- 
-         this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:60000,tradeCoinPariId:2}).then(res=>{
+ console.log(symbolInfo,resolution,from,to,firstDataRequest)
+         this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600,tradeCoinPariId:2}).then(res=>{
         console.log(res,'我是历史数据++++++')
         var kline=[]
           res.datas.list.forEach(function(bar) {
