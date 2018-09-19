@@ -8,7 +8,8 @@ const state = {
 	category: [], //交易对列表
 	dealOrder: [], //涨跌幅排行
 	coinList: [], //首页置顶展示
-	tradingList: [], //主币区
+	tradingList: {}, //主币区
+	tradingCurrentIndex:null,
 	officialIndex: 0,
 }
 const getters = {
@@ -43,8 +44,8 @@ const mutations = {
 	//获取交易对列表
 	getTrading(state, obj) {
 		api.getTradeInfoByZone({ id: obj }).then(res => {
-			console.log(res)
 			state.tradingList = res.datas
+			state.tradingCurrentIndex = obj
 		})
 	},
 	//涨跌幅排行
@@ -107,6 +108,7 @@ const mutations = {
 				api.getTradeInfoByZone({ id: res[2].datas[0].id }).then(data => {
 					console.log(data)
 					state.tradingList = data.datas
+					state.tradingCurrentIndex = res[2].datas[0].id
 				})
 			}).catch(error => {
 				console.log("error===>", error)

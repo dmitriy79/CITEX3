@@ -2,7 +2,7 @@
     <div class="container">
         <div class="tab-transaction">
             <div class="tab">
-                <span v-for="(item,index) of category" :class="{active:active==index}" data-id="item.id" @click='$store.dispatch("home/getTrading", item.id)'>{{item.zoneName}}</span>
+                <span v-for='(item,index) of category' :class='{active:tradingCurrentIndex == item.id}' @click='$store.dispatch("home/getTrading", item.id)'>{{item.zoneName}}</span>
             </div>
             <div class="content">
                 <dl class="transaction-list">
@@ -15,7 +15,7 @@
                         <div>昨日收盘价</div>
                         <div>24h交易量</div>
                     </dt>
-                    <dd v-for="(item,index) of tradingList.list" v-if="tradingList.list">
+                    <dd v-for='(item,index) of tradingList.list' v-if="tradingList.list">
                         <div class="transaction-list-title"> <i class="ico-star"></i><img src="../../assets/images/b.png" alt="" /><span>{{item.type}}</span></div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
@@ -35,7 +35,8 @@ export default {
     props: {
         category: Array,
         list:Array,
-        tradingList:Object
+        tradingList:Object,
+        tradingCurrentIndex:Number
     },
     // data() {
     //     return {
@@ -65,14 +66,7 @@ export default {
     //         ]
     //     }
     // },
-    methods: {
-        // tabs(index) {
-        //     console.log(index)
-        //     this.num = index;
-        //     this.active = index;
-        // },
-    },
-    computed:mapGetters(['home/tradingList']),
+
     mounted(){
        // this.getInfo()
     },
@@ -85,7 +79,7 @@ export default {
     background: #292F37;
     margin-top: 18px;
     .tab {
-        background: #23272e;
+        background: #1f252d;
         height: 38px;
         line-height: 38px;
         span {
