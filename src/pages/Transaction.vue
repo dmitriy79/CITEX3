@@ -146,7 +146,7 @@ export default {
  methods: {
    getDeepImg(){
     this.$api.getTradeInfoByTradeCoinPairId({id:2,quantity:100}).then(res=>{
-      console.log(res.data.datas.bid_list,'99303039')
+      console.log(res.datas.bid_list,'99303039')
     })
    }
      

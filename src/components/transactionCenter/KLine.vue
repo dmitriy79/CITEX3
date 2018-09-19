@@ -15,7 +15,7 @@ export default {
   name: "KLine",
   mounted: function() {
     const this_vue = this;
-
+    //this_vue.getda()
   // this_vue.getChartData();//todo: do odkomentowania na feedzie
 
     // if(window.localStorage.getItem("chart_settings")) //todo: do sprawdzenia w bardziej zaawansowanym stanie
@@ -388,6 +388,43 @@ export default {
     // });
   },
   methods: {
+     getda(){
+      let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+        ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('++++++++ws33333++++++++++')
+              console.log('数据发送中8888++++++...实时是银行业')
+          }
+          ws.onmessage = evt => {
+           var content=JSON.parse(evt.data)
+           var kline=[]
+          //  console.log(content,'我是k线图')
+             content.list.forEach(function(bar) {
+              console.log(bar,'我是实时数据bar')
+            kline.push({
+             time: Number(bar.endTime),
+               open: Number(bar.openingPrice),
+               close: Number(bar.closeingPrice),
+               high: Number(bar.topPrice),
+               low: Number(bar.floorPrice),
+               volume: Number(bar.total)
+             });
+              console.log(kline,'我是实时数据999999+++++————（（（9')
+           });
+        //onRealtimeCallback(kline)
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          }
+          ws.onerror=function(){
+            console.log("我是错误+++++++")
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
+     },
        getChartData: function() {
        	var this_vue=this
             var url=`https://api.hadax.com/market/history/kline?period=5min&symbol=btcusdt`
@@ -669,6 +706,7 @@ export default {
         onSymbolResolvedCallback,
         onResolveErrorCallback
       ) {
+        console.log( this_vue.currency1,'09999=====pppp888ppgsggsgsgs')
         this._logMessage("GOWNO :: resolve symbol " + symbolName);
         Promise.resolve().then(() => {
           function adjustScale() {
@@ -719,23 +757,12 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-        // this.$api.getKDatas({start:,end:,step:,})
-       
-       let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
-       //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
-      
-      ws.onopen = () => {
-            // Web Socket 已连接上，使用 send() 方法发送数据
-              ws.send('ws')
-              console.log('数据发送中8888++++++...')
-          }
-
-          ws.onmessage = evt => {
-           var content=JSON.parse(evt.data)
-           console.log(content,'我是k线图')
-             content.list.forEach(function(bar) {
-              
-            this_vue.bars.push({
+ 
+         this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:60000,tradeCoinPariId:2}).then(res=>{
+        console.log(res,'我是历史数据++++++')
+        var kline=[]
+          res.datas.list.forEach(function(bar) {
+            kline.push({
              time: Number(bar.endTime),
                open: Number(bar.openingPrice),
                close: Number(bar.closeingPrice),
@@ -743,18 +770,15 @@ export default {
                low: Number(bar.floorPrice),
                volume: Number(bar.total)
              });
-              console.log(this_vue.bars,'999999')
+            //console.log(kline,'999999++++我是我是历史上历史=====')
            });
-          onHistoryCallback(this_vue.bars)
-          }
-          ws.onclose = function () {
-            // 关闭 websocket
-            console.log('连接已关闭...')
-          }
-           // 组件销毁时调用，中断websocket链接
-          this.over = () => {
-            ws.close()
-          }
+         
+         if(firstDataRequest) {
+            onHistoryCallback(kline, {noData : false});
+        } else {
+            onHistoryCallback([], {noData : true});
+        }
+      })
         console.log("我被加载了。。。。。。。。。。。。。");
         console.log(resolution, "我是resolution");
         console.log(from, to);
@@ -818,6 +842,49 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
+        console.log("我是实时数据77777777777")
+      
+   let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
+       //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+        ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('++++++++ws33333++++++++++')
+              console.log('数据发送中8888++++++...实时是银行业')
+          }
+          ws.onmessage = evt => {
+           var content=JSON.parse(evt.data)
+          //  var kline=[]
+           var list=JSON.parse(JSON.stringify(content.list))
+          console.log(list,'我是k线图')
+
+
+          //    content.list.forEach(function(bar) {
+          //     console.log(bar.endTime,'我是实时数据bar')
+          //   kline.push({
+          //    time: Number(bar.endTime),
+          //      open: Number(bar.openingPrice),
+          //      close: Number(bar.closeingPrice),
+          //      high: Number(bar.topPrice),
+          //      low: Number(bar.floorPrice),
+          //      volume: Number(bar.total)
+          //    });
+          //     //console.log(kline,'我是实时数据999999+++++————（（（9')
+          //  });
+        onRealtimeCallback(list)
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            console.log('连接已关闭...')
+          }
+          ws.onerror=function(){
+            console.log("我是错误+++++++")
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
+     
+     
         //    var url='https://api.fcoin.com/v2/market/candles/M1/btcusdt'
         // 	this_vue.$http.get(url).then(response => {
         // 		console.log(response,'1111111111')

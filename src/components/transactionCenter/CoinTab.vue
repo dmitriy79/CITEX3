@@ -68,8 +68,8 @@ export default {
     classificationList(){
       
       this.$api.classificationList().then(res=>{
-        console.log(res,'090999')
-        this.coinNameList=res.data.datas
+        console.log(res,'090999+++++')
+        this.coinNameList=res.datas
         if(this.coinNameList.length>0){
           var id=this.coinNameList[0].id
           this.tabs(0,id)
@@ -87,7 +87,7 @@ export default {
       this.active = index;
       this.$api.getTradeInfoByZone({id:id}).then(res=>{
         console.log(res,'交易区++++')
-        this.tradeList=res.data.datas.list
+        this.tradeList=res.datas.list
       })
     },
     checkCoin() {

@@ -1,6 +1,7 @@
 import api from '../../api'
 import axios from 'axios'
 let webSocket = api.socket
+
 const state = {
 	banner: [], //banner
 	official: [], //公告
