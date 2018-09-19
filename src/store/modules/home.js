@@ -73,8 +73,6 @@ const mutations = {
 				state.officialIndex = i
 			if (i == state.official.length - 1) {
 				currindex = 0
-				clearInterval(rod)
-				rod()
 			}
 		}, 4000)
 	},
