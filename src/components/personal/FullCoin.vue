@@ -77,9 +77,9 @@ export default {
         //下拉选择币种
         selectCoin(val){
             this.$api.allotRechargeAddr({coinId:val}).then(res=>{
-                if(res.data.message=='成功'){
-                     this.address=res.data.datas
-                     this.copyData=res.data.datas
+                if(res.message=='成功'){
+                     this.address=res.datas
+                     this.copyData=res.datas
                          this.$refs.btns.removeAttribute('disabled')
                   this.$refs.btns.style.cursor = ""
                   
@@ -87,7 +87,7 @@ export default {
                 else{
                    this.$refs.btns.setAttribute('disabled', 'disabled')
                   this.$refs.btns.style.cursor = "not-allowed"
-                  this.address=res.data.message  
+                  this.address=res.message  
                 }
                    })
             // this.address=val
@@ -112,7 +112,7 @@ export default {
         },
         getFullcoinList(){//
             this.$api.all().then(res=>{
-               var content=res.data.datas
+               var content=res.datas
                content.forEach(element => {
                    this.coinId=element.id
                    this.$api.allotRechargeAddr({coinId:this.coinId}).then(res=>{

@@ -73,7 +73,7 @@ export default {
           this.currentIndex=index
            this.$api.list({type_id:typeId,pageNum:1,pageSize:8,n_language:'zh_CN'}).then(res=>{
                 // console.log(res,'我是公告内容tabs')
-                var  content=res.data.datas
+                var  content=res.datas
                 content.list.forEach(item=>{
                     console.log(item.id,'我是公告id')
                    this.create_time=this.timestampToTime(item.create_time);
@@ -87,7 +87,7 @@ export default {
       },
       getNoticeList(){
           this.$api.listType({pageNum:1,pageSize:8,n_language:'zh_CN'}).then(res=>{
-              var datalist=res.data.datas
+              var datalist=res.datas
               this.datalists=datalist
               console.log(datalist,'WOWOWO00000')
               datalist.forEach(element => {        
@@ -95,7 +95,7 @@ export default {
                     console.log(this.noticeList,'woshiwo我是id')
                     this.$api.list({type_id:6,pageNum:1,pageSize:8,n_language:'zh_CN'}).then(res=>{
                         console.log(res,'我是公告内容')
-                        var  content=res.data.datas
+                        var  content=res.datas
                         content.list.forEach(item=>{
                             this.create_time=this.timestampToTime(item.create_time);
                           

@@ -67,7 +67,7 @@ form: {
         getUserInfo(){
             this.$api.getValidateById().then(res=>{
                 console.log(res,'我是用户信息')
-                var content =res.data.datas
+                var content =res.datas
                 // this.tradePassword=content.user_password;
              
                 if(!content.trade_password){
@@ -164,9 +164,9 @@ form: {
            
             if(this.form.loginPassword&&this.form.tranPassword&&(this.form.confirmPassword==this.form.tranPassword)){
                     this.$api.setTradePassword({userPassword:this.form.loginPassword,tradePassword:this.form.tranPassword}).then(res=>{
-                if(res.data.message=='成功'){
+                if(res.message=='成功'){
                     this.$message({
-                    message: res.data.message,
+                    message: res.message,
                     type: 'success'
                     });
                     this.show=true
@@ -174,7 +174,7 @@ form: {
                 }
                 else{
                     this.$message({
-                    message: res.data.message,
+                    message: res.message,
                     type: 'warning'
                     });
                 }
@@ -209,7 +209,7 @@ form: {
             if(this.form.newPassword&&(this.form.newPassword==this.form.confirmPassword_)){
                 this.$api.reset({tradePassword:this.form.newPassword,code:this.form.code}).then(res=>{
                 console.log(res,'我是修改后的交易密码')
-                if(res.data.message=='成功'){
+                if(res.message=='成功'){
                    this.$message({
                 message: '交易密码修改成功',
                 type: 'success'
@@ -222,7 +222,7 @@ form: {
                 }
                 else{
                     this.$message({
-                message: res.data.message,
+                message: res.message,
                 type: 'warning'
                 });   
                 }

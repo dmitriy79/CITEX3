@@ -78,13 +78,13 @@ export default{
             } 
            if(this.form.oldPassword&&this.form.newPassword&&(this.form.confirmPassword==this.form.newPassword)&&this.form.code){
                this.$api.reset({userPassword:this.form.newPassword,oldUserPassword:this.form.oldPassword,code:this.form.code}).then(res=>{
-                 if(res.data.message=='成功'){
+                 if(res.message=='成功'){
                     localStorage.removeItem("token")
                     this.$router.push({path: '/login'});
                 }  
                 else{
                       this.$message({
-                message: res.data.message,
+                message: res.message,
                 type: "warning"
                 });  
                 }

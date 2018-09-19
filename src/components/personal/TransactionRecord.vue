@@ -96,9 +96,9 @@ export default {
     getUserTransactionRecord(){
       this.$api.getUserTransactionRecord().then(res=>{
         console.log(res,'交易记录9999')
-        if(res.data.message=='success'){
+        if(res.message=='success'){
           
-          var content=res.data.datas
+          var content=res.datas
           content.forEach(element => {
          
          element.dealTime=date.timestampToTimeAll(element.dealTime) 
@@ -119,9 +119,9 @@ export default {
       console.log(index,'0000+++(((((')
       this.$api.getUserTransactionRecord({type:index}).then(res=>{
         console.log(res,'交易记录9999')
-        if(res.data.message=='success'){
+        if(res.message=='success'){
           
-          var content=res.data.datas
+          var content=res.datas
           content.forEach(element => {
          
          element.dealTime=date.timestampToTimeAll(element.dealTime) 

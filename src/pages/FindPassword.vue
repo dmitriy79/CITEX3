@@ -87,7 +87,7 @@ export default {
         this.$refs.sendEmail.setAttribute('disabled', 'disabled')
         this.$refs.sendEmail.style.cursor = "not-allowed"
                 this.$api.emailCode({email: this.email}).then(res=>{
-           if (res.data.message == '成功') {
+           if (res.message == '成功') {
             //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
             if (!this.canClick) return
             this.canClick = false
@@ -207,7 +207,7 @@ export default {
           passWord: this.passWord,
           code: this.code,
           }).then(res=>{
-            var returnData = res.data.message
+            var returnData = res.message
              if (returnData == '成功') {
               this.$router.push({ path: "/Login" });
             }

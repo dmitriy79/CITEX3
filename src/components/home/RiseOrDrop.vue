@@ -52,9 +52,9 @@ export default {
   methods: {
    getDealOrderUpDownTen(){
       this.$api.getDealOrderUpDownTen().then(res=>{
-        if(res.data.message="success"){
-           this.topList=res.data.datas.top
-        this.lastList=res.data.datas.last
+        if(res.message="success"){
+           this.topList=res.datas.top
+        this.lastList=res.datas.last
         }
         console.log(res,'涨跌幅排行榜')
        

@@ -257,12 +257,12 @@ coinNum:'',rate:'',realNum:'',
       if(this.form.password&&this.form.code){
           this.$api.withdraw({coin_id:this.coin_Id,code:this.form.code,tradePassword:this.form.password,to:this.coinAddress,amount:this.coinNum,}).then(res=>{
             console.log(res,'99999+++++w我呀提币')
-            if(res.data.message=='成功'){
+            if(res.message=='成功'){
               this.dialogAuditing=false
             }
             else{
               this.$message({
-                message: res.data.message,
+                message: res.message,
                 type: 'warning'
             });
             }
@@ -319,15 +319,15 @@ coinNum:'',rate:'',realNum:'',
       myproperty(){
          this.$api.uplistByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
           const  that= this;
-          var propertyList=res.data.datas.list
+          var propertyList=res.datas.list
           propertyList.forEach(function(list){
            that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
             console.log(res,'我是第二个res')
-              if(res.data.message=='success'){
+              if(res.message=='success'){
                propertyList.forEach (function (item) {
-                  if (item.coinId === res.data.datas.id) {
-                    item.coinName = res.data.datas.name;
-                    item.logoUrl = res.data.datas.logoUrl
+                  if (item.coinId === res.datas.id) {
+                    item.coinName = res.datas.name;
+                    item.logoUrl = res.datas.logoUrl
                   }
                 })
               }
@@ -355,13 +355,13 @@ coinNum:'',rate:'',realNum:'',
       fullCoin(index,id,name){
         console.log(id,'w我是coinid+++++')
          this.$api.allotRechargeAddr({coinId:id}).then(res=>{
-           if(res.data.message=='成功'){
-             console.log(res.data.datas,'成功')
-             this.fullAddress=res.data.datas
+           if(res.message=='成功'){
+             console.log(res.datas,'成功')
+             this.fullAddress=res.datas
             
            }
            else{
-             this.fullAddress=res.data.message
+             this.fullAddress=res.message
              this.able=false
              console.log( this.fullAddress,'失败')
 

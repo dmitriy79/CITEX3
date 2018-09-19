@@ -90,7 +90,7 @@ export default {
     open(){
         this.$api.enableGooleAutu({secret:this.password,tradePassword:this.form.tradePassword,code:this.form.code}).then(res=>{
      
-           if(res.data.message=='成功'){
+           if(res.message=='成功'){
                 this.$message({
                 message: "谷歌验证成功",
                 type: "success"
@@ -100,7 +100,7 @@ export default {
            }
            else{
                 this.$message({
-                message: res.data.message,
+                message: res.message,
                 type: "warning"
                 });  
            }
@@ -117,7 +117,7 @@ export default {
     getValidateById(){
         this.$api.getValidateById().then(res=>{
             console.log(res,'ajjajajjajjajj_+++++')
-            if(res.data.datas.google_auth_secret){
+            if(res.datas.google_auth_secret){
                 console.log('shsjsjsjj++++++')
                 this.show=true
             }
@@ -126,7 +126,7 @@ export default {
     //获取谷歌验证码
     setGooleAutu() {
       this.$api.setGooleAutu().then(res => {
-        var content = decodeURIComponent(res.data.datas);
+        var content = decodeURIComponent(res.datas);
         // content.split("|")[0]
         this.password=content.split("|")[0]
         this.ewm = content.split("|")[1];

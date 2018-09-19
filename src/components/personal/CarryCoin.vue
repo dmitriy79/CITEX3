@@ -72,7 +72,7 @@ export default {
             console.log(this.coinName,'999++++++')
             this.$api.listByUserId({coinKey:this.coinName}).then(res=>{
                 console.log(res,'这是我的账户币种地址++++++000000')
-               this.coinList=res.data.datas
+               this.coinList=res.datas
                
             })
         },
@@ -80,26 +80,26 @@ export default {
         getlistByUserId(){
             this.$api.listByUserId({coinKey:'TEST'}).then(res=>{
                 console.log(res,'这是我的账户币种地址++++++')
-                this.coinList=res.data.datas
+                this.coinList=res.datas
             })
         },
         //查询币种
         getCoin(){
             this.$api.all().then(res=>{
                 console.log(res,'查询币种')
-               this.allCoin=res.data.datas
+               this.allCoin=res.datas
             })
         },
        //转出
        carryCoin(){
            this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.form.number}).then(res=>{
                console.log(res,'88888++++++转出')
-               if(res.data.message=='成功'){
+               if(res.message=='成功'){
                   this.$router.push({ path: "/personal" });
                }
                else{
                    this.$message({
-					          message: res.data.message,
+					          message: res.message,
 					          type: 'warning'
 		        		});
                }

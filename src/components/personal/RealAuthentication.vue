@@ -230,7 +230,7 @@ console.log(form,'98+++++++++++')
       getUserInfo(){
             this.$api.getValidateById().then(res=>{
                 console.log(res,'我是用户信息')
-                var content =res.data.datas
+                var content =res.datas
              this.form.cardName=content.user_real_name
              this.form.cardNum=content.document_id
              if(content.document_type==1){
@@ -334,7 +334,7 @@ console.log(form,'98+++++++++++')
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.number,document_type:this.type}
          ).then(res=>{
              console.log(res,'我是实名认证1111')
-              if(res.data.message=='成功'){
+              if(res.message=='成功'){
                 this.$message({
                 message: "提交成功",
                 type: "success"
@@ -350,7 +350,7 @@ console.log(form,'98+++++++++++')
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.passportId,document_type:this.type}
          ).then(res=>{
              console.log(res,'我是实名认证1111')
-              if(res.data.message=='成功'){
+              if(res.message=='成功'){
                 this.$message({
                 message: "提交成功",
                 type: "success"

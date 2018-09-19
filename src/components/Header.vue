@@ -103,7 +103,7 @@ export default {
         });*/
 
       this.$api.logout().then(res => {
-        var returnData = res.data.message
+        var returnData = res.message
         console.log(res, 'wosSJJSJWW999')
         if (returnData == '用户登出') {
           this.token = localStorage.removeItem("token")

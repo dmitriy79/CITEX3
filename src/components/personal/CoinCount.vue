@@ -95,14 +95,14 @@ export default {
         getlistByUserId(){
             this.$api.walistByUserId().then(res=>{
                 console.log(res,'这是我的账户币种地址')
-                this.coinList=res.data.datas
+                this.coinList=res.datas
             })
         },
         //查询币种
         getCoin(){
             this.$api.all().then(res=>{
                 console.log(res,'查询币种')
-               this.allCoin=res.data.datas
+               this.allCoin=res.datas
             })
         },
         //选择币种
@@ -124,7 +124,7 @@ export default {
         //   this.coinList.push(this.coinName)
           this.$api.add({coinId:this.coinId,withdrawAddress:this.form.coinAddress,code:this.code,coinName:this.coinName,comment:this.form.mark}).then(res=>{
               console.log(res,'我是添加的一条')
-              if(res.data.message=="成功"){
+              if(res.message=="成功"){
                  this.getlistByUserId()
                 this.form={
                     coinType:'',
@@ -135,7 +135,7 @@ export default {
               else{
                   this.$message({
                     type: 'warning',
-                    message: res.data.message
+                    message: res.message
                 });
               }
             //    this.getlistByUserId()
@@ -163,7 +163,7 @@ export default {
             console.log(scope,'9999++++++')
             this.$api.delete({id:scope.id}).then(res=>{
                 
-                if(res.data.message=="成功"){
+                if(res.message=="成功"){
                     console.log(res,'删除一条')
                  this.getlistByUserId()
                

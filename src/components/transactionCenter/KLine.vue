@@ -282,10 +282,7 @@ export default {
             label: "4小时",
             resolution: "240"
           },
-          {
-            label: "4小时",
-            resolution: "360"
-          },
+          
           {
             label: "12小时",
             resolution: "720"
@@ -842,8 +839,6 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-        console.log("我是实时数据77777777777")
-      
    let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
         ws.onopen = () => {
@@ -853,24 +848,21 @@ export default {
           }
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)
-          //  var kline=[]
-           var list=JSON.parse(JSON.stringify(content.list))
-          console.log(list,'我是k线图')
-
-
-          //    content.list.forEach(function(bar) {
-          //     console.log(bar.endTime,'我是实时数据bar')
-          //   kline.push({
-          //    time: Number(bar.endTime),
-          //      open: Number(bar.openingPrice),
-          //      close: Number(bar.closeingPrice),
-          //      high: Number(bar.topPrice),
-          //      low: Number(bar.floorPrice),
-          //      volume: Number(bar.total)
-          //    });
-          //     //console.log(kline,'我是实时数据999999+++++————（（（9')
-          //  });
-        onRealtimeCallback(list)
+          var kline=[]
+          content.list.forEach(function(item){
+              kline.push({
+             time: Number(item.endTime),
+               open: Number(item.openingPrice),
+               close: Number(item.closeingPrice),
+               high: Number(item.topPrice),
+               low: Number(item.floorPrice),
+               volume: Number(item.total)
+             });
+            console.log(kline,'9999')
+          })
+         
+          console.log(kline[0],'我是k线图')
+          onRealtimeCallback(kline[0])
           }
           ws.onclose = function () {
             // 关闭 websocket
