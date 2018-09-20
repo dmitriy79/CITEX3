@@ -110,5 +110,6 @@ for (let i in apiList) {
     }
   }
 }
+
 api.socket = webSocket
 export default api

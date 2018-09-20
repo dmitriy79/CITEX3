@@ -1,4 +1,5 @@
 import api from '../../api'
+import Axios from 'axios';
 export default {
   state: {
     pageLoading: false,
@@ -21,7 +22,13 @@ export default {
         console.log(res)
         commit('toggleTrading',res[0].id)
       })
-    }
+    },
+    //切换币种
+    toggleMarket({commit,state}, params){
+        console.log("交易对ID====>",params)
+        commit('setMarket',params)
+        commit('getCoinInfo',params.selectId)
+      }
   },
   mutations: {
     showLoading(state) {
@@ -60,20 +67,25 @@ export default {
     searchTradingCoin(state, params) {
       console.log("state")
     },
-    //切换币种
-    toggleMarket(state,params){
-      console.log("交易对ID====>",params)
-      state.currentTradingIndex = params.selectId
-        state.marketInfo = state.tradingList[params.selectId]
-      },
+  
     //收藏币种
     favoriteCoin(state, params) {
       api.collect(params).then(res => {
         console.log(res.message)
       })
     },
-    //币种资料
-
+    //切换币种 资料显示
+    setMarket(state,params){
+      state.currentTradingIndex = params.selectId
+      state.marketInfo = state.tradingList[params.selectId]
+    },
+    //获取币种资料
+    getCoinInfo(state,id){
+      Axios.get(`/COIN/info/${id}`).then(res=>{
+        console.log(res)
+        //state.coinInfo = res.datas
+      })
+    }
 
   }
 }
