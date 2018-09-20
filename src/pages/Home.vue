@@ -17,7 +17,7 @@
       </div>
       <coin-type :coinList="coinList"></coin-type>
       <rise-drop :dealOrder="dealOrder"></rise-drop>
-      <tab-transaction :category="category" :tradingList="tradingList" :tradingCurrentIndex="tradingCurrentIndex"></tab-transaction>
+      <tab-transaction></tab-transaction>
       <div class="bottom">
         <div class="container">
           <div class="bottom-title">{{$t("home.adtitle")}}</div>
