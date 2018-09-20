@@ -14,15 +14,15 @@
                     <span class="name">价格</span>
                     <input type="number"
                     name="buyPrice"
-                    @keyup="checkNumber" 
+                    @keyup="checkNumber"
                     v-model="buyParams.price">
                     <span class="unit">ETH</span>
                 </div>
                <div class="buy-num">
                     <span class="name">数量</span>
                     <input type="number"
-                    name="buyNumber"
-                    @keyup="isNumber" 
+                    name="buyAmount"
+                     @keyup="checkNumber"
                     v-model="buyParams.amount">
                     <span class="unit">IOST</span>
                 </div>
@@ -56,12 +56,18 @@
                 <span class="label">卖出<i>IOST</i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
-                    <input type="text" v-model="sellParams.price">
+                    <input type="text" 
+                    name="sellPrice" 
+                    @keyup="checkNumber"
+                    v-model="sellParams.price">
                     <span class="unit">ETH</span>
                 </div>
                 <div class="buy-num">
                     <span  class="name">数量</span>
-                    <input type="text" v-model="sellParams.amount">
+                    <input type="text" 
+                    name="sellAmount"
+                    @keyup="checkNumber"
+                     v-model="sellParams.amount">
                     <span class="unit">IOST</span>
                 </div>
                 <div class="buy-rate">
@@ -153,7 +159,6 @@ export default {
   },
   methods: {
     selectPercentage(e) {
-      console.log(e);
       let target = e.target.dataset;
       if (target.id == "buyPre") {
         this.buySelect = target.index;
@@ -170,16 +175,44 @@ export default {
       }
     },
     isNumber(value) {
-      // <input type = "text" name= "price" id = 'price' onkeyup= "if( ! /^d*(?:.d{0,2})?$/.test(this.value)){alert('只能输入数字，小数点后只能保留两位');this.value='';}" />
-      let regs = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,8})))$/
+      let regs = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,8})))$/;
       let isNumber = regs.test(value)
       return isNumber
     },
+    totalAmout(type) {
+      switch (type) {
+        case "buy":
+          return (this.buyParams.amount * this.buyParams.price).toFixed(8)
+        case "sell":
+          return (this.sellParams.amount * this.sellParams.price).toFixed(8)
+      }
+    },
     checkNumber(e) {
-      console.log(e)
-      console.log(this.isNumber(e.target.value))
-      if (!this.isNumber(e.target.value)) {
-        
+      let buy = this.buyParams,
+          sell = this.sellParams,
+          buyAmount = this.buyAmount,
+          sellAmount = this.sellAmount,
+          isRight = !this.isNumber(e.target.value),
+          buyAmounts = this.buyParams.amount,
+          buyPrices = this.buyParams.price
+          console.log(isRight)
+      switch(e.target.name){
+        case 'buyAmount':
+          this.buyParams.amount = isRight ? "" : e.target.value
+          this.buyAmount = this.buyParams.price ? this.totalAmout('buy') : 0
+          break
+        case "buyPrice":
+          this.buyParams.price = isRight ? buyPrices : e.target.value
+          this.buyAmount = buy.amount ? this.totalAmout('buy') : 0
+          break
+        case 'sellAmount':
+          this.sellParams.amount = isRight ? sell.amount : e.target.value
+          this.sellAmount = this.sellParams.price ? this.totalAmout('sell') : 0
+          break
+        case "sellPrice":
+          this.sellParams.price = !this.isNumber(e.target.value) ? sell.price : e.target.value
+          this.sellAmount = sell.amount ? this.totalAmout('sell') : 0
+          break
       }
     },
     ...mapMutations(["searchTradingCoin"])
