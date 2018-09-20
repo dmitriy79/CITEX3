@@ -45,6 +45,7 @@ let apiList = {
     '/withdrawAddr/add',//新增提币地址
     '/withdrawAddr/update',//更新提币地址
     '/withdrawAddr/delete',//删除提币地址
+    '/userProperty/uplistByUserId', //我的资产
   ],
 
   //交易管理 :10340
@@ -59,6 +60,8 @@ let apiList = {
     '/trade/getDealOrderUpDownTen', //涨跌幅排行榜
     '/dealOrder/getUserTransactionRecord', //交易记录
     '/trade_zone/classificationList', //交易区
+    '/trade/bid-order/buy',//挂买单
+    '/trade/ask-order/sell',//挂卖单
 
   ],
 }
@@ -83,7 +86,11 @@ let ajax = (url, params, method) => {
 
 let res =  (res) => {
   if (res.status == '200') {
-    return res.data
+    if(res.data.status == '200'){
+      return res.data
+    }else{
+      console.log("ERROR========>",res.data.message)
+    }
   }else{
     console.log(res.statusText)
   }
@@ -94,10 +101,8 @@ for (let i in apiList) {
   for (let s in item) {
     let name = item[s].split('/').pop()
     let url =process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}:${apiPort[i]}${item[s]}` :`/${reqName}${item[s]}`
-    //let url = process.env.NODE_ENV === 'production' ? `/${reqName}${item[s]}` : `/${reqName}${item[s]}`
-    //console.log(url)
     api[name] = (params, method) => {
-      let ajax = method || 'GET' ? axios.get(url, { params: params }).then(res) : axios.post(url, { params: params }).then(res)
+      let ajax = method ? axios.post(url, { params: params }).then(res) : axios.get(url, { params: params }).then(res)
       return ajax
     }
   }

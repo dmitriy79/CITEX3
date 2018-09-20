@@ -87,8 +87,12 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("home/initHome");
-    this.$store.dispatch("home/officaliCycle");
+    this.$store.dispatch("home/initHome")
+    this.$store.dispatch("home/officaliCycle")
+    mapActions(['initTrading'])
+  },
+  mounted(){
+  
   },
   methods: {
     noticeDetail() {
@@ -124,9 +128,6 @@ export default {
 <style lang="less" scoped>
 html {
   background: #3b4249;
-}
-.fade {
-  animate: 0.4s fade;
 }
 .loading {
   min-height: 300rpx;

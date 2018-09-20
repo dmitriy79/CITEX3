@@ -7,30 +7,13 @@
                     <span>时间</span>
                 </div>
             <dl>
-               
                 <dd v-for="item in dataList">
                     <span>{{item.dealPrice}}</span>
                     <span>{{item.dealAmount}}</span>
                     <span>{{item.dealTime}}</span>
                 </dd>
-                <!-- <dd>
-                    <span>7342.62</span>
-                    <span>192.898131</span>
-                    <span>12:12:11</span>
-                </dd>
-                <dd>
-                    <span>7342.62</span>
-                    <span>192.898131</span>
-                    <span>12:12:11</span>
-                </dd>
-                <dd>
-                    <span>7342.62</span>
-                    <span>192.898131</span>
-                    <span>12:12:11</span>
-                </dd> -->
             </dl>
         </div>
-
     </div>
 </template>
 <script>
@@ -52,7 +35,6 @@ export default {
     this.getDealOrders()
   },
   methods: {
-    
     getDealOrders(){
       /*this.$api.getDealOrdersByTradeCoinPairId({id:2}).then(res=>{
        console.log(res.data.datas.dealTime, date.timestampToTime(1536305419000),'我是实时交易')
@@ -64,7 +46,6 @@ export default {
        this.dataList=content
     })*/
      let ws = new WebSocket('ws://47.94.213.6:13080/websocketSSCJ?pairId=1')
-     
          ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('Holle')

@@ -23,8 +23,6 @@
                 <span class="num">{{item.amount_24H}}</span>
                 <span class="ico-star" @click="checkCoin" v-if="!isSelect"></span>
                 <span class="ico-star-fill" @click="checkCoin" v-if="isSelect">
-             
-
                 </span>
             </div>
         </div>
@@ -66,7 +64,6 @@ export default {
   methods: {
     //获取交易区类型
     classificationList(){
-      
       this.$api.classificationList().then(res=>{
         console.log(res,'090999+++++')
         this.coinNameList=res.datas
@@ -77,7 +74,6 @@ export default {
         }
       })
     },
-    
     changeType(){
  
       this.isShow=!this.isShow
