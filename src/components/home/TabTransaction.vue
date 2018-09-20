@@ -3,7 +3,7 @@
         <div class="tab-transaction">
             <div class="tab">
                 <span v-for='(item,index) of tradingCategory' 
-                :class='{active:tradingCurrentIndex == item.id}' 
+                :class='{active:currentCategoryIndex == item.id}' 
                 @click='toggleTrading(item.id)'>{{item.zoneName}}</span>
             </div>
             <div class="content">
@@ -41,7 +41,7 @@ export default {
     this.$store.dispatch("initTrading");
   },
   computed: {
-    ...mapState(["tradingCategory", "tradingList", "tradingCurrentIndex"])
+    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex"])
   },
   methods: {
     ...mapMutations(["toggleTrading"])

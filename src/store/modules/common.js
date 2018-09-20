@@ -41,7 +41,7 @@ export default {
     //设置主币分类
     setTradingCategory(state, tradingCategory) {
       state.tradingCategory = tradingCategory
-      state.tradingCurrentIndex = tradingCategory[0].id
+      state.currentCategoryIndex = tradingCategory[0].id
     },
 
     toggleTrading(state,id){
