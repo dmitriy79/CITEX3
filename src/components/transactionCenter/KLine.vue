@@ -38,7 +38,7 @@ export default {
         user_id: "public_user_id",
         debug: true,
         //loading_screen:{ backgroundColor: "#000000",foregroundColor: "#000000", }//todo:do it
-        interval: "60",
+        interval: "1",
         // timeframe:'',//todo: na koncu
         toolbar_bg: "#1e252d",
         // saved_data: this_vue.savedData,
@@ -70,7 +70,7 @@ export default {
           "header_symbol_search", //头部搜索
           "header_screenshot", //照相机
           "header_undo_redo", //左右箭头
-          //"header_resolutions", //时间下拉框
+          "header_resolutions", //时间下拉框
           // "header_settings",//设置（切换图标类型）
           "header_chart_type", //图表类型
           "header_interval_dialog_button",
@@ -294,7 +294,7 @@ export default {
           
           {
             label: "周线",
-            resolution: "7D"
+            resolution: "W"
           },
           
         ];
@@ -314,8 +314,11 @@ export default {
           this_vue.chart.changingInterval = false;
         });
         buttons.forEach((item, index) => {
+          
+          console.log(item, index,'我是按钮组++++')
           let button = this_vue.chart.createButton();
-
+     
+                
           item.resolution === this_vue.chart.interval &&
             updateSelectedIntervalButton(button);
           button
@@ -349,6 +352,7 @@ export default {
             });
         });
         function updateSelectedIntervalButton(button) {
+          console.log(button,'wos版本不一样呀')
           this_vue.chart.selectedIntervalButton &&
             this_vue.chart.selectedIntervalButton.removeClass("selected");
           button.addClass("selected");
@@ -695,7 +699,7 @@ export default {
           });
         }
       };
-     
+     //通过商品名称解析商品信息
       Datafeed.Container.prototype.resolveSymbol = function(
         symbolName,
         onSymbolResolvedCallback,
@@ -716,21 +720,21 @@ export default {
               this_vue.currency2
           );
           onSymbolResolvedCallback({
-            name: this_vue.currency1 + "/" + this_vue.currency2,
-            timezone: "Asia/Shangha",
+            name: this_vue.currency1 + "/" + this_vue.currency2,//商品名称
+            timezone: "Asia/Shangha",//商品的交易所时区
             pricescale: adjustScale(),
-            minmov: 1,
+            minmov: 1,//最小波动
             minmov2: 0,
-            ticker: this_vue.currency1 + ":" + this_vue.currency2,
-            description: "",
-            session: "24x7",
-            type: "bitcoin",
+            ticker: this_vue.currency1 + ":" + this_vue.currency2,//商品体系中此商品的唯一标识符
+            description: "",//商品说明
+            session: "24x7",//商品交易时间
+            type: "bitcoin",//仪表的可选类型
             "exchange-traded": "myExchange",
             // "exchange-listed": "myExchange",
-            has_intraday: true,
-            intraday_multipliers: ["60"], //It is an array containing intraday resolutions (in minutes) the datafeed wants to build by itself. E.g., if the datafeed reported he supports resolutions ["1", "5", "15"], but in fact it has only 1 minute bars for symbol X, it should set intraday_multipliers of X = [1]. This will make Charting Library to build 5 and 15 resolutions by itself.
-            has_weekly_and_monthly: false,
-            has_no_volume: false,
+            has_intraday: true,//布尔值显示商品是否具有日内（分钟）历史数据, 如果它为false，则当图表中的该商品处于活动状态时，日内周期的所有按钮将被禁用。 如果设置为true，则由datafeed直接提供的所有周期必须在intraday_multipliers数组中设定。
+            intraday_multipliers: ["1","3","5","15","30","60","120","240","720"], //这是一个包含日内周期(分钟单位)的数组
+            has_weekly_and_monthly: false,//布尔值显示商品是否具有以W和M为单位的历史数据
+            has_no_volume: false,//布尔表示商品是否拥有成交量数据
             regular_session: "24x7"
           });
         });
@@ -744,7 +748,7 @@ export default {
       //     //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
       // };
       //修改首屏默认加载数量
-      Datafeed.Container.prototype.calculateHistoryDepth = function(resolution, resolutionBack, intervalBack) {
+     /* Datafeed.Container.prototype.calculateHistoryDepth = function(resolution, resolutionBack, intervalBack) {
         console.log(resolution, resolutionBack, intervalBack,'历史深度+++++++）））（（（（（99999999')
           if (resolution == "60") {
               return {
@@ -752,7 +756,7 @@ export default {
                   intervalBack: 1
               };
           }
-      };
+      };*/
       Datafeed.Container.prototype.getBars = function(
         symbolInfo,
         resolution,
@@ -764,7 +768,42 @@ export default {
       ) {
 
         if(firstDataRequest) {
-        this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
+          if(resolution==1){
+            resolution='1min'
+          }
+          if(resolution==3){
+            resolution='3min'
+          }
+           if(resolution==5){
+            resolution='5min'
+          }
+           if(resolution==15){
+            resolution='15min'
+          }
+           if(resolution==30){
+            resolution='30min'
+          }
+          if(resolution==60){
+            resolution='60min'
+          }
+          if(resolution==120){
+            resolution='120min'
+          }
+          if(resolution==240){
+            resolution='240min'
+          }
+          if(resolution==720){
+            resolution='720min'
+          }
+          if(resolution=='1D'){
+            resolution='1day'
+          }
+           if(resolution=='W'){
+            resolution='10080min'
+          }
+          this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:2}).then(res=>{
+        //this_vue.$http("192.168.0.107:13040/trade/getKDatas2?step=1min&tradeCoinPariId=2").then(res=>){
+        //this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
         // this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600000,tradeCoinPariId:2}).then(res=>{
         //console.log(res,'我是历史数据++++++')
         var kline=[]
@@ -777,7 +816,7 @@ export default {
                low: Number(bar.floorPrice),
                volume: Number(bar.total)
              });
-            console.log(kline,'999999++++我是我是历史数据kline=====')
+            //console.log(kline,'999999++++我是我是历史数据kline=====')
            });
          
          onHistoryCallback(kline)
@@ -933,8 +972,8 @@ export default {
   },
   data: function() {
     return {
-      currency1: "USD",
-      currency2: "BTC",
+      currency1: "NEBL",
+      currency2: "ETH",
       saved_chart: null,
       chart: null,
       feed: null,
