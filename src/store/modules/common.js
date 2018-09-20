@@ -5,7 +5,7 @@ export default {
     isMember: true,
     tradingList: {}, //主币区交易对列表
     tradingCategory: [], //主币分类
-    tradingCurrentIndex: 1,
+    currentCategoryIndex: 1,
   },
   actions: {
     //初始化交易对列表
@@ -40,7 +40,7 @@ export default {
       api.getTradeInfoByZone({id:id}).then(res=>{
         console.log(res)
         state.tradingList = res.datas.list
-        state.tradingCurrentIndex = id
+        state.currentCategoryIndex = id
       })
     },
 
@@ -51,7 +51,7 @@ export default {
         .then(res => {
           console.log("getTradingList==>", res)
           state.tradingList = res.datas
-          state.tradingCurrentIndex = res.datas[0].id
+          state.currentCategoryIndex = res.datas[0].id
         })
     },
 

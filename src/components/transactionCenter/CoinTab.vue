@@ -6,7 +6,7 @@
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of tradingCategory" 
-            :class="{active: item.id == tradingCurrentIndex}" 
+            :class="{active: item.id == currentCategoryIndex}" 
             @click="toggleTrading(item.id)">{{item.zoneName}}</li>
             <li class="fav"><span class="ico-star-fill" ></span>自选</li>
         </ul>
@@ -17,7 +17,10 @@
                 <span class="rate">涨幅<b><i class="up"></i><i class="down"></i></b></span>
                 <span class="num">24h交易量<b><i class="up"></i><i class="down"></i></b></span>
             </div>
-            <div class="coin-list" v-for="(item,index) of tradingList" @click="toggleMarket(item.id)">
+            <div class="coin-list" 
+            v-for="(item,index) of tradingList"
+            :class="{active: index == currentTradingIndex}"
+            @click="toggleMarket({selectId:index,coinId:item.id})">
                 <span class="coin-type">{{item.name}}</span>
                 <span class="price">{{item.deal_price}}</span>
                 <span class="rate" >{{item.increase_24H}}</span>
@@ -32,7 +35,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {};
@@ -42,7 +45,8 @@ export default {
     this.$store.dispatch("initTrading");
   },
   computed: {
-    ...mapState(["tradingCategory", "tradingList", "tradingCurrentIndex"])
+    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex"]),
+    ...mapState("trading", ["currentTradingIndex"])
   },
   methods: {
     ...mapMutations({
@@ -211,13 +215,21 @@ export default {
   .coin-list {
     color: #e7e7e7;
     font-size: 0;
-    height: 35px;
-    border-bottom: 1px solid #3f4449;
-    line-height: 35px;
-    transition:.5s;
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+    transition: 0.5s;
+    *{
+      line-height:34px;
+    }
     &:hover {
       background: #181f27;
       cursor: pointer;
+    }
+    &.active{
+      background: #181f27;
+      *{
+        color:#fff;
+      }
     }
     span {
       display: inline-block;
