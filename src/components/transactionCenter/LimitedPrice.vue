@@ -198,7 +198,7 @@ export default {
           console.log(isRight)
       switch(e.target.name){
         case 'buyAmount':
-          this.buyParams.amount = isRight ? "" : e.target.value
+          this.buyParams.amount = isRight ? buyAmounts : e.target.value
           this.buyAmount = this.buyParams.price ? this.totalAmout('buy') : 0
           break
         case "buyPrice":
