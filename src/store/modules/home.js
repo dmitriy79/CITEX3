@@ -49,14 +49,6 @@ const mutations = {
       state.tradingCurrentIndex = obj
     })
   },
-  //涨跌幅排行
-  getDealOrderUpDownTen(state, obj) {
-
-  },
-  //公告列表
-  getOfficial(state, obj) {
-
-  },
   toggleDeal(e) {
     console.log(e)
     let dealOrderList = new webSocket("websocketDealPrice")
@@ -94,9 +86,8 @@ const mutations = {
       state.dealOrder = s
     })
     let indexData = [
-      api.listByType({type: 1}), 
+      api.listByType({type: 1}), //banner
       api.list({pageNum: 1,pageSize: 10}), //公告列表
-      api.classificationList({}), //交易对列表
       api.getTopTradeCoinPairs({}) //首页排行
     ]
     axios.all(indexData)
