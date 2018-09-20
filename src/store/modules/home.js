@@ -50,9 +50,13 @@ const mutations = {
     })
   },
   //涨跌幅排行
-  getDealOrderUpDownTen(state, obj) {},
+  getDealOrderUpDownTen(state, obj) {
+
+  },
   //公告列表
-  getOfficial(state, obj) {},
+  getOfficial(state, obj) {
+
+  },
   toggleDeal(e) {
     console.log(e)
     let dealOrderList = new webSocket("websocketDealPrice")
@@ -80,45 +84,37 @@ const mutations = {
   },
   //初始化首页
   initHomePage(state, obj) {
-    // let webs = new webSocket("websocketRankingList")
-    // webs.initWebSocket()
-    // webs.sendSocket("ss", res => {
-    //   console.log(res)
-    //   let s = {}
-    //   s.fall = JSON.parse(res.fall)
-    //   s.up = JSON.parse(res.up)
-    //   state.dealOrder = s
-    // })
-    //api.socket.sendSocket({})
+    let webs = new webSocket("websocketRankingList")
+    webs.initWebSocket()
+    webs.sendSocket("ss", res => {
+      console.log(res)
+      let s = {}
+      s.fall = JSON.parse(res.fall)
+      s.up = JSON.parse(res.up)
+      state.dealOrder = s
+    })
     let indexData = [
-      api.listByType({
-        type: 1
-      }), 
+      api.listByType({type: 1}), 
       //banner列表
-      api.list({
-        pageNum: 1,
-        pageSize: 10
-      }), //公告列表
+      api.list({pageNum: 1,pageSize: 10}), //公告列表
       api.classificationList({}), //交易对列表
       api.getTopTradeCoinPairs({}) //首页排行
     ]
     axios.all(indexData)
       .then(res => {
-        console.log(res)
         state.banner = res[0].datas
         state.official = res[1].datas.list
         state.category = res[2].datas
+        state.tradingCurrentIndex = res[2].datas[0].id
         state.coinList = res[3].datas
         return res
       }).then(res => {
         console.log(res)
-        api.getTradeInfoByZone({
-          id: res[2].datas[0].id
-        }).then(data => {
+        api.getTradeInfoByZone({id: res[2].datas[0].id}).then(data => {
           console.log(data)
           state.tradingList = data.datas
-          state.tradingCurrentIndex = res[2].datas[0].id
         })
+        
       }).catch(error => {
         console.log("error===>", error)
       })

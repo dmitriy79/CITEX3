@@ -74,24 +74,6 @@ export default {
   },
   components: {
     XChart
-  },
-  mounted() {
-    this.getTopTradeCoinPairs()
-  },
-  methods: {
-    //币种分类
-    //获取主要币种
-    getTopTradeCoinPairs() {
-      this.$api.classificationList({})
-        .then(res => {
-        //  this.category = res.data.datas
-          console.log(res)
-          // this.$api.getTopTradeCoinPairs().then(res => {
-          //   console.log(res, '主要币种')
-          // })
-        })
-
-    }
   }
 }
 

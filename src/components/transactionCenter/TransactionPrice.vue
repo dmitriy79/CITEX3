@@ -56,8 +56,7 @@ export default {
              content.forEach(element => {
               element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
               console.log(element.dealTime,'99999999')
-             });
-
+             })
              console.log(content,'我是content')
              this.dataList=content
               console.log(this.dataList,'数据已接收...')

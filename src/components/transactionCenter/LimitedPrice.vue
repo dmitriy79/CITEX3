@@ -139,27 +139,19 @@ export default {
     }
   },
   created() {
-    // tradePassword 复制	[string]	是	交易密码
-    // price	[string]	是	价格
-    // amount	[string]	是	数量
-    // code	[string]	是	验证码
-    // tradeCoinPairId	[string]	是	交易对ID
-    console.log(this.$store);
     const assetsParams = {
       pageNum: 1,
       pageSize: 90,
-      coinId: 1
+      coinId: 3
     };
-    console.log(this.isNumber("810"));
-    this.$store.dispatch("trading/getAssets", assetsParams);
+    //this.$store.dispatch("trading/getAssets", assetsParams)
   },
-
   computed: {
     ...mapState("trading", ["tradingAssets"])
   },
   methods: {
     selectPercentage(e) {
-      let target = e.target.dataset;
+      let target = e.target.dataset
       if (target.id == "buyPre") {
         this.buySelect = target.index;
         let params = this.buyParams;

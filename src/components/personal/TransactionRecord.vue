@@ -14,9 +14,6 @@
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
                     </el-form-item><span>/</span>
-                 
-                            <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
-                           
                               <el-form-item>
                                   <el-select v-model="form.region" placeholder="BTC">
                                   <el-option label="BTC" value="BTC"></el-option>
@@ -39,29 +36,24 @@
                         
                         <el-table-column prop="askRateAmountString" label="手续费"></el-table-column>
                     </el-table>
-                  
-                
                 </div>
-               
             </div>
-
         </div>
-   
 </template>
 <script>
-import date from '../../assets/js/date'
+import date from "../../assets/js/date";
 export default {
   data() {
     return {
       currentTab: "current",
       currentIndex: 0, //当前方向
       showUl: false,
-      recordList:[],
+      recordList: [],
       form: {
-          name: '',
-          region: '',
-        },
-      conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }],
+        name: "",
+        region: ""
+      },
+      conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }]
       // tableData1: [
       //   {
       //     date: "2016-05-02 11:00:09",
@@ -88,52 +80,38 @@ export default {
       // ]
     };
   },
-  mounted () {
-    this.getUserTransactionRecord()
+  created() {
+    this.getUserTransactionRecord();
   },
   methods: {
     //获取交易记录
-    getUserTransactionRecord(){
-      this.$api.getUserTransactionRecord().then(res=>{
-        console.log(res,'交易记录9999')
-        if(res.message=='success'){
-          
-          var content=res.datas
+    getUserTransactionRecord() {
+      this.$api.getUserTransactionRecord().then(res => {
+        console.log(res, "交易记录9999");
+        if (res.message == "success") {
+          var content = res.datas;
           content.forEach(element => {
-         
-         element.dealTime=date.timestampToTimeAll(element.dealTime) 
-
-        });
-         this.recordList=content
+            element.dealTime = date.timestampToTimeAll(element.dealTime);
+          });
+          this.recordList = content;
         }
-       
-        
-
-      })
+      });
     },
     tab(item) {
       this.currentTab = item;
     },
     tabCondition(index) {
       this.currentIndex = index;
-      console.log(index,'0000+++(((((')
-      this.$api.getUserTransactionRecord({type:index}).then(res=>{
-        console.log(res,'交易记录9999')
-        if(res.message=='success'){
-          
-          var content=res.datas
+      this.$api.getUserTransactionRecord({ type: index }).then(res => {
+        console.log(res, "交易记录9999");
+        if (res.message == "success") {
+          var content = res.datas;
           content.forEach(element => {
-         
-         element.dealTime=date.timestampToTimeAll(element.dealTime) 
-
-        });
-         this.recordList=content
+            element.dealTime = date.timestampToTimeAll(element.dealTime);
+          });
+          this.recordList = content;
         }
-       
-        
-
-      })
-
+      });
     },
     //是否显示交易对
     showCoinType() {
@@ -142,8 +120,6 @@ export default {
   }
 };
 </script>
-
-
 <style lang="less" scoped>
 .tabs {
   height: 40px;
@@ -183,12 +159,13 @@ export default {
       }
       .right {
         margin-left: 30px;
-           display: flex;
-       .el-form{
-        display: flex
-
-       }
-       .el-input{width: 100%!important}
+        display: flex;
+        .el-form {
+          display: flex;
+        }
+        .el-input {
+          width: 100% !important;
+        }
         .coin-type {
           position: relative;
           cursor: pointer;
@@ -218,7 +195,6 @@ export default {
     .table-wrapper {
       padding: 0 10px 50px;
 
-          
       div {
         padding: 0 10px 50px;
       }

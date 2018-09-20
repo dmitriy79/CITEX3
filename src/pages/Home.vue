@@ -3,7 +3,6 @@
     <v-header></v-header>
     <section class="loading" v-if='pageLoading'>
       <div class="ico-logo"></div>
-      <div>loading...</div>
     </section>
     <section v-else>
       <home-swiper :list="banner"></home-swiper>
@@ -89,10 +88,6 @@ export default {
   created() {
     this.$store.dispatch("home/initHome")
     this.$store.dispatch("home/officaliCycle")
-    mapActions(['initTrading'])
-  },
-  mounted(){
-  
   },
   methods: {
     noticeDetail() {

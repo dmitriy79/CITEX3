@@ -17,7 +17,7 @@ const actions={
     },
     getAssets({commit,state}, obj) {
         commit("getAssets", obj)
-    },
+    }
 }
 const mutations={
     tradingBuy(state,params){
@@ -33,10 +33,26 @@ const mutations={
     //币种资产
     getAssets(state,params){
         api.uplistByUserId(params).then(res=>{
-            console.log(res)
+            console.log("getAssets====>",res)
             state.tradingAssets = res.datas.list[0]
         })
     },
+    //撤销挂单
+    canceOrder(state,params){
+        api.cancelBuy(params).then(res => {
+            console.log("canceOrder====>",res)
+        })
+    },
+    //交易记录
+    orderRecord(state,params){
+        api.getUserTransactionRecord(params).then(res => {
+            console.log("canceOrder====>",res)
+        })
+    },
+    //切换币种
+    toggleMarket(state,params){
+        console.log("交易对ID====>",params)
+    }
     
 }
 export default {

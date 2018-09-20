@@ -8,7 +8,7 @@
         <ul>
       <li v-for="(item,index) in dealOrder.fall" v:if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
             <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
-            <div class="rate green">+{{item.range}}%<i class="ico-downs"></i></div>
+            <div class="rate green">{{item.range}}%<i class="ico-ups"></i></div>
           </li>
         </ul>
       </div>
@@ -31,69 +31,18 @@
 export default {
   data() {
     return {
-      name: 'RiseOrDrop',
-      topList:[],
-       websock: null,
-      lastList:[]
-    }
+      name: "RiseOrDrop",
+      topList: [],
+      websock: null,
+      lastList: []
+    };
   },
- props: {
+  props: {
     dealOrder: Object
   },
-  mounted () {
-    //this.getRankingList()
-    // this.getDealOrderUpDownTen()
-    //  window.InitSetInterval = setInterval(this.getDealOrderUpDownTen,2000)
-  } ,
-  destroyed(){
-   // clearInterval(window.InitSetInterval)
-  },
- 
-  methods: {
-   getDealOrderUpDownTen(){
-      this.$api.getDealOrderUpDownTen().then(res=>{
-        if(res.message="success"){
-           this.topList=res.datas.top
-        this.lastList=res.datas.last
-        }
-        console.log(res,'涨跌幅排行榜')
-       
-      })
-    },
-    getRankingList(){
-      let ws = new WebSocket('ws://47.93.194.146:13080/websocketRankingList')
-     var _this = this;
-     console.log(ws.readyState,'99999000000+++++++')
-         ws.onopen = () => {
-            // Web Socket 已连接上，使用 send() 方法发送数据
-              ws.send('Holle')
-              console.log('数据发送中...')
-          }
-          ws.onmessage = evt => {
-             clearInterval(window.InitSetInterval)
-             var content=JSON.parse(evt.data)
-            
-             console.log(JSON.parse(content.up),'我是content')
-             
-              console.log('数据已接收...')
-          }
-          ws.onclose = function () {
-            // 关闭 websocket
-            console.log('连接已关闭...')
-            
-            window.InitSetInterval=_this.getDealOrderUpDownTen()
-            setInterval(_this.getDealOrderUpDownTen,20000)
-          }
-           // 组件销毁时调用，中断websocket链接
-          this.over = () => {
-            ws.close()
-          }
-      
-    }
-   
+  mounted() {
   }
 }
-
 </script>
 <style lang="less" scoped>
 .rise {
@@ -107,23 +56,23 @@ export default {
     width: 48%;
   }
   .ranking {
-    &.active{
+    &.active {
       color: #fff;
-      background:#FF6442;
+      background: #ff6442;
     }
     background: #fff;
     width: 20px;
     height: 20px;
     display: inline-block;
-    border-radius:90px;
+    border-radius: 90px;
     text-align: center;
-    margin-right:8px;
-    border:none;
-    color:#292F37;
+    margin-right: 8px;
+    border: none;
+    color: #292f37;
   }
   &-list {
     width: 50%;
-    background: #292F37;
+    background: #292f37;
     &:first-child {
       margin-right: 20px;
     }
@@ -135,10 +84,9 @@ export default {
         width: 120px;
         text-align: center;
         display: block;
-        ;
         color: #fff;
         font-size: 14px;
-        background: #292F37;
+        background: #292f37;
       }
     }
     ul {
@@ -156,17 +104,17 @@ export default {
         font-family: "PingFangSC-Semibold";
         font-size: 14px;
         background: #31373e;
-        display:flex;
-        align-items:center;
+        display: flex;
+        align-items: center;
         .type {
           color: #d4d5d7;
           flex: 1;
         }
         .rate {
-          color: #1FC56D;
+          color: #1fc56d;
         }
-        .red{
-              color: #FF6442;
+        .red {
+          color: #ff6442;
         }
       }
     }
@@ -175,25 +123,23 @@ export default {
     ul {
       li {
         .rate {
-          color: #EF6E59;
+          color: #ef6e59;
         }
       }
     }
   }
 }
-
 </style>
 <style>
 @media only screen and (max-width: 1366px) and (min-width: 1300px) {
   .riseOrDrop .list ul li {
-    width: 48%!important
+    width: 48% !important;
   }
 }
 
 @media only screen and (max-width: 1300px) {
   .riseOrDrop .list ul li {
-    width: 47.9%!important
+    width: 47.9% !important;
   }
 }
-
 </style>

@@ -65,13 +65,11 @@
                      <entrust></entrust>
                  </div>
                  <div class="panel-right">
-                     <buy-sell></buy-sell>  
-                    
+                     <buy-sell></buy-sell> 
                  </div>
-                 
              </div>
              <div class="transaction-middle-right">
-                     <transaction-price></transaction-price>
+                <transaction-price></transaction-price>
              </div>
          </div>
          <div class="transaction-bottom">
@@ -83,7 +81,6 @@
                <x-chart :id="id" :option="option"></x-chart>
                <!-- <deep-img></deep-img> -->
             </div>
-           
          </div>
        </div>
        
@@ -104,8 +101,7 @@ import TypeInfo from "../components/transactionCenter/CoinTypeInfo";
 import XChart from "../components/chart/DeepImg.vue";
 // 导入chart组件模拟数据
 import options from "../chart-options/deepImg";
-
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Transaction",
   components: {
@@ -132,25 +128,28 @@ export default {
     return {
       id: "id",
       option: options.deep
-    }
+    };
   },
-  created(){
-     mapActions(["initTrading"]) //初始化
+  created() {
+  
   },
   mounted() {
-    this.getDeepImg();
-    options.deep.series[0].data[0][0] = 999;
-    console.log(options.deep.series[0].data[0][0], "ss我是深度图");
-    console.log(options.deep.series[0], "ss我是深度图22222");
+    // this.getDeepImg();
+    // options.deep.series[0].data[0][0] = 999;
+    // console.log(options.deep.series[0].data[0][0], "ss我是深度图");
+    // console.log(options.deep.series[0], "ss我是深度图22222");
   },
   methods: {
-    getDeepImg() {
-      this.$api
-        .getTradeInfoByTradeCoinPairId({ id: 2, quantity: 100 })
-        .then(res => {
-          console.log(res.datas.bid_list, "99303039");
-        });
-    }
+    // getDeepImg() {
+    //   this.$api
+    //     .getTradeInfoByTradeCoinPairId({ id: 2, quantity: 100 })
+    //     .then(res => {
+    //       console.log(res.datas.bid_list, "99303039");
+    //     });
+    // }
+  },
+  computed:{
+
   }
 };
 </script>

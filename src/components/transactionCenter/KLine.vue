@@ -386,7 +386,7 @@ export default {
   },
   methods: {
      getda(){
-      let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+      let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
         ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('++++++++ws33333++++++++++')
@@ -856,7 +856,7 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-   let ws= new WebSocket('ws://192.168.0.107:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
+   let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
         ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据

@@ -37,42 +37,8 @@ export default {
         list:Array,
         tradingList:Object,
         tradingCurrentIndex:Number
-    },
-    // data() {
-    //     return {
-    //         name: 'TabTransaction',
-    //         active: 0,
-    //         num: 0,
-    //         coinId: 1, //币种id
-    //         navs: [
-    //             { id: 1, name: 'ETH交易', coinId: 1 },
-    //             { id: 2, name: 'IT交易', coinId: '' },
-    //             { id: 3, name: 'BTC交易', coinId: 10 },
-    //             { id: 4, name: '自选市场' },
-    //         ],
-    //         List: [
-    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-0.1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '+120', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-11', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-1', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '+21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 1, type: 'TRUE/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 2, type: 'ITOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 3, type: 'BTC/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //             { id: 4, type: 'EOS/ETH', newprice: '0.0015900/¥90.23', riseprice: '-21', low: '0.00159000', high: '0.00159000', close: '0.00159000', num: '989899' },
-    //         ]
-    //     }
-    // },
-
-    mounted(){
-       // this.getInfo()
-    },
-
+    }
 }
-
 </script>
 <style lang="less" scoped>
 .tab-transaction {
