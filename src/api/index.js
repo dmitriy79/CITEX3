@@ -62,9 +62,13 @@ let apiList = {
     '/trade_zone/classificationList', //交易区
     '/trade/bid-order/buy',//挂买单
     '/trade/ask-order/sell',//挂卖单
+
     '/trade_coin_pair/collect',//收藏币种
     '/trade/bid-order/cancelBuy',//挂单取消
     '/trade_coin_pair/getTradeCoinPairByCoinId',//根据项目查交易对
+
+    '/trade/getKDatas2',//getKDatas2
+
 
   ],
 }
