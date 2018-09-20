@@ -1,10 +1,11 @@
 import api from '../../api'
 import axios from 'axios'
 const state ={
-    buyParams:{},         //buy参数
-    sellParams:{},        //sell参数
-    tradingAssets:{},     //当前交易对资金
+    buyParams:{},          //buy参数
+    sellParams:{},         //sell参数
+    tradingAssets:{},      //当前交易对资金
     currentTradingIndex:0, //交易对列表当前选择项
+    marketInfo:{},         //当前选择的交易对
 }
 const getters={
 
@@ -50,17 +51,11 @@ const mutations={
             console.log("canceOrder====>",res)
         })
     },
-    //切换币种
-    toggleMarket(state,params){
-        console.log("交易对ID====>",params)
-        state.currentTradingIndex = params.selectId
-        
-    },
+    
     //切换到收藏
     toggleToFav(){
         
     }
-    
 }
 export default {
     namespaced: true,

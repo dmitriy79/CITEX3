@@ -45,14 +45,10 @@ export default {
     this.$store.dispatch("initTrading");
   },
   computed: {
-    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex"]),
-    ...mapState("trading", ["currentTradingIndex"])
+    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex","currentTradingIndex"]),
   },
   methods: {
-    ...mapMutations({
-      toggleTrading: "toggleTrading",
-      toggleMarket: "trading/toggleMarket"
-    })
+    ...mapMutations(["toggleTrading","toggleMarket"])
   }
 };
 </script>
@@ -219,7 +215,7 @@ export default {
 
     transition: 0.5s;
     *{
-      line-height:34px;
+      line-height:32px;
     }
     &:hover {
       background: #181f27;

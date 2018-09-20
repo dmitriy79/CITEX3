@@ -6,6 +6,8 @@ export default {
     tradingList: {}, //主币区交易对列表
     tradingCategory: [], //主币分类
     currentCategoryIndex: 1,
+    marketInfo:{},
+    currentTradingIndex:0,
   },
   actions: {
     //初始化交易对列表
@@ -21,7 +23,6 @@ export default {
       })
     }
   },
-
   mutations: {
     showLoading(state) {
       state.pageLoading = true
@@ -41,6 +42,7 @@ export default {
         console.log(res)
         state.tradingList = res.datas.list
         state.currentCategoryIndex = id
+        state.marketInfo = res.datas.list[id]
       })
     },
 
@@ -58,7 +60,12 @@ export default {
     searchTradingCoin(state, params) {
       console.log("state")
     },
-
+    //切换币种
+    toggleMarket(state,params){
+      console.log("交易对ID====>",params)
+      state.currentTradingIndex = params.selectId
+        state.marketInfo = state.tradingList[params.selectId]
+      },
     //收藏币种
     favoriteCoin(state, params) {
       api.collect(params).then(res => {

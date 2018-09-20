@@ -8,11 +8,11 @@
                 <div class="title">
                     <div class="title-left">
                         <div class="symbol">
-                            <span>ETH</span>/<span>IOST</span>
+                            <span>ETH</span>/<span>{{marketInfo.name}}</span>
                         </div>
                         <div class="price-wrap">
-                            <span class="rate">+<i>59%</i></span>
-                            <span class="price">0.01009447</span>&nbsp;<span class="price-val">≈ <i>8000.12</i> CNY</span>
+                            <span class="rate">+<i>{{marketInfo.increase_24H}}%</i></span>
+                            <span class="price">{{marketInfo.deal_price}}</span>&nbsp;<span class="price-val">≈ <i>0000.43</i> CNY</span>
                         </div>
                     </div>
                     <div class="title-right">
@@ -22,21 +22,19 @@
                                      <!-- <img src="../../src/assets/images/hours.png" alt=""> -->
                                      <span class="ico-hours"></span>
                                 </div>
-                               
                                 <div>
                                     <p class="ititle">24h成交量</p>
-                                    <p class="result">1823912311</p>
+                                    <p class="result">{{marketInfo.amount_24H}}</p>
                                 </div>
                             </li>
                             <li>
                                  <div class="img-wrap">
                                     <span class="ico-chart"></span>
                                      <!-- <img src="../../src/assets/images/icon-hours-top.png" alt=""> -->
-                                     
                                 </div>
                                 <div>
                                     <p class="ititle">24h最高</p>
-                                    <p class="result">0.02323232323</p>
+                                    <p class="result">{{marketInfo.maxPrice_24H}}</p>
                                 </div>
                             </li>
                             <li>
@@ -46,7 +44,7 @@
                                 </div>
                                 <div>
                                     <p class="ititle">24h最低</p>
-                                    <p class="result">0.02323232323</p>
+                                    <p class="result">{{marketInfo.minPrice_24H}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -147,9 +145,10 @@ export default {
     //       console.log(res.datas.bid_list, "99303039");
     //     });
     // }
+    ...mapMutations({toggleMarket:'trading/toggleMarket'})
   },
   computed:{
-
+    ...mapState(['marketInfo'])
   }
 };
 </script>
@@ -263,6 +262,7 @@ export default {
             padding: 0 13px 0 12px;
             margin-right: 22px;
             color: #e4e5e7;
+            font-weight:800;
           }
           .price-wrap {
             span {
