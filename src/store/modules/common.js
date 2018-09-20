@@ -27,7 +27,14 @@ export default {
     toggleMarket({commit,state}, params){
         console.log("交易对ID====>",params)
         commit('setMarket',params)
-        commit('getCoinInfo',params.selectId)
+        commit('getCoinInfo',params.coinId)
+      },
+      timestampToTime({commit,state}, timestamp) {
+          var date = new Date(timestamp)
+          var Y = date.getFullYear() + '-'
+          var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-'
+          var D = date.getDate() + ' '
+          return Y+M+D
       }
   },
   mutations: {
@@ -81,11 +88,13 @@ export default {
     },
     //获取币种资料
     getCoinInfo(state,id){
-      Axios.get(`/COIN/info/${id}`).then(res=>{
+      Axios.get(`/COIN/coin/info/${id}`).then(res=>{
         console.log(res)
-        //state.coinInfo = res.datas
+        let coninInfo = res.data.datas
+        
+        state.coninInfo = res.data.datas
+        
       })
     }
-
   }
 }

@@ -17,9 +17,16 @@ const actions={
     tradingSell({commit,state}, obj) {
         commit("tradingSell", obj)
     },
-    getAssets({commit,state}, obj) {
-        commit("getAssets", obj)
-    },
+    //切换币种
+    toggleMarket({commit,state}, params){
+        console.log("交易对ID====>",params)
+        commit('setMarket',params)
+        commit('getCoinInfo',params.coinId)
+      },
+      testAct({commit,rootState,state},params){
+          console.log(rootState)
+      }
+
 }
 const mutations={
     tradingBuy(state,params){

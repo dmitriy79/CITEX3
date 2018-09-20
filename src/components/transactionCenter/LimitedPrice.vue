@@ -115,14 +115,14 @@ export default {
       sellAmount: 0,
       buyAmount: 0,
       buyParams: {
-        tradeCoinPairId: 0,
+        tradeCoinPairId: 2,
         code: 12,
-        tradePassword: "hebi199261"
+        tradePassword: "keyou88"
       },
       sellParams: {
-        tradeCoinPairId: 1,
+        tradeCoinPairId: 2,
         code: 14,
-        tradePassword: "hebi199261"
+        tradePassword: "keyou88"
       }
     };
   },
