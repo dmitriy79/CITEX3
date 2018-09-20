@@ -695,7 +695,7 @@ export default {
           });
         }
       };
-     
+     //通过商品名称解析商品信息
       Datafeed.Container.prototype.resolveSymbol = function(
         symbolName,
         onSymbolResolvedCallback,
@@ -716,21 +716,21 @@ export default {
               this_vue.currency2
           );
           onSymbolResolvedCallback({
-            name: this_vue.currency1 + "/" + this_vue.currency2,
-            timezone: "Asia/Shangha",
+            name: this_vue.currency1 + "/" + this_vue.currency2,//商品名称
+            timezone: "Asia/Shangha",//商品的交易所时区
             pricescale: adjustScale(),
-            minmov: 1,
+            minmov: 1,//最小波动
             minmov2: 0,
-            ticker: this_vue.currency1 + ":" + this_vue.currency2,
-            description: "",
-            session: "24x7",
-            type: "bitcoin",
+            ticker: this_vue.currency1 + ":" + this_vue.currency2,//商品体系中此商品的唯一标识符
+            description: "",//商品说明
+            session: "24x7",//商品交易时间
+            type: "bitcoin",//仪表的可选类型
             "exchange-traded": "myExchange",
             // "exchange-listed": "myExchange",
-            has_intraday: true,
-            intraday_multipliers: ["60"], //It is an array containing intraday resolutions (in minutes) the datafeed wants to build by itself. E.g., if the datafeed reported he supports resolutions ["1", "5", "15"], but in fact it has only 1 minute bars for symbol X, it should set intraday_multipliers of X = [1]. This will make Charting Library to build 5 and 15 resolutions by itself.
-            has_weekly_and_monthly: false,
-            has_no_volume: false,
+            has_intraday: true,//布尔值显示商品是否具有日内（分钟）历史数据, 如果它为false，则当图表中的该商品处于活动状态时，日内周期的所有按钮将被禁用。 如果设置为true，则由datafeed直接提供的所有周期必须在intraday_multipliers数组中设定。
+            intraday_multipliers: ["60"], //这是一个包含日内周期(分钟单位)的数组
+            has_weekly_and_monthly: false,//布尔值显示商品是否具有以W和M为单位的历史数据
+            has_no_volume: false,//布尔表示商品是否拥有成交量数据
             regular_session: "24x7"
           });
         });
@@ -933,8 +933,8 @@ export default {
   },
   data: function() {
     return {
-      currency1: "USD",
-      currency2: "BTC",
+      currency1: "NEBL",
+      currency2: "ETH",
       saved_chart: null,
       chart: null,
       feed: null,
