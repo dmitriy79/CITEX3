@@ -81,6 +81,7 @@ export default {
       isShowLine:true
     };
   },
+  
   mounted () {
     console.log(mapState,'+++++(((((9999999h哈哈哈哈哈哈')
      this.token = localStorage.getItem("token")

@@ -23,6 +23,7 @@ const actions = {
         //订单记录
         //币种资料
         commit("getCoinInfo", obj)
+        commit("tradingAskBid", obj)
         //成交记录
         //实时订单
         //用户资金
@@ -60,11 +61,10 @@ const actions = {
     testClick({ commit, rootState, state }, params) {
         console.log(rootState, state, commit)
     },
-    tradingAskBid({ commit,state}, params) {
-        console.log(params,'++++我是params++++））000=======》')
-        commit('tradingAskBid', params)
-    }
-    
+    // tradingAskBid({ commit,state}, params) {
+    //     console.log(params,'++++我是params++++））000=======》')
+    //      commit('tradingAskBid', params)
+    // } 
 }
 const mutations = {
     //买卖挂单 websocketAskBid
@@ -110,7 +110,6 @@ const mutations = {
     testClick({ commit, rootState, state }, params) {
         console.log(rootState, state, commit)
     },
-   
 
     tradingBuy(state, params) {
         console.log(params)
@@ -166,4 +165,4 @@ export default {
     getters,
     actions,
     mutations
-}
+    }

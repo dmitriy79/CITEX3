@@ -130,6 +130,8 @@ export default {
   },
   created() {
        this.$store.dispatch("trading/tradingAskBid")
+       this.$store.dispatch("trading/toggleMarket")
+       
   },
   
  
