@@ -21,13 +21,11 @@
             v-for="(item,index) of tradingList"
             :class="{active: index == currentTradingIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
-                <span class="coin-type">{{item.name}}</span>
-                <span class="price">{{item.deal_price}}</span>
-                <span class="rate" >{{item.increase_24H}}</span>
-                <span class="num">{{item.amount_24H}}</span>
-                <span class="ico-star"></span>
-                <!-- <span class="ico-star-fill"> -->
-                </span>
+                <div class="coin-type">{{item.name}}</div>
+                <div class="price">{{item.deal_price}}</div>
+                <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>
+                <div class="num">{{item.amount_24H}}</div>
+                <div class="ico ico-star-fill" :class="{'ico-star':!item.collect}"></div>
             </div>
         </div>
         <div class="tab-content">
@@ -215,6 +213,11 @@ export default {
   .rate {
     // width: 8.9%;
     margin-right: 8.4%;
+     color: #ef6e59;
+     font-weight:800;
+    &.red{
+      color:#1fc56d;
+    }
   }
   .num {
     width: 28%;
@@ -225,6 +228,9 @@ export default {
     font-size: 0;
     border-bottom:1px solid rgba(255,255,255,.1);
     transition: 0.5s;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
     *{
       line-height:32px;
     }
@@ -238,14 +244,19 @@ export default {
         color:#fff;
       }
     }
-    span {
+    &>div {
       display: inline-block;
       font-size: 11px;
+      width: 22.5%;
+      &.ico{
+        width:10%;
+        text-align:center;
+      }
     }
+    
     .ico-star,
     .ico-star-fill {
-      font-size: 16px;
-      margin-left: 2%;
+      font-size: 14px;
       cursor: pointer;
     }
     .select.icon-save {
