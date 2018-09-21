@@ -46,10 +46,14 @@ const actions = {
 const mutations = {
      //买卖挂单 websocketAskBid
      tradingAskBid(state, obj){
-        let webs = new webSocket("websocketRankingList")
+        let webs = new webSocket("websocketAskBid")
         webs.initWebSocket()
-        webs.sendSocket("ss+++++++999999999", res => {
-          console.log(res,'+++我是交易中心')
+        let sendParams = {
+            pairId: 1,
+           
+          }
+        webs.sendSocket(sendParams, res => {
+          console.log(res,'+++我是交易中心3333333333')
          
         })
       },

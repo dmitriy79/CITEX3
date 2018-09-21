@@ -128,7 +128,11 @@ export default {
       option: options.deep
     };
   },
-  created() {},
+  created() {
+       this.$store.dispatch("trading/tradingAskBid")
+  },
+  
+ 
   mounted() {
     // this.getDeepImg();
     // options.deep.series[0].data[0][0] = 999;
