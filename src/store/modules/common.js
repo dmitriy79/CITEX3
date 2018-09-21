@@ -1,5 +1,5 @@
 import api from '../../api'
-import Axios from 'axios';
+import Axios from 'axios'
 export default {
   state: {
     pageLoading: false,
@@ -28,31 +28,12 @@ export default {
         commit('toggleTrading',res[0].id)
       })
     },
-
-    //切换币种
-    toggleMarket({commit,state}, params){
-      //console.log("交易对ID====>",params)
-      //commit('setMarket',params)
-      //commit('getCoinInfo',params.coinId)
-    },
-
+ 
     //收藏币种
     favoriteCoin({commit,state}, params) {
       api.collect(params).then(res => {
         commit('toggleTrading',state.currentCategoryIndex) //刷新列表
       })
-    },
-
-    //搜索过滤币种
-    searchCoin({commit,state}, value){
-       // let name = item.name
-       if(value!=''){
-        let filterTradingList = state.tradingList.filter(item => item.name.indexOf(value)!= '-1')
-        console.log(filterTradingList)
-        commit("setTradingList",filterTradingList)
-      }else{
-        //commit("toggleTrading",arg.id)
-      }
     },
 
     timestampToTime({commit,state}, timestamp) {
@@ -63,9 +44,24 @@ export default {
         return Y+M+D
     }
   },
+  
+  getter:{
+   //搜索过滤币种
+    filterCoin:(state) => (value) => {
+      return state.tradingList.filter(item => item.name.indexOf(value)!= '-1')
+    },
+    getUserInfo(state){
+      return 'sss'
+    },
+  },
   mutations: {
     showLoading(state) {
       state.pageLoading = true
+    },
+    searchCoin(state,arg){
+      // if(arg.value != ''){
+        
+      // }
     },
     hideLoading(state) {
       state.pageLoading = false
@@ -78,7 +74,16 @@ export default {
       state.tradingCategory = tradingCategory
       state.currentCategoryIndex = tradingCategory[0].id
     },
-
+    setToken(state){
+      state.userToken = localStorage.getItem('token')
+    },
+    checkLogin(state,cb){
+      if(!localStorage.getItem('token')){
+        cb()
+      }else{
+        cb()
+      }
+    },
     //交易对切换
     toggleTrading(state,id){
       console.log(id)

@@ -5,19 +5,35 @@ const state ={
     sellParams:{},         //sell参数
     tradingAssets:{},      //当前交易对资金
     currentTradingIndex:0, //交易对列表当前选择项
-    coinInfo:{},
+    coinInfo:{},           //币种资料
     marketInfo:{},         //当前选择的交易对
+    orderData:{},          //订单委托/历史记录
 }
 const getters = {
 
 }
 const actions = {
+    //initTrading
+    initTrading({commit,state,rootState},arg){
+        //交易对基本信息
+        //订单记录
+        //币种资料
+        commit("getCoinInfo",obj)
+        //成交记录
+        //实时订单
+        //用户资金
+        //深度图
+        //k线图
+    },
     tradingBuy({commit,state}, obj) {
-        
         commit("tradingBuy", obj)
       },
     tradingSell({commit,state}, obj) {
         commit("tradingSell", obj)
+    },
+    //订单记录
+    listBidOrders({commit,state},obj){
+        commit('listBidOrders',obj)
     },
     initMarketInfo({commit,rootState},obj){
         console.log(rootState)
@@ -32,18 +48,35 @@ const actions = {
         commit('setMarket',{...rootState,...params})
         commit('getCoinInfo',params.coinId)
       },
-      
-      testClick({commit,rootState,state},params){
-          console.log(rootState,state,commit)
-      },
+    //订单记录切换
+    toggleOrder({commit,rootState,state}, params){
+
+    },
+    testClick({commit,rootState,state},params){
+        console.log(rootState,state,commit)
+    }
 }
 const mutations = {
+    //当前所有委托记录
+    listBidOrders(state,params){
+        api.listBidOrders(params).then(res=>{
+            console.log("listBidOrders================>",res)
+            state.orderData = res.datas
+        })
+    },
+    //当前or历史 卖单 记录
+    listAskOrders(state,params){
+        api.listAskOrders(params)
+    },
+    
+    //委托买单
     tradingBuy(state,params){
         console.log(params)
         api.buy(params,"POST").then(res=>{
             console.log(res)
         })
     },
+    //委托卖单
     tradingSell(state,params){
         console.log(params)
         api.sell(params,"POST").then(res=>{

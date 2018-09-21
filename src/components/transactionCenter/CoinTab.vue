@@ -3,7 +3,7 @@
         <div class="search-wrap">
           <div class="search-input">
             <i class="ico ico-search"></i>
-            <input type="text" @keyup="$store.dispatch('searchCoin',searchValue)" v-model="searchValue" placeholder="查询" class="search">
+            <input type="text" @keyup="searchCoin(searchValue)" v-model="searchValue" placeholder="查询" class="search">
           </div>
           <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
         </div>
@@ -56,7 +56,15 @@ export default {
     //...mapActions(['toggleMarket'])
   },
   methods: {
-    ...mapMutations(['toggleTrading'])
+    ...mapMutations(['toggleTrading','searchCoin']),
+    searchCoin(value){
+      console.log(this.$store)
+      if(value!= ''){
+        this.tradingList = this.$store.getters.filterCoin
+      }else{
+        mapState(['tradingList'])
+      }
+    },
   }
 };
 </script>

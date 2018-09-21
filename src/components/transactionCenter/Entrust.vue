@@ -1,93 +1,31 @@
 <template>
     <div class="entrust-wrapper">
         <ul class="tab-nav">
-            <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="tabs(index)">{{item.name}}</li>
+            <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="$store.dispatch('trading/toggleOrder',index)">{{item.name}}</li>
         </ul>
         <div class="entrust-list" >
             <dl class="entrust-panel" style="display:block" v-if="this.token">
-                <dt>
-                    <span>日期</span>
-                    <span>类型</span>
-                    <span>价格（BTC）</span>
-                    <span>挂单（ADA）</span>
-                    <span>操作</span>
-                </dt>
+                <table>
+                  <tr>
+                      <th>创建日期</th>
+                      <th>买单状态</th>
+                      <th>价格（BTC）</th>
+                      <th>数量（ADA）</th>
+                      <th>未成交</th>
+                      <th>操作</th>
+                    </tr>
+                    <tr v-for='item of orderData.list'>
+                      <td>{{item.createTime}}</td>
+                        <td>{{status[item.matchStatus]}}</td>
+                      <td>{{item.price}}</td>
+                      <td>{{item.amount}}</td>
+                    
+                    
+                        <td>{{item.leftAmount}}</td>
+                      <td><a href="" class="button-min">撤单</a></td>
+                    </tr>
+                </table>
                 
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-            </dl>
-            <dl class="entrust-panel" v-if="this.token">
-                <dt>
-                    <span>日期</span>
-                    <span>类型</span>
-                    <span>价格（BTC）</span>
-                    <span>成交量（ADA）</span>
-                </dt>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-                <dd> 
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-
-            </dl>
-            <dl class="entrust-panel" v-if="this.token">
-                <dt>
-                    <span>日期</span>
-                    <span>类型</span>
-                    <span>价格（BTC）</span>
-                    <span>挂单（ADA）</span>
-                    <span>操作</span>
-                </dt>
-                <dd>
-                    <span>1</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>3</span>
-                    <span>5</span>
-                </dd>
-               
             </dl>
            <div class="noData" v-if="!this.token">
                 <span>暂无记录</span>
@@ -96,6 +34,7 @@
     </div>
 </template>
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 export default {
   data() {
     return {
@@ -106,35 +45,50 @@ export default {
         { id: 1, name: "当前委托" },
         { id: 2, name: "历史委托" },
         { id: 3, name: "成交历史" }
+      ],
+      status:[
+        "未成交",
+        "部分成交",
+        "完全成交",
+        "用户撤单”",
+        "系统撤单",
       ]
     };
   },
   methods: {
-    tabs(index) {
-      var tabCollection = document.querySelectorAll(".entrust-panel"),
-        len = tabCollection.length;
-      for (var i = 0; i < len; i++) {
-        tabCollection[i].style.display = "none";
-      }
-      this.active = index;
-      tabCollection[index].style.display = "block";
-    },
-    //获取当前历史委托
-    getEntrust(){
-
-    this.$api.listBidOrders({type:1,pageNum:1,pageSize:100,bidOrAsk:0}).then(res=>{
-      console.log(res,'历史委托')
-    })
-    }
   },
-  mounted() {
-        this.token = localStorage.getItem("token")
-    this.getEntrust()
+  created(){
+    this.token = localStorage.getItem("token")
+    let orderParams={
+      type:1,
+      userId:localStorage.getItem('userId'),
+      pageNum:1,
+      pageSize:6,
+    }
+    this.$store.dispatch('trading/listBidOrders',orderParams)
+  },
+  computed:{
+    ...mapState('trading',['orderData'])
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
+table{
+  tr{
+    th{
+      text-align:left;
+      font-size:12px;
+      background:lighten(#181f27,2%);
+      padding:5px 8px;
+    }
+  }
+  td{
+    font-size:12px;
+    padding:8px;
+    border-bottom:1px solid rgba(255, 255, 255, .1);
+  }
+}
 .entrust-wrapper {
   background: #292f37;
   .entrust-list {

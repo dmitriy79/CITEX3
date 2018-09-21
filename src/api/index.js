@@ -39,38 +39,37 @@ let apiList = {
   //支付管理 :13030
   "payment": [
     '/withdraw',//提币
-    '/userProperty/uplistByUserId',//我的资产
-    '/rechargeRecord/rrlistByUserId',//充币记录
-    '/withdrawRecord/wrlistByUserId',//提币记录
-    '/withdrawAddr/walistByUserId',//根据用户获取提币地址列表
-    '/withdrawAddr/add',//新增提币地址
-    '/withdrawAddr/update',//更新提币地址
-    '/withdrawAddr/delete',//删除提币地址
-    '/userProperty/uplistByUserId', //我的资产
+    '/userProperty/uplistByUserId',            //我的资产
+    '/rechargeRecord/rrlistByUserId',          //充币记录
+    '/withdrawRecord/wrlistByUserId',          //提币记录
+    '/withdrawAddr/walistByUserId',            //根据用户获取提币地址列表
+    '/withdrawAddr/add',                       //新增提币地址
+    '/withdrawAddr/update',                    //更新提币地址
+    '/withdrawAddr/delete',                    //删除提币地址
+    '/userProperty/uplistByUserId',            //我的资产
   ],
 
   //交易管理 :10340
   "trade": [
-    '/trade/getTopTradeCoinPairs', //GET 主要币种模块展示  
-    '/trade/getTradeInfoByZone', //交易区列表(根据交易区ID查询)
-    '/trade/getKDatas', //启用获取k线  GET
-    '/dealOrder/getUserTransactionRecord', //交易记录
-    '/trade/getDealOrdersByTradeCoinPairId', //实时成交
-    '/trade/getTradeInfoByTradeCoinPairId', //买卖盘挂单
-    '/trade/bid-ask-order/listBidOrders', //历史/当前委托订单
-    '/trade/getDealOrderUpDownTen', //涨跌幅排行榜
-    '/dealOrder/getUserTransactionRecord', //交易记录
-    '/trade_zone/classificationList', //交易区
-    '/trade/bid-order/buy',//挂买单
-    '/trade/ask-order/sell',//挂卖单
-
-    '/trade_coin_pair/collect',//收藏币种
-    '/trade/bid-order/cancelBuy',//挂单取消
+    '/trade/getTopTradeCoinPairs',              //GET 主要币种模块展示  
+    '/trade/getTradeInfoByZone',                //交易区列表(根据交易区ID查询)
+    '/trade/getKDatas',                         //启用获取k线  GET
+    '/dealOrder/getUserTransactionRecord',      //交易记录
+    '/trade/getDealOrdersByTradeCoinPairId',    //实时成交
+    '/trade/getTradeInfoByTradeCoinPairId',     //买卖盘挂单
+//    '/trade/bid-ask-order/listBidOrders',       //历史/当前委托订单
+//   '/trade/ask-order/listAskOrders',           //历史/当前委托卖订单
+    '/trade/bid-ask-order/listBidOrders',       //历史/当前委托买订单（ALL）
+    'trade/bid-order/cancelBuy',                //撤销买挂单
+    '/trade/ask-order/cancelSell',              //撤销卖挂单
+    '/trade/getDealOrderUpDownTen',             //涨跌幅排行榜
+    '/dealOrder/getUserTransactionRecord',      //交易记录
+    '/trade_zone/classificationList',           //交易区
+    '/trade/bid-order/buy',                     //挂买单
+    '/trade/ask-order/sell',                    //挂卖单
+    '/trade_coin_pair/collect',                 //收藏币种
     '/trade_coin_pair/getTradeCoinPairByCoinId',//根据项目查交易对
-
-    '/trade/getKDatas2',//getKDatas2
-
-
+    '/trade/getKDatas2',                        //getKDatas2
   ],
 }
 //生产环境接口处理
@@ -108,19 +107,6 @@ let AUTH_TOKEN=(function(){
   return localStorage.getItem("token")
 })()
 
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
-// axios.defaults.headers.post['AUTH_TOKEN'] = AUTH_TOKEN
-//axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
-let ajax = (url,params,method,headers) =>{
-  let axiosArg = {
-    method: method || 'get',
-    url: url,
-    data:params,
-  }
-  return axios(axiosArg).then(res)
-}
-
 for (let i in apiList) {
   let reqName = i.toUpperCase()
   let item = apiList[i]
@@ -128,7 +114,9 @@ for (let i in apiList) {
     let name = item[s].split('/').pop()
     let url =process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}:${apiPort[i]}${item[s]}` :`/${reqName}${item[s]}`
     api[name] = (params, method, headers) => {
-      let ajax = method=='POST' ? axios({method:'POST',url:url,data:qs.stringify(params),headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}}).then(res) : axios.get(url, { params: params }).then(res)
+      let ajax = method=='POST' ? 
+      axios({method:'POST',url:url,data:qs.stringify(params),headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}}).then(res) 
+      : axios.get(url, { params: params }).then(res)
       return ajax
     }
   }

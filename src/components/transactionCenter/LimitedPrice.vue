@@ -97,8 +97,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 export default {
   name: "LimitedPrice",
   data() {

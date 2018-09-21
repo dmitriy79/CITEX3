@@ -6,8 +6,9 @@ import common from './modules/common'
 import trading from './modules/trading'
 
 export default new vuex.Store({
-	...common,
-	modules: {
-	home, //首页
-	trading, //交易中心
-}})
+  ...common,
+  modules: {
+    home, //首页
+    trading, //交易中心
+  }
+})
