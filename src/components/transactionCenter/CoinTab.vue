@@ -17,15 +17,17 @@
                 <span class="rate">涨幅<b><i class="up"></i><i class="down"></i></b></span>
                 <span class="num">24h交易量<b><i class="up"></i><i class="down"></i></b></span>
             </div>
-            <div class="coin-list" 
+            <div class="coin-list"
             v-for="(item,index) of tradingList"
-            :class="{active: index == currentTradingIndex}"
+            :class="{'active': index == currentTradingIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
                 <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>
                 <div class="num">{{item.amount_24H}}</div>
-                <div class="ico ico-star-fill" :class="{'ico-star':!item.collect}"></div>
+                <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"
+                class="ico ico-star-fill" 
+                :class="{'ico-star':!item.collect}"></div>
             </div>
         </div>
         <div class="tab-content">
@@ -48,7 +50,6 @@ export default {
     ...mapState('trading',['currentTradingIndex'])
     //...mapActions(['toggleMarket'])
   },
-  
   methods: {
     ...mapMutations(['toggleTrading'])
   }

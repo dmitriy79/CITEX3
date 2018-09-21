@@ -35,7 +35,13 @@ export default {
       commit('setMarket',params)
       commit('getCoinInfo',params.coinId)
     },
-
+    //收藏币种
+    favoriteCoin({commit,state}, params) {
+      api.collect(params).then(res => {
+        //console.log(res.message)
+        commit('toggleTrading',state.currentCategoryIndex) //刷新列表
+      })
+    },
     timestampToTime({commit,state}, timestamp) {
         var date = new Date(timestamp)
         var Y = date.getFullYear() + '-'
@@ -60,6 +66,7 @@ export default {
 
     //交易对切换
     toggleTrading(state,id){
+      console.log(id)
       api.getTradeInfoByZone({id:id}).then(res=>{
         console.log(res)
         state.tradingList = res.datas.list
@@ -73,12 +80,7 @@ export default {
       console.log("state")
     },
   
-    //收藏币种
-    favoriteCoin(state, params) {
-      api.collect(params).then(res => {
-        console.log(res.message)
-      })
-    },
+
 
     //切换为收藏列表
     toggleToFav(){
