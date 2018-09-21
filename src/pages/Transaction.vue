@@ -11,8 +11,8 @@
                             <span>ETH</span>/<span>{{marketInfo.name}}</span>
                         </div>
                         <div class="price-wrap">
-                            <span class="rate">+<i>{{marketInfo.increase_24H}}%</i></span>
-                            <span class="price">{{marketInfo.deal_price}}</span>&nbsp;<span class="price-val">≈ <i>0000.43</i> CNY</span>
+                            <span class="rate" :class="{red:!marketInfo.increase}">{{marketInfo.increase ? '+':'-'}}<i>{{marketInfo.increase_24H}}%</i></span>
+                            <span class="price" :class="{red:!marketInfo.increase}">{{marketInfo.deal_price}}</span>&nbsp;<span class="price-val">≈ <i>0000.43</i> CNY</span>
                         </div>
                     </div>
                     <div class="title-right">
@@ -49,8 +49,8 @@
                             </li>
                         </ul>
                     </div>
-                    </div>
-                    <k-line></k-line>
+                </div>
+                <k-line></k-line>
              </div>
              <div class="right">
                  <coin-tab></coin-tab>
@@ -128,9 +128,7 @@ export default {
       option: options.deep
     };
   },
-  created() {
-    
-  },
+  created() {},
   mounted() {
     // this.getDeepImg();
     // options.deep.series[0].data[0][0] = 999;
@@ -145,10 +143,10 @@ export default {
     //       console.log(res.datas.bid_list, "99303039");
     //     });
     // }
-    ...mapMutations({toggleMarket:'trading/toggleMarket'})
+    ...mapMutations({ toggleMarket: "trading/toggleMarket" })
   },
-  computed:{
-    ...mapState('trading',['marketInfo'])
+  computed: {
+    ...mapState("trading", ["marketInfo"])
   }
 };
 </script>
@@ -239,6 +237,40 @@ export default {
 }
 </style>
 <style lang="less" scoped>
+.price-wrap {
+  span {
+    font-size: 16px;
+  }
+  i {
+    font-style: normal;
+  }
+  .rate {
+    background: #1fc56d;
+    border-radius: 2px;
+    padding: 1px 7px;
+    font-family: PingFangSC-Semibold;
+    font-size: 13px;
+    color: #ffffff;
+    &.red{
+      background-color:#ef6e59;
+    }
+    i {
+      font-size: 13px;
+      font-style: normal;
+    }
+  }
+  .price {
+    font-size: 16px;
+    color: #5dc176;
+    &.red{
+      color:#ef6e59;
+    }
+  }
+  .price-val {
+    font-size: 16px;
+    color: #dfe2e8;
+  }
+}
 .transaction-wrap {
   background: #3b4249;
   padding: 8px 0 9px 17px;
@@ -262,35 +294,7 @@ export default {
             padding: 0 13px 0 12px;
             margin-right: 22px;
             color: #e4e5e7;
-            font-weight:800;
-          }
-          .price-wrap {
-            span {
-              font-size: 16px;
-            }
-            i {
-              font-style: normal;
-            }
-            .rate {
-              background: #1fc56d;
-              border-radius: 2px;
-              padding: 1px 7px;
-              font-family: PingFangSC-Semibold;
-              font-size: 13px;
-              color: #ffffff;
-              i {
-                font-size: 13px;
-                font-style: normal;
-              }
-            }
-            .price {
-              font-size: 16px;
-              color: #5dc176;
-            }
-            .price-val {
-              font-size: 16px;
-              color: #dfe2e8;
-            }
+            font-weight: 800;
           }
         }
         .title-right {

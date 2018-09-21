@@ -6,7 +6,7 @@
           <div>涨幅排行榜</div>
         </div>
         <ul>
-      <li v-for="(item,index) in dealOrder.fall" v:if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+      <li v-for="(item,index) in dealOrder.up" v:if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
             <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
             <div class="rate green">{{item.range}}%<i class="ico-ups"></i></div>
           </li>
@@ -17,7 +17,7 @@
           <div>跌幅排行榜</div>
         </div>
         <ul>
-           <li v-for="(item,index) in dealOrder.up" v:if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+           <li v-for="(item,index) in dealOrder.fall" v:if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
             <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
             <div class="rate red">-{{item.range}}%<i class="ico-downs"></i></div>
           </li>

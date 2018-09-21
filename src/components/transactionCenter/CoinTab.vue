@@ -70,7 +70,7 @@ export default {
       width:100%;
       background: #3b4249;
       border-radius: 2px;
-      padding: 6px 0 6px 7px;
+      padding: 6px 0 7px 7px;
       font-size: 13px;
       color: #b6b7b7;
       text-indent: 30px;
