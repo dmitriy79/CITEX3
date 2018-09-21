@@ -38,7 +38,6 @@ export default {
     //收藏币种
     favoriteCoin({commit,state}, params) {
       api.collect(params).then(res => {
-        //console.log(res.message)
         commit('toggleTrading',state.currentCategoryIndex) //刷新列表
       })
     },
@@ -50,7 +49,6 @@ export default {
         return Y+M+D
     }
   },
-
   mutations: {
     showLoading(state) {
       state.pageLoading = true
@@ -78,15 +76,7 @@ export default {
     //搜索币种
     searchTradingCoin(state, params) {
       console.log("state")
-    },
-  
-
-
-    //切换为收藏列表
-    toggleToFav(){
-        
-    },
-    
+    }
 
   }
 }

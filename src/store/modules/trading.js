@@ -28,7 +28,6 @@ const actions={
         state.currentTradingIndex = params.selectId
         state.marketInfo = rootState.tradingList[params.selectId]
         commit('setMarket',{...rootState,...params})
-        // commit('getCoinInfo',params.coinId)
       },
       testClick({commit,rootState,state},params){
           console.log(rootState,state,commit)
