@@ -8,11 +8,9 @@ const state ={
     currentTradingIndex:0, //交易对列表当前选择项
     coinInfo:{},           //币种资料
     marketInfo:{},         //当前选择的交易对
-<<<<<<< HEAD
     orderData:{},          //订单委托/历史记录
-=======
     AskBidList:[], //买单
->>>>>>> refs/remotes/origin/master
+
 }
 const getters = {
 
@@ -53,7 +51,6 @@ const actions = {
         commit('setMarket',{...rootState,...params})
         commit('getCoinInfo',params.coinId)
       },
-<<<<<<< HEAD
     //订单记录切换
     toggleOrder({commit,rootState,state}, params){
 
@@ -76,8 +73,6 @@ const mutations = {
     },
     
     //委托买单
-=======
-      
       testClick({commit,rootState,state},params){
           console.log(rootState,state,commit)
       },
@@ -100,7 +95,7 @@ const mutations = {
          
         })
       },
->>>>>>> refs/remotes/origin/master
+
     tradingBuy(state,params){
         console.log(params)
         api.buy(params,"POST").then(res=>{
