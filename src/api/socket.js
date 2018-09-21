@@ -61,7 +61,7 @@ export default class websock{
     }
     //数据发送
     websocketSend(agentData) {
-        console.log("数据发送", agentData)
+        console.log("数据发送。。。", agentData)
         this.websock.send(JSON.stringify(agentData))
     }
     //关闭

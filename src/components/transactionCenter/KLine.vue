@@ -802,6 +802,7 @@ export default {
             resolution='10080min'
           }
           this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:2}).then(res=>{
+            console.log(res,'==============>历史数据')
         //this_vue.$http("192.168.0.107:13040/trade/getKDatas2?step=1min&tradeCoinPariId=2").then(res=>){
         //this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
         // this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600000,tradeCoinPariId:2}).then(res=>{
@@ -810,8 +811,8 @@ export default {
           res.datas.list.forEach(function(bar) {
             kline.push({
              time: Number(bar.endTime),
-               open: Number(bar.openingPrice),
-               close: Number(bar.closeingPrice),
+               open: Number(bar.openPrice),
+               close: Number(bar.closePrice),
                high: Number(bar.topPrice),
                low: Number(bar.floorPrice),
                volume: Number(bar.total)

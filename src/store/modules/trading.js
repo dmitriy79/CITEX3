@@ -9,7 +9,12 @@ const state = {
     coinInfo: {}, //币种资料
     marketInfo: {}, //当前选择的交易对
     orderData: {}, //订单委托/历史记录
+<<<<<<< HEAD
     AskBidList: [], //买单
+=======
+    AskList: [], //卖单
+    BidList:[],//买单 
+>>>>>>> 0921: tmp
 
 }
 const getters = {
@@ -58,19 +63,55 @@ const actions = {
     testClick({ commit, rootState, state }, params) {
         console.log(rootState, state, commit)
     },
+<<<<<<< HEAD
     tradingAskBid({commit}, params) {
+=======
+    tradingAskBid({ commit,state}, params) {
+        console.log(params,'++++我是params++++））000=======》')
+>>>>>>> 0921: tmp
         commit('tradingAskBid', params)
     }
+    
 }
 const mutations = {
     //买卖挂单 websocketAskBid
     tradingAskBid(state, obj) {
+<<<<<<< HEAD
         let webs = new webSocket("websocketAskBid")
         webs.initWebSocket()
         let sendParams = { pairId: 1 }
         webs.sendSocket(sendParams, res => {
             console.log(res, '+++我是交易中心3333333333')
         })
+=======
+        console.log(state.marketInfo,'00000+++++888888999&&&&&&&我是0——————===>>>>')
+        let webs = new webSocket("websocketAskBid?pairId=2")
+        webs.initWebSocket()
+       
+        webs.sendSocket('sendParams', res => {
+            state.AskList=res.ask
+            state.BidList=res.bid
+            console.log(res, '+++我是交易中心3333333333s================>')
+        })
+        // let ws= new WebSocket('ws://47.94.213.6:13080/websocketAskBid?pairId=2')
+        // ws.onopen = () => {
+        //      // Web Socket 已连接上，使用 send() 方法发送数据
+        //        ws.send('ws')
+        //        console.log('数据发送中8888..++++++++买卖000000000=========》》》单')
+        //    }
+        //    ws.onmessage = evt => {
+        //     var content=JSON.parse(evt.data)
+        //     console.log(evt,'--------')
+        //    }
+        //    ws.onclose = function () {
+        //      // 关闭 websocket
+        //      console.log('连接已关闭...')
+        //    }
+        //     // 组件销毁时调用，中断websocket链接
+        //    this.over = () => {
+        //      ws.close()
+        //    }
+>>>>>>> 0921: tmp
     },
     //当前所有委托记录
     listBidOrders(state, params) {
@@ -87,9 +128,13 @@ const mutations = {
     testClick({ commit, rootState, state }, params) {
         console.log(rootState, state, commit)
     },
+<<<<<<< HEAD
     tradingAskBid({ commit, state }, obj) {
         commit("tradingAskBid", obj)
     },
+=======
+   
+>>>>>>> 0921: tmp
 
     tradingBuy(state, params) {
         console.log(params)
@@ -145,4 +190,8 @@ export default {
     getters,
     actions,
     mutations
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0921: tmp
