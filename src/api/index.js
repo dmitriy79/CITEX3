@@ -1,5 +1,6 @@
 import axios from 'axios'
 import webSocket from './socket'
+import qs from 'qs'
 let apiPort = {
   "coin": 13020, //管理
   "payment": 13030, //支付管理
@@ -109,7 +110,7 @@ let AUTH_TOKEN=(function(){
 
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
 // axios.defaults.headers.post['AUTH_TOKEN'] = AUTH_TOKEN
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+//axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 let ajax = (url,params,method,headers) =>{
   let axiosArg = {
@@ -127,8 +128,8 @@ for (let i in apiList) {
     let name = item[s].split('/').pop()
     let url =process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}:${apiPort[i]}${item[s]}` :`/${reqName}${item[s]}`
     api[name] = (params, method, headers) => {
-      let ajax = method ? axios.post(url, params).then(res) : axios.get(url, { params: params }).then(res)
-     return ajax
+      let ajax = method=='POST' ? axios({method:'POST',url:url,data:qs.stringify(params),headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}}).then(res) : axios.get(url, { params: params }).then(res)
+      return ajax
     }
   }
 }

@@ -13,6 +13,7 @@ const getters = {
 }
 const actions = {
     tradingBuy({commit,state}, obj) {
+        
         commit("tradingBuy", obj)
       },
     tradingSell({commit,state}, obj) {
@@ -31,19 +32,21 @@ const actions = {
         commit('setMarket',{...rootState,...params})
         commit('getCoinInfo',params.coinId)
       },
+      
       testClick({commit,rootState,state},params){
           console.log(rootState,state,commit)
       },
 }
 const mutations = {
     tradingBuy(state,params){
-        console.log(params.price)
-        api.buy({...params},true).then(res=>{
+        console.log(params)
+        api.buy(params,"POST").then(res=>{
             console.log(res)
         })
     },
     tradingSell(state,params){
-        api.sell(params,true).then(res=>{
+        console.log(params)
+        api.sell(params,"POST").then(res=>{
             console.log(res)
         })
     },

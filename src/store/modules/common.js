@@ -42,6 +42,19 @@ export default {
         commit('toggleTrading',state.currentCategoryIndex) //刷新列表
       })
     },
+
+    //搜索过滤币种
+    searchCoin({commit,state}, value){
+       // let name = item.name
+       if(value!=''){
+        let filterTradingList = state.tradingList.filter(item => item.name.indexOf(value)!= '-1')
+        console.log(filterTradingList)
+        commit("setTradingList",filterTradingList)
+      }else{
+        //commit("toggleTrading",arg.id)
+      }
+    },
+
     timestampToTime({commit,state}, timestamp) {
         var date = new Date(timestamp)
         var Y = date.getFullYear() + '-'
@@ -56,6 +69,9 @@ export default {
     },
     hideLoading(state) {
       state.pageLoading = false
+    },
+    setTradingList(state,tradingList){
+      state.tradingList = tradingList
     },
     //设置主币分类
     setTradingCategory(state, tradingCategory) {

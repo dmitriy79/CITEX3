@@ -1,7 +1,10 @@
 <template>
     <div class="coin-tab">
         <div class="search-wrap">
-          <div class="search-input"><i class="ico ico-search"></i><input type="text" placeholder="查询" class="search"></div>
+          <div class="search-input">
+            <i class="ico ico-search"></i>
+            <input type="text" @keyup="$store.dispatch('searchCoin',searchValue)" v-model="searchValue" placeholder="查询" class="search">
+          </div>
           <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
         </div>
         <ul class="nav-bar">
@@ -38,7 +41,9 @@
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      searchValue:''
+    };
   },
 
   created() {
