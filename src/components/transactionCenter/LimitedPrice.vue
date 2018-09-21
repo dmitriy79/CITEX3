@@ -178,7 +178,7 @@ export default {
           isRight = !this.isNumber(e.target.value),
           buyAmounts = this.buyParams.amount,
           buyPrices = this.buyParams.price
-          console.log(isRight)
+          // console.log(isRight)
       switch(e.target.name){
         case 'buyAmount':
           this.buyParams.amount = isRight ? buyAmounts : e.target.value

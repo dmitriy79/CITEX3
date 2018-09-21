@@ -1,5 +1,6 @@
 import api from '../../api'
 import axios from 'axios'
+let webSocket = api.socket
 const state ={
     buyParams:{},          //buy参数
     sellParams:{},         //sell参数
@@ -7,6 +8,7 @@ const state ={
     currentTradingIndex:0, //交易对列表当前选择项
     coinInfo:{},
     marketInfo:{},         //当前选择的交易对
+    AskBidList:[], //买单
 }
 const getters = {
 
@@ -20,7 +22,7 @@ const actions = {
         commit("tradingSell", obj)
     },
     initMarketInfo({commit,rootState},obj){
-        console.log(rootState)
+        console.log(rootState,'rootState++++0000')
         let id = rootState.tradingList[0].id
         commit('setMarket',{...rootState,selectId:id})
     },
@@ -36,8 +38,21 @@ const actions = {
       testClick({commit,rootState,state},params){
           console.log(rootState,state,commit)
       },
+      tradingAskBid({commit,state}, obj) {
+        commit("tradingAskBid", obj)
+      },
+     
 }
 const mutations = {
+     //买卖挂单 websocketAskBid
+     tradingAskBid(state, obj){
+        let webs = new webSocket("websocketRankingList")
+        webs.initWebSocket()
+        webs.sendSocket("ss+++++++999999999", res => {
+          console.log(res,'+++我是交易中心')
+         
+        })
+      },
     tradingBuy(state,params){
         console.log(params)
         api.buy(params,"POST").then(res=>{
@@ -72,7 +87,7 @@ const mutations = {
     
     //切换币种 资料显示
     setMarket(state,params){
-        console.log(params)
+       
         state.currentTradingIndex = params.selectId
         state.marketInfo = params.tradingList[params.selectId]
     },
