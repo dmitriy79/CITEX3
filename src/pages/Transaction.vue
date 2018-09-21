@@ -99,7 +99,7 @@ import TypeInfo from "../components/transactionCenter/CoinTypeInfo";
 import XChart from "../components/chart/DeepImg.vue";
 // 导入chart组件模拟数据
 import options from "../chart-options/deepImg";
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 export default {
   name: "Transaction",
   components: {

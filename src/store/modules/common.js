@@ -31,10 +31,11 @@ export default {
 
     //切换币种
     toggleMarket({commit,state}, params){
-      console.log("交易对ID====>",params)
-      commit('setMarket',params)
-      commit('getCoinInfo',params.coinId)
+      //console.log("交易对ID====>",params)
+      //commit('setMarket',params)
+      //commit('getCoinInfo',params.coinId)
     },
+
     //收藏币种
     favoriteCoin({commit,state}, params) {
       api.collect(params).then(res => {

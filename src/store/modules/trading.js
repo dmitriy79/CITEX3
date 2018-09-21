@@ -5,12 +5,13 @@ const state ={
     sellParams:{},         //sell参数
     tradingAssets:{},      //当前交易对资金
     currentTradingIndex:0, //交易对列表当前选择项
+    coinInfo:{},
     marketInfo:{},         //当前选择的交易对
 }
-const getters={
+const getters = {
 
 }
-const actions={
+const actions = {
     tradingBuy({commit,state}, obj) {
         commit("tradingBuy", obj)
       },
@@ -28,12 +29,13 @@ const actions={
         state.currentTradingIndex = params.selectId
         state.marketInfo = rootState.tradingList[params.selectId]
         commit('setMarket',{...rootState,...params})
+        commit('getCoinInfo',params.coinId)
       },
       testClick({commit,rootState,state},params){
           console.log(rootState,state,commit)
       },
 }
-const mutations={
+const mutations = {
     tradingBuy(state,params){
         console.log(params.price)
         api.buy({...params},true).then(res=>{
@@ -74,10 +76,10 @@ const mutations={
 
     //获取币种资料
     getCoinInfo(state,id){
-        Axios.get(`/COIN/coin/info/${id}`).then(res=>{
+        axios.get(`/COIN/coin/info/${id}`).then(res=>{
             console.log(res)
             let coninInfo = res.data.datas
-            state.coninInfo = res.data.datas
+            state.coinInfo = res.data.datas
         })
     }
 }

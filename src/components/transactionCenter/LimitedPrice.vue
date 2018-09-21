@@ -124,26 +124,17 @@ export default {
         code: 1123414,
         tradePassword:95558
       }
-    };
+    }
   },
   mounted() {
-    this.token = localStorage.getItem("token");
-    if (this.token == null) {
-      this.isAllowed = true;
-      this.isAllowed1 = true;
-      this.isDisabled = true;
-    } else {
-      this.isAllowed = false;
-      this.isAllowed1 = false;
-      this.isDisabled = false;
-    }
+    this.token = localStorage.getItem("token")
   },
   created() {
     const assetsParams = {
       pageNum: 1,
       pageSize: 90,
       coinId: 3
-    };
+    }
     //this.$store.dispatch("trading/getAssets", assetsParams)
   },
   computed: {
