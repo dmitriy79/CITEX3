@@ -15,6 +15,11 @@ export default {
     initTrading({commit,state}, params) {
       api.classificationList({}).then(res => {
         if (res.datas) {
+          let category  = res.datas
+          category.push({
+            zoneName:'自选',
+            id:-1
+          })
           commit('setTradingCategory', res.datas)
           return res.datas
         }
@@ -23,25 +28,27 @@ export default {
         commit('toggleTrading',res[0].id)
       })
     },
+
     //切换币种
     toggleMarket({commit,state}, params){
-        console.log("交易对ID====>",params)
-        commit('setMarket',params)
-        commit('getCoinInfo',params.coinId)
-      },
-      timestampToTime({commit,state}, timestamp) {
-          var date = new Date(timestamp)
-          var Y = date.getFullYear() + '-'
-          var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-'
-          var D = date.getDate() + ' '
-          return Y+M+D
-      }
+      console.log("交易对ID====>",params)
+      commit('setMarket',params)
+      commit('getCoinInfo',params.coinId)
+    },
+
+    timestampToTime({commit,state}, timestamp) {
+        var date = new Date(timestamp)
+        var Y = date.getFullYear() + '-'
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-'
+        var D = date.getDate() + ' '
+        return Y+M+D
+    }
   },
+
   mutations: {
     showLoading(state) {
       state.pageLoading = true
     },
-
     hideLoading(state) {
       state.pageLoading = false
     },
@@ -51,6 +58,7 @@ export default {
       state.currentCategoryIndex = tradingCategory[0].id
     },
 
+    //交易对切换
     toggleTrading(state,id){
       api.getTradeInfoByZone({id:id}).then(res=>{
         console.log(res)
@@ -60,17 +68,7 @@ export default {
       })
     },
 
-
-    getTradingList(state, params) {
-      console.log("getTradingList==>")
-      return api.getTradeInfoByZone(params)
-        .then(res => {
-          console.log("getTradingList==>", res)
-          state.tradingList = res.datas
-          state.currentCategoryIndex = res.datas[0].id
-        })
-    },
-
+    //搜索币种
     searchTradingCoin(state, params) {
       console.log("state")
     },
@@ -81,20 +79,12 @@ export default {
         console.log(res.message)
       })
     },
-    //切换币种 资料显示
-    setMarket(state,params){
-      state.currentTradingIndex = params.selectId
-      state.marketInfo = state.tradingList[params.selectId]
+
+    //切换为收藏列表
+    toggleToFav(){
+        
     },
-    //获取币种资料
-    getCoinInfo(state,id){
-      Axios.get(`/COIN/coin/info/${id}`).then(res=>{
-        console.log(res)
-        let coninInfo = res.data.datas
-        
-        state.coninInfo = res.data.datas
-        
-      })
-    }
+    
+
   }
 }

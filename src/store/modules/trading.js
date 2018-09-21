@@ -17,20 +17,27 @@ const actions={
     tradingSell({commit,state}, obj) {
         commit("tradingSell", obj)
     },
+    initMarketInfo({commit,rootState},obj){
+        console.log(rootState)
+        let id = rootState.tradingList[0].id
+        commit('setMarket',{...rootState,selectId:id})
+    },
     //切换币种
-    toggleMarket({commit,state}, params){
+    toggleMarket({commit,rootState,state}, params){
         console.log("交易对ID====>",params)
-        commit('setMarket',params)
-        commit('getCoinInfo',params.coinId)
+        state.currentTradingIndex = params.selectId
+        state.marketInfo = rootState.tradingList[params.selectId]
+        commit('setMarket',{...rootState,...params})
+        // commit('getCoinInfo',params.coinId)
       },
-      testAct({commit,rootState,state},params){
-          console.log(rootState)
-      }
-
+      testClick({commit,rootState,state},params){
+          console.log(rootState,state,commit)
+      },
 }
 const mutations={
     tradingBuy(state,params){
-        api.buy(params,true).then(res=>{
+        console.log(params.price)
+        api.buy({...params},true).then(res=>{
             console.log(res)
         })
     },
@@ -59,9 +66,20 @@ const mutations={
         })
     },
     
-    //切换到收藏
-    toggleToFav(){
-        
+    //切换币种 资料显示
+    setMarket(state,params){
+        console.log(params)
+        state.currentTradingIndex = params.selectId
+        state.marketInfo = params.tradingList[params.selectId]
+    },
+
+    //获取币种资料
+    getCoinInfo(state,id){
+        Axios.get(`/COIN/coin/info/${id}`).then(res=>{
+            console.log(res)
+            let coninInfo = res.data.datas
+            state.coninInfo = res.data.datas
+        })
     }
 }
 export default {

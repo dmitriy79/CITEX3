@@ -116,13 +116,13 @@ export default {
       buyAmount: 0,
       buyParams: {
         tradeCoinPairId: 2,
-        code: 12,
-        tradePassword: "keyou88"
+        code: 13422,
+        tradePassword:95558
       },
       sellParams: {
         tradeCoinPairId: 2,
-        code: 14,
-        tradePassword: "keyou88"
+        code: 1123414,
+        tradePassword:95558
       }
     };
   },

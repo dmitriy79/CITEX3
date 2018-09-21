@@ -129,7 +129,7 @@ export default {
     };
   },
   created() {
-  
+    
   },
   mounted() {
     // this.getDeepImg();
@@ -148,7 +148,7 @@ export default {
     ...mapMutations({toggleMarket:'trading/toggleMarket'})
   },
   computed:{
-    ...mapState(['marketInfo'])
+    ...mapState('trading',['marketInfo'])
   }
 };
 </script>

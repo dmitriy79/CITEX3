@@ -79,17 +79,17 @@ let apiList = {
 // params object
 
 let api = {}
-let ajax = (url, params, method) => {
-  return axios({
-    method: method || "get",
-    url: url,
-    data: params,
-  }).then(res => {
-    if (res.status == '200') {
-      res(res.data)
-    }
-  })
-}
+// let ajax = (url, params, method) => {
+//   return axios({
+//     method: method || "get",
+//     url: url,
+//     data: params,
+//   }).then(res => {
+//     if (res.status == '200') {
+//       res(res.data)
+//     }
+//   })
+// }
 
 let res =  (res) => {
   if (res.status == '200') {
@@ -102,15 +102,33 @@ let res =  (res) => {
     console.log(res.statusText)
   }
 }
+
+let AUTH_TOKEN=(function(){
+  return localStorage.getItem("token")
+})()
+
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
+// axios.defaults.headers.post['AUTH_TOKEN'] = AUTH_TOKEN
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
+let ajax = (url,params,method,headers) =>{
+  let axiosArg = {
+    method: method || 'get',
+    url: url,
+    data:params,
+  }
+  return axios(axiosArg).then(res)
+}
+
 for (let i in apiList) {
   let reqName = i.toUpperCase()
   let item = apiList[i]
   for (let s in item) {
     let name = item[s].split('/').pop()
     let url =process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}:${apiPort[i]}${item[s]}` :`/${reqName}${item[s]}`
-    api[name] = (params, method) => {
-      let ajax = method ? axios.post(url, { params: params }).then(res) : axios.get(url, { params: params }).then(res)
-      return ajax
+    api[name] = (params, method, headers) => {
+      let ajax = method ? axios.post(url, params).then(res) : axios.get(url, { params: params }).then(res)
+     return ajax
     }
   }
 }

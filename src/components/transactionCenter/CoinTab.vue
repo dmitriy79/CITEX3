@@ -2,13 +2,13 @@
     <div class="coin-tab">
         <div class="search-wrap">
               <input type="text" placeholder="查询" class="search"><div class="ico-search"></div>
-              <span class="change"><b class="ico-changecny"></b><i>CNY</i></span>
+              <div class="change" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of tradingCategory" 
             :class="{active: item.id == currentCategoryIndex}" 
-            @click="toggleTrading(item.id)">{{item.zoneName}}</li>
-            <li class="fav"><span class="ico-star-fill" ></span>自选</li>
+            @click="toggleTrading(item.id)"><span v-if="item.id == -1" class="ico-star-fill" ></span>{{item.zoneName}}
+            </li>
         </ul>
         <div class="coin-list-wrap">
             <div class="title">
@@ -20,7 +20,7 @@
             <div class="coin-list" 
             v-for="(item,index) of tradingList"
             :class="{active: index == currentTradingIndex}"
-            @click='$store.dispatch("toggleMarket", {selectId:index,coinId:item.id})'>
+            @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
                 <span class="coin-type">{{item.name}}</span>
                 <span class="price">{{item.deal_price}}</span>
                 <span class="rate" >{{item.increase_24H}}</span>
@@ -42,14 +42,17 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("initTrading");
+    this.$store.dispatch("initTrading")
   },
+
   computed: {
     ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex","currentTradingIndex"]),
-    ...mapActions(['toggleMarket'])
+    ...mapState('trading',['currentTradingIndex'])
+    //...mapActions(['toggleMarket'])
   },
+  
   methods: {
-    ...mapMutations(["toggleTrading"])
+    ...mapMutations(['toggleTrading'])
   }
 };
 </script>
@@ -62,6 +65,8 @@ export default {
 }
 .search-wrap {
   position: relative;
+  display: flex;
+  justify-content:space-between;
   input {
     width: 67.5%;
     background: #3b4249;
@@ -89,20 +94,18 @@ export default {
   }
   .change {
     margin-left: 5px;
+    display: flex;
+    align-items:center;
     cursor: pointer;
+    background: #292f37;
+    border-radius: 2px;
+    padding: 5px 20px 5px 10px;
+    font-size: 13px;
+    display: inline-block;
   }
   .ico-changecny {
     font-size: 15px;
     cursor: pointer;
-  }
-  span {
-    background: #292f37;
-    border-radius: 2px;
-    padding: 5px 10px;
-    font-family: PingFangSC-Semibold;
-    font-size: 13px;
-    width: 24%;
-    display: inline-block;
   }
 }
 .coin-list-wrap {
@@ -213,7 +216,6 @@ export default {
     color: #e7e7e7;
     font-size: 0;
     border-bottom:1px solid rgba(255,255,255,.1);
-
     transition: 0.5s;
     *{
       line-height:32px;
@@ -263,12 +265,18 @@ export default {
       padding: 6.5px 5%;
       cursor: pointer;
       height: 30px;
+      display: flex;
+      align-items:center;
       &.active {
         background: #292f37;
         color: #1fc56d;
       }
-      &:last-child {
-        float: right;
+      &:last-child{
+        padding-left:10px;
+        span{
+          margin-right:4px;
+          font-size:16px;
+        }
       }
     }
     .fr {
