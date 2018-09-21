@@ -24,6 +24,7 @@
             v-for="(item,index) of tradingList"
             :class="{'active': index == currentTradingIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
+<<<<<<< HEAD
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
                 <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>
@@ -31,6 +32,14 @@
                 <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"
                 class="ico ico-star-fill" 
                 :class="{'ico-star':!item.collect}"></div>
+                <span class="coin-type">{{item.name}}</span>
+                <span class="price">{{item.deal_price}}</span>
+                <span class="rate" >{{item.increase_24H}}</span>
+                <span class="num">{{item.amount_24H}}</span>
+                <span class="ico-star"></span>
+                <!-- <span class="ico-star-fill"> 
+                </span>-->
+
             </div>
         </div>
         <div class="tab-content">
