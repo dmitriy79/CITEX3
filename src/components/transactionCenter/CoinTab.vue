@@ -1,8 +1,8 @@
 <template>
     <div class="coin-tab">
         <div class="search-wrap">
-              <input type="text" placeholder="查询" class="search"><div class="ico-search"></div>
-              <div class="change" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
+          <div class="search-input"><i class="ico ico-search"></i><input type="text" placeholder="查询" class="search"></div>
+          <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of tradingCategory" 
@@ -63,49 +63,57 @@ export default {
   display: flex;
   align-items: center;
 }
-.search-wrap {
-  position: relative;
-  display: flex;
-  justify-content:space-between;
-  input {
-    width: 67.5%;
-    background: #3b4249;
-    border-radius: 2px;
-    padding: 6px 0 6px 7px;
-    margin: 21px 0 21px 13px;
-    font-size: 13px;
-    color: #b6b7b7;
-    text-indent: 30px;
-    &:focus {
-      border-color: #1fc56d;
+.search {
+  &-input{
+    position: relative;
+    flex-grow:2;
+    input {
+      width:100%;
+      background: #3b4249;
+      border-radius: 2px;
+      padding: 6px 0 6px 7px;
+      font-size: 13px;
+      color: #b6b7b7;
+      text-indent: 30px;
+      font-size: 14px;
     }
+      &:focus {
+        border-color: #1fc56d;
+      }
+      .ico {
+      position: absolute;
+      left:10px;
+      top: 0;
+      line-height:32px;
+      }
   }
-  i {
-    padding-left: 15%;
-  }
-  .active {
-    color: #1fc56d;
-  }
-  .ico-search {
-    position: absolute;
-    left: 23px;
-    top: 30px;
-    font-size: 14px;
-  }
-  .change {
-    margin-left: 5px;
-    display: flex;
+  &-wrap{
+    position: relative;
+    padding:20px;
+    display:flex;
     align-items:center;
-    cursor: pointer;
-    background: #292f37;
-    border-radius: 2px;
-    padding: 5px 20px 5px 10px;
-    font-size: 13px;
-    display: inline-block;
-  }
-  .ico-changecny {
-    font-size: 15px;
-    cursor: pointer;
+    justify-content:space-between;
+    .active {
+      color: #1fc56d;
+    }
+  
+    .change {
+      margin-left: 5px;
+      display: flex;
+      align-items:center;
+      cursor: pointer;
+      background: #292f37;
+      border-radius: 2px;
+      padding: 0 15px 0 10px;
+      font-size: 13px;
+      display: inline-block;
+      line-height:32px;
+    }
+    .ico-changecny {
+      font-size: 14px;
+      margin-right:8px;
+      cursor: pointer;
+    }
   }
 }
 .coin-list-wrap {
