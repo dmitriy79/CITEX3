@@ -89,11 +89,11 @@ export default {
   methods: {
     //买卖盘挂单
     getInfo(){
-      let ws= new WebSocket('ws://47.94.213.6:13080/websocketAskBid?pairId=1')
+      let ws= new WebSocket('ws://47.94.213.6:13080/websocketAskBid?pairId=2')
        ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('ws')
-              console.log('数据发送中8888...')
+              console.log('数据发送中8888..++++++++买卖单')
           }
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)

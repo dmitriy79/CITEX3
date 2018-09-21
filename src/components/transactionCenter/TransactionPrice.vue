@@ -45,7 +45,7 @@ export default {
        });
        this.dataList=content
     })*/
-     let ws = new WebSocket('ws://47.94.213.6:13080/websocketSSCJ?pairId=1')
+     let ws = new WebSocket('ws://47.94.213.6:13080/websocketSSCJ?pairId=10')
          ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('Holle')
@@ -55,9 +55,9 @@ export default {
              var content=JSON.parse(evt.data)
              content.forEach(element => {
               element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
-              console.log(element.dealTime,'99999999')
+              // console.log(element.dealTime,'99999999')
              })
-             console.log(content,'我是content')
+            //  console.log(content,'我是content')
              this.dataList=content
               console.log(this.dataList,'数据已接收...')
           }

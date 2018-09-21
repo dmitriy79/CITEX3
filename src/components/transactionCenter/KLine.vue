@@ -315,7 +315,7 @@ export default {
         });
         buttons.forEach((item, index) => {
           
-          console.log(item, index,'我是按钮组++++')
+          // console.log(item, index,'我是按钮组++++')
           let button = this_vue.chart.createButton();
      
                 

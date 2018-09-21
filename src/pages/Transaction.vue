@@ -121,14 +121,18 @@ export default {
     //  options.deep.series[0].data.push(buy)
     // var buy=[[214, 99], [289, 78], [305, 59], [458, 36], [500, 45], [900, 12]]
     // options.deep.series[0].data.push(buy)
-    console.log(options.deep.series, "000000");
+    // console.log(options.deep.series, "000000");
     //let option = options.option1
     return {
       id: "id",
       option: options.deep
     };
   },
-  created() {},
+  created() {
+       this.$store.dispatch("trading/tradingAskBid")
+  },
+  
+ 
   mounted() {
     // this.getDeepImg();
     // options.deep.series[0].data[0][0] = 999;

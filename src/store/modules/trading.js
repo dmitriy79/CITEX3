@@ -1,5 +1,6 @@
 import api from '../../api'
 import axios from 'axios'
+let webSocket = api.socket
 const state ={
     buyParams:{},          //buy参数
     sellParams:{},         //sell参数
@@ -7,7 +8,11 @@ const state ={
     currentTradingIndex:0, //交易对列表当前选择项
     coinInfo:{},           //币种资料
     marketInfo:{},         //当前选择的交易对
+<<<<<<< HEAD
     orderData:{},          //订单委托/历史记录
+=======
+    AskBidList:[], //买单
+>>>>>>> refs/remotes/origin/master
 }
 const getters = {
 
@@ -36,7 +41,7 @@ const actions = {
         commit('listBidOrders',obj)
     },
     initMarketInfo({commit,rootState},obj){
-        console.log(rootState)
+        console.log(rootState,'rootState++++0000')
         let id = rootState.tradingList[0].id
         commit('setMarket',{...rootState,selectId:id})
     },
@@ -48,6 +53,7 @@ const actions = {
         commit('setMarket',{...rootState,...params})
         commit('getCoinInfo',params.coinId)
       },
+<<<<<<< HEAD
     //订单记录切换
     toggleOrder({commit,rootState,state}, params){
 
@@ -70,6 +76,31 @@ const mutations = {
     },
     
     //委托买单
+=======
+      
+      testClick({commit,rootState,state},params){
+          console.log(rootState,state,commit)
+      },
+      tradingAskBid({commit,state}, obj) {
+        commit("tradingAskBid", obj)
+      },
+     
+}
+const mutations = {
+     //买卖挂单 websocketAskBid
+     tradingAskBid(state, obj){
+        let webs = new webSocket("websocketAskBid")
+        webs.initWebSocket()
+        let sendParams = {
+            pairId: 1,
+           
+          }
+        webs.sendSocket(sendParams, res => {
+          console.log(res,'+++我是交易中心3333333333')
+         
+        })
+      },
+>>>>>>> refs/remotes/origin/master
     tradingBuy(state,params){
         console.log(params)
         api.buy(params,"POST").then(res=>{
@@ -105,7 +136,7 @@ const mutations = {
     
     //切换币种 资料显示
     setMarket(state,params){
-        console.log(params)
+       
         state.currentTradingIndex = params.selectId
         state.marketInfo = params.tradingList[params.selectId]
     },

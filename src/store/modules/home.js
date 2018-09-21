@@ -78,7 +78,7 @@ const mutations = {
   initHomePage(state, obj) {
     let webs = new webSocket("websocketRankingList")
     webs.initWebSocket()
-    webs.sendSocket("ss", res => {
+    webs.sendSocket("ss+++++0000000", res => {
       console.log(res)
       let s = {}
       s.fall = JSON.parse(res.fall)

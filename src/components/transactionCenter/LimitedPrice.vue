@@ -177,7 +177,7 @@ export default {
           isRight = !this.isNumber(e.target.value),
           buyAmounts = this.buyParams.amount,
           buyPrices = this.buyParams.price
-          console.log(isRight)
+          // console.log(isRight)
       switch(e.target.name){
         case 'buyAmount':
           this.buyParams.amount = isRight ? buyAmounts : e.target.value
@@ -346,11 +346,6 @@ export default {
         // display:flex;
         align-items: center;
         input {
-          // padding:4px 0;
-          // font-size:12px;
-          // &:focus{
-          //   border-color:transparent;
-          // }
         }
       }
 
