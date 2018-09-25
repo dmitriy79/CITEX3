@@ -92,6 +92,7 @@ const mutations = {
     ]
     axios.all(indexData)
       .then(res => {
+        console.log(res,'首页list========》》》》')
         state.banner = res[0].datas
         state.official = res[1].datas.list
         state.coinList = res[2].datas

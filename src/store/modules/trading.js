@@ -24,9 +24,9 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
-        console.log(arg,'=======....;;;;;;;')
+        // console.log(arg,'=======....;;;;;;;')
         setTimeout(()=>{
-            console.log(arg,'888888==========99999=====777777')
+            // console.log(arg,'888888==========99999=====777777')
             commit("initMarketInfo",rootState.tradingList)
         },500)
        
@@ -57,7 +57,7 @@ const actions = {
     },
     //k线图
     getKline({ commit, rootState, state }, params){
-        console.log(rootState.currentCoinId,'我是lk线图===============》')
+        // console.log(rootState.currentCoinId,'我是lk线图===============》')
         state.step=params.step
         commit('getKline',{currentCoinId:rootState.currentCoinId,step:params.step})  //币种
     },
@@ -67,7 +67,7 @@ const actions = {
         // let id = rootState.tradingList[0].id
         // state.currentCoinName=rootState.tradingList[0].name
         // commit('initMarketInfo', rootState)
-        console.log(rootState.tradingList,'wo啥时候说实话====================================》')
+        // console.log(rootState.tradingList,'wo啥时候说实话====================================》')
         // state.currentTradingIndex=rootState.tradingList[0].id
         // commit('setMarket', { ...rootState, selectId: id })
     },
@@ -80,7 +80,7 @@ const actions = {
             state.marketInfo = rootState.tradingList[params.selectId]
             rootState.currentCoinId=params.coinId
             
-            console.log(state.marketInfo,'=============>state.marketInfo')
+            // console.log(state.marketInfo,'=============>state.marketInfo')
             commit('setMarket', { ...rootState, ...params })
             commit('getCoinInfo', params.coinId)  //币种
             commit('tradingAskBid',params.coinId) //买卖挂单
