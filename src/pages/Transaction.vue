@@ -8,7 +8,7 @@
                 <div class="title" v-if="marketInfo">
                     <div class="title-left">
                         <div class="symbol">
-                            <span>ETH</span>/<span>{{marketInfo.name}}</span>
+                            <span>{{marketInfo.name}}</span>/<span>{{zoneName}}</span>
                         </div>
                         <div class="price-wrap">
                             <span class="rate" :class="{red:!marketInfo.increase}">{{marketInfo.increase ? '+':'-'}}<i>{{marketInfo.increase_24H}}%</i></span>
@@ -159,8 +159,8 @@ export default {
   },
   computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo"])
-    
+     ...mapState("trading", ["marketInfo"]),
+     ...mapState(["zoneName"])
 
   }
 };

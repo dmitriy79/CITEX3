@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="hello">{{currentCoinId}}
+  <div class="hello">
     <div id="chart_container" class="f-fill" style="height:610px;display:block;border:none"></div>
   </div>
 </template>
@@ -386,7 +386,8 @@ export default {
     createFeed: function() {
       let this_vue = this;
       let Datafeed = {};
-
+      var currentCoinId=this_vue.currentCoinId
+  console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
         console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
         this._datafeed = datafeed;
@@ -653,7 +654,6 @@ export default {
           });
         });
       };
-
       Datafeed.Container.prototype.getBars = function(
         symbolInfo,
         resolution,
@@ -663,7 +663,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-
+        console.log(resolution,'resolution====================================>>>>>>>>')
         if(firstDataRequest) {
           if(resolution==1){
             resolution='1min'
@@ -697,9 +697,12 @@ export default {
           }
            if(resolution=='W'){
             resolution='10080min'
-          }
-            
-          this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
+          }  
+          this_vue.$store.dispatch("trading/getKline", {step:resolution})
+         
+          
+          onHistoryCallback(this_vue.klineHistory)
+         /* this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
             console.log(res,'----------------..>>>>>>>>>>>>>')
         var kline=[]
           res.datas.list.forEach(function(bar) {
@@ -714,8 +717,8 @@ export default {
             //console.log(kline,'999999++++我是我是历史数据kline=====')
            });
          
-         onHistoryCallback(kline)
-      })
+         onHistoryCallback(klineHistory)
+      })*/
         } else {
             onHistoryCallback([], {noData : true});
         }
@@ -795,7 +798,7 @@ export default {
   },
    computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo"]),
+     ...mapState("trading", ["marketInfo","klineHistory"]),
       ...mapState([
         "currentCoinId"
     ]

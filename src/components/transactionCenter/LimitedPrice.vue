@@ -8,15 +8,19 @@
           <div class="buy-panel">
             <div class="input-text">
                <p class="islogin"  v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num">{{tradingAssets.able}}</span><span class="type">IOST</span></p>
-                <span class="label">买入<i >IOST</i></span>
+                <p class="useable" v-if="this.token">可用：<span class="num">{{tradingAssets.able}}</span><span class="type">{{zoneName}}</span></p>
+                <span class="label">买入<i ></i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
-                    <input type="number"
+                    <!-- <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
-                    v-model="buyParams.price">
-                    <span class="unit">ETH</span>
+                    v-model="buyParams.price"> -->
+                     <input type="number"
+                    name="buyPrice"
+                    @keyup="checkNumber"
+                    v-model="currentPrcie">
+                    <span class="unit">{{zoneName}}</span>
                 </div>
                <div class="buy-num">
                     <span class="name">数量</span>
@@ -24,7 +28,7 @@
                     name="buyAmount"
                      @keyup="checkNumber"
                     v-model="buyParams.amount">
-                    <span class="unit">IOST</span>
+                    <span class="unit">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
                     <button 
@@ -52,15 +56,15 @@
         <div class="sell-panel">
             <div class="input-text">
                <p class="islogin"   v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num">192321</span><span class="type">ETH</span></p>
-                <span class="label">卖出<i>IOST</i></span>
+                <p class="useable" v-if="this.token">可用：<span class="num">192321</span><span class="type">{{marketInfo.name}}</span></p>
+                <span class="label">卖出<i></i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
                     <input type="text" 
                     name="sellPrice" 
                     @keyup="checkNumber"
                     v-model="sellParams.price">
-                    <span class="unit">ETH</span>
+                    <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
                     <span  class="name">数量</span>
@@ -68,7 +72,7 @@
                     name="sellAmount"
                     @keyup="checkNumber"
                      v-model="sellParams.amount">
-                    <span class="unit">IOST</span>
+                    <span class="unit">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
                     <button
@@ -126,7 +130,8 @@ export default {
     }
   },
   mounted() {
-    this.token = localStorage.getItem("token")
+     this.token = localStorage.getItem("token")
+    console.log(this.token,'-------------------------------->我是token.....<>>>>')
   },
   created() {
     const assetsParams = {
@@ -137,7 +142,10 @@ export default {
     //this.$store.dispatch("trading/getAssets", assetsParams)
   },
   computed: {
-    ...mapState("trading", ["tradingAssets"])
+    ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo"]),
+    
+
+     ...mapState(["zoneName"])
   },
   methods: {
     selectPercentage(e) {

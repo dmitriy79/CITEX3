@@ -10,14 +10,17 @@ export default {
     marketInfo:{},
     currentTradingIndex:0,
     currentCoinId:2,
+    zoneName:'',//交易区类型
   },
   actions: {
     //初始化交易对列表
     initTrading({commit,state}, params) {
       api.classificationList({}).then(res => {
-        console.log(res,'交易列表====》')
+        console.log(res,'交易列表=++++++===》')
         if (res.datas) {
           let category  = res.datas
+          state.zoneName=res.datas[0].zoneName
+          console.log(state.zoneName,'state.zoneName+++++++_____________3')
           category.push({
             zoneName:'自选',
             id:-1

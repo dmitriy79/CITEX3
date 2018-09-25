@@ -31,7 +31,7 @@
         <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
             
             <dl v-if="BidList">
-                <dd  v-for="(item,index) in BidList.slice(0,11)">
+                <dd  v-for="(item,index) in BidList.slice(0,11)" @click='$store.dispatch("trading/togglePrice", {currentPrice:item.price})'>
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>

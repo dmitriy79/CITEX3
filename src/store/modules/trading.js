@@ -13,7 +13,10 @@ const state = {
     AskList: [], //卖单
     BidList:[],//买单 
     currentIndex:0,
-    historyList:[]
+    historyList:[],
+    currentPrcie:'',//交易区当前价格
+    klineHistory:[],
+    step:'',
 }
 const getters = {
 
@@ -21,8 +24,9 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
+        console.log(arg,'=======....;;;;;;;')
         setTimeout(()=>{
-            console.log(rootState.tradingList,'888888==========99999=====777777')
+            console.log(arg,'888888==========99999=====777777')
             commit("initMarketInfo",rootState.tradingList)
         },500)
        
@@ -33,7 +37,7 @@ const actions = {
         commit("tradingAskBid", rootState.currentCoinId)//初始化交易页面买卖单交易
         commit("initMarketInfo",rootState)
         commit("getDealOrders", rootState.currentCoinId)//初始化交易历史
-       
+       commit("getAssets",rootState.currentCoinId)
         
         //成交记录
         //实时订单
@@ -51,7 +55,12 @@ const actions = {
     listBidOrders({ commit, state }, obj) {
         commit('listBidOrders', obj)
     },
-
+    //k线图
+    getKline({ commit, rootState, state }, params){
+        console.log(rootState.currentCoinId,'我是lk线图===============》')
+        state.step=params.step
+        commit('getKline',{currentCoinId:rootState.currentCoinId,step:params.step})  //币种
+    },
   
     initMarketInfo({ commit,state, rootState }, obj) {
        
@@ -64,23 +73,25 @@ const actions = {
     },
     //切换币种
     toggleMarket({ commit, rootState, state }, params) {
-        console.log("交易对ID====>", rootState.tradingList,params)
+        console.log("交易对ID====>", state,rootState,params)
         if(params){
             state.currentIndex=params.selectId
             state.currentTradingIndex = params.selectId
             state.marketInfo = rootState.tradingList[params.selectId]
             rootState.currentCoinId=params.coinId
+            
             console.log(state.marketInfo,'=============>state.marketInfo')
             commit('setMarket', { ...rootState, ...params })
             commit('getCoinInfo', params.coinId)  //币种
             commit('tradingAskBid',params.coinId) //买卖挂单
             commit('getDealOrders',params.coinId) //成交历史
-             
+            commit('getKline',{currentCoinId:params.coinId,step:state.step}) //成交历史
+            
         }
        
     },
-    togglePrice(){
-
+    togglePrice({ commit, rootState, state }, params){
+       state.currentPrcie=params.currentPrice
     },
     //订单记录切换
     toggleOrder({ commit, rootState, state }, params) {
@@ -142,7 +153,28 @@ const mutations = {
         })
     },
     //k线历史数据
-
+    getKline(state, params){
+        console.log(params,'========hhahhahahhahahh=====00000')
+        var resolution=params.step
+        var currentCoinId=params.currentCoinId
+        api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
+            console.log(res,'wozai----------->>>>>>kline999999')
+            var kline=[]
+            if(res.datas.list.length){
+                res.datas.list.forEach(function(bar) {
+                    kline.push({
+                    time: Number(bar.endTime),
+                    open: Number(bar.openPrice),
+                    close: Number(bar.closePrice),
+                    high: Number(bar.topPrice),
+                    low: Number(bar.floorPrice),
+                    volume: Number(bar.total)
+                    });
+                });
+            }
+            state.klineHistory=kline
+        })
+    },
     //当前所有委托记录
     listBidOrders(state, params) {
         api.listBidOrders(params).then(res => {
@@ -174,8 +206,9 @@ const mutations = {
     },
     //币种资产
     getAssets(state, params) {
-        api.uplistByUserId(params).then(res => {
-            // console.log("getAssets====>", res)
+        console.log(params,'0099988888===============>>>>>>')
+        api.uplistByUserId({pageNum:1,pageSize:10,coinId:params}).then(res => {
+           console.log("getAssets====>", res)
             state.tradingAssets = res.datas.list[0]
         })
     },
