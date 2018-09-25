@@ -266,6 +266,10 @@ export default {
       padding-left: 16px;
     }
     dd {
+      &:hover{
+      background: #181f27;
+      cursor: pointer;
+      }
       span {
         height: 26px;
         line-height: 26px;

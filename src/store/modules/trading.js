@@ -13,6 +13,7 @@ const state = {
     AskList: [], //卖单
     BidList:[],//买单 
     currentIndex:0,
+    historyList:[]
 }
 const getters = {
 
@@ -23,11 +24,7 @@ const actions = {
         setTimeout(()=>{
             console.log(rootState.tradingList,'888888==========99999=====777777')
             commit("initMarketInfo",rootState.tradingList)
-        },1000)
-
-        // if(rootState.tradingList.length){
-        //     console.log(rootState.tradingList,'888888==========99999=====777777')
-        // }
+        },500)
        
         //交易对基本信息
         //订单记录
@@ -35,6 +32,8 @@ const actions = {
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
         commit("tradingAskBid", rootState.currentCoinId)//初始化交易页面买卖单交易
         commit("initMarketInfo",rootState)
+        commit("getDealOrders", rootState.currentCoinId)//初始化交易历史
+       
         
         //成交记录
         //实时订单
@@ -52,6 +51,8 @@ const actions = {
     listBidOrders({ commit, state }, obj) {
         commit('listBidOrders', obj)
     },
+
+  
     initMarketInfo({ commit,state, rootState }, obj) {
        
         // let id = rootState.tradingList[0].id
@@ -68,12 +69,18 @@ const actions = {
             state.currentIndex=params.selectId
             state.currentTradingIndex = params.selectId
             state.marketInfo = rootState.tradingList[params.selectId]
+            rootState.currentCoinId=params.coinId
             console.log(state.marketInfo,'=============>state.marketInfo')
             commit('setMarket', { ...rootState, ...params })
             commit('getCoinInfo', params.coinId)  //币种
-            commit('tradingAskBid',params.coinId) //买卖挂单 
+            commit('tradingAskBid',params.coinId) //买卖挂单
+            commit('getDealOrders',params.coinId) //成交历史
+             
         }
        
+    },
+    togglePrice(){
+
     },
     //订单记录切换
     toggleOrder({ commit, rootState, state }, params) {
@@ -85,9 +92,20 @@ const actions = {
     tradingAskBid({ commit,state}, obj) {
         // console.log(obj,'++++我是params++++））000=======》')
          commit('tradingAskBid', obj)
-    } 
+    } ,
+   
 }
 const mutations = {
+    timestampToTime_(state,timestamp) {
+        var date = new Date(timestamp);
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;  
+        second = second < 10 ? ('0' + second) : second; 
+        return h+':'+minute+':'+second; 
+    },
     //买卖挂单 websocketAskBid
     tradingAskBid(state, id) {
         // console.log(state,'0999888======.......')
@@ -100,6 +118,31 @@ const mutations = {
         })
 
     },
+    //成交历史
+    getDealOrders(state,id){
+        
+        let webs = new webSocket(`websocketSSCJ?pairId=${id}`)
+        webs.initWebSocket()
+        webs.sendSocket('sendParams', res => {
+            if(res.length){
+                res.forEach(element => {
+                    var date = new Date(parseInt(element.dealTime));
+                    var h = date.getHours();
+                    h = h < 10 ? ('0' + h) : h;
+                    var minute = date.getMinutes();
+                    var second = date.getSeconds();
+                    minute = minute < 10 ? ('0' + minute) : minute;  
+                    second = second < 10 ? ('0' + second) : second; 
+                    element.dealTime=h+':'+minute+':'+second; 
+                  });
+            }
+        
+          state.historyList=res
+            console.log("成交历史========>",res)
+        })
+    },
+    //k线历史数据
+
     //当前所有委托记录
     listBidOrders(state, params) {
         api.listBidOrders(params).then(res => {

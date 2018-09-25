@@ -12,7 +12,7 @@
                 </div>
                 <ul class="list">
                     <li>
-                        发行时间<span>{{coinInfo.createTime}}</span>
+                        发行时间<span>{{this.timestampToTime(coinInfo.createTime)}}</span>
                     </li>
                     <li>
                         发行总量<span>{{coinInfo.circulation}}</span>
