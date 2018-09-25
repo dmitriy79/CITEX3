@@ -9,11 +9,13 @@ export default {
     currentCategoryIndex: 1,
     marketInfo:{},
     currentTradingIndex:0,
+    currentCoinId:2,
   },
   actions: {
     //初始化交易对列表
     initTrading({commit,state}, params) {
       api.classificationList({}).then(res => {
+        console.log(res,'交易列表====》')
         if (res.datas) {
           let category  = res.datas
           category.push({
@@ -24,7 +26,7 @@ export default {
           return res.datas
         }
       }).then(res => {
-        console.log(res)
+        console.log(res,'toggleTrading+++=--------------')
         commit('toggleTrading',res[0].id)
       })
     },
@@ -71,8 +73,10 @@ export default {
     },
     //设置主币分类
     setTradingCategory(state, tradingCategory) {
+      console.log(tradingCategory,'11111111111交易区+++++')
       state.tradingCategory = tradingCategory
-      state.currentCategoryIndex = tradingCategory[0].id
+      // state.currentCategoryIndex = tradingCategory[0].id
+      
     },
     setToken(state){
       state.userToken = localStorage.getItem('token')
@@ -86,13 +90,23 @@ export default {
     },
     //交易对切换
     toggleTrading(state,id){
-      console.log(id)
+      console.log(id,'99999999+++++++')
       api.getTradeInfoByZone({id:id}).then(res=>{
-        console.log(res)
         state.tradingList = res.datas.list
         state.currentCategoryIndex = id
-        state.marketInfo = res.datas.list[id]
+        state.marketInfo = res.datas.list[0]
+        state.currentCoinId=res.datas.list[0].id
+        console.log(res.datas.list[0].id,'888888+++++++')
+
+        // state.tradingList = res.datas.list
+        // console.log(res,'res------')
+        // state.currentTradingIndex=res.datas.list[0].id
+        // state.currentCategoryIndex = id
+        // state.marketInfo = res.datas.list[id]
+        // console.log( state.tradingList , state.marketInfo,'state.marketInfo)))++++(99')
       })
+
+     
     },
 
     //搜索币种

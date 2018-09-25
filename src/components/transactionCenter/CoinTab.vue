@@ -22,7 +22,7 @@
             </div>
             <div class="coin-list"
             v-for="(item,index) of tradingList"
-            :class="{'active': index == currentTradingIndex}"
+            :class="{'active': index == currentIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
@@ -52,8 +52,8 @@ export default {
 
   computed: {
     ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex","currentTradingIndex"]),
-    ...mapState('trading',['currentTradingIndex'])
-    //...mapActions(['toggleMarket'])
+    ...mapState('trading',['currentIndex'])
+  
   },
   methods: {
     ...mapMutations(['toggleTrading','searchCoin']),

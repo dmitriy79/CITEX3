@@ -61,6 +61,12 @@ export default {
   mounted() {
     //this.coinInfo();
   },
+    created() {
+       this.$store.dispatch("initTrading")
+     
+        this.$store.dispatch("trading/initTradings")
+        
+  },
   methods: {
     //时间戳转时间
     timestampToTime(timestamp) {

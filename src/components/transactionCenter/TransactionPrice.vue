@@ -59,7 +59,7 @@ export default {
              })
             //  console.log(content,'我是content')
              this.dataList=content
-              console.log(this.dataList,'数据已接收...')
+             // console.log(this.dataList,'数据已接收...')
           }
           ws.onclose = function () {
             // 关闭 websocket

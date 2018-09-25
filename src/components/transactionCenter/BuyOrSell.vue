@@ -30,8 +30,8 @@
             </div>
         <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
             
-            <dl>
-                <dd v-for="(item,index) in BidList.slice(0,11)">
+            <dl v-if="BidList">
+                <dd  v-for="(item,index) in BidList.slice(0,11)">
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -41,8 +41,8 @@
         </div>
         <div class="line" v-if="isShowLine"></div>
           <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
-            <dl>
-                <dd v-for="(item,index) in AskList.slice(0,11)">
+            <dl v-if="AskList">
+                <dd  v-for="(item,index) in AskList.slice(0,11)">
                     <span>卖{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -83,7 +83,7 @@ export default {
   },
   
   mounted () {
-    console.log(mapState,'+++++(((((9999999h哈哈哈哈哈哈')
+    console.log(this.$store.state.tradingList,'+++++(((((9999999h哈哈哈哈哈哈我是99999')
      this.token = localStorage.getItem("token")
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
@@ -94,7 +94,12 @@ export default {
     ...mapState("trading", [
       "AskList",
       "BidList"
-    ])
+    ]),
+    ...mapState("common",[
+        "tradingList"
+    ]
+    ),
+
   },
   methods: {
     //买卖盘挂单

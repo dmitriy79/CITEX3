@@ -352,14 +352,14 @@ export default {
             });
         });
         function updateSelectedIntervalButton(button) {
-          console.log(button,'wos版本不一样呀')
+          //console.log(button,'wos版本不一样呀')
           this_vue.chart.selectedIntervalButton &&
             this_vue.chart.selectedIntervalButton.removeClass("selected");
           button.addClass("selected");
           this_vue.chart.selectedIntervalButton = button;
         }
         function showMAStudies(visible) {
-          console.log(visible, "111111");
+          //console.log(visible, "111111");
           this_vue.chart.MAStudies.forEach(item => {
             chart.setEntityVisibility(item, visible);
           });
@@ -394,14 +394,14 @@ export default {
         ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('++++++++ws33333++++++++++')
-              console.log('数据发送中8888++++++...实时是银行业')
+              //console.log('数据发送中8888++++++...实时是银行业')
           }
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)
            var kline=[]
           //  console.log(content,'我是k线图')
              content.list.forEach(function(bar) {
-              console.log(bar,'我是实时数据bar')
+             // console.log(bar,'我是实时数据bar')
             kline.push({
              time: Number(bar.endTime),
                open: Number(bar.openingPrice),
@@ -410,13 +410,13 @@ export default {
                low: Number(bar.floorPrice),
                volume: Number(bar.total)
              });
-              console.log(kline,'我是实时数据999999+++++————（（（9')
+              //console.log(kline,'我是实时数据999999+++++————（（（9')
            });
         //onRealtimeCallback(kline)
           }
           ws.onclose = function () {
             // 关闭 websocket
-            console.log('连接已关闭...')
+           // console.log('连接已关闭...')
           }
           ws.onerror=function(){
             console.log("我是错误+++++++")
@@ -429,11 +429,11 @@ export default {
        getChartData: function() {
        	var this_vue=this
             var url=`https://api.hadax.com/market/history/kline?period=5min&symbol=btcusdt`
-        console.log(url);
+        //console.log(url);
          this_vue.$http.get(url).then(response => {
          
           var d = response.data.data.reverse();
-          console.log(d, "666666666666");
+         // console.log(d, "666666666666");
 //        var dateStart = response.data[0][0];
 //        var dateEnd = response.data[response.data.length - 1][0];
 //         console.log(dateEnd, dateStart, "6767676");
@@ -449,7 +449,7 @@ export default {
                volume: Number(bar.vol)
              });
            });
-        	console.log( this_vue.bars,'4444444')
+        	//console.log( this_vue.bars,'4444444')
        })
          
       },
@@ -802,7 +802,7 @@ export default {
             resolution='10080min'
           }
           this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:2}).then(res=>{
-            console.log(res,'==============>历史数据')
+          //  console.log(res,'==============>历史数据')
         //this_vue.$http("192.168.0.107:13040/trade/getKDatas2?step=1min&tradeCoinPariId=2").then(res=>){
         //this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
         // this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600000,tradeCoinPariId:2}).then(res=>{
@@ -825,7 +825,7 @@ export default {
         } else {
             onHistoryCallback([], {noData : true});
         }
- console.log(symbolInfo,resolution,from,to,firstDataRequest,"++++++000000+++++++)))((((********",1536810480000,1536810780000)
+ //console.log(symbolInfo,resolution,from,to,firstDataRequest,"++++++000000+++++++)))((((********",1536810480000,1536810780000)
    
         // console.log("我被加载了。。。。。。。。。。。。。");
         // console.log(resolution, "我是resolution");
@@ -901,7 +901,7 @@ export default {
         ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
               ws.send('++++++++ws33333++++++++++')
-              console.log('数据发送中8888++++++...实时是银行业')
+              //console.log('数据发送中8888++++++...实时是银行业')
           }
           ws.onmessage = evt => {
            var content=JSON.parse(evt.data)
@@ -915,18 +915,18 @@ export default {
                low: Number(item.floorPrice),
                volume: Number(item.total)
              });
-            console.log(kline,'9999')
+           // console.log(kline,'9999')
           })
          
-          console.log(kline[0],'我是k线图')
+          //console.log(kline[0],'我是k线图')
           onRealtimeCallback(kline[0])
           }
           ws.onclose = function () {
             // 关闭 websocket
-            console.log('连接已关闭...')
+            //console.log('连接已关闭...')
           }
           ws.onerror=function(){
-            console.log("我是错误+++++++")
+           // console.log("我是错误+++++++")
           }
            // 组件销毁时调用，中断websocket链接
           this.over = () => {

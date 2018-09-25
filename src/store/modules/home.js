@@ -31,9 +31,9 @@ const actions = {
   toggleDeal({commit,state}, obj) {
     commit("toggleDeal", obj)
   },
-  getTrading({commit,state}, obj) {
-    commit("getTrading", obj)
-  },
+  // getTrading({commit,state}, obj) {
+  //   commit("getTrading", obj)
+  // },
 }
 const mutations = {
   //币种分类
