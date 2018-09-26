@@ -3,14 +3,14 @@
         <div class="search-wrap">
           <div class="search-input">
             <i class="ico ico-search"></i>
-            <input type="text" @keyup="searchCoin(searchValue)" v-model="searchValue" placeholder="查询" class="search">
+            <input type="text" v-model="searchValue" placeholder="查询" class="search">
           </div>
           <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of tradingCategory" 
             :class="{active: item.id == currentCategoryIndex}" 
-            @click="toggleTrading(item.id)"><span v-if="item.id == -1" class="ico-star-fill" ></span>{{item.zoneName}}
+            @click="$store.dispatch('toggleTrading',item.id)"><span v-if="item.id == -1" class="ico-star-fill" ></span>{{item.zoneName}}
             </li>
         </ul>
         <div class="coin-list-wrap">
@@ -23,7 +23,7 @@
             <div class="coin-list"
             v-for="(item,index) of tradingList"
             :class="{'active': index == currentTradingIndex}"
-            @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
+            @click='$store.dispatch("trading/initTrading", {selectId:index,coinId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
                 <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>
@@ -38,7 +38,10 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+const search = {
+
+}
 export default {
   data() {
     return {
@@ -47,26 +50,20 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("initTrading")
+    this.$store.dispatch("initTradingList")
   },
 
   computed: {
-    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex","currentTradingIndex"]),
-    ...mapState('trading',['currentTradingIndex'])
-    //...mapActions(['toggleMarket'])
+    ...mapState(["tradingCategory","currentCategoryIndex",'tradingList',"currentTradingIndex"]),
+    ...mapState('trading',['currentTradingIndex']),
+    //...mapGetters(["filterCoin"]),
+    ...mapActions(['toggleMarket']),
   },
+
   methods: {
-    ...mapMutations(['toggleTrading','searchCoin']),
-    searchCoin(value){
-      console.log(this.$store)
-      if(value!= ''){
-        this.tradingList = this.$store.getters.filterCoin
-      }else{
-        mapState(['tradingList'])
-      }
-    },
+    ...mapMutations(['toggleTrading'])
   }
-};
+}
 </script>
 
 

@@ -81,7 +81,6 @@
             </div>
          </div>
        </div>
-       
         <v-footer></v-footer> 
     </div>
 </template>
@@ -129,17 +128,11 @@ export default {
     };
   },
   created() {
-       this.$store.dispatch("trading/tradingAskBid")
-       this.$store.dispatch("trading/toggleMarket")
-       
+   
   },
   
- 
   mounted() {
-    // this.getDeepImg();
-    // options.deep.series[0].data[0][0] = 999;
-    // console.log(options.deep.series[0].data[0][0], "ss我是深度图");
-    // console.log(options.deep.series[0], "ss我是深度图22222");
+    this.$store.dispatch("trading/initTrading")
   },
   methods: {
     // getDeepImg() {

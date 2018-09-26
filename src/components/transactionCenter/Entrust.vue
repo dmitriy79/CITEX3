@@ -14,7 +14,7 @@
                       <th>未成交</th>
                       <th>操作</th>
                     </tr>
-                    <tr v-for='item of orderData.list'>
+                    <tr v-for='item of orderList.list'>
                       <td>{{item.createTime}}</td>
                         <td>{{status[item.matchStatus]}}</td>
                       <td>{{item.price}}</td>
@@ -59,16 +59,10 @@ export default {
   },
   created(){
     this.token = localStorage.getItem("token")
-    let orderParams={
-      type:1,
-      userId:localStorage.getItem('userId'),
-      pageNum:1,
-      pageSize:6,
-    }
-    this.$store.dispatch('trading/listBidOrders',orderParams)
   },
   computed:{
-    ...mapState('trading',['orderData'])
+    ...mapState(['token']),
+    ...mapState('trading',['orderList'])
   }
 }
 </script>

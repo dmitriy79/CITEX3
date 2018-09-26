@@ -12,7 +12,7 @@ export default {
   },
   actions: {
     //初始化交易对列表
-    initTrading({commit,state}, params) {
+    initTradingList({commit,state}, params) {
       api.classificationList({}).then(res => {
         if (res.datas) {
           let category  = res.datas
@@ -24,18 +24,18 @@ export default {
           return res.datas
         }
       }).then(res => {
-        console.log(res)
         commit('toggleTrading',res[0].id)
       })
     },
- 
     //收藏币种
     favoriteCoin({commit,state}, params) {
       api.collect(params).then(res => {
         commit('toggleTrading',state.currentCategoryIndex) //刷新列表
       })
     },
-
+    toggleTrading({commit,state}, id) {
+      commit('toggleTrading',id) //刷新列表
+    },
     timestampToTime({commit,state}, timestamp) {
         var date = new Date(timestamp)
         var Y = date.getFullYear() + '-'
@@ -45,10 +45,14 @@ export default {
     }
   },
   
-  getter:{
+  getters:{
    //搜索过滤币种
-    filterCoin:(state) => (value) => {
+    filterCoin:(state,getters) => (value) => {
+      console.log(getters.tradingList)
       return state.tradingList.filter(item => item.name.indexOf(value)!= '-1')
+    },
+    tradingList(state){
+      return state.tradingList
     },
     getUserInfo(state){
       return 'sss'
@@ -59,9 +63,6 @@ export default {
       state.pageLoading = true
     },
     searchCoin(state,arg){
-      // if(arg.value != ''){
-        
-      // }
     },
     hideLoading(state) {
       state.pageLoading = false
@@ -84,17 +85,17 @@ export default {
         cb()
       }
     },
+
     //交易对切换
     toggleTrading(state,id){
-      console.log(id)
       api.getTradeInfoByZone({id:id}).then(res=>{
-        console.log(res)
-        state.tradingList = res.datas.list
-        state.currentCategoryIndex = id
-        state.marketInfo = res.datas.list[id]
+        if(res.status == '200'){
+          state.tradingList = res.datas.list
+          state.currentCategoryIndex = id
+          state.marketInfo = res.datas.list[id]
+        }
       })
     },
-
     //搜索币种
     searchTradingCoin(state, params) {
       console.log("state")

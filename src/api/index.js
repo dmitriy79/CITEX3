@@ -70,6 +70,7 @@ let apiList = {
     '/trade_coin_pair/collect',                 //收藏币种
     '/trade_coin_pair/getTradeCoinPairByCoinId',//根据项目查交易对
     '/trade/getKDatas2',                        //getKDatas2
+    
   ],
 }
 //生产环境接口处理

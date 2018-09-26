@@ -31,7 +31,7 @@
         <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
             
             <dl>
-                <dd v-for="(item,index) in BidList.slice(0,11)">
+                <dd v-for="(item,index) in BidList">
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -42,7 +42,7 @@
         <div class="line" v-if="isShowLine"></div>
           <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
             <dl>
-                <dd v-for="(item,index) in AskList.slice(0,11)">
+                <dd v-for="(item,index) in AskList">
                     <span>卖{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -88,41 +88,12 @@ export default {
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
      }
-   // this.getInfo()
   },
    computed: {
-    ...mapState("trading", [
-      "AskList",
-      "BidList"
-    ])
+    ...mapState("trading", ["AskList","BidList"])
   },
   methods: {
-    //买卖盘挂单
-    getInfo(){
-      let ws= new WebSocket('ws://47.94.213.6:13080/websocketAskBid?pairId=2')
-       ws.onopen = () => {
-            // Web Socket 已连接上，使用 send() 方法发送数据
-              ws.send('ws')
-              console.log('数据发送中8888..++++++++买卖单')
-          }
-          ws.onmessage = evt => {
-           var content=JSON.parse(evt.data)
-           this.buyListsAll=content.bid
-           this.sellListsAll=content.ask
-           console.log(content,'length')
-           this.buyLists=content.bid.slice(0,11)
-           this.sellLists=content.ask.slice(0,11)
-              console.log(content,'数据已接收8888++++++...')
-          }
-          ws.onclose = function () {
-            // 关闭 websocket
-            console.log('连接已关闭...')
-          }
-           // 组件销毁时调用，中断websocket链接
-          this.over = () => {
-            ws.close()
-          }
-    },
+
     showDeep() {
       this.isShow = !this.isShow;
       this.isActive = !this.isActive;
@@ -161,9 +132,8 @@ export default {
         this.isShowLine=true
 
     },
-
   }
-};
+}
 </script>
 <style lang="less" scoped>
 .fade-enter-active,
@@ -174,85 +144,100 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-.more{float: right;padding-right: 10px;font-size: 13px;cursor: pointer;}
-.ico-uos{color: #1fc56d}
-.ico-downs,.red{color:#ef6e59!important}
-.line{    border-bottom: 1px solid #3f4449;    margin: 10px 14px;}
+.more {
+  float: right;
+  padding-right: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.ico-uos {
+  color: #1fc56d;
+}
+.ico-downs,
+.red {
+  color: #ef6e59 !important;
+}
+.line {
+  border-bottom: 1px solid #3f4449;
+  margin: 10px 14px;
+}
 .buyOrSell-wrapper {
-    height: 695px;
+  height: 695px;
   position: relative;
   background: #292f37;
-      .title {
-      height: 33px;
-      background: #181f27;
-      font-size: 12px;
-      color: #e4e5e7;
-      padding-left: 16px;
-      display: flex;
-      align-items: center;
-      .concat-deep-wrap {
-        position: relative;
-        .dropdown {
-          position: absolute;
-          top: 25px;
-          left: 0;
-          right: 0;
-          z-index: 10;
-          background: #1e2130;
-          div {
-            line-height: 25px;
-            padding-left: 5px;
-            cursor: pointer;
-          }
-        }
-      }
-      .concat-deep {
-        padding-right: 35px;
-        span {
-          width: 60px !important;
-          display: inline-block;
-          padding-left: 6px;
-        }
-        i {
-          position: absolute;
-          top: 7px;
-          right: 20px;
-          width: 0;
-          height: 0;
-          border-width: 4px 4px 0;
-          border-style: solid;
-          border-color: #fff transparent transparent;
-        }
-        i.active {
-          transform: rotate(180deg);
-        }
-      }
-      .wrap-img {
-        flex: 1;
-        line-height: 33px;
-        .ico-colsp{
-        color: #1fc56d;
-        }
-        .ico-cols{
-        color: #ef6e59;
-        }
-        span{    font-size: 18px;margin-right: 7px;
+  .title {
+    height: 33px;
+    background: #181f27;
+    font-size: 12px;
+    color: #e4e5e7;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+    .concat-deep-wrap {
+      position: relative;
+      .dropdown {
+        position: absolute;
+        top: 25px;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background: #1e2130;
+        div {
+          line-height: 25px;
+          padding-left: 5px;
           cursor: pointer;
-    font-weight: bold;}
-       
-      }
-      span {
-        cursor: pointer;
+        }
       }
     }
+    .concat-deep {
+      padding-right: 35px;
+      span {
+        width: 60px !important;
+        display: inline-block;
+        padding-left: 6px;
+      }
+      i {
+        position: absolute;
+        top: 7px;
+        right: 20px;
+        width: 0;
+        height: 0;
+        border-width: 4px 4px 0;
+        border-style: solid;
+        border-color: #fff transparent transparent;
+      }
+      i.active {
+        transform: rotate(180deg);
+      }
+    }
+    .wrap-img {
+      flex: 1;
+      line-height: 33px;
+      .ico-colsp {
+        color: #1fc56d;
+      }
+      .ico-cols {
+        color: #ef6e59;
+      }
+      span {
+        font-size: 18px;
+        margin-right: 7px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+    }
+    span {
+      cursor: pointer;
+    }
+  }
   .list {
     margin-bottom: 25px;
 
     .name {
       color: #e4e5e7;
-      span{
-          height: 26px;
-          line-height: 26px;
+      span {
+        height: 26px;
+        line-height: 26px;
       }
     }
     dd,
@@ -278,29 +263,33 @@ export default {
       }
     }
   }
-  .top-title{margin-bottom: 0; 
-    div{
-      display: flex;padding-left:16px;
+  .top-title {
+    margin-bottom: 0;
+    div {
+      display: flex;
+      padding-left: 16px;
     }
   }
-  .buy-list {height: 40%;
+  .buy-list {
+    height: 40%;
     dd {
       span:first-child {
         color: #5dc176;
       }
     }
-    &.active{
-      height: 84%
+    &.active {
+      height: 84%;
     }
   }
-  .sell-list {height: 40%;
+  .sell-list {
+    height: 40%;
     dd {
       span:first-child {
         color: #ff7758;
       }
     }
-    &.active{
-      height: 84%
+    &.active {
+      height: 84%;
     }
   }
   .list-bottom {

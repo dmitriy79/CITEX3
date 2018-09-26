@@ -51,18 +51,6 @@ const mutations = {
   },
   toggleDeal(e) {
     console.log(e)
-    let dealOrderList = new webSocket("websocketDealPrice")
-    dealOrderList.initWebSocket()
-    console.log(dealOrderList)
-    let uuid = new Date().getTime()
-    console.log(uuid)
-    let sendParams = {
-      unitPriceCoinId: 1,
-      uuid: uuid,
-    }
-    dealOrderList.sendSocket({}, res => {
-      console.log(res)
-    })
   },
   officaliCycle(state, obj) {
     var currindex = 0
@@ -74,16 +62,23 @@ const mutations = {
       }
     }, 4000)
   },
+  
+  setMarketInfo(state,obj){
+    
+  },
+
   //初始化首页
   initHomePage(state, obj) {
-    let webs = new webSocket("websocketRankingList")
-    webs.initWebSocket()
-    webs.sendSocket("ss+++++0000000", res => {
-      console.log(res)
-      let s = {}
-      s.fall = JSON.parse(res.fall)
-      s.up = JSON.parse(res.up)
-      state.dealOrder = s
+    let rankList = new webSocket({
+      url:'websocketRankingList',
+      data:'',
+      success:(res)=>{
+        console.log(res)
+        let dealOrder = {}
+        dealOrder.fall = JSON.parse(res.fall)
+        dealOrder.up = JSON.parse(res.up)
+        state.dealOrder = dealOrder
+      }
     })
     let indexData = [
       api.listByType({type: 1}), //banner
