@@ -95,10 +95,15 @@ export default {
     toggleTrading(state,id){
       // console.log(id,'99999999+++++++')
       api.getTradeInfoByZone({id:id}).then(res=>{
-        state.tradingList = res.datas.list
-        state.currentCategoryIndex = id
-        state.marketInfo = res.datas.list[0]
+        console.log(res,'交易对切换=========》》》》》》》')
+        if(res.datas.list.length>0){
+          state.tradingList = res.datas.list
+          state.marketInfo = res.datas.list[0]
         state.currentCoinId=res.datas.list[0].id
+        }
+       
+        state.currentCategoryIndex = id
+        
         // console.log(res.datas.list[0].id,'888888+++++++')
 
         // state.tradingList = res.datas.list

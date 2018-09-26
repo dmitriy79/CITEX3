@@ -131,15 +131,16 @@ export default {
   },
   mounted() {
      this.token = localStorage.getItem("token")
+     console.log(this,'=====>>>>>>>>>>')
      if(this.token){
-       if(marketInfo.name>0){
-         this.isAllowed=false
-        this.isAllowed1=false
-       }
-       else{
-         this.isAllowed=true
-        this.isAllowed1=true
-       }
+      //  if(marketInfo){
+      //    this.isAllowed=false
+      //   this.isAllowed1=false
+      //  }
+      //  else{
+      //    this.isAllowed=true
+      //   this.isAllowed1=true
+      //  }
         this.isDisabled=false
         
      }

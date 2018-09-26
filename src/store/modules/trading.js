@@ -178,8 +178,8 @@ const mutations = {
     //当前所有委托记录
     listBidOrders(state, params) {
         api.listBidOrders(params).then(res => {
-            // console.log("listBidOrders================>", res)
-            state.orderData = res.datas
+             console.log("listBidOrders+++++++++++================>", res)
+           // state.orderData = res.datas
         })
     },
     //当前or历史 卖单 记录
@@ -208,8 +208,13 @@ const mutations = {
     getAssets(state, params) {
         console.log(params,'0099988888===============>>>>>>')
         api.uplistByUserId({pageNum:1,pageSize:10,coinId:params}).then(res => {
-           console.log("getAssets====>", res)
-            state.tradingAssets = res.datas.list[0]
+            if(res.status==200){
+                if(res.datas.list.length>0){
+                    state.tradingAssets = res.datas.list[0]
+                }
+            }
+           console.log("getAssets============>", res)
+           
         })
     },
     //撤销挂单
