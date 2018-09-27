@@ -9,13 +9,18 @@ export default {
     currentCategoryIndex: 1,
     marketInfo:{},
     currentTradingIndex:0,
+    currentCoinId:2,
+    zoneName:'',//交易区类型
   },
   actions: {
     //初始化交易对列表
     initTradingList({commit,state}, params) {
       api.classificationList({}).then(res => {
+        // console.log(res,'交易列表=++++++===》')
         if (res.datas) {
           let category  = res.datas
+          state.zoneName=res.datas[0].zoneName
+           console.log(state.zoneName,'state.zoneName+++++++_____________3')
           category.push({
             zoneName:'自选',
             id:-1
@@ -72,8 +77,10 @@ export default {
     },
     //设置主币分类
     setTradingCategory(state, tradingCategory) {
+      // console.log(tradingCategory,'11111111111交易区+++++')
       state.tradingCategory = tradingCategory
-      state.currentCategoryIndex = tradingCategory[0].id
+      // state.currentCategoryIndex = tradingCategory[0].id
+      
     },
     setToken(state){
       state.userToken = localStorage.getItem('token')
@@ -89,11 +96,13 @@ export default {
     //交易对切换
     toggleTrading(state,id){
       api.getTradeInfoByZone({id:id}).then(res=>{
-        if(res.status == '200'){
+        console.log(res,'交易对切换')
+        if(res.datas.list.length>0){
           state.tradingList = res.datas.list
-          state.currentCategoryIndex = id
           state.marketInfo = res.datas.list[id]
+          state.currentCoinId=res.datas.list[0].id
         }
+        state.currentCategoryIndex = id
       })
     },
     //搜索币种

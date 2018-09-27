@@ -31,9 +31,9 @@ const actions = {
   toggleDeal({commit,state}, obj) {
     commit("toggleDeal", obj)
   },
-  getTrading({commit,state}, obj) {
-    commit("getTrading", obj)
-  },
+  // getTrading({commit,state}, obj) {
+  //   commit("getTrading", obj)
+  // },
 }
 const mutations = {
   //币种分类
@@ -87,6 +87,7 @@ const mutations = {
     ]
     axios.all(indexData)
       .then(res => {
+        console.log(res,'首页list========》》》》')
         state.banner = res[0].datas
         state.official = res[1].datas.list
         state.coinList = res[2].datas

@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="hello">
+  <div class="hello">{{marketInfo}}
     <div id="chart_container" class="f-fill" style="height:610px;display:block;border:none"></div>
   </div>
 </template>
@@ -12,22 +12,19 @@ export default {
   data(){
     return{
       websock: null,
-      currency1: '',
-      currency2: "ETH",
-      saved_chart: null,
-      chart: null,
-      feed: null,
-      last_price: 1234.2365,
-      bars: [],
     }
   },
   name: "KLine",
-
   mounted: function() {
     const this_vue = this;
-   
-    this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
+    //this_vue.getda()
+  // this_vue.getChartData();//todo: do odkomentowania na feedzie
+
+    // if(window.localStorage.getItem("chart_settings")) //todo: do sprawdzenia w bardziej zaawansowanym stanie
+    //     this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
+
     this_vue.feed = this_vue.createFeed();
+
     // TradingView.onready(function(configurationData) {
       this_vue.chart = window.tvWidget = new TradingView.widget({
         fullscreen: false,
@@ -319,7 +316,11 @@ export default {
           this_vue.chart.changingInterval = false;
         });
         buttons.forEach((item, index) => {
-          let button = this_vue.chart.createButton();      
+          
+          // console.log(item, index,'我是按钮组++++')
+          let button = this_vue.chart.createButton();
+     
+                
           item.resolution === this_vue.chart.interval &&
             updateSelectedIntervalButton(button);
           button
@@ -343,6 +344,9 @@ export default {
                 }
                 if (chart.chartType() !== chartType) {
                   chart.setChartType(chartType);
+                  //											widthis_vue.chartget.applyOverrides({
+                  //												"mainSeriesProperties.style": chartType
+                  //											});
                 }
                 updateSelectedIntervalButton(button);
                 showMAStudies(chartType !== 3);
@@ -350,23 +354,107 @@ export default {
             });
         });
         function updateSelectedIntervalButton(button) {
+          //console.log(button,'wos版本不一样呀')
           this_vue.chart.selectedIntervalButton &&
             this_vue.chart.selectedIntervalButton.removeClass("selected");
           button.addClass("selected");
           this_vue.chart.selectedIntervalButton = button;
         }
         function showMAStudies(visible) {
+          //console.log(visible, "111111");
           this_vue.chart.MAStudies.forEach(item => {
             chart.setEntityVisibility(item, visible);
           });
         }
-
+        // timeList.forEach(function(v){
+        //     var button=this_vue.chart.createButton();
+        //     button.attr('title',v);
+        //     button.attr('class','button');
+        //     button.append('<span>'+v+'</span>');
+        //     button.on("click",function(a){
+        //         console.log($(a)[0].target)
+        //     })
+        // })
+        // this_vue.chart.createButton()
+        // .attr('title', 'test')
+        // .attr('class','button')
+        // .on('click', function (e) {
+        // this_vue.chart.load(referenceChart2);
+        // })
+        // .append('<span>test</span>');
+        // this_vue.chart.chart().createStudy('MA Cross', false, false, [30, 120])
+        //  this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#642d92'});
+        // this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#5278a3'});
         this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#238031'});
         this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#850058'});
       });
     // });
   },
   methods: {
+     getda(){
+      let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+        ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('++++++++ws33333++++++++++')
+              //console.log('数据发送中8888++++++...实时是银行业')
+          }
+          ws.onmessage = evt => {
+           var content=JSON.parse(evt.data)
+           var kline=[]
+          //  console.log(content,'我是k线图')
+             content.list.forEach(function(bar) {
+             // console.log(bar,'我是实时数据bar')
+            kline.push({
+             time: Number(bar.endTime),
+               open: Number(bar.openingPrice),
+               close: Number(bar.closeingPrice),
+               high: Number(bar.topPrice),
+               low: Number(bar.floorPrice),
+               volume: Number(bar.total)
+             });
+              //console.log(kline,'我是实时数据999999+++++————（（（9')
+           });
+        //onRealtimeCallback(kline)
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+           // console.log('连接已关闭...')
+          }
+          ws.onerror=function(){
+            console.log("我是错误+++++++")
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
+     },
+       getChartData: function() {
+       	var this_vue=this
+            var url=`https://api.hadax.com/market/history/kline?period=5min&symbol=btcusdt`
+        //console.log(url);
+         this_vue.$http.get(url).then(response => {
+         
+          var d = response.data.data.reverse();
+         // console.log(d, "666666666666");
+//        var dateStart = response.data[0][0];
+//        var dateEnd = response.data[response.data.length - 1][0];
+//         console.log(dateEnd, dateStart, "6767676");
+//
+          d.forEach(function(bar) {
+
+            this_vue.bars.push({
+             time: Number(bar.id),
+               open: Number(bar.open),
+               close: Number(bar.close),
+               high: Number(bar.high),
+               low: Number(bar.low),
+               volume: Number(bar.vol)
+             });
+           });
+        	//console.log( this_vue.bars,'4444444')
+       })
+         
+      },
     changePair: function() {
       let this_vue = this;
       if (this.chart && this.feed) {
@@ -386,8 +474,7 @@ export default {
     createFeed: function() {
       let this_vue = this;
       let Datafeed = {};
-      var currentCoinId=this_vue.currentCoinId
-  console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
+
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
         console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
         this._datafeed = datafeed;
@@ -654,6 +741,24 @@ export default {
           });
         });
       };
+
+      // Datafeed.Container.prototype.getBars = function(symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback) {
+      //     if (rangeStartDate > 0 && (rangeStartDate + '').length > 10) {
+      //         throw new Error(['Got a JS time instead of Unix one.', rangeStartDate, rangeEndDate]);
+      //     }
+      //     onDataCallback([], { noData: true });
+      //     //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
+      // };
+      //修改首屏默认加载数量
+     /* Datafeed.Container.prototype.calculateHistoryDepth = function(resolution, resolutionBack, intervalBack) {
+        console.log(resolution, resolutionBack, intervalBack,'历史深度+++++++）））（（（（（99999999')
+          if (resolution == "60") {
+              return {
+                  resolutionBack: 'D',
+                  intervalBack: 1
+              };
+          }
+      };*/
       Datafeed.Container.prototype.getBars = function(
         symbolInfo,
         resolution,
@@ -663,7 +768,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-        console.log(resolution,'resolution====================================>>>>>>>>')
+
         if(firstDataRequest) {
           if(resolution==1){
             resolution='1min'
@@ -697,13 +802,13 @@ export default {
           }
            if(resolution=='W'){
             resolution='10080min'
-          }  
-          this_vue.$store.dispatch("trading/getKline", {step:resolution})
-         
-          
-          onHistoryCallback(this_vue.klineHistory)
-         /* this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
-            console.log(res,'----------------..>>>>>>>>>>>>>')
+          }
+          this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:2}).then(res=>{
+          //  console.log(res,'==============>历史数据')
+        //this_vue.$http("192.168.0.107:13040/trade/getKDatas2?step=1min&tradeCoinPariId=2").then(res=>){
+        //this_vue.$api.getKDatas({start:from*1000,end:to*1000,step:3600000,tradeCoinPariId:2}).then(res=>{
+        // this_vue.$api.getKDatas({start:1536810480000,end:1536810780000,step:3600000,tradeCoinPariId:2}).then(res=>{
+        //console.log(res,'我是历史数据++++++')
         var kline=[]
           res.datas.list.forEach(function(bar) {
             kline.push({
@@ -717,11 +822,73 @@ export default {
             //console.log(kline,'999999++++我是我是历史数据kline=====')
            });
          
-         onHistoryCallback(klineHistory)
-      })*/
+         onHistoryCallback(kline)
+      })
         } else {
             onHistoryCallback([], {noData : true});
         }
+ //console.log(symbolInfo,resolution,from,to,firstDataRequest,"++++++000000+++++++)))((((********",1536810480000,1536810780000)
+   
+        // console.log("我被加载了。。。。。。。。。。。。。");
+        // console.log(resolution, "我是resolution");
+        // console.log(from, to);
+        // var num = parseInt((to - from) / (resolution * 60));
+
+        // console.log(num); //1440.0166666666667
+        
+        // var url='https://api.fcoin.com/v2/market/candles/M3/btcusdt'
+        // this_vue.$http.get(url).then(response => {
+        // 	var d=response.data.data
+        // 	var finald=d.sort(compare('seq'))
+        // 	console.log(d,'777777')
+        // 	finald.forEach(function(bar){
+        // 		this_vue.bars.push({
+        // 			time:Number(bar.seq),
+        // 			open:Number(bar.open),
+        // 			close:Number(bar.close),
+        // 			high:Number(bar.high),
+        // 			low:Number(bar.low),
+        // 			volume:Number(bar.quote_vol),
+        // 		})
+
+        // 	})
+        // 	onHistoryCallback(this_vue.bars)
+
+        // })
+        //var url = `https://www.okcoin.com/api/v1/kline.do?symbol=btc_usd&type=1hour&size=${num}&since=${to}`;
+       // var url=`https://api.hadax.com/market/history/kline?period=60min&size=${num}&symbol=btcusdt`
+     /* var url="https://api.hadax.com/market/history/kline?period=60min&size=200&symbol=btcusdt"
+        console.log(url);
+         this_vue.$http.get(url).then(response => {
+         
+          var d = response.data.data.reverse();
+          console.log(d, "pppppppppp哈哈哈哈哈哈");
+//        var dateStart = response.data[0][0];
+//        var dateEnd = response.data[response.data.length - 1][0];
+//         console.log(dateEnd, dateStart, "6767676");
+//
+          d.forEach(function(bar) {
+//        	console.log(bar,'999999')
+            this_vue.bars.push({
+             time: Number(bar.id*1000),
+               open: Number(bar.open),
+               close: Number(bar.close),
+               high: Number(bar.high),
+               low: Number(bar.low),
+               volume: Number(bar.vol)
+             });
+           });
+           console.log(this_vue.bars,'888888');
+            if(firstDataRequest) {
+            onHistoryCallback(this_vue.bars, {noData : false});
+        } else {
+            onHistoryCallback([], {noData : true});
+        }
+           
+         });*/
+        // onHistoryCallback(this_vue.bars);  我在这里显示
+        //onHistoryCallback([], { noData: true });
+        //onDataCallback(bars, { noData: true , nextTime: data.nb || data.nextTime });
       };
 
       Datafeed.Container.prototype.subscribeBars = function(
@@ -731,7 +898,6 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-      
    let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
         ws.onopen = () => {
@@ -769,7 +935,18 @@ export default {
             ws.close()
           }
      
-  
+     
+        //    var url='https://api.fcoin.com/v2/market/candles/M1/btcusdt'
+        // 	this_vue.$http.get(url).then(response => {
+        // 		console.log(response,'1111111111')
+        // 	})
+        //    this_vue.bars.forEach(function (bar) { // in subscribeBars
+        //         onRealtimeCallback(bar)
+        //     });
+        //     this.on('pair_change', function() {
+        //         onResetCacheNeededCallback();
+        //     });
+        //this._barsPulseUpdater.subscribeDataListener(symbolInfo, resolution, onRealtimeCallback, listenerGUID, onResetCacheNeededCallback);
       };
 
       Datafeed.Container.prototype.unsubscribeBars = function(listenerGUID) {
@@ -798,14 +975,58 @@ export default {
   },
    computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo","klineHistory"]),
-      ...mapState([
-        "currentCoinId"
-    ]
-    ),
+     ...mapState("trading", ["marketInfo"])
+    
 
   },
- 
+  data: function() {
+    return {
+      currency1: '',
+      currency2: "ETH",
+      saved_chart: null,
+      chart: null,
+      feed: null,
+      last_price: 1234.2365,
+      bars: [
+      // {
+      //     time:1508313600000,
+      //     close:42.1,
+      //     open:41.0,
+      //     high:43.0,
+      //     low:40.4,
+      //     volume:12000
+      // }, {
+      //     time:1508317200000,
+      //     close:43.4,
+      //     open:42.9,
+      //     high:44.1,
+      //     low:42.1,
+      //     volume:18500
+      // }, {
+      //     time:1508320800000,
+      //     close:44.3,
+      //     open:43.7,
+      //     high:44.8,
+      //     low:42.8,
+      //     volume:24000
+      // }, {
+      //     time:1508324400000,
+      //     close:42.8,
+      //     open:44.5,
+      //     high:44.5,
+      //     low:42.3,
+      //     volume:45000
+      // }, {
+      //     time:1508328000000,
+      //     close:40.8,
+      //     open:47.5,
+      //     high:48.5,
+      //     low:42.3,
+      //     volume:35000
+      // }
+      ]
+    };
+  }
 };
 </script>
 

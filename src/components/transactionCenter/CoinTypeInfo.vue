@@ -12,7 +12,7 @@
                 </div>
                 <ul class="list">
                     <li>
-                        发行时间<span>{{coinInfo.createTime}}</span>
+                        发行时间<span>{{this.timestampToTime(coinInfo.createTime)}}</span>
                     </li>
                     <li>
                         发行总量<span>{{coinInfo.circulation}}</span>
@@ -60,6 +60,12 @@ export default {
   },
   mounted() {
     //this.coinInfo();
+  },
+    created() {
+       this.$store.dispatch("initTrading")
+     
+        this.$store.dispatch("trading/initTradings")
+        
   },
   methods: {
     //时间戳转时间

@@ -22,8 +22,8 @@
             </div>
             <div class="coin-list"
             v-for="(item,index) of tradingList"
-            :class="{'active': index == currentTradingIndex}"
-            @click='$store.dispatch("trading/initTrading", {selectId:index,coinId:item.id})'>
+            :class="{'active': index == currentIndex}"
+            @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
                 <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>

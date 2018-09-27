@@ -6,8 +6,8 @@
                     <span>数量(IOST)</span>
                     <span>时间</span>
                 </div>
-            <dl>
-                <dd v-for="item in dataList">
+            <dl v-if="historyList">
+                <dd v-for="item in historyList">
                     <span>{{item.dealPrice}}</span>
                     <span>{{item.dealAmount}}</span>
                     <span>{{item.dealTime}}</span>
@@ -17,6 +17,8 @@
     </div>
 </template>
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+
 import date from '../../assets/js/date'
 export default {
   data() {
@@ -32,9 +34,20 @@ export default {
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
      }
-    this.getDealOrders()
+
   },
+ 
   methods: {
+    timestampToTime(timestamp) {
+        var date = new Date(timestamp);
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;  
+        second = second < 10 ? ('0' + second) : second; 
+        return h+':'+minute+':'+second; 
+    },
     getDealOrders(){
       /*this.$api.getDealOrdersByTradeCoinPairId({id:2}).then(res=>{
        console.log(res.data.datas.dealTime, date.timestampToTime(1536305419000),'我是实时交易')
@@ -59,7 +72,7 @@ export default {
              })
             //  console.log(content,'我是content')
              this.dataList=content
-              console.log(this.dataList,'数据已接收...')
+             // console.log(this.dataList,'数据已接收...')
           }
           ws.onclose = function () {
             // 关闭 websocket
@@ -71,7 +84,10 @@ export default {
           }
     }
     
-  }
+  },
+     computed: {
+    ...mapState("trading", ["historyList"]),
+    },
 };
 </script>
 <style lang="less" scoped>

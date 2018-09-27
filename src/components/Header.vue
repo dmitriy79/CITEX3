@@ -104,11 +104,11 @@ export default {
 
       this.$api.logout().then(res => {
         var returnData = res.message
-        console.log(res, 'wosSJJSJWW999')
+        // console.log(res, 'wosSJJSJWW999')
         if (returnData == '用户登出') {
           this.token = localStorage.removeItem("token")
           this.$router.push({ path: "/" });
-          console.log(this.token, '09090990')
+          // console.log(this.token, '09090990')
         }
       })
       //  var url=`/api/user/logout`

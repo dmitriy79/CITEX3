@@ -210,6 +210,7 @@ coinNum:'',rate:'',realNum:'',
   },
   mounted(){
     this.myproperty();
+    
    // this.fullCoinRecord()
   },
   methods:{

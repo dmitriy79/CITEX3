@@ -8,15 +8,19 @@
           <div class="buy-panel">
             <div class="input-text">
                <p class="islogin"  v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num">{{tradingAssets.able}}</span><span class="type">IOST</span></p>
-                <span class="label">买入<i >IOST</i></span>
+                <p class="useable" v-if="this.token">可用：<span class="num" ></span><span  class="num">0.00000000</span><span class="type">{{zoneName}}</span></p>
+                <span class="label">买入<i ></i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
                     <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
                     v-model="buyParams.price">
-                    <span class="unit">ETH</span>
+                     <!-- <input type="number"
+                    name="buyPrice"
+                    @keyup="checkNumber"
+                    v-model="currentPrcie"> -->
+                    <span class="unit">{{zoneName}}</span>
                 </div>
                <div class="buy-num">
                     <span class="name">数量</span>
@@ -24,7 +28,7 @@
                     name="buyAmount"
                      @keyup="checkNumber"
                     v-model="buyParams.amount">
-                    <span class="unit">IOST</span>
+                    <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
                     <button 
@@ -40,27 +44,27 @@
                 <div class="total-price">
                     <span class="name">交易额</span>
                     <span class="value">{{buyAmount}}</span>
-                    <span class="unit">ETH</span>
+                    <span class="unit">{{zoneName}}</span>
                 </div>
                 <button 
                 class="buy-button transaction-btn"
                 :class="{Allowed:isAllowed}"
                 @click='$store.dispatch("trading/tradingBuy", buyParams)' 
-                :disabled="isDisabled">买入<span>IOST</span></button> 
+                :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button> 
             </div>
         </div>
         <div class="sell-panel">
             <div class="input-text">
                <p class="islogin"   v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num">192321</span><span class="type">ETH</span></p>
-                <span class="label">卖出<i>IOST</i></span>
+                <p class="useable" v-if="this.token">可用：<span class="num" v-if="tradingAssets">{{tradingAssets.able}}</span><span v-else class="num">0.00000000</span><span class="type" v-if="marketInfo" >{{marketInfo.name}}</span></p>
+                <span class="label">卖出<i></i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
                     <input type="text" 
                     name="sellPrice" 
                     @keyup="checkNumber"
                     v-model="sellParams.price">
-                    <span class="unit">ETH</span>
+                    <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
                     <span  class="name">数量</span>
@@ -68,7 +72,7 @@
                     name="sellAmount"
                     @keyup="checkNumber"
                      v-model="sellParams.amount">
-                    <span class="unit">IOST</span>
+                    <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
                     <button
@@ -84,12 +88,12 @@
                 <div class="total-price">
                     <span  class="name">交易额</span>
                    <span class="value">{{sellAmount}}</span>
-                    <span class="unit">ETH</span>
+                    <span class="unit">{{zoneName}}</span>
                 </div>
-                <div class="sell-button transaction-btn"
+                <button class="sell-button transaction-btn"
                 :class="{Allowed:isAllowed}"
                  @click='$store.dispatch("trading/tradingSell", sellParams)'
-                :disabled="isDisabled">卖出<span>IOST</span></div>
+                :disabled="isDisabled">卖出<span v-if="marketInfo">{{marketInfo.name}}</span></button>
             </div>
         </div>
         </div>
@@ -107,7 +111,7 @@ export default {
       token: "",
       isAllowed: false,
       isAllowed1: false,
-      isDisabled: false,
+      isDisabled: true,
       buyPrice: "",
       buyNum: "",
       percentage: ["25", "50", "75", "100"],
@@ -126,7 +130,26 @@ export default {
     }
   },
   mounted() {
-    this.token = localStorage.getItem("token")
+     this.token = localStorage.getItem("token")
+     console.log(this,'=====>>>>>>>>>>')
+     if(this.token){
+      //  if(marketInfo){
+      //    this.isAllowed=false
+      //   this.isAllowed1=false
+      //  }
+      //  else{
+      //    this.isAllowed=true
+      //   this.isAllowed1=true
+      //  }
+        this.isDisabled=false
+        
+     }
+     else{
+       this.isDisabled=true
+       this.isAllowed=true
+      this.isAllowed1=true
+     }
+    console.log(this.token,'-------------------------------->我是token.....<>>>>')
   },
   created() {
     const assetsParams = {
@@ -137,7 +160,10 @@ export default {
     //this.$store.dispatch("trading/getAssets", assetsParams)
   },
   computed: {
-    ...mapState("trading", ["tradingAssets"])
+    ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo"]),
+    
+
+     ...mapState(["zoneName"])
   },
   methods: {
     selectPercentage(e) {
@@ -308,6 +334,7 @@ export default {
       .type {
         font-size: 12px;
         font-weight: 800;
+        margin-left: 5px;
       }
       input {
         width: 100%;
@@ -325,7 +352,7 @@ export default {
           font-size: 16px;
         }
       }
-      div {
+     div, .transaction-btn {
         margin-bottom: 19px;
         height: 32px;
         line-height: 32px;

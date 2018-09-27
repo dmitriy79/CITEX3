@@ -30,8 +30,8 @@
             </div>
         <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
             
-            <dl>
-                <dd v-for="(item,index) in BidList">
+            <dl v-if="BidList">
+                <dd  v-for="(item,index) in BidList.slice(0,11)" @click='$store.dispatch("trading/togglePrice", {currentPrice:item.price})'>
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -41,8 +41,8 @@
         </div>
         <div class="line" v-if="isShowLine"></div>
           <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
-            <dl>
-                <dd v-for="(item,index) in AskList">
+            <dl v-if="AskList">
+                <dd  v-for="(item,index) in AskList.slice(0,11)">
                     <span>卖{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
@@ -83,7 +83,6 @@ export default {
   },
   
   mounted () {
-    console.log(mapState,'+++++(((((9999999h哈哈哈哈哈哈')
      this.token = localStorage.getItem("token")
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
@@ -109,7 +108,7 @@ export default {
         this.sellList=false
         this.isSelect=true
 
-  this.buyLists=this.buyListsAll.slice(0,23)
+        this.buyLists=this.buyListsAll.slice(0,23)
         this.isShow1=false
         this.isShowLine=false
     },
@@ -120,7 +119,6 @@ export default {
         this.isSelect_=true
         this.isShow1=true
         this.isShowLine=false
-
     },
     showAll(){
       this.isSelect=false
@@ -246,6 +244,10 @@ export default {
       padding-left: 16px;
     }
     dd {
+      &:hover{
+      background: #181f27;
+      cursor: pointer;
+      }
       span {
         height: 26px;
         line-height: 26px;
