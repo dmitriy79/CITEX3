@@ -83,6 +83,7 @@ export default {
   },
   
   mounted () {
+    // console.log(this.$store.state.tradingList,'+++++(((((9999999h哈哈哈哈哈哈我是99999')
      this.token = localStorage.getItem("token")
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
