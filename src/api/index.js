@@ -71,7 +71,7 @@ let apiList = {
     '/trade_coin_pair/getTradeCoinPairByCoinId',//根据项目查交易对
     '/trade/getKDatas2',                        //getKDatas2
     '/trade/getUserTotalProperty',              //计算用户资产总和
-    
+    '/trade_coin_pair/tradeCoinPairMaxMinPrice',//
   ],
 }
 //生产环境接口处理
@@ -94,11 +94,13 @@ let api = {}
 // }
 
 let res =  (res) => {
+  
   if (res.status == '200') {
     if(res.data.status == '200'){
       return res.data
     }else{
       console.log("ERROR========>",res.data.message)
+      return res.data
     }
   }else{
     console.log(res.statusText)
@@ -116,9 +118,15 @@ for (let i in apiList) {
     let name = item[s].split('/').pop()
     let url =process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}:${apiPort[i]}${item[s]}` :`/${reqName}${item[s]}`
     api[name] = (params, method, headers) => {
-      let ajax = method=='POST' ? 
-      axios({method:'POST',url:url,data:qs.stringify(params),headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}}).then(res) 
-      : axios.get(url, { params: params }).then(res)
+      let ajax = method == 'POST' ? 
+        axios({ 
+          method:'POST',
+          url:url,
+          data:qs.stringify(params),
+          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}
+        }).then(res) 
+      : 
+        axios.get(url, { params: params }).then(res);
       return ajax
     }
   }

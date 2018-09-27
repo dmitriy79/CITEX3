@@ -62,7 +62,7 @@ export default {
     //this.coinInfo();
   },
     created() {
-       this.$store.dispatch("initTrading")
+       this.$store.dispatch("initTradingList")
      
         this.$store.dispatch("trading/initTradings")
         

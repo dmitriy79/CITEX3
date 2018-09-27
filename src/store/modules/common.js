@@ -15,6 +15,7 @@ export default {
     tradeId:'',//交易对id
   },
   actions: {
+ 
     //初始化交易对列表
     initTradingList({commit,state}, params) {
       api.classificationList({}).then(res => {

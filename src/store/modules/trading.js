@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import api from '../../api'
 import axios from 'axios'
 import { stat } from 'fs';
@@ -20,7 +21,8 @@ const state = {
     klineCurrent:{},
     step:'',
     curbuyPrice:'',
-    cursellPrice:''
+    cursellPrice:'',
+    entrustList:[],//委托订单
 }
 const getters = {
     
@@ -44,13 +46,14 @@ const actions = {
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
       
         commit("initMarketInfo",rootState)
-       
-       
+        commit("toggleOrder",rootState)
+        
+        
         
         
         //当前交易对基本信息 marketInfo
         //commit('getMarketInfo',coinId)
-        commit('setMarket',  { ...rootState, ...params })
+        commit('setMarket',  { ...rootState, ...arg })
         let coinId = rootState.marketInfo.id
         console.log(coinId)
          //用户币种可用资金
@@ -67,8 +70,9 @@ const actions = {
 
         //k线图
     },
-    tradingBuy({ commit, state }, obj) {
-        commit("tradingBuy", obj)
+    tradingBuy({ commit, state,rootState }, obj) {
+        console.log(obj,'我是tradingBuy+++++++++++++++++')
+        commit("tradingBuy", {tradeId:rootState.tradeId,params:obj})
     },
     tradingSell({ commit, state }, obj) {
         commit("tradingSell", obj)
@@ -135,18 +139,128 @@ const actions = {
     },
     //订单记录切换
     toggleOrder({ commit, rootState, state }, params) {
-
+        commit('toggleOrder',params)
     },
     testClick({ commit, rootState, state }, params) {
         // console.log(rootState, state, commit)
     },
     tradingAskBid({ commit,state,rootState}, obj) {
-         console.log(obj,rootState,'++++我是params++++））000=======》')
+        //  console.log(obj,rootState,'++++我是params++++））000=======》')
          commit('tradingAskBid', obj)
     } ,
-   
+    tradeCoinPairMaxMinPrice({ commit,state,rootState}, obj){
+
+        console.log(obj,'tradeCoinPairMaxMinPrice====>')
+        commit('tradeCoinPairMaxMinPrice',{tradeCoinPairId:rootState.tradeId,obj:obj} )
+    },
+    tradeCoinPairMaxMinPrice1({ commit,state,rootState}, obj){
+
+        console.log(obj,'tradeCoinPairMaxMinPrice====>')
+        commit('tradeCoinPairMaxMinPrice1',{tradeCoinPairId:rootState.tradeId,obj:obj} )
+    }
 }
 const mutations = {
+    toggleOrder(state, params){
+        console.log(params,'00000=====.............哈哈哈哈哈哈++++++')
+        var userId=localStorage.getItem('userId')
+        api.listBidOrders({type:params,userId:userId,pageNum:1,pageSize:7}).then(res=>{
+            res.datas.list.forEach(element => {
+                var date = new Date(parseInt(element.createTime));
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var minute = date.getMinutes();
+                var second = date.getSeconds();
+                minute = minute < 10 ? ('0' + minute) : minute;  
+                second = second < 10 ? ('0' + second) : second; 
+                element.createTime=h+':'+minute+':'+second; 
+              });
+              console.log(res.datas)
+            state.orderData = res.datas
+        })
+    },
+    tradeCoinPairMaxMinPrice({state,rootState},params){
+        api.tradeCoinPairMaxMinPrice({tradeCoinPairId:params.tradeCoinPairId,price:params.obj.Nums}).then(res=>{
+            if(res.datas.trueOrFalse){
+          Vue.prototype.$prompt('请输入交易密码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',//replace(/[^\d]/g,'')
+          inputPattern: '',
+          inputErrorMessage: ''
+        }).then(({ value }) => {
+            api.buy({tradePassword:value,tradeCoinPairId:params.tradeCoinPairId,price:params.obj.Price,amount:params.obj.Nums}, "POST").then(res => {
+                if(res.message === '成功'){
+                    
+                    Vue.prototype.$message({
+                        message: '成功',
+                        type: 'success'
+                    }); 
+                } else {
+                    Vue.prototype.$message({
+                        message: res.message,
+                        type: 'warning'
+                    }); 
+                }
+               
+            })
+            console.log( value,'我是交易密码')
+            
+         
+        }).catch(() => {
+            
+        });
+            }
+            else{
+               
+                Vue.prototype.$message({
+                    message:  res.datas.msg,
+                    type: 'warning'
+                }); 
+            }
+        })
+    },
+    tradeCoinPairMaxMinPrice1({state,rootState},params){
+        console.log(params,'-----00000000000+++++++')
+        api.tradeCoinPairMaxMinPrice({tradeCoinPairId:params.tradeCoinPairId,price:params.obj.Nums}).then(res=>{
+            console.log(res,'这里是交易限额-----------')
+            if(res.datas.trueOrFalse){
+          Vue.prototype.$prompt('请输入交易密码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',//replace(/[^\d]/g,'')
+          inputPattern: '',
+          inputErrorMessage: ''
+        }).then(({ value }) => {
+            api.sell({tradePassword:value,tradeCoinPairId:params.tradeCoinPairId,price:params.obj.Price,amount:params.obj.Nums}, "POST").then(res => {
+                console.log(res,'009999===我是卖单')
+                if(res.message === '成功'){
+                    
+                    Vue.prototype.$message({
+                        message: '成功',
+                        type: 'success'
+                    }); 
+                } else {
+                    Vue.prototype.$message({
+                        message: res.message,
+                        type: 'warning'
+                    }); 
+                }
+               
+            })
+            console.log( value,'我是交易密码')
+            
+         
+        }).catch(() => {
+            
+        });
+            }
+            else{
+               
+                Vue.prototype.$message({
+                    message:  res.datas.msg,
+                    type: 'warning'
+                }); 
+            }
+        })
+    },
     timestampToTime_(state,timestamp) {
         var date = new Date(timestamp);
         var h = date.getHours();
@@ -171,24 +285,24 @@ const mutations = {
     //成交历史
     getDealOrders(state,id){
         console.log("成交历史========>",id)
-        let webs = new webSocket(`websocketSSCJ?pairId=${id}`)
-        webs.initWebSocket()
-        webs.sendSocket('sendParams', res => {
-            console.log("成交历史========>",res)
-            if(res.length){
-                res.forEach(element => {
-                    var date = new Date(parseInt(element.dealTime));
-                    var h = date.getHours();
-                    h = h < 10 ? ('0' + h) : h;
-                    var minute = date.getMinutes();
-                    var second = date.getSeconds();
-                    minute = minute < 10 ? ('0' + minute) : minute;  
-                    second = second < 10 ? ('0' + second) : second; 
-                    element.dealTime=h+':'+minute+':'+second; 
-                  });
+        new webSocket({
+            url:`websocketSSCJ?pairId=${id}`,
+            data:'sendParams',
+            success:(res)=>{
+                if(res.length){
+                    res.forEach(element => {
+                        var date = new Date(parseInt(element.dealTime));
+                        var h = date.getHours();
+                        h = h < 10 ? ('0' + h) : h;
+                        var minute = date.getMinutes();
+                        var second = date.getSeconds();
+                        minute = minute < 10 ? ('0' + minute) : minute;  
+                        second = second < 10 ? ('0' + second) : second; 
+                        element.dealTime=h+':'+minute+':'+second; 
+                      });
+                }
+                state.historyList=res
             }
-          state.historyList=res
-           
         })
     },
     //k线历史数据
@@ -218,12 +332,11 @@ const mutations = {
     websocketKline(state, params){ 
         var resolution=params.step
         var currentCoinId=params.currentCoinId
-        let webs = new webSocket(`websocketKline?pairId=${currentCoinId}&uuid=1&step=${resolution}`)
-        webs.initWebSocket()
-        webs.sendSocket('sendParams========', res => {
-            console.log("实时成交哈哈哈哈========>klineCurrent",res)
-            var klineCurrent=[]
-            // content.list.forEach(function(item){
+        new webSocket({
+            url:`websocketKline?pairId=${currentCoinId}&uuid=1&step=${resolution}`,
+            data:'sendParams',
+            success:(res)=>{
+             // content.list.forEach(function(item){
             //     klineCurrent.push({
             //    time: Number(item.endTime),
             //      open: Number(item.openingPrice),
@@ -236,13 +349,14 @@ const mutations = {
             // })
             
             // state.klineCurrent=klineCurrent[0]
-           
+            }
         })
+
     },
     //当前所有委托记录
     listBidOrders(state, params) {
         api.listBidOrders(params).then(res => {
-            // console.log("listBidOrders+++++++++++================>", res)
+             console.log("listBidOrders+++++++++++=当前所有委托记录===============>", res)
            // state.orderData = res.datas
         })
     },
@@ -252,16 +366,36 @@ const mutations = {
     },
 
     tradingBuy(state, params) {
-        // console.log(params)
-        api.buy(params, "POST").then(res => {
-            // console.log(res)
+         var param={
+            tradePassword:params.params.tradePassword,
+            price:params.params.buyPrice,
+            amount:params.params.buyNums,
+            tradeCoinPairId:params.tradeId
+         }
+         console.log(param,'我是买单--------》》》》》》》》》》》》》++++++')
+        
+        api.buy(param, "POST").then(res => {
+            console.log(res,'009999===我是买单')
+            if(res.message === '成功'){
+                
+                Vue.prototype.$message({
+                    message: '成功',
+                    type: 'success'
+                }); 
+            } else {
+                Vue.prototype.$message({
+                    message: res.message,
+                    type: 'warning'
+                }); 
+            }
+           
         })
     },
     //委托卖单
     tradingSell(state, params) {
         // console.log(params)
         api.sell(params, "POST").then(res => {
-            // console.log(res)
+            console.log(res,'我是卖单========》》》》》》》')
         })
     },
     //币种资产
