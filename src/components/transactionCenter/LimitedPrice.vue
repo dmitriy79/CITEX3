@@ -15,7 +15,7 @@
                     <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
-                    v-model="buyParams.price">
+                    v-model="buyPrice" :class="{border1:hasBorder}">
                      <!-- <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
@@ -24,10 +24,10 @@
                 </div>
                <div class="buy-num">
                     <span class="name">数量</span>
-                    <input type="number"
+                    <input type="number" :class="{border2:hasBorder}"
                     name="buyAmount"
                      @keyup="checkNumber"
-                    v-model="buyParams.amount">
+                    v-model="buyNums">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
@@ -46,11 +46,16 @@
                     <span class="value">{{buyAmount}}</span>
                     <span class="unit">{{zoneName}}</span>
                 </div>
-                <button 
+                   <button 
+                class="buy-button transaction-btn"
+                :class="{Allowed:isAllowed}"
+                @click='buyCoin' 
+                :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button> 
+                <!-- <button 
                 class="buy-button transaction-btn"
                 :class="{Allowed:isAllowed}"
                 @click='$store.dispatch("trading/tradingBuy", buyParams)' 
-                :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button> 
+                :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button>  -->
             </div>
         </div>
         <div class="sell-panel">
@@ -63,7 +68,7 @@
                     <input type="text" 
                     name="sellPrice" 
                     @keyup="checkNumber"
-                    v-model="sellParams.price">
+                    v-model="sellPrice"> 
                     <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
@@ -71,7 +76,7 @@
                     <input type="text" 
                     name="sellAmount"
                     @keyup="checkNumber"
-                     v-model="sellParams.amount">
+                     v-model="sellNums">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
@@ -90,9 +95,13 @@
                    <span class="value">{{sellAmount}}</span>
                     <span class="unit">{{zoneName}}</span>
                 </div>
-                <button class="sell-button transaction-btn"
+                <!-- <button class="sell-button transaction-btn"
                 :class="{Allowed:isAllowed}"
                  @click='$store.dispatch("trading/tradingSell", sellParams)'
+                :disabled="isDisabled">卖出<span v-if="marketInfo">{{marketInfo.name}}</span></button> -->
+                <button class="sell-button transaction-btn"
+                :class="{Allowed:isAllowed}"
+                 @click='sellCoin'
                 :disabled="isDisabled">卖出<span v-if="marketInfo">{{marketInfo.name}}</span></button>
             </div>
         </div>
@@ -112,18 +121,24 @@ export default {
       isAllowed: false,
       isAllowed1: false,
       isDisabled: true,
-      buyPrice: "",
-      buyNum: "",
+     
+      hasBorder:false,
       percentage: ["25", "50", "75", "100"],
       sellAmount: 0,
       buyAmount: 0,
+      ableTotal:'',//可买入总数
+      buyPrice:'',//买入价
+      buyNums:'',//买入数量
+      sellPrice:'',//买入价格
+      sellNums:'',//买入数量
+      ableSellTotal:'',//可卖总数
       buyParams: {
         tradeCoinPairId: 1,
         //code: 13422,
         tradePassword:95558
       },
       sellParams: {
-        tradeCoinPairId: 10,
+        tradeCoinPairId: 1,
         //code: 1123414,
         tradePassword:95558
       }
@@ -176,63 +191,131 @@ export default {
     ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo","curbuyPrice","cursellPrice"]),
     
 
-     ...mapState(["zoneName"])
+     ...mapState(["zoneName"]),
+    //  sellAmount(){
+  
+    //    this.sellAmount = (this.buyPrice * this.buyNums).toFixed(8);
+    //  }
   },
   methods: {
+   
     selectPercentage(e) {
       let target = e.target.dataset
+      console.log(target,'====00000target')
       if (target.id == "buyPre") {
         this.buySelect = target.index;
         let params = this.buyParams;
-        params.price = 0.02;
-        params.amount = 1000 * (target.num / 100);
-        this.buyAmount = (params.price * params.amount).toFixed(8);
+      this.$nextTick(() => {
+        var currentProperty1=this.$refs.num1.innerText
+        this.ableTotal=currentProperty1/this.buyPrice
+      console.log(this.ableTotal,target.num)
+       this.buyNums=(target.num / 100)*this.ableTotal
+       this.buyAmount=this.buyNums*this.buyPrice
+      })
       } else if (target.id == "sellPre") {
         this.sellSelect = target.index;
         let params = this.sellParams;
-        params.price = 0.02;
-        params.amount = 12300 * (target.num / 100);
-        this.sellAmount = (params.price * params.amount).toFixed(8);
+      this.$nextTick(() => {
+        var currentProperty2=this.$refs.num2.innerText
+        this.ableSellTotal=currentProperty2/this.sellPrice
+      console.log(this.ableSellTotal,target.num)
+       this.sellNums=(target.num / 100)*this.ableSellTotal
+       this.sellAmount=this.sellNums*this.sellPrice
+      })
+
+
+       
       }
+    },
+     //买币
+    buyCoin(){
+    if(this.buyNums==''){
+        this.hasBorder=true
+        this.$message({
+                message: '请输入买入数量',
+                type: 'warning'
+                });
+      }
+      if(this.buyPrice==''){
+        this.hasBorder=true
+        this.$message({
+                message: '请输入买入价',
+                type: 'warning'
+                });
+      }
+      var buyParams={
+             Price:this.buyPrice,
+             Nums:this.buyNums
+           }
+      this.$store.dispatch("trading/tradeCoinPairMaxMinPrice", buyParams)
+    },
+    sellCoin(){
+        if(this.sellNums==''){
+        this.hasBorder=true
+        this.$message({
+                message: '请输入卖出数量',
+                type: 'warning'
+                });
+      }
+      if(this.sellPrice==''){
+        this.hasBorder=true
+        this.$message({
+                message: '请输入卖出价',
+                type: 'warning'
+                });
+      }
+      var sellParams={
+             Price:this.sellPrice,
+             Nums:this.sellNums
+           }
+      this.$store.dispatch("trading/tradeCoinPairMaxMinPrice1",sellParams)
     },
     isNumber(value) {
       let regs = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,8})))$/;
       let isNumber = regs.test(value)
       return isNumber
     },
+
     totalAmout(type) {
       switch (type) {
         case "buy":
-          return (this.buyParams.amount * this.buyParams.price).toFixed(8)
+          return (this.buyNums * this.buyPrice).toFixed(8)
         case "sell":
-          return (this.sellParams.amount * this.sellParams.price).toFixed(8)
+          return (this.sellNums * this.sellPrice).toFixed(8)
       }
     },
+
     checkNumber(e) {
-      let buy = this.buyParams,
-          sell = this.sellParams,
-          buyAmount = this.buyAmount,
-          sellAmount = this.sellAmount,
-          isRight = !this.isNumber(e.target.value),
-          buyAmounts = this.buyParams.amount,
-          buyPrices = this.buyParams.price
+    
+      // let buy = this.buyParams,
+      //     sell = this.sellParams,
+      //     buyAmount = this.buyAmount,
+      //     sellAmount = this.sellAmount,
+      //     isRight = !this.isNumber(e.target.value),
+      //     buyAmounts = this.buyParams.amount,
+      //     buyPrices = this.buyParams.price
           // console.log(isRight)
+ 
       switch(e.target.name){
         case 'buyAmount':
-          this.buyParams.amount = isRight ? buyAmounts : e.target.value
-          this.buyAmount = this.buyParams.price ? this.totalAmout('buy') : 0
+        this.hasBorder=false
+          // this.buyParams.amount = isRight ? buyAmounts : e.target.value
+          this.buyAmount = this.buyPrice ? this.totalAmout('buy') : 0
           break
         case "buyPrice":
-          this.buyParams.price = isRight ? buyPrices : e.target.value
-          this.buyAmount = buy.amount ? this.totalAmout('buy') : 0
+        this.hasBorder=false
+          // this.buyParams.price = isRight ? buyPrices : e.target.value
+          this.buyAmount = this.buyNums ? this.totalAmout('buy') : 0
           break
         case 'sellAmount':
-          this.sellParams.amount = isRight ? sell.amount : e.target.value
-          this.sellAmount = this.sellParams.price ? this.totalAmout('sell') : 0
+        this.hasBorder=false
+          // this.sellParams.amount = isRight ? sell.amount : e.target.value
+          this.sellAmount = this.sellPrice ? this.totalAmout('sell') : 0
           break
         case "sellPrice":
-          this.sellParams.price = !this.isNumber(e.target.value) ? sell.price : e.target.value
-          this.sellAmount = sell.amount ? this.totalAmout('sell') : 0
+        this.hasBorder=false
+          // this.sellParams.price = !this.isNumber(e.target.value) ? sell.price : e.target.value
+          this.sellAmount = this.sellNums ? this.totalAmout('sell') : 0
           break
       }
     },
@@ -240,7 +323,13 @@ export default {
   }
 };
 </script>
+<style>
+.el-message-box__input .el-input__inner{color:#333}
+</style>
+
 <style lang="less" scoped>
+
+.border1,.border2{border:1px solid red}
 .useable {
   margin-top: 12px;
   color: #fff;

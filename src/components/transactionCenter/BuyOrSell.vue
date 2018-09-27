@@ -52,7 +52,7 @@
             </dl>
         </div>
         <div class="list-bottom">
-           <span :class="{'ico-uos':isShow,'ico-downs':isShow1}"></span> <span class="left" :class="{red:isShow1,green:isShow}">0.1009447</span><span class="right" >&nbsp;≈&nbsp;<i>8000.12 </i>CNY</span><span></span>
+           <span :class="{'ico-uos':isShow,'ico-downs':isShow1}"></span> <span class="left" :class="{red:isShow1,green:isShow}">{{marketInfo.deal_price}}</span><span class="right" >&nbsp;≈&nbsp;<i>8000.12 </i>CNY</span><span></span>
            <router-link to="/BuyOrSellDetail" tag="span" class="more">更多</router-link>
         </div>
     </div>
@@ -90,7 +90,18 @@ export default {
      }
   },
    computed: {
-    ...mapState("trading", ["AskList","BidList"])
+
+    ...mapState("trading", ["marketInfo"]),
+    ...mapState("trading", [
+      "AskList",
+      "BidList"
+    ]),
+    ...mapState("common",[
+        "tradingList"
+    ]
+    ),
+
+
   },
   methods: {
 
@@ -103,7 +114,6 @@ export default {
       this.isShow = false;
     },
         showBuy(){
-          console.log(this.buyLists,'999990000000')
   
         this.buyList=true
         this.sellList=false

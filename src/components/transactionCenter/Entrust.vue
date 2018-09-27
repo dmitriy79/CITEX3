@@ -1,7 +1,7 @@
 <template>
     <div class="entrust-wrapper">
         <ul class="tab-nav">
-            <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="$store.dispatch('trading/toggleOrder',index)">{{item.name}}</li>
+            <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="toggleOrder(index)">{{item.name}}</li>
         </ul>
         <div class="entrust-list" >
             <dl class="entrust-panel" style="display:block" v-if="this.token">
@@ -11,8 +11,8 @@
                       <th>买单状态</th>
                       <th>价格（BTC）</th>
                       <th>数量（ADA）</th>
-                      <th>未成交</th>
-                      <th>操作</th>
+                      <th>未成交数量</th>
+                      <th v-if="this.active==0">操作</th>
                     </tr>
                     <tr v-for='item of orderList.list'>
                       <td>{{item.createTime}}</td>
@@ -22,7 +22,7 @@
                     
                     
                         <td>{{item.leftAmount}}</td>
-                      <td><a href="" class="button-min">撤单</a></td>
+                      <td v-if="active==0"><a href="" class="button-min">撤单</a></td>
                     </tr>
                 </table>
                 
@@ -44,7 +44,7 @@ export default {
       navs: [
         { id: 1, name: "当前委托" },
         { id: 2, name: "历史委托" },
-        { id: 3, name: "成交历史" }
+        // { id: 3, name: "成交历史" }
       ],
       status:[
         "未成交",
@@ -56,8 +56,13 @@ export default {
     };
   },
   methods: {
+    toggleOrder(index){
+      this.active=index
+      this.$store.dispatch('trading/toggleOrder',this.active+1)
+    }
   },
   created(){
+    this.$store.dispatch('trading/toggleOrder',this.active+1)
     this.token = localStorage.getItem("token")
   },
   computed:{
