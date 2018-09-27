@@ -21,6 +21,7 @@ export default class {
     }
     this.websock.onclose = (e) => {
       this.websock.close()
+      arg.fail(e)
       console.log(wsUri, `====>WebSocket连接关闭:::errorCode = ${e.code}`)
     }
     this.websock.onopen = (e) => {
