@@ -55,7 +55,7 @@ export default {
 
   computed: {
     ...mapState(["tradingCategory","currentCategoryIndex",'tradingList',"currentTradingIndex"]),
-    ...mapState('trading',['currentTradingIndex']),
+    ...mapState('trading',['currentTradingIndex','currentIndex']),
     //...mapGetters(["filterCoin"]),
     ...mapActions(['toggleMarket']),
   },

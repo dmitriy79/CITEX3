@@ -14,7 +14,7 @@
                       <th>未成交数量</th>
                       <th v-if="this.active==0">操作</th>
                     </tr>
-                    <tr v-for='item of orderList.list'>
+                    <tr v-for='item of orderData.list'>
                       <td>{{item.createTime}}</td>
                         <td>{{status[item.matchStatus]}}</td>
                       <td>{{item.price}}</td>
@@ -66,8 +66,8 @@ export default {
     this.token = localStorage.getItem("token")
   },
   computed:{
-    ...mapState(['token']),
-    ...mapState('trading',['orderList'])
+    // ...mapState(['token']),
+    ...mapState('trading',['orderData'])
   }
 }
 </script>

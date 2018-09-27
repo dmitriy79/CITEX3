@@ -53,7 +53,7 @@ const actions = {
         
         //当前交易对基本信息 marketInfo
         //commit('getMarketInfo',coinId)
-        commit('setMarket',  { ...rootState, ...params })
+        commit('setMarket',  { ...rootState, ...arg })
         let coinId = rootState.marketInfo.id
         console.log(coinId)
          //用户币种可用资金
@@ -161,7 +161,7 @@ const actions = {
 }
 const mutations = {
     toggleOrder(state, params){
-        console.log(params)
+        console.log(params,'00000=====.............哈哈哈哈哈哈++++++')
         var userId=localStorage.getItem('userId')
         api.listBidOrders({type:params,userId:userId,pageNum:1,pageSize:7}).then(res=>{
             res.datas.list.forEach(element => {
@@ -174,6 +174,7 @@ const mutations = {
                 second = second < 10 ? ('0' + second) : second; 
                 element.createTime=h+':'+minute+':'+second; 
               });
+              console.log(res.datas)
             state.orderData = res.datas
         })
     },
@@ -284,24 +285,24 @@ const mutations = {
     //成交历史
     getDealOrders(state,id){
         console.log("成交历史========>",id)
-        let webs = new webSocket(`websocketSSCJ?pairId=${id}`)
-        webs.initWebSocket()
-        webs.sendSocket('sendParams', res => {
-            console.log("成交历史========>",res)
-            if(res.length){
-                res.forEach(element => {
-                    var date = new Date(parseInt(element.dealTime));
-                    var h = date.getHours();
-                    h = h < 10 ? ('0' + h) : h;
-                    var minute = date.getMinutes();
-                    var second = date.getSeconds();
-                    minute = minute < 10 ? ('0' + minute) : minute;  
-                    second = second < 10 ? ('0' + second) : second; 
-                    element.dealTime=h+':'+minute+':'+second; 
-                  });
+        new webSocket({
+            url:`websocketSSCJ?pairId=${id}`,
+            data:'sendParams',
+            success:(res)=>{
+                if(res.length){
+                    res.forEach(element => {
+                        var date = new Date(parseInt(element.dealTime));
+                        var h = date.getHours();
+                        h = h < 10 ? ('0' + h) : h;
+                        var minute = date.getMinutes();
+                        var second = date.getSeconds();
+                        minute = minute < 10 ? ('0' + minute) : minute;  
+                        second = second < 10 ? ('0' + second) : second; 
+                        element.dealTime=h+':'+minute+':'+second; 
+                      });
+                }
+                state.historyList=res
             }
-          state.historyList=res
-           
         })
     },
     //k线历史数据
@@ -331,12 +332,11 @@ const mutations = {
     websocketKline(state, params){ 
         var resolution=params.step
         var currentCoinId=params.currentCoinId
-        let webs = new webSocket(`websocketKline?pairId=${currentCoinId}&uuid=1&step=${resolution}`)
-        webs.initWebSocket()
-        webs.sendSocket('sendParams========', res => {
-            console.log("实时成交哈哈哈哈========>klineCurrent",res)
-            var klineCurrent=[]
-            // content.list.forEach(function(item){
+        new webSocket({
+            url:`websocketKline?pairId=${currentCoinId}&uuid=1&step=${resolution}`,
+            data:'sendParams',
+            success:(res)=>{
+             // content.list.forEach(function(item){
             //     klineCurrent.push({
             //    time: Number(item.endTime),
             //      open: Number(item.openingPrice),
@@ -349,8 +349,9 @@ const mutations = {
             // })
             
             // state.klineCurrent=klineCurrent[0]
-           
+            }
         })
+
     },
     //当前所有委托记录
     listBidOrders(state, params) {
