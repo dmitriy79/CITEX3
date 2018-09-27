@@ -9,8 +9,10 @@ export default {
     currentCategoryIndex: 1,
     marketInfo:{},
     currentTradingIndex:0,
-    currentCoinId:2,
+    currentCoinId:2,//当前币种id
     zoneName:'',//交易区类型
+    zoneId:'',//交易区id
+    tradeId:'',//交易对id
   },
   actions: {
     //初始化交易对列表
@@ -18,18 +20,20 @@ export default {
       api.classificationList({}).then(res => {
         // console.log(res,'交易列表=++++++===》')
         if (res.datas) {
-          let category  = res.datas
+          let datas  = res.datas
+          let category=datas.filter(item => item.zoneSwitch===1 )
           state.zoneName=res.datas[0].zoneName
-           console.log(state.zoneName,'state.zoneName+++++++_____________3')
+          state.zoneId=res.datas[0].tradeCoinId
+           console.log(category,'state.zoneName+++++++_____________3')
           category.push({
             zoneName:'自选',
             id:-1
           })
-          commit('setTradingCategory', res.datas)
-          return res.datas
+          commit('setTradingCategory', category)
+          return category
         }
       }).then(res => {
-        // console.log(res,'toggleTrading+++=--------------')
+       console.log(res,'toggleTrading+++=00099999999--------------')
         commit('toggleTrading',res[0].id)
       })
     },
@@ -93,15 +97,16 @@ export default {
     },
     //交易对切换
     toggleTrading(state,id){
-      // console.log(id,'99999999+++++++')
+      
       api.getTradeInfoByZone({id:id}).then(res=>{
-        console.log(res,'交易对切换=========》》》》》》》')
         if(res.datas.list.length>0){
           state.tradingList = res.datas.list
           state.marketInfo = res.datas.list[0]
-        state.currentCoinId=res.datas.list[0].id
+        state.currentCoinId=res.datas.list[0].coinId
+        state.tradeId=res.datas.list[0].id
+      
         }
-       
+       console.log(state.tradingList,'---------.......>>>>>>>>>切换交易对')
         state.currentCategoryIndex = id
         
         // console.log(res.datas.list[0].id,'888888+++++++')

@@ -8,7 +8,7 @@
           <div class="buy-panel">
             <div class="input-text">
                <p class="islogin"  v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num" ></span><span  class="num">0.00000000</span><span class="type">{{zoneName}}</span></p>
+                <p class="useable" v-if="this.token">可用：<span class="num" ref="num1"><span  class="num" v-if="!curbuyPrice">0.00000000</span>{{curbuyPrice}}</span><span class="type">{{zoneName}}</span></p>
                 <span class="label">买入<i ></i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
@@ -56,7 +56,7 @@
         <div class="sell-panel">
             <div class="input-text">
                <p class="islogin"   v-if="!this.token"> <router-link tag="a" to="/login" class="green">登录</router-link> 或  <router-link tag="a" to="/register" class="green">注册</router-link> 开始交易</p>
-                <p class="useable" v-if="this.token">可用：<span class="num" v-if="tradingAssets">{{tradingAssets.able}}</span><span v-else class="num">0.00000000</span><span class="type" v-if="marketInfo" >{{marketInfo.name}}</span></p>
+                <p class="useable" v-if="this.token">可用：<span class="num" ref="num2"><span  class="num" v-if="!cursellPrice">0.00000000</span>{{cursellPrice}}</span><span class="type" v-if="marketInfo" >{{marketInfo.name}}</span></p>
                 <span class="label">卖出<i></i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
@@ -118,7 +118,7 @@ export default {
       sellAmount: 0,
       buyAmount: 0,
       buyParams: {
-        tradeCoinPairId: 10,
+        tradeCoinPairId: 1,
         //code: 13422,
         tradePassword:95558
       },
@@ -131,16 +131,29 @@ export default {
   },
   mounted() {
      this.token = localStorage.getItem("token")
-     console.log(this,'=====>>>>>>>>>>')
+      console.log(this.token)
+      // this.$nextTick(() => {
+      //   var currentProperty1=this.$refs.num1.innerText
+      //   var currentProperty2=this.$refs.num2.innerText
+      //   console.log(currentProperty2,currentProperty1)
+      //   if(currentProperty1<=0){
+      //     this.isAllowed=true
+      //     this.isDisabled=true
+      //   }
+      //   else{
+      //     this.isAllowed=false
+      //     this.isDisabled=false
+      //   }
+      //    if(currentProperty2<=0){
+      //     this.isAllowed1=true
+      //     this.isDisabled=true
+      //   }
+      //   else{
+      //     this.isAllowed1=false
+      //     this.isDisabled=false
+      //   }
+      // })
      if(this.token){
-      //  if(marketInfo){
-      //    this.isAllowed=false
-      //   this.isAllowed1=false
-      //  }
-      //  else{
-      //    this.isAllowed=true
-      //   this.isAllowed1=true
-      //  }
         this.isDisabled=false
         
      }
@@ -149,7 +162,6 @@ export default {
        this.isAllowed=true
       this.isAllowed1=true
      }
-    console.log(this.token,'-------------------------------->我是token.....<>>>>')
   },
   created() {
     const assetsParams = {
@@ -157,10 +169,11 @@ export default {
       pageSize: 90,
       coinId: 3
     }
+   
     //this.$store.dispatch("trading/getAssets", assetsParams)
   },
   computed: {
-    ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo"]),
+    ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo","curbuyPrice","cursellPrice"]),
     
 
      ...mapState(["zoneName"])

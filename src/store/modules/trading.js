@@ -16,7 +16,10 @@ const state = {
     historyList:[],
     currentPrcie:'',//交易区当前价格
     klineHistory:[],
+    klineCurrent:{},
     step:'',
+    curbuyPrice:'',
+    cursellPrice:''
 }
 const getters = {
 
@@ -24,20 +27,24 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
-        // console.log(arg,'=======....;;;;;;;')
+        
         setTimeout(()=>{
             // console.log(arg,'888888==========99999=====777777')
             commit("initMarketInfo",rootState.tradingList)
-        },500)
-       
+            commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
+            
+            commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
+            commit("getDealOrders", rootState.tradeId)//初始化交易历史
+        },1500)
+        console.log(rootState,rootState.tradeId,'=======9999999....;;;;;;;')
         //交易对基本信息
         //订单记录
         //币种资料
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
-        commit("tradingAskBid", rootState.currentCoinId)//初始化交易页面买卖单交易
+      
         commit("initMarketInfo",rootState)
-        commit("getDealOrders", rootState.currentCoinId)//初始化交易历史
-       commit("getAssets",rootState.currentCoinId)
+       
+       
         
         //成交记录
         //实时订单
@@ -59,9 +66,15 @@ const actions = {
     getKline({ commit, rootState, state }, params){
         // console.log(rootState.currentCoinId,'我是lk线图===============》')
         state.step=params.step
-        commit('getKline',{currentCoinId:rootState.currentCoinId,step:params.step})  //币种
+        commit('getKline',{currentCoinId:rootState.tradeId,step:params.step})  //币种
     },
   
+    websocketKline({ commit, rootState, state }, params){
+        // console.log(rootState.currentCoinId,'我是lk线图===============》')
+        state.step=params.step
+        commit('websocketKline',{currentCoinId:rootState.tradeId,step:params.step})  //币种
+    },
+
     initMarketInfo({ commit,state, rootState }, obj) {
        
         // let id = rootState.tradingList[0].id
@@ -79,14 +92,22 @@ const actions = {
             state.currentTradingIndex = params.selectId
             state.marketInfo = rootState.tradingList[params.selectId]
             rootState.currentCoinId=params.coinId
+            rootState.tradeId=params.tradeId
             
             // console.log(state.marketInfo,'=============>state.marketInfo')
             commit('setMarket', { ...rootState, ...params })
             commit('getCoinInfo', params.coinId)  //币种
-            commit('tradingAskBid',params.coinId) //买卖挂单
-            commit('getDealOrders',params.coinId) //成交历史
-            commit('getKline',{currentCoinId:params.coinId,step:state.step}) //成交历史
             
+            commit('getDealOrders',rootState.tradeId) //成交历史
+            commit('getKline',{currentCoinId:rootState.tradeId,step:state.step}) //历史k线
+            
+          
+            setTimeout(()=>{
+                // console.log(arg,'888888==========99999=====777777')
+                commit('tradingAskBid',rootState.tradeId) //买卖挂单
+                commit('websocketKline',{zoneId:rootState.tradeId,step:state.step}) //我的资产
+                commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
+            },500)
         }
        
     },
@@ -100,8 +121,8 @@ const actions = {
     testClick({ commit, rootState, state }, params) {
         // console.log(rootState, state, commit)
     },
-    tradingAskBid({ commit,state}, obj) {
-        // console.log(obj,'++++我是params++++））000=======》')
+    tradingAskBid({ commit,state,rootState}, obj) {
+         console.log(obj,rootState,'++++我是params++++））000=======》')
          commit('tradingAskBid', obj)
     } ,
    
@@ -119,10 +140,12 @@ const mutations = {
     },
     //买卖挂单 websocketAskBid
     tradingAskBid(state, id) {
-        // console.log(state,'0999888======.......')
+        console.log(id,'0999888======.买卖挂单 websocketAskBid......')
         let webs = new webSocket(`websocketAskBid?pairId=${id}`)
         webs.initWebSocket()
         webs.sendSocket('sendParams', res => {
+        console.log(res,'0999888======.买卖挂单 websocketAskBid......')
+
             state.AskList=res.ask
             state.BidList=res.bid
             // console.log("交易中心========>",res)
@@ -131,10 +154,11 @@ const mutations = {
     },
     //成交历史
     getDealOrders(state,id){
-        
+        console.log("成交历史========>",id)
         let webs = new webSocket(`websocketSSCJ?pairId=${id}`)
         webs.initWebSocket()
         webs.sendSocket('sendParams', res => {
+            console.log("成交历史========>",res)
             if(res.length){
                 res.forEach(element => {
                     var date = new Date(parseInt(element.dealTime));
@@ -149,7 +173,7 @@ const mutations = {
             }
         
           state.historyList=res
-            console.log("成交历史========>",res)
+           
         })
     },
     //k线历史数据
@@ -163,7 +187,7 @@ const mutations = {
             if(res.datas.list.length){
                 res.datas.list.forEach(function(bar) {
                     kline.push({
-                    time: Number(bar.endTime),
+                    time: Number(bar.startTime),
                     open: Number(bar.openPrice),
                     close: Number(bar.closePrice),
                     high: Number(bar.topPrice),
@@ -172,13 +196,39 @@ const mutations = {
                     });
                 });
             }
+            console.log(kline)
             state.klineHistory=kline
+        })
+    },
+    //K线实时数据
+    websocketKline(state, params){ 
+        var resolution=params.step
+        var currentCoinId=params.currentCoinId
+        let webs = new webSocket(`websocketKline?pairId=${currentCoinId}&uuid=1&step=${resolution}`)
+        webs.initWebSocket()
+        webs.sendSocket('sendParams========', res => {
+            console.log("实时成交哈哈哈哈========>klineCurrent",res)
+            var klineCurrent=[]
+            // content.list.forEach(function(item){
+            //     klineCurrent.push({
+            //    time: Number(item.endTime),
+            //      open: Number(item.openingPrice),
+            //      close: Number(item.closeingPrice),
+            //      high: Number(item.topPrice),
+            //      low: Number(item.floorPrice),
+            //      volume: Number(item.total)
+            //    });
+            //  // console.log(kline,'9999')
+            // })
+            
+            // state.klineCurrent=klineCurrent[0]
+           
         })
     },
     //当前所有委托记录
     listBidOrders(state, params) {
         api.listBidOrders(params).then(res => {
-             console.log("listBidOrders+++++++++++================>", res)
+            // console.log("listBidOrders+++++++++++================>", res)
            // state.orderData = res.datas
         })
     },
@@ -206,16 +256,45 @@ const mutations = {
     },
     //币种资产
     getAssets(state, params) {
-        console.log(params,'0099988888===============>>>>>>')
-        api.uplistByUserId({pageNum:1,pageSize:10,coinId:params}).then(res => {
-            if(res.status==200){
-                if(res.datas.list.length>0){
-                    state.tradingAssets = res.datas.list[0]
-                }
-            }
-           console.log("getAssets============>", res)
-           
-        })
+        console.log(params,'=========.......///////')
+        let indexData = [
+            api.uplistByUserId({pageNum:1,pageSize:1,coinId:params.zoneId}),
+            api.uplistByUserId({pageNum:1,pageSize:1,coinId:params.currentCoinId})
+          ]
+          axios.all(indexData)
+            .then(res => {
+             if(Object.keys(res[1].datas.list).length==0){
+                state.cursellPrice = 0.00000000
+             }
+             else{
+                state.curbuyPrice = res[0].datas.list[0].able
+                state.cursellPrice = res[1].datas.list[0].able
+             }
+             
+            
+            //   return res
+            }).catch(error => {
+              console.log("error===>", error)
+            })
+            console.log('首页list========》》》》',state.cursellPrice)
+    //    api.uplistByUserId({pageNum:1,pageSize:1,coinId:params.zoneId}).then(res => {
+    //     console.log(res,res.datas)
+    //     if(res.status==200){
+    //         if(res.datas.list.length>0){
+    //             state.tradingAssets = res.datas.list[0]
+    //             console.log("getAssets=============9999988888800000009999999===========00000000000>", state.tradingAssets)
+    //         }
+    //     }
+    // })
+        // api.uplistByUserId({pageNum:1,pageSize:1,coinId:params.currentCoinId}).then(res => {
+        //     console.log(res,res.datas)
+        //     if(res.status==200){
+        //         if(res.datas.list.length>0){
+        //             state.tradingAssets = res.datas.list[0]
+        //             console.log("getAssets=============999999999999===========00000000000>", state.tradingAssets)
+        //         }
+        //     }
+        // })
     },
     //撤销挂单
     canceOrder(state, params) {
@@ -236,7 +315,7 @@ const mutations = {
         state.marketInfo = params.tradingList[params.selectId]
     },
     initMarketInfo(state,params){
-        console.log(params,'000----------')
+        // console.log(params,'000----------')
         state.marketInfo=params[0]
     },
     //获取币种资料

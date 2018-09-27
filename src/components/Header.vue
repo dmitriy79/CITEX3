@@ -145,7 +145,7 @@ export default {
   mounted() {
     this.token = localStorage.getItem("token")
     this.userName = localStorage.getItem("userName")
-    console.log(this.token, this.userName, '999992202020200')
+    // console.log(this.token, this.userName, '999992202020200')
     window.onscroll = e => {
       this.isTop = (window.scrollY > 50) ? true : false
     }

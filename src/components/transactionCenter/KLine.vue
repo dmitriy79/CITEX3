@@ -387,9 +387,9 @@ export default {
       let this_vue = this;
       let Datafeed = {};
       var currentCoinId=this_vue.currentCoinId
-  console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
+  // console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
-        console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
+        // console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
         this._datafeed = datafeed;
         this._subscribers = {};
 
@@ -620,7 +620,7 @@ export default {
         onSymbolResolvedCallback,
         onResolveErrorCallback
       ) {
-        console.log( this_vue.currency1,'09999=====pppp888ppgsggsgsgs')
+        // console.log( this_vue.currency1,'09999=====pppp888ppgsggsgsgs')
         this._logMessage("GOWNO :: resolve symbol " + symbolName);
         Promise.resolve().then(() => {
           function adjustScale() {
@@ -663,7 +663,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-        console.log(resolution,'resolution====================================>>>>>>>>')
+        // console.log(resolution,'resolution====================================>>>>>>>>')
         if(firstDataRequest) {
           if(resolution==1){
             resolution='1min'
@@ -731,8 +731,45 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-      
-   let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
+             if(resolution==1){
+            resolution='1min'
+          }
+          if(resolution==3){
+            resolution='3min'
+          }
+           if(resolution==5){
+            resolution='5min'
+          }
+           if(resolution==15){
+            resolution='15min'
+          }
+           if(resolution==30){
+            resolution='30min'
+          }
+          if(resolution==60){
+            resolution='60min'
+          }
+          if(resolution==120){
+            resolution='120min'
+          }
+          if(resolution==240){
+            resolution='240min'
+          }
+          if(resolution==720){
+            resolution='720min'
+          }
+          if(resolution=='1D'){
+            resolution='1day'
+          }
+           if(resolution=='W'){
+            resolution='10080min'
+          }  
+      this_vue.$store.dispatch("trading/websocketKline", {step:resolution}) 
+      if(this_vue.klineCurrent){
+        onRealtimeCallback(this_vue.klineCurrent)
+      }
+     
+   /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
        //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
         ws.onopen = () => {
             // Web Socket 已连接上，使用 send() 方法发送数据
@@ -767,7 +804,7 @@ export default {
            // 组件销毁时调用，中断websocket链接
           this.over = () => {
             ws.close()
-          }
+          }*/
      
   
       };
