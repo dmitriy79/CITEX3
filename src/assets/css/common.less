@@ -71,12 +71,30 @@
     border-radius: 2px;
     cursor: pointer;
     transition: .4s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     &:hover {
       background: darken(@blue, 10%);
     }
     &-max {
       font-size: 16px;
       padding: 20px 50px;
+    }
+    &-min {
+      font-size: 13px;
+      padding:6px 14px;
+    }
+    .ico{
+      margin-right:5px;
+    }
+    &-grey{
+      background: #51565C;
+      color:#fff;
+      &:hover{
+        background:darken( #51565C,5%);
+        color:#fff;
+      }
     }
   }
 
@@ -111,3 +129,39 @@
       background: #1E252D;
     }
   }
+
+  .member{
+    &-content{
+      padding:30px;
+    }
+    &-title {
+    padding:0 0;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    h1 {
+      background: #292f37;
+      font-size:24px;
+      display: block;
+      color: #ffffff;
+      font-weight:800;
+    }
+  }
+  &-assets{
+    margin:20px 0;
+    opacity:.5;
+  }
+  &-total{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  &-table{
+
+  }
+}
+.flex{
+  &-c-b{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+}

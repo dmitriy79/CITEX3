@@ -1,26 +1,32 @@
 <template>
-    <div>
+    <div class="member-content">
         <div class="property-wrapper"  v-if="showProperty">
-        <div class="title"><span>我的资产</span></div>
+      
+        <div class="member-title">
+          <h1>我的资产</h1>
+           <div class="member-total">
+            <div class="member-assets">总资产折合：0.00048100 BTC<i>≈<b>21.23</b>CNY</i></div>
+             <div @click="showRecord" class="button button-min" ><i class="ico ico-order"></i>提币&充币记录</div>
+             </div>
+        </div>
+  
         <div class="top-info">
-            <div class="info-left">
-                <span>总资产折合：0.00048100 BTC<i>≈<b>21.23</b>CNY</i></span>
-                 <span class="check-item"><i class="check" :class="{active:this.checked}" @click="handleChecked"></i>隐藏小额资产</span>
-                 <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span><span class="iconfont">&#xe627;</span> </div> 
+            <div class="flex-c-b info-left">
+              <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span> </div> 
+              <span class="check-item"><i class="check" :class="{active:this.checked}" @click="handleChecked"></i>隐藏小额资产</span>
             </div>
-            <div class="info-right"><span @click="showRecord" >提币&充币记录</span></div>
         </div>
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
-            <dd class="list" v-for="(item, index) in propertyLists">
+            <dd class="list" v-if=" myAssets.list.length>1" v-for="(item, index) in myAssets.list">
                <span>{{item.coinName}} </span>
                 <span>{{item.total}}</span>
                 <span>{{item.able}}</span>
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
-                    <i @click="fullCoin(index,item.coinId,item.coinName)">充币</i>
-                    <i @click="carryCoin(index,item.coinId)">提币</i>
-                    <i><router-link to="/Transaction" tag="span">交易</router-link></i>
+                    <div @click="fullCoin(index,item.coinId,item.coinName)">充币</div>
+                    <div @click="carryCoin(index,item.coinId)">提币</div>
+                    <div><router-link to="/Transaction" tag="span">交易</router-link></div>
                 </span>
                 <transition name="fade">
                 <div class="carry-coin coin-item" ref="child" style="display:none" >
@@ -146,129 +152,137 @@
     
 </template>
 <script>
+import { mapState, mapActions, mapMutations } from "vuex"
 export default {
-    props:{
-        currentTab:{
-            type:Boolean,
-           
-        }
-    },
-    
+  props: {
+    currentTab: {
+      type: Boolean
+    }
+  },
+
   data() {
     return {
-      coinAddress:'',
-coinNum:'',rate:'',realNum:'',
-      coinId:'',
-      able:true,
-      coiname:'',
-      coin_Id:'',
-      dialogAuditing:false,
-      form:{
-        code:'',
-        password:''
+      coinAddress: "",
+      coinNum: "",
+      rate: "",
+      realNum: "",
+      coinId: "",
+      able: true,
+      coiname: "",
+      coin_Id: "",
+      dialogAuditing: false,
+      form: {
+        code: "",
+        password: ""
       },
-      fullAddress:'',
-        current:'full',
-        isShow:false,
-        checked:false,//隐藏小额资产
-        isShow1:false,
-        isshowEwm:false,
-        showProperty:true,
-        showList:false,
-        logoUrl:'',
-         coinName:'',
-        activeIndex:'',
-        propertyLists:[],
-       fullCoinRecordList:[],
-        tableData1: [{
-            date: '2016-05-02',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }],
-        tableData2: [{
-            date: '2016-05-02',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+      fullAddress: "",
+      current: "full",
+      isShow: false,
+      checked: false, //隐藏小额资产
+      isShow1: false,
+      isshowEwm: false,
+      showProperty: true,
+      showList: false,
+      logoUrl: "",
+      coinName: "",
+      activeIndex: "",
+      propertyLists: [],
+      fullCoinRecordList: [],
+      tableData1: [
+        {
+          date: "2016-05-02",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1517 弄"
+        }
+      ],
+      tableData2: [
+        {
+          date: "2016-05-02",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "USDT",
+          address: "上海市普陀区金沙江路 1516 弄"
+        }
+      ]
     };
   },
-  mounted(){
-    this.myproperty();
-    
-   // this.fullCoinRecord()
+  created() {
+    this.$store.dispatch("assets/allAssets")
   },
-  methods:{
+  methods: {
     //确定提币
-    dialogAudit(){
-
-    },
-    carrycoins(){
-      if(this.coinAddress&&this.coinNum&&this.realNum&&this.rate){
-        this.dialogAuditing=true
-        
-      }
-      else{
-         if(this.realNum==''){
-           this.$message({
-                message: '到账数量不能为空',
-                type: 'warning'
-                });
+    dialogAudit() {},
+    carrycoins() {
+      if (this.coinAddress && this.coinNum && this.realNum && this.rate) {
+        this.dialogAuditing = true;
+      } else {
+        if (this.realNum == "") {
+          this.$message({
+            message: "到账数量不能为空",
+            type: "warning"
+          });
         }
-         if(this.rate==''){
-           this.$message({
-                message: '手续费不能为空',
-                type: 'warning'
-                });
+        if (this.rate == "") {
+          this.$message({
+            message: "手续费不能为空",
+            type: "warning"
+          });
         }
-        if(this.coinNum==''){
-           this.$message({
-                message: '数量不能为空',
-                type: 'warning'
-                });
+        if (this.coinNum == "") {
+          this.$message({
+            message: "数量不能为空",
+            type: "warning"
+          });
         }
-        if(this.coinAddress==''){
-           this.$message({
-                message: '提币不能为空',
-                type: 'warning'
-                });
+        if (this.coinAddress == "") {
+          this.$message({
+            message: "提币不能为空",
+            type: "warning"
+          });
         }
-       
-         
-        
       }
     },
     //最终确定提币
-    confirmFull(){
-      if(this.form.password&&this.form.code){
-          this.$api.withdraw({coin_id:this.coin_Id,code:this.form.code,tradePassword:this.form.password,to:this.coinAddress,amount:this.coinNum,}).then(res=>{
-            console.log(res,'99999+++++w我呀提币')
-            if(res.message=='成功'){
-              this.dialogAuditing=false
-            }
-            else{
+    confirmFull() {
+      if (this.form.password && this.form.code) {
+        this.$api
+          .withdraw({
+            coin_id: this.coin_Id,
+            code: this.form.code,
+            tradePassword: this.form.password,
+            to: this.coinAddress,
+            amount: this.coinNum
+          })
+          .then(res => {
+            console.log(res, "99999+++++w我呀提币");
+            if (res.message == "成功") {
+              this.dialogAuditing = false;
+            } else {
               this.$message({
                 message: res.message,
-                type: 'warning'
-            });
+                type: "warning"
+              });
             }
-          })
-        }
+          });
+      }
       //  this.$prompt('请输入交易密码', '提示', {
       //     confirmButtonText: '确定',
       //     cancelButtonText: '取消',//replace(/[^\d]/g,'')
@@ -281,145 +295,73 @@ coinNum:'',rate:'',realNum:'',
       //   })
     },
     //隐藏小额资产
-    handleChecked(){
-      this.checked=!this.checked
+    handleChecked() {
+      this.checked = !this.checked;
     },
     //复制成功
-   handleSuccess(){
-    this.$message({
-        message: '复制成功',
-        type: 'success'
-		 });
-   },
-   //充币记录
-  fullCoinRecord(){
-    // this.$api.rrlistByUserId({pageNum:1,pageSize:12}).then(res=>{
-    //   console.log(res,'我是充币记录')
-    //   var fullCoinRecordList=res.data.datas.list
-    //   fullCoinRecord.forEach(function(list){
-    //     that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
-            
-    //           if(res.data.message=='success'){
-               
-    //            fullCoinRecord.forEach (function (item) {
-    //               if (item.coinId === res.data.datas.id) {
-    //                 item.coinName = res.data.datas.name;
-                    
-    //               }
-                  
-               
-    //              that.fullCoinRecord=fullCoinRecord
-    //             })
-                   
-    //           }
-    //         })
-    //   })
-    // })
+    handleSuccess() {
+      this.$message({
+        message: "复制成功",
+        type: "success"
+      });
+    },
+
+    fullCoin(index, id, name) {
+      console.log(id, "w我是coinid+++++");
+      this.$api.allotRechargeAddr({ coinId: id }).then(res => {
+        if (res.message == "成功") {
+          console.log(res.datas, "成功");
+          this.fullAddress = res.datas;
+        } else {
+          this.fullAddress = res.message;
+          this.able = false;
+          console.log(this.fullAddress, "失败");
+        }
+        this.coiname = name;
+      });
+      this.$refs.child[index].style.display = "none";
+      if (this.$refs.child1[index].style.display === "none") {
+        this.$refs.child1[index].style.display = "block";
+      } else {
+        this.$refs.child1[index].style.display = "none";
+      }
+    },
+    showEwm() {
+      this.isshowEwm = !this.isshowEwm;
+    },
+    showRecord() {
+      this.showProperty = false;
+      this.showList = true;
+    },
+    //充币记录,提币记录
+    tabRecord(tab) {
+      if (tab == "full") {
+      } else {
+      }
+      console.log(tab, "222299999");
+
+      this.current = tab;
+    },
+    goback() {
+      this.showProperty = true;
+      this.showList = false;
+    }
   },
-    //我的资产列表
-      myproperty(){
-         this.$api.uplistByUserId({pageNum:1,pageSize:20,collet:0}).then(res=>{
-          const  that= this;
-          var propertyList=res.datas.list
-          propertyList.forEach(function(list){
-           that.$http(`/COIN/coin/info/${list.coinId}`).then(res=>{
-            console.log(res,'我是第二个res')
-              if(res.message=='success'){
-               propertyList.forEach (function (item) {
-                  if (item.coinId === res.datas.id) {
-                    item.coinName = res.datas.name;
-                    item.logoUrl = res.datas.logoUrl
-                  }
-                })
-              }
-            })
-          })
-           this.propertyLists=propertyList
-          
-               console.log(this.propertyLists,'11++33+++44444')    
-
-         })
-       
-      },
-      carryCoin(index,id){
-        this.coin_Id=id
-         this.$refs.child1[index].style.display = 'none'
-        if (this.$refs.child[index].style.display === 'none') {
-        this.$refs.child[index].style.display = 'block'
-       
-      } else {
-        this.$refs.child[index].style.display = 'none'
-      
-      }
- 
-      },
-      fullCoin(index,id,name){
-        console.log(id,'w我是coinid+++++')
-         this.$api.allotRechargeAddr({coinId:id}).then(res=>{
-           if(res.message=='成功'){
-             console.log(res.datas,'成功')
-             this.fullAddress=res.datas
-            
-           }
-           else{
-             this.fullAddress=res.message
-             this.able=false
-             console.log( this.fullAddress,'失败')
-
-           }
-             this.coiname=name
-             
-            
-    })
-             this.$refs.child[index].style.display = 'none'
-         if (this.$refs.child1[index].style.display === 'none') {
-        this.$refs.child1[index].style.display = 'block'
-       
-      } else {
-        this.$refs.child1[index].style.display = 'none'
-      
-      }
-
-      },
-      showEwm(){
-          this.isshowEwm=!this.isshowEwm
-      },
-      showRecord(){
-        this.showProperty=false
-        this.showList=true   
-      },
-      //充币记录,提币记录
-      tabRecord(tab){
-        if(tab=='full'){
-
-        }
-        else{
-
-        }
-          console.log(tab,'222299999')
-
-          this.current=tab
-      },
-     goback(){
-        this.showProperty=true
-        this.showList=false   
-     }
-      
+  computed:{
+    ...mapState('assets',['myAssets'])
   }
 };
 </script>
 
 <style>
- .el-input input{color: #000!important
-
-    }
+.el-input input {
+  color: #000 !important;
+}
 </style>
 
 <style lang="less" scoped>
-
 .el-input {
-    width: 100%!important;
-   
+  width: 100% !important;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -432,25 +374,6 @@ coinNum:'',rate:'',realNum:'',
 .property-wrapper {
   height: 920px;
   color: #fff;
-  .title {
-    height: 40px;
-    background: #1b222a;
-    span {
-      background: #292f37;
-      font-size: 15px;
-      width: 144px;
-      display: block;
-      text-align: center;
-      height: 40px;
-      line-height: 40px;
-      color: #ffffff;
-      text-align: center;
-    }
-  }
-  .top-info,
-  dl {
-    padding: 0 30px;
-  }
   .coin-info {
     font-size: 14px;
     dt {
@@ -458,8 +381,9 @@ coinNum:'',rate:'',realNum:'',
     }
     .txt-right {
       text-align: right;
-      i {
-        margin-left: 10px;
+      &>div{
+        display:inline-block;
+        padding:4px 8px;
         color: #2286ff;
         cursor: pointer;
       }
@@ -505,11 +429,14 @@ coinNum:'',rate:'',realNum:'',
         height: 30px;
         display: inline-block;
         // border: 1px solid #3b4148;
-        input{color: #fff;text-indent: 25px;    height: 30px;}
+        input {
+          color: #fff;
+          text-indent: 25px;
+          height: 30px;
+        }
       }
       .search-item {
         position: relative;
-        margin-left: 31px;
         .ico-search {
           position: absolute;
           left: 9px;
@@ -553,7 +480,10 @@ coinNum:'',rate:'',realNum:'',
     }
     .info-right {
       color: #2286ff;
-      span{cursor: pointer;font-size: 16px;}
+      span {
+        cursor: pointer;
+        font-size: 16px;
+      }
     }
   }
   .coin-info {
@@ -567,7 +497,7 @@ coinNum:'',rate:'',realNum:'',
     }
 
     .coin-item {
-     z-index: 999;
+      z-index: 999;
       border: 1px solid #898c91;
       padding: 20px 30px 100px;
       border-radius: 2px;
@@ -621,18 +551,30 @@ coinNum:'',rate:'',realNum:'',
       }
       .tips {
         margin-top: 40px;
-        font-size: 14px;position: relative;
+        font-size: 14px;
+        position: relative;
         p {
           line-height: 30px;
         }
-        .tips-btn{width: 132px;height: 42px;line-height: 42px;background: #2286FF;text-align: center;position: absolute;right: 0;bottom: 0;
-border-radius: 2px;font-size: 16px;cursor: pointer;
-color: #FFFFFF;}
+        .tips-btn {
+          width: 132px;
+          height: 42px;
+          line-height: 42px;
+          background: #2286ff;
+          text-align: center;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          border-radius: 2px;
+          font-size: 16px;
+          cursor: pointer;
+          color: #ffffff;
+        }
       }
     }
 
-    .carry-coin{
-       background: #181f27;
+    .carry-coin {
+      background: #181f27;
       &::before,
       &::after {
         border: solid transparent;
@@ -653,18 +595,26 @@ color: #FFFFFF;}
         top: -20px;
       }
     }
-    .full-coin{
-        .copy,.ewm,.record{color: #2286FF;font-size: 14px;cursor: pointer;}
-         .item{font-size: 14px;
-            .ewm-img{
-                position: absolute;
-                left: 330px;
-            }
-         }
-        .address, .copy{
-            margin-right: 10px;
+    .full-coin {
+      .copy,
+      .ewm,
+      .record {
+        color: #2286ff;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .item {
+        font-size: 14px;
+        .ewm-img {
+          position: absolute;
+          left: 330px;
         }
-         &::before,
+      }
+      .address,
+      .copy {
+        margin-right: 10px;
+      }
+      &::before,
       &::after {
         border: solid transparent;
         content: " ";
@@ -686,32 +636,37 @@ color: #FFFFFF;}
     }
   }
 }
-.carry-full-coin{    height: 920px;
-    .content{
-      
-       div{padding: 0 10px 50px;}
+.carry-full-coin {
+  height: 920px;
+  .content {
+    div {
+      padding: 0 10px 50px;
     }
-    .tabs{
-        height: 40px;margin-bottom: 23px;
-        background: #1b222a;
-        div{
-            text-align: right;
-            flex: 1;
-            padding-right: 20px;
-        }
-        cursor: pointer;line-height: 40px;display: flex;
-        span{
-            display: block;text-align: center;font-size: 15px;
-    width: 144px;
-        }
-        span.active{
-                background: #292f37;
-    
-        }
+  }
+  .tabs {
+    height: 40px;
+    margin-bottom: 23px;
+    background: #1b222a;
+    div {
+      text-align: right;
+      flex: 1;
+      padding-right: 20px;
     }
+    cursor: pointer;
+    line-height: 40px;
+    display: flex;
+    span {
+      display: block;
+      text-align: center;
+      font-size: 15px;
+      width: 144px;
+    }
+    span.active {
+      background: #292f37;
+    }
+  }
 }
 </style>
 
 <style>
-
 </style>
