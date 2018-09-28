@@ -450,8 +450,7 @@ const mutations = {
     //获取币种资料
     getCoinInfo(state, id) {
        // console.log(params.currentCoinId,'币种idd_________________________-d++++++')
-       
-        axios.get(`/COIN/coin/info/${id}`).then(res => {
+        axios.get(`/coin/coin/info/${id}`).then(res => {
             // console.log(res)
             let coninInfo = res.data.datas
             state.coinInfo = res.data.datas
