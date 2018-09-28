@@ -9,13 +9,11 @@ import Notice from '@/pages/Notice'
 import NoticeDetail from '@/pages/NoticeDetail'
 import JoinUs from '@/pages/JoinUs'
 import Transaction from '@/pages/Transaction'
-import ApplyChannel from  '@/components/channel/ApplyChannel'
-import ApplyChannelText from  '@/components/channel/ApplyChannelText'
-import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
-import BasicInfo from '@/components/mountCoin/BasicInfo'
-import MineProperty from '@/components/personal/MineProperty'
-import CarryfullCoin from '@/components/personal/CarryfullCoin'
-import BuyOrSellDetail from '@/components/transactionCenter/BuyOrSellDetail'
+// import ApplyChannel from  '@/components/channel/ApplyChannel'
+// import ApplyChannelText from  '@/components/channel/ApplyChannelText'
+// import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
+// import BasicInfo from '@/components/mountCoin/BasicInfo'
+import BuyOrSellDetail from '@/pages/BuyOrSellDetail'
 
 
 Vue.use(Router)
@@ -39,72 +37,75 @@ const router =  new Router({
       component: JoinUs
     },
     {
-      path: '/applyChannel',
-      name: 'ApplyChannel',
-      component: ApplyChannel
-    },{  
-      path: '/applyChannelText',
-      name: 'ApplyChannelText',
-      component: ApplyChannelText,
-      redirect: '/basicInfo',
-    },{
-      
-      path: '/applyMountCoin',
-      name: 'ApplyMountCoin',
-      component: ApplyMountCoin,
-      // children:[
-      //   {
-      //     path: '/basicInfo',
-      //     name: 'BasicInfo',
-      //     component: BasicInfo
-      //   }
-      // ]
-    },
-    {
-      path: '/basicInfo',
-      name: 'BasicInfo',
-      component: BasicInfo
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
     },{
-      
       path: '/register',
       name: 'Register',
       component: Register
     },{
-      
       path: '/personal',
       name: 'Personal',
       component: Personal,
       meta: {
         requireAuth: true
-      }
+      },
+      children: [{
+        path: 'property',
+        component: () => import('@/components/personal/MineProperty')
+      }, {
+        path: 'entrust',
+        component: () => import('@/components/personal/MineEntrust')
+      }, {
+        path: 'record',
+        component: () => import('@/components/personal/TransactionRecord')
+      }, {
+        path: 'full-coin',
+        component: () => import('@/components/personal/FullCoin')
+      }, {
+        path: 'carry-coin',
+        component: () => import('@/components/personal/CarryCoin')
+      }, {
+        path: 'bank-card',
+        component: () => import('@/components/personal/BankCardManage')
+      }, {
+        path: 'coin-count',
+        component: () => import('@/components/personal/CoinCount')
+      }, {
+        path: 'phone-authentication',
+        component: () => import('@/components/personal/PhoneAuthentication')
+      }, {
+        path: 'real-authentication',
+        component: () => import('@/components/personal/RealAuthentication')
+      }, {
+        path: 'google-authenticator',
+        component: () => import('@/components/personal/GoogleAuthenticator')
+      }, {
+        path: 'recommed',
+        component: () => import('@/components/personal/Recommed')
+      }, {
+        path: 'modify-password',
+        component: () => import('@/components/personal/ModifyPassword')
+      }, {
+        path: 'mine-info',
+        component: () => import('@/components/personal/MineInfo')
+      }, {
+        path: 'email-authenticator',
+        component: () => import('@/components/personal/EmailAuthenticator')
+      }, {
+        path: 'transaction-passWord',
+        component: () => import('@/components/personal/TransactionPassWord')
+      }]
     },{
-      
       path: '/findPassword',
       name: 'FindPassword',
       component: FindPassword
     },
     {
-      
       path: '/notice',
       name: 'Notice',
       component: Notice
-    },
-    {
-      
-      path: '/mineProperty',
-      name: 'MineProperty',
-      component: MineProperty
-    },
-    {
-      
-      path: '/carryfullCoin',
-      name: 'CarryfullCoin',
-      component: CarryfullCoin
     },
     {
       path: '/buyOrSellDetail',
@@ -116,7 +117,6 @@ const router =  new Router({
       path: '/noticeDetail',
       name: 'NoticeDetail',
       component: NoticeDetail
-      
     }
   ],
   

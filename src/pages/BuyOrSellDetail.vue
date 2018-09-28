@@ -1,6 +1,5 @@
 <template>   
     <div>
-         <v-header></v-header>  
          <div class="container">
              <div class="title"><router-link to="/Transaction" class="green">交易中心</router-link> > <span>买卖盘</span></div>
             <div class="list">
@@ -41,12 +40,9 @@
             </div>
            
          </div>
-          <v-footer></v-footer> 
     </div>
 </template>
 <script>
-import VHeader from "../../components/Header";
-import VFooter from "../../components/Footer";
 export default {
     data(){
         return{
@@ -89,10 +85,6 @@ export default {
                
             ]
         }
-    },
-components: {
-    VHeader,
-    VFooter
     }
 }
 </script>

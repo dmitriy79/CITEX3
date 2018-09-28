@@ -53,7 +53,7 @@
     methods: {
       //邮箱验证
       blurUserName() {
-        let msg = valid.isEmailValid(this.email);
+        let msg = valid.isEmailValid(this.userName);
         if (msg) {
           this.$message({
             message: msg,
@@ -87,7 +87,7 @@
       },
       //登陆
       login() {
-        let msg = valid.isEmailValid(this.email);
+        let msg = valid.isEmailValid(this.userName);
         if (msg) {
           this.$message({
             message: msg,
