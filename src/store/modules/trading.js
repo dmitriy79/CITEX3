@@ -258,16 +258,6 @@ const mutations = {
             }
         })
     },
-    timestampToTime_(state,timestamp) {
-        var date = new Date(timestamp);
-        var h = date.getHours();
-        h = h < 10 ? ('0' + h) : h;
-        var minute = date.getMinutes();
-        var second = date.getSeconds();
-        minute = minute < 10 ? ('0' + minute) : minute;  
-        second = second < 10 ? ('0' + second) : second; 
-        return h+':'+minute+':'+second; 
-    },
     //买卖挂单 websocketAskBid
     tradingAskBid(state, id) {
         new webSocket({
@@ -286,18 +276,6 @@ const mutations = {
             url:`websocketSSCJ?pairId=${id}`,
             data:'sendParams',
             success:(res)=>{
-                if(res.length){
-                    res.forEach(element => {
-                        var date = new Date(parseInt(element.dealTime));
-                        var h = date.getHours();
-                        h = h < 10 ? ('0' + h) : h;
-                        var minute = date.getMinutes();
-                        var second = date.getSeconds();
-                        minute = minute < 10 ? ('0' + minute) : minute;  
-                        second = second < 10 ? ('0' + second) : second; 
-                        element.dealTime=h+':'+minute+':'+second; 
-                      });
-                }
                 state.historyList=res
             }
         })
