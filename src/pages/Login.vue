@@ -29,191 +29,112 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      clientHeight: '',
-      userName: '',
-      passWord: ''
-    }
-  },
-  mounted() {
-     this.loadYanzhengma()
-    // 获取浏览器可视区域高度
-    this.clientHeight = `${document.documentElement.clientHeight}` //document.body.clientWidth;
-    //console.log(self.clientHeight);
-    window.onresize = function temp() {
-      this.clientHeight = `${document.documentElement.clientHeight}`;
-    };
-  },
-  watch: {
-    // 如果 `clientHeight` 发生改变，这个函数就会运行
-    // clientHeight: function() {
-    //   this.changeFixed(this.clientHeight)
-    // }
-  },
-  methods: {
-    //邮箱验证
-    blurUserName() {
-      var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-      if (this.userName == '') {
-        //    alert("请输入邮箱");
-        this.$message({
-          message: '请输入邮箱',
-          type: 'warning'
-        });
-      } else if (!regEmail.test(this.userName)) {
-        // alert("邮箱格式不正确");
-        this.$message({
-          message: '请输入正确的邮箱',
-          type: 'warning'
-        });
+
+  import valid from '@/utils/valid';
+  export default {
+    data() {
+      return {
+        clientHeight: '',
+        userName: '',
+        passWord: ''
       }
     },
-    //密码验证
-    /*    blurPassword(){
-           var  regExp=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-           
-             if(this.passWord==''){
-                 this.$message({
-                message: '密码不能为空',
-                type: 'warning'
-                });
-             }
-             else if(!regExp.test(this.passWord)){
-                    this.$message({
-                message: '密码是数字和字母组合，不能小于6位',
-                type: 'warning'
-                });
-                
-            }
-          
-        },*/
-    //登陆滑动验证码
-    loadYanzhengma() {
-      initNECaptcha({
-        captchaId: '1ea48dc26ca240218216696392578acf',
-        element: '#register_yanzhengma',
-        mode: 'float',
-        width: 400,
-        onVerify: function(err, ret) {
-          if (!err) {
-            console.log(ret)
-            localStorage.setItem('registerYanzhengma', ret.validate)
-            // ret['validate'] 获取二次校验数据
-          }
-        }
-      }, function onload(instance) {
-        localStorage.setItem('registerYanzhengma', '')
-        // 初始化成功后，用户输入对应用户名和密码，以及完成验证后，直接点击登录按钮即可
-      }, function onerror(err) {
-
-        localStorage.setItem('registerYanzhengma', '')
-        // 验证码初始化失败处理逻辑，例如：提示用户点击按钮重新初始化
-      })
-
+    mounted() {
+      this.loadYanzhengma()
+      // 获取浏览器可视区域高度
+      this.clientHeight = `${document.documentElement.clientHeight}` //document.body.clientWidth;
+      //console.log(self.clientHeight);
+      window.onresize = function temp() {
+        this.clientHeight = `${document.documentElement.clientHeight}`;
+      };
     },
-    // changeFixed(clientHeight){                        //动态修改样式
-    //   console.log(clientHeight,'w9999999');
-    //   this.$refs.content.style.height = (clientHeight-311)+'px';
-
-    // },
-    //登陆
-    login() {
-      var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-      if (this.userName == '') {
-        //    alert("请输入邮箱");
-        this.$message({
-          message: '邮箱不能为空',
-          type: 'warning'
-        });
-        return
-      }
-      if (!regEmail.test(this.userName)) {
-        // alert("邮箱格式不正确");
-        this.$message({
-          message: '请输入正确的邮箱',
-          type: 'warning'
-        });
-        return
-      }
-
-      var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-
-      if (this.passWord == '') {
-        this.$message({
-          message: '密码不能为空',
-          type: 'warning'
-        });
-        return
-      }
-      if (!regExp.test(this.passWord)) {
-        this.$message({
-          message: '密码是数字和字母组合，不能小于6位',
-          type: 'warning'
-        });
-        return
-      }
-      // var url = `/api/user/login`
-       this.$api.login({userName: this.userName,
-          passWord: this.passWord,
-          NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
-          
-             var returnData = res.message
-             console.log(res,'000====9999999+++++')
-             var datasList=res.datas.split("|")
-             var token=datasList[0]
-             var userId=datasList[1]
-            localStorage.setItem("userId", userId)
-                    localStorage.setItem("token", token)
-        localStorage.setItem("userName", this.userName)
-        localStorage.setItem("loginPassword", this.passWord)
-              console.log(res.datas,'我是登录userId')
-        // let token = JSON.stringify(res.data.datas)                                            
-console.log(returnData !== '成功','0000++++*****')
-        if (returnData !== '成功') {
+    watch: {
+    },
+    methods: {
+      //邮箱验证
+      blurUserName() {
+        let msg = valid.isEmailValid(this.email);
+        if (msg) {
           this.$message({
-            message: returnData,
+            message: msg,
             type: 'warning'
           });
-          this.loadYanzhengma()
         }
+      },
+      //登陆滑动验证码
+      loadYanzhengma() {
+        initNECaptcha({
+          captchaId: '1ea48dc26ca240218216696392578acf',
+          element: '#register_yanzhengma',
+          mode: 'float',
+          width: 400,
+          onVerify: function(err, ret) {
+            if (!err) {
+              console.log(ret)
+              localStorage.setItem('registerYanzhengma', ret.validate)
+              // ret['validate'] 获取二次校验数据
+            }
+          }
+        }, function onload(instance) {
+          localStorage.setItem('registerYanzhengma', '')
+          // 初始化成功后，用户输入对应用户名和密码，以及完成验证后，直接点击登录按钮即可
+        }, function onerror(err) {
 
-        if (returnData == '成功') {
-          this.$router.push({ path: "/" });
+          localStorage.setItem('registerYanzhengma', '')
+          // 验证码初始化失败处理逻辑，例如：提示用户点击按钮重新初始化
+        })
+
+      },
+      //登陆
+      login() {
+        let msg = valid.isEmailValid(this.email);
+        if (msg) {
+          this.$message({
+            message: msg,
+            type: 'warning'
+          });
+          return;
         }
-          })
-     /* this.$http.get(url, {
-        params: {
+        
+        let passMsg = valid.isPasswordValid(this.passWord);
+        if (passMsg) {
+          this.$message({
+            message: passMsg,
+            type: 'warning'
+          });
+          return;
+        }
+        // var url = `/api/user/login`
+        this.$api.login({
           userName: this.userName,
           passWord: this.passWord,
-          NECaptchaValidate: localStorage.getItem('registerYanzhengma'),
-        }
-      }, {
-        headers: { "Content-Type": "application/json" }
-      }).then(res => {
-        console.log(res)
-        var returnData = res.data.message
-        let token = JSON.stringify(res.data.datas)
-        localStorage.setItem("token", token)
-        localStorage.setItem("userName", this.userName)
-        if (returnData !== '成功') {
-          this.$message({
-            message: returnData,
-            type: 'warning'
-          });
-          this.loadYanzhengma()
-        }
+          NECaptchaValidate: localStorage.getItem('registerYanzhengma')
+        }).then(res => {
+          var returnData = res.message
+          var datasList = res.datas.split("|")
+          var token = datasList[0]
+          var userId = datasList[1]
+          localStorage.setItem("userId", userId)
+          localStorage.setItem("token", token)
+          localStorage.setItem("userName", this.userName)
+          localStorage.setItem("loginPassword", this.passWord)
+          if (returnData !== '成功') {
+            this.$message({
+              message: returnData,
+              type: 'warning'
+            });
+            this.loadYanzhengma()
+          }
 
-        if (returnData == '成功') {
-          this.$router.push({ path: "/" });
-        }
-
-
-      })*/
+          if (returnData == '成功') {
+            this.$router.push({
+              path: "/"
+            });
+          }
+        })
+      }
     }
   }
-}
 
 </script>
 <style lang="less" scoped>

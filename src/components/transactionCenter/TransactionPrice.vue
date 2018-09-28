@@ -10,16 +10,14 @@
                 <dd v-for="item in historyList">
                     <span>{{item.dealPrice}}</span>
                     <span>{{item.dealAmount}}</span>
-                    <span>{{item.dealTime}}</span>
+                    <span>{{item.dealTime | time-format}}</span>
                 </dd>
             </dl>
         </div>
     </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-
-import date from '../../assets/js/date'
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -29,65 +27,19 @@ export default {
       dealTime:''
     };
   },
+
   mounted () {
      this.token = localStorage.getItem("token")
      if(this.token!==null){
        this.$refs.wrapper.style.height='700px'
      }
+  },
 
-  },
- 
   methods: {
-    timestampToTime(timestamp) {
-        var date = new Date(timestamp);
-        var h = date.getHours();
-        h = h < 10 ? ('0' + h) : h;
-        var minute = date.getMinutes();
-        var second = date.getSeconds();
-        minute = minute < 10 ? ('0' + minute) : minute;  
-        second = second < 10 ? ('0' + second) : second; 
-        return h+':'+minute+':'+second; 
-    },
-    getDealOrders(){
-      /*this.$api.getDealOrdersByTradeCoinPairId({id:2}).then(res=>{
-       console.log(res.data.datas.dealTime, date.timestampToTime(1536305419000),'我是实时交易')
-       date.timestampToTime(1536305419000)
-       var content=res.data.datas
-       content.forEach(element => {
-         this.dealTime=date.timestampToTime_(element.dealTime) 
-       });
-       this.dataList=content
-    })*/
-     let ws = new WebSocket('ws://47.94.213.6:13080/websocketSSCJ?pairId=10')
-         ws.onopen = () => {
-            // Web Socket 已连接上，使用 send() 方法发送数据
-              ws.send('Holle')
-              console.log('数据发送中...')
-          }
-          ws.onmessage = evt => {
-             var content=JSON.parse(evt.data)
-             content.forEach(element => {
-              element.dealTime=date.timestampToTime_(JSON.parse(element.dealTime))
-              // console.log(element.dealTime,'99999999')
-             })
-            //  console.log(content,'我是content')
-             this.dataList=content
-             // console.log(this.dataList,'数据已接收...')
-          }
-          ws.onclose = function () {
-            // 关闭 websocket
-            console.log('连接已关闭...')
-          }
-           // 组件销毁时调用，中断websocket链接
-          this.over = () => {
-            ws.close()
-          }
-    }
-    
   },
-     computed: {
+  computed: {
     ...mapState("trading", ["historyList"]),
-    },
+  },
 };
 </script>
 <style lang="less" scoped>

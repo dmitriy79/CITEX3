@@ -16,20 +16,11 @@
             </div>
             <div class="input-wrapper">
               <input type="password" placeholder="请输入密码" v-model="passWord" v-on:blur="blurPassword">
-              <!-- <input type="password" placeholder="请输入密码" v-model="passWord" > -->
             </div>
             <div class="input-wrapper">
               <input type="password" placeholder="请输入确认密码" v-model="confirmPassword" v-on:blur="blurConfirmPassword">
-              <!-- <input type="password" placeholder="请输入确认密码" v-model="confirmPassword" > -->
             </div>
-            <!-- <div class="input-wrapper">
-                       <input type="text" placeholder="请输入验证码"><span class="input-btn">2359</span>
-                   </div> -->
-            <!-- <div class="input-wrapper"> -->
-            <!-- <input type="text" placeholder="邀请码（非必填）"  v-model="inviteCode"> -->
             <div id="register_yanzhengma" class="register-yzm"></div>
-            <!-- </div> -->
-            
           </div>
           <div class="register-btn" @click="register">注册</div>
 
@@ -38,8 +29,7 @@
               <i :class="{active:this.agree}" @click="handleAgree" ref="isAgree"></i>我已仔细阅读并同意<span>《注册协议》</span>
               </div>
                <router-link to="/login" tag="div" class="login-btn">登陆</router-link>
-            </div>          
-
+            </div>
         </div>
         <div class="right">
           <img src="../assets/images/login-bg.png" alt="">
@@ -94,132 +84,76 @@ export default {
     },
     //邮箱验证
     sendEmail() {
-      var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-      if (this.email == '') {
-        //    alert("请输入邮箱");
+      let msg = valid.isEmailValid(this.email);
+      if (msg) {
         this.$message({
-          message: '请输入邮箱',
+          message: msg,
           type: 'warning'
         });
-      } else if (!regEmail.test(this.email)) {
-        // alert("邮箱格式不正确");
-        this.$message({
-          message: '请输入正确的邮箱',
-          type: 'warning'
-        });
-      } else {
-        this.$refs.sendEmail.setAttribute('disabled', 'disabled')
-        this.$refs.sendEmail.style.cursor = "not-allowed"
-        this.$api.emailCode({email: this.email}).then(res=>{
-           if (res.message == '成功') {
-            //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
-            if (!this.canClick) return
-            this.canClick = false
-            this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
-            let clock = window.setInterval(() => {
-              this.wait--
-                this.content = this.wait + 's后重新发送'
-              if (this.wait < 0) { //当倒计时小于0时清除定时器
-                window.clearInterval(clock)
-                this.content = '获取邮箱验证码'
-                this.wait = 60
-                this.canClick = true
-              }
-            }, 1000)
-          }
-        })
-        // var url = `/api/user/emailCode`
-        // this.$http.get(url, {
-        //   params: {
-        //     email: this.email,
-        //   }
-        // }, {
-        //   headers: { "Content-Type": "application/json" }
-        // }).then(res => {
-        //   if (res.data.message == '成功') {
-        //     //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
-        //     if (!this.canClick) return
-        //     this.canClick = false
-        //     this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
-        //     let clock = window.setInterval(() => {
-        //       this.wait--
-        //         this.content = this.wait + 's后重新发送'
-        //       if (this.wait < 0) { //当倒计时小于0时清除定时器
-        //         window.clearInterval(clock)
-        //         this.content = '获取邮箱验证码'
-        //         this.wait = 60
-        //         this.canClick = true
-        //       }
-        //     }, 1000)
-        //   }
-        // })
+        return;
       }
+      this.$refs.sendEmail.setAttribute('disabled', 'disabled')
+      this.$refs.sendEmail.style.cursor = "not-allowed"
+      this.$api.emailCode({email: this.email}).then(res=>{
+         if (res.message == '成功') {
+          //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
+          if (!this.canClick) return
+          this.canClick = false
+          this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
+          let clock = window.setInterval(() => {
+            this.wait--
+              this.content = this.wait + 's后重新发送'
+            if (this.wait < 0) { //当倒计时小于0时清除定时器
+              window.clearInterval(clock)
+              this.content = '获取邮箱验证码'
+              this.wait = 60
+              this.canClick = true
+            }
+          }, 1000)
+        }
+      })
 
     },
 
     //密码验证
     blurPassword() {
-      var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-
-      if (this.passWord == '') {
+      let passMsg = valid.isPasswordValid(this.passWord);
+      if (passMsg) {
         this.$message({
-          message: '密码不能为空',
+          message: passMsg,
           type: 'warning'
         });
-      } else if (!regExp.test(this.passWord)) {
-        this.$message({
-          message: '密码是数字和字母组合，不能小于6位',
-          type: 'warning'
-        });
-
+        return;
       }
 
     },
     //密码确认验证
     blurConfirmPassword() {
-      var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-
-      if (this.confirmPassword == '') {
+      let passMsg = valid.isPasswordValid(this.passWord);
+      if (passMsg) {
         this.$message({
-          message: '确认密码不能为空',
+          message: passMsg,
           type: 'warning'
         });
-      } else if (this.passWord !== this.confirmPassword) {
-        this.$message({
-          message: '两次密码不匹配',
-          type: 'warning'
-        });
+        return;
       }
     },
     //注册
     register() {
-
-
-
-
       if (this.$refs.isAgree.className == '') {
         this.$message({
           message: '请勾选同意注册协议',
           type: 'warning'
         });
       }
-      
-      var regEmail = /^[A-Za-z0-9]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (this.email == '') {
-        //    alert("请输入邮箱");
+
+      let msg = valid.isEmailValid(this.email);
+      if (msg) {
         this.$message({
-          message: '邮箱不能为空',
+          message: msg,
           type: 'warning'
         });
-        return
-      }
-      if (!regEmail.test(this.email)) {
-        // alert("邮箱格式不正确");
-        this.$message({
-          message: '请输入正确的邮箱',
-          type: 'warning'
-        });
-        return
+        return;
       }
       if (this.code == '') {
         //    alert("请输入邮箱");
@@ -228,21 +162,14 @@ export default {
           type: 'warning'
         });
       }
-      var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
 
-      if (this.passWord == '') {
+      let passMsg = valid.isPasswordValid(this.passWord);
+      if (passMsg) {
         this.$message({
-          message: '密码不能为空',
+          message: passMsg,
           type: 'warning'
         });
-        return
-      }
-      if (!regExp.test(this.passWord)) {
-        this.$message({
-          message: '密码是数字和字母组合，不能小于6位',
-          type: 'warning'
-        });
-        return
+        return;
       }
 
       this.blurConfirmPassword()
@@ -259,29 +186,6 @@ export default {
             }
           })
       }
-  
-    /*  var url = `/api/user/register`
-      this.$http.get(url, {
-        params: {
-          email: this.email,
-          passWord: this.passWord,
-          code: this.code,
-          inviteCode: this.inviteCode,
-          NECaptchaValidate: localStorage.getItem('registerYanzhengma'),
-        }
-      }, {
-        headers: { "Content-Type": "application/json" }
-      }).then(res => {
-        var returnData = res.data.message
-
-        // this.$message({
-        //     message: returnData,
-        //     type: 'warning'
-        //     });
-        if (returnData == '成功') {
-          this.$router.push({ path: "/Login" });
-        }
-      })*/
     }
   },
   mounted() {

@@ -30,6 +30,8 @@ import 'swiper/dist/css/swiper.css'
 import './assets/css/font.css'
 import './assets/css/iconfont.css'
 import './assets/css/common.less'
+
+import './utils/filter'
 import axios from 'axios'
 import VueClipboards from 'vue-clipboards';
 import VueI18n from 'vue-i18n'

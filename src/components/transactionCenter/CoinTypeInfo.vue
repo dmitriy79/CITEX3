@@ -12,7 +12,7 @@
                 </div>
                 <ul class="list">
                     <li>
-                        发行时间<span>{{this.timestampToTime(coinInfo.createTime)}}</span>
+                        发行时间<span>{{coinInfo.createTime | date-format}}</span>
                     </li>
                     <li>
                         发行总量<span>{{coinInfo.circulation}}</span>
@@ -59,42 +59,11 @@ export default {
     };
   },
   mounted() {
-    //this.coinInfo();
   },
     created() {
-       this.$store.dispatch("initTradingList")
-     
-        // this.$store.dispatch("trading/initTradings")
-        
+       this.$store.dispatch("initTradingList");
   },
   methods: {
-    //时间戳转时间
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + "-";
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D = date.getDate() + " ";
-      return Y + M + D;
-    }
-
-    // //币种资料
-    // coinInfo(){
-    //     this.$http("/COIN/coin/info/12").then(res=>{
-    //     console.log(res,'9999')
-    //      var coinInfo=res.data.datas
-    //      this.coinName=coinInfo.name
-    //      this.circulation=coinInfo.circulation
-    //      this.wihtePaperUrl=coinInfo.wihtePaperUrl
-    //      this.coinPortal=coinInfo.coinPortal
-    //     this.blockExplorerUrl=coinInfo.blockExplorerUrl
-    //     this.introdution=coinInfo.introdution
-    //     this.createTime=this.timestampToTime(coinInfo.createTime);
-
-    //     })
-    // },
   },
   computed: {
     ...mapState("trading", ["coinInfo"])

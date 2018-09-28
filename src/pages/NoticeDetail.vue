@@ -1,61 +1,20 @@
 <template>
-    <div>
-        <v-header></v-header>
-        <div class="container noticeDetail">
-            <div class="item" >
-                  <div class="title">{{title}}</div><div class="goback" @click="goback">返回</div>
-                <div class="text">关键字：<span class="keyword">{{key_word}}</span> <span class="date">发布时间：{{create_time}}</span></div>
-                <pre class="detail"  v-html='content'>
-                    
-                </pre>
-            </div>
-            <div class="line"> </div>
-            <div class="pre" :class="{notAllowed:showPre}"   @click="preNotice">上一篇:<span v-if="!showPre">{{preTitle}}</span><span v-if="showPre">当前已经是第一篇</span></div>
-            <div class="next" :class="{notAllowed:showNext}" @click="nextNotice">下一篇:{{nextTitle}}<span v-if="showNext">当前已经是最后一篇</span></div>
+    <div class="container noticeDetail">
+        <div class="item" >
+              <div class="title">{{title}}</div><div class="goback" @click="goback">返回</div>
+            <div class="text">关键字：<span class="keyword">{{key_word}}</span> <span class="date">发布时间：{{create_time}}</span></div>
+            <pre class="detail"  v-html='content'>
+                
+            </pre>
         </div>
-        <v-footer></v-footer>
+        <div class="line"> </div>
+        <div class="pre" :class="{notAllowed:showPre}"   @click="preNotice">上一篇:<span v-if="!showPre">{{preTitle}}</span><span v-if="showPre">当前已经是第一篇</span></div>
+        <div class="next" :class="{notAllowed:showNext}" @click="nextNotice">下一篇:{{nextTitle}}<span v-if="showNext">当前已经是最后一篇</span></div>
     </div>
   
 </template>
-<style lang="less" scoped>
 
-.noticeDetail{padding-bottom: 30px;
-    .goback{    position: absolute;cursor: pointer;
-    right: 60px;
-    top: 40px;
-    font-size: 14px;}
-        margin: 47px auto;
-    background: #292f37;
-}
-.item{    color: #686d72;    font-size: 14px;font-family:"PingFangSC-Regular" ;
-        padding: 40px 60px;
-        .text,.title{text-align: center}
-        .text{margin-bottom: 56px;
-
-line-height: 22px;
-        }
-        .title{
-            font-size: 18px;margin-bottom: 12px;
-color: #FFFFFF;
-        }
-        .detail{line-height: 22px;white-space: pre-wrap;word-wrap: break-word;}
-        .date{margin-left: 5px;}
-        .keyword{
-            color: #2286FF;
-        }
-      
-}
-  .line{border-bottom: 1px solid #3B4249;margin-bottom: 20px;}
-  .pre,.next{
-          padding: 4px 60px;font-size: 14px;cursor: pointer;
-      
-       
-  }
-     .notAllowed{cursor:not-allowed}
-</style>
 <script>
-import VHeader from "../../components/Header";
-import VFooter from "../../components/Footer";
 export default {
     data(){
         return{
@@ -83,10 +42,6 @@ export default {
     mounted () {
         this.getNotice()
     },
-      components: {
-    VHeader,
-    VFooter,
-  },
     methods: {
         //返回
         goback(){
@@ -237,4 +192,39 @@ export default {
     }
 }
 </script>
+<style lang="less" scoped>
 
+.noticeDetail{padding-bottom: 30px;
+    .goback{    position: absolute;cursor: pointer;
+    right: 60px;
+    top: 40px;
+    font-size: 14px;}
+        margin: 47px auto;
+    background: #292f37;
+}
+.item{    color: #686d72;    font-size: 14px;font-family:"PingFangSC-Regular" ;
+        padding: 40px 60px;
+        .text,.title{text-align: center}
+        .text{margin-bottom: 56px;
+
+line-height: 22px;
+        }
+        .title{
+            font-size: 18px;margin-bottom: 12px;
+color: #FFFFFF;
+        }
+        .detail{line-height: 22px;white-space: pre-wrap;word-wrap: break-word;}
+        .date{margin-left: 5px;}
+        .keyword{
+            color: #2286FF;
+        }
+      
+}
+  .line{border-bottom: 1px solid #3B4249;margin-bottom: 20px;}
+  .pre,.next{
+          padding: 4px 60px;font-size: 14px;cursor: pointer;
+      
+       
+  }
+     .notAllowed{cursor:not-allowed}
+</style>

@@ -6,6 +6,7 @@ import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
 import Notice from '@/pages/Notice'
+import NoticeDetail from '@/pages/NoticeDetail'
 import JoinUs from '@/pages/JoinUs'
 import Transaction from '@/pages/Transaction'
 import ApplyChannel from  '@/components/channel/ApplyChannel'
@@ -15,7 +16,6 @@ import BasicInfo from '@/components/mountCoin/BasicInfo'
 import MineProperty from '@/components/personal/MineProperty'
 import CarryfullCoin from '@/components/personal/CarryfullCoin'
 import BuyOrSellDetail from '@/components/transactionCenter/BuyOrSellDetail'
-import NoticeDetail from '@/components/notice/NoticeDetail'
 
 
 Vue.use(Router)
