@@ -64,7 +64,7 @@ export default {
     created() {
        this.$store.dispatch("initTradingList")
      
-        this.$store.dispatch("trading/initTradings")
+        // this.$store.dispatch("trading/initTradings")
         
   },
   methods: {

@@ -30,15 +30,12 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
-        
-        setTimeout(()=>{
             // console.log(arg,'888888==========99999=====777777')
-            commit("initMarketInfo",rootState.tradingList)
-            commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
-            
-            commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
-            commit("getDealOrders", rootState.tradeId)//初始化交易历史
-        },1500)
+        commit("initMarketInfo",rootState.tradingList)
+        commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
+        
+        commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
+        commit("getDealOrders", rootState.tradeId)//初始化交易历史
         console.log(rootState,rootState.tradeId,'=======9999999....;;;;;;;')
         //交易对基本信息
         //订单记录

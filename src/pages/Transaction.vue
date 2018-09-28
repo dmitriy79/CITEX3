@@ -132,7 +132,9 @@ export default {
   },
   
   mounted() {
-    this.$store.dispatch("initTradingList")
+    this.$store.dispatch("initTradingList", () => {
+      this.$store.dispatch("trading/initTradings")
+    })
   },
   methods: {
     // getDeepImg() {

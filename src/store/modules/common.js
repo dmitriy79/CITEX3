@@ -17,7 +17,7 @@ export default {
   actions: {
  
     //初始化交易对列表
-    initTradingList({commit,state}, params) {
+    initTradingList({commit,state}, callback) {
       api.classificationList({}).then(res => {
         // console.log(res,'交易列表=++++++===》')
         if (res.datas) {
@@ -35,17 +35,17 @@ export default {
         }
       }).then(res => {
        console.log(res,'toggleTrading+++=00099999999--------------')
-        commit('toggleTrading',res[0].id)
+        commit('toggleTrading', {id: res[0].id, callback: callback})
       })
     },
     //收藏币种
     favoriteCoin({commit,state}, params) {
       api.collect(params).then(res => {
-        commit('toggleTrading',state.currentCategoryIndex) //刷新列表
+        commit('toggleTrading', { id: state.currentCategoryIndex }) //刷新列表
       })
     },
     toggleTrading({commit,state}, id) {
-      commit('toggleTrading',id) //刷新列表
+      commit('toggleTrading', { id }) //刷新列表
     },
     timestampToTime({commit,state}, timestamp) {
         var date = new Date(timestamp)
@@ -100,15 +100,15 @@ export default {
     },
 
     //交易对切换
-    toggleTrading(state,id){
+    toggleTrading(state, params){
       
-      api.getTradeInfoByZone({id:id}).then(res=>{
+      api.getTradeInfoByZone({id:params.id}).then(res=>{
         if(res.datas.list.length>0){
           state.tradingList = res.datas.list
           state.marketInfo = res.datas.list[0]
         state.currentCoinId=res.datas.list[0].coinId
         state.tradeId=res.datas.list[0].id
-      
+          params.callback && params.callback();
         }
        console.log(state.tradingList,'---------.......>>>>>>>>>切换交易对')
         state.currentCategoryIndex = id
