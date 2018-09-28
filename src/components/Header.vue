@@ -1,5 +1,5 @@
 <template>
-  <div class="header" :class="{ 'header-top': isTop }" id="header">
+  <div class="header header-top" id="header">
     <h1 class="header-logo">
         <a href="/Home" class="ico-logo">
           <span>ibtop.com</span>
@@ -146,9 +146,9 @@ export default {
     this.token = localStorage.getItem("token")
     this.userName = localStorage.getItem("userName")
     // console.log(this.token, this.userName, '999992202020200')
-    window.onscroll = e => {
-      this.isTop = (window.scrollY > 50) ? true : false
-    }
+    // window.onscroll = e => {
+    //   this.isTop = (window.scrollY > 50) ? true : false
+    // }
   }
 };
 

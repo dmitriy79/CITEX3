@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <v-header></v-header>
-    <router-view/>
+    <div class="wrapper" style="padding-top: 50px;">
+      <router-view/>
+    </div>
     <div class="footer">
       <v-footer></v-footer>
     </div>
