@@ -38,7 +38,6 @@ export default {
     return {};
   },
   created() {
-    this.$store.dispatch("trading/initMarketInfo")
   },
   computed: {
     ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex"])

@@ -30,9 +30,9 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
-        commit("initMarketInfo",rootState.tradingList)
+        // commit("initMarketInfo",rootState.tradingList)
         commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
-        
+
         commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
         commit("getDealOrders", rootState.tradeId)//初始化交易历史
 
@@ -41,18 +41,10 @@ const actions = {
         //币种资料
         commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
-      
-        commit("initMarketInfo",rootState)
         commit("toggleOrder",rootState)
-        
-        
-        
-        
         //当前交易对基本信息 marketInfo
-        //commit('getMarketInfo',coinId)
-        commit('setMarket',  { ...rootState, ...arg })
+        commit('setMarket',  { ...rootState, selectId: 0})
         let coinId = rootState.marketInfo.id
-        console.log(coinId)
          //用户币种可用资金
         //commit('getAssets',)
         //币种资料
@@ -91,16 +83,7 @@ const actions = {
         commit('websocketKline',{currentCoinId:rootState.tradeId,step:params.step})  //币种
     },
 
-    initMarketInfo({ commit,state, rootState }, obj) {
-        // let id = rootState.tradingList[0].id
-        // state.currentCoinName=rootState.tradingList[0].name
-        // commit('initMarketInfo', rootState)
-        // console.log(rootState.tradingList,'wo啥时候说实话====================================》')
-        // state.currentTradingIndex=rootState.tradingList[0].id
-        // commit('setMarket', { ...rootState, selectId: id })
-    },
     //根据项目查询交易对
-    
     searchCoin({ commit, rootState }, value){
     
     },
@@ -298,7 +281,7 @@ const mutations = {
                     });
                 });
             }
-            console.log(kline)
+            console.log('k line data', kline)
             state.klineHistory=kline
 
         })
@@ -417,13 +400,6 @@ const mutations = {
         //     }
         // })
     },
-    getMarketInfo(state,id){
-        console.log(id)
-        api.getTradeCoinPairByCoinId({tradeCoinId:id}).then(res=>{
-            console.log(res)
-            state.marketInfo = res.datas
-        })
-    },
     //撤销挂单
     canceOrder(state, params) {
         api.cancelBuy(params).then(res => {
@@ -442,10 +418,6 @@ const mutations = {
         console.log(params)
         state.currentTradingIndex = params.selectId
         state.marketInfo = params.tradingList[params.selectId]
-    },
-    initMarketInfo(state,params){
-        // console.log(params,'000----------')
-        state.marketInfo=params[0]
     },
     //获取币种资料
     getCoinInfo(state, id) {

@@ -24,7 +24,29 @@ export default {
   name: "KLine",
 
   mounted: function() {
-    const this_vue = this;
+    // setTimeout( () => {
+      this.createKline();
+    // }, )
+  },
+  methods: {
+    changePair: function() {
+      let this_vue = this;
+      if (this.chart && this.feed) {
+        this.feed._fireEvent("pair_change");
+        this.chart.activeChart().resetData();
+        this.chart
+          .activeChart()
+          .setSymbol(this.currency1 + ":" + this.currency2, function() {
+            console.log(
+              "GOWNO :: proba zmiany",
+              this_vue.currency1,
+              this_vue.currency2
+            );
+          });
+      }
+    },
+    createKline: function () {
+const this_vue = this;
    
     this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
     this_vue.feed = this_vue.createFeed();
@@ -229,7 +251,7 @@ export default {
       this_vue.chart.MAStudies = [];
       /*创建自定义的功能button,attr 定义标签属性,on 定义button的点击事件,append button的内容 */
       this_vue.chart.onChartReady(function() {
-      	document.getElementById('chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
+        document.getElementById('chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
         let chart = this_vue.chart.chart();
         let mas = [
           {
@@ -364,24 +386,6 @@ export default {
         this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#238031'});
         this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#850058'});
       });
-    // });
-  },
-  methods: {
-    changePair: function() {
-      let this_vue = this;
-      if (this.chart && this.feed) {
-        this.feed._fireEvent("pair_change");
-        this.chart.activeChart().resetData();
-        this.chart
-          .activeChart()
-          .setSymbol(this.currency1 + ":" + this.currency2, function() {
-            console.log(
-              "GOWNO :: proba zmiany",
-              this_vue.currency1,
-              this_vue.currency2
-            );
-          });
-      }
     },
     createFeed: function() {
       let this_vue = this;
@@ -700,8 +704,10 @@ export default {
           }  
           this_vue.$store.dispatch("trading/getKline", {step:resolution})
          
-          
-          onHistoryCallback(this_vue.klineHistory)
+          console.log('k line data 2 ', this_vue.klineHistory)
+          // setTimeout( function () {
+            onHistoryCallback(this_vue.klineHistory)
+          // }, 1000)
          /* this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
             console.log(res,'----------------..>>>>>>>>>>>>>')
         var kline=[]
