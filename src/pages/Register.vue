@@ -1,6 +1,5 @@
 <template>
   <div class="register-wrapper">
-    <v-header></v-header>
     <div class="register" ref="content">
       <div class="container">
         <div class="left">
@@ -47,14 +46,9 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      <v-footer></v-footer>
-    </div>
   </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 export default {
   data() {
     return {
@@ -69,11 +63,6 @@ export default {
       canClick: true,
       timer: null,
     }
-  },
-
-  components: {
-    VHeader,
-    VFooter,
   },
   methods: {
     loadYanzhengma() {

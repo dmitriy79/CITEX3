@@ -1,28 +1,21 @@
 <template>
-    <div>
-         <v-header></v-header>
-         <div class="container notice">
-             
-              <div class="tabs" >
-                <span v-for="(item,index) in datalists" @click="tabs(index,item.name)" :class="{active:currentIndex==index}">{{item.name}}</span>
-            </div>
-            <div class="search-box">
-                 <input type="text"><span class="ico-search"></span>
-             </div>
-            <div class="content" >
-                <div class="item" v-for="(item,index) in list" @click="noticeDetail(item.id,index)">
-                    <div class="title">{{item.title}}</div>
-                    <div class="text"><span class="keyword">关键字：{{item.key_word}}</span> <span class="date">发布时间：{{create_time}}</span></div>
-                    <div class="detail">{{item.content}}</div>
-                </div>
-            </div>
-        </div>
-        <v-footer></v-footer>
+  <div class="container notice">
+    <div class="tabs" >
+        <span v-for="(item,index) in datalists" @click="tabs(index,item.name)" :class="{active:currentIndex==index}">{{item.name}}</span>
     </div>
+    <div class="search-box">
+      <input type="text"><span class="ico-search"></span>
+    </div>
+    <div class="content" >
+      <div class="item" v-for="(item,index) in list" @click="noticeDetail(item.id,index)">
+        <div class="title">{{item.title}}</div>
+        <div class="text"><span class="keyword">关键字：{{item.key_word}}</span> <span class="date">发布时间：{{create_time}}</span></div>
+        <div class="detail">{{item.content}}</div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 export default {
     data(){
         return{
@@ -38,8 +31,6 @@ export default {
         }
     },
     components: {
-    VHeader,
-    VFooter,
   },
   mounted () {
       this.getNoticeList()

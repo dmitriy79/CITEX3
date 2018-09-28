@@ -1,10 +1,16 @@
 <template>
   <div id="app">
-      <router-view/>
+    <v-header></v-header>
+    <router-view/>
+    <div class="footer">
+      <v-footer></v-footer>
+    </div>
   </div>
 </template>
 
 <script>
+import VHeader from "@/components/Header";
+import VFooter from "@/components/Footer";
 export default {
   name: 'App',
   data(){
@@ -12,7 +18,9 @@ export default {
     
     }
   },
-
+  components: {
+    VHeader, VFooter
+  },
   methods: {
 
   }

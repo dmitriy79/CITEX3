@@ -1,6 +1,5 @@
 <template>
   <div class="login-wrapper">
-    <v-header></v-header>
     <div class="login">
       <div class="container">
         <div class="login-form">
@@ -27,12 +26,9 @@
         </div>
       </div>
     </div>
-    <v-footer></v-footer>
   </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 export default {
   data() {
     return {
@@ -216,10 +212,6 @@ console.log(returnData !== '成功','0000++++*****')
 
       })*/
     }
-  },
-  components: {
-    VHeader,
-    VFooter,
   }
 }
 

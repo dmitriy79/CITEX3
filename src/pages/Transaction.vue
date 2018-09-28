@@ -1,7 +1,6 @@
 
 <template>
     <div >
-        <v-header></v-header>  
         <div class="transaction-wrap">
            <div class="transaction-top">
              <div class="left">
@@ -81,12 +80,9 @@
             </div>
          </div>
        </div>
-        <v-footer></v-footer> 
     </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 import KLine from "../components/transactionCenter/KLine";
 import CoinTab from "../components/transactionCenter/CoinTab";
 import LimitedPrice from "../components/transactionCenter/LimitedPrice";
@@ -102,7 +98,6 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 export default {
   name: "Transaction",
   components: {
-    VHeader,
     KLine,
     CoinTab,
     LimitedPrice,
@@ -111,8 +106,7 @@ export default {
     TransactionPrice,
     // DeepImg,
     XChart,
-    TypeInfo,
-    VFooter
+    TypeInfo
   },
  
   data() {

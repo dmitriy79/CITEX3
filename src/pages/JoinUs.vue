@@ -93,16 +93,13 @@
             </div>
         </div>
     </div>
-    <v-footer></v-footer>
 </div>
     
 
 </template>
 <script>
-import VFooter from "../components/Footer";
 export default {
     components: {
-    VFooter,
   },
     data(){
         return{

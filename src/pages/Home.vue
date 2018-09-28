@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <v-header></v-header>
     <section class="loading" v-if='pageLoading'>
       <div class="ico-logo"></div>
     </section>
@@ -59,12 +58,9 @@
         </div>
       </div>
     </section>
-    <v-footer></v-footer>
   </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 import HomeSwiper from "../components/Swiper";
 import CoinType from "../components/home/CoinType";
 import RiseDrop from "../components/home/RiseOrDrop";
@@ -73,8 +69,6 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "Home",
   components: {
-    VHeader,
-    VFooter,
     CoinType,
     RiseDrop,
     TabTransaction,

@@ -1,6 +1,5 @@
 <template>
     <div class="login-wrapper">
-        <v-header></v-header>
         <div class="findpassword">
             <div class="container" ref="content">
             <div class="left">
@@ -28,15 +27,11 @@
         </div>
         </div>
         
-        <div class="footer">
-             <v-footer></v-footer>
-        </div>
+        
        
     </div>
 </template>
 <script>
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 export default {
     data(){
         return{
@@ -213,10 +208,6 @@ export default {
             }
           })
     }
-    },
-    components: {
-        VHeader,
-        VFooter,
     }
 }
 </script>

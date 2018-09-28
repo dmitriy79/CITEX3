@@ -1,6 +1,5 @@
 <template>
 <div class="contanier">
-    <v-header></v-header>
     <div class="personal-wrapper">
     <div class="tabs">
        <dl>
@@ -43,8 +42,7 @@
         <property :is="currentTab" keep-alive ></property>
     </div>
     
-</div>
-<v-footer></v-footer>
+  </div>
 </div>
 
 
@@ -52,8 +50,6 @@
  
 <script>
 // 引入子组件
-import VHeader from "../components/Header";
-import VFooter from "../components/Footer";
 import Property from "../components/personal/MineProperty";
 import Entrust from "../components/personal/MineEntrust";
 import Record from "../components/personal/TransactionRecord";
@@ -94,9 +90,7 @@ export default {
     ModifyPassword,
     TransactionPassword,
     Recommed,
-    MineInfo,
-    VHeader,
-    VFooter
+    MineInfo
   },
   methods: {
     toggleTab: function(tab) {
