@@ -31,12 +31,17 @@ import './assets/css/font.css'
 import './assets/css/iconfont.css'
 import './assets/css/common.less'
 
+
+import './utils/axios'
 import './utils/filter'
 import axios from 'axios'
 import VueClipboards from 'vue-clipboards';
 import VueI18n from 'vue-i18n'
 import lang from './lang'
 import store from './store'
+
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 Vue.use(VueI18n)
 Vue.use(VueClipboards);
@@ -65,43 +70,21 @@ Vue.prototype.$prompt = MessageBox.prompt;
 //为了方便打包后去除'/api',建议把'/api'设成全局，在main.js中添加
 //Vue.prototype.api = process.env.NODE_ENV === 'production' ? '' : '/api'
 //console.log(process.env.WS_API)
-// 请求拦截
-axios.interceptors.request.use(
-	config => {
-		let token = localStorage.getItem("token");
-		// let token =JSON.parse(localStorage.getItem("token")) ;
-		// token = JSON.parse(token)
-		if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-			config.headers['USER-TOKEN'] = `${token}`;
-		}
-		// if (config.url.indexOf(url) === -1) {
-		// 	config.url = url + config.url;/*拼接完整请求路径*/
-		// }
-		return config;
-	},
-	err => {
-		return Promise.reject(err);
-	});
-
-axios.interceptors.response.use(function(response) {
-	// token 已过期，重定向到登录页面
-	if (response.data.message == 'no login') {
-		// localStorage.clear()
-		localStorage.removeItem('token')
-		router.replace({
-			path: '/login'
-		})
-	}
-	return response
-}, function(error) {
-	// Do something with response error
-	return Promise.reject(error)
-})
 
 const i18n = new VueI18n({
 	locale: 'zh_cn',
 	messages: lang
 })
+
+
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
 
 /* eslint-disable no-new */
 new Vue({

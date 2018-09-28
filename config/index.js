@@ -2,34 +2,30 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 const path = require('path')
-const APIHOST = "http://47.93.194.146"
-const apiPort = {
-  13020:"coin",//管理
-  13030:"payment", //支付管理
-  13040:"trade",//交易管理
-  13010:"user", //用户管理
-}
-let proxys = {}
-for (let i in apiPort) {
-  //console.log(apiPort[i])
-  let reqName = apiPort[i].toUpperCase()
-  proxys[`/${reqName}`] = {
-    target: `${APIHOST}:${i}`,
-    changeOrigin: true,
-    pathRewrite: {
-      [`^/${reqName}`]: ""
-    }
-  }
-}
-
-console.log(proxys)
 
 module.exports = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable:proxys,
+    proxyTable: {
+      "/coin": {
+        target: 'http://47.93.194.146/'
+        // target: 'https://api.punchvip.cn/'
+      },
+      "/payment": {
+        target: 'http://47.93.194.146/'
+        // target: 'https://api.punchvip.cn/'
+      },
+      "/trade": {
+        target: 'http://47.93.194.146/'
+        // target: 'https://api.punchvip.cn/'
+      },
+      "/user": {
+        target: 'http://47.93.194.146/'
+        // target: 'https://api.punchvip.cn/'
+      }
+    },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
