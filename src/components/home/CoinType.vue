@@ -5,47 +5,15 @@
         <div class="item" v-for="(item,index) in coinList">
           <div class="top-wrapper">
             <div class="coin-type"><span class="type">{{item.name}}</span><span class="rate green">{{item.increaseNum}}%</span></div>
-            <div class="price">{{item.price}} ≈$2.12</div>
+            <div class="price">{{item.price}} ≈${{item.price*0.1452}}</div>
             <div class="num">量：<span>{{item.amount_24H}}</span></div>
           </div>
-          <x-chart :id="id1" :option="option1"></x-chart>
-          <!-- <x-chart :id="id2" :option="option2"></x-chart>
-               <x-chart :id="id3" :option="option3"></x-chart>
-               <x-chart :id="id4" :option="option4"></x-chart>
-               <x-chart :id="id5" :option="option5"></x-chart> -->
+          <x-chart :id="id1" :option="option1" v-if="index==0"></x-chart>
+          <x-chart :id="id2" :option="option2" v-if="index==1"></x-chart>
+          <x-chart :id="id3" :option="option3" v-if="index==2"></x-chart>
+          <x-chart :id="id4" :option="option4" v-if="index==3"></x-chart>
+          <x-chart :id="id5" :option="option5" v-if="index==4"></x-chart>
         </div>
-    <!--     <div class="item">
-          <div class="top-wrapper">
-            <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate red">-12%</span></div>
-            <div class="price">0.21232 ≈$2.12</div>
-            <div class="num">量：<span>1982382983</span></div>
-          </div>
-          <x-chart :id="id2" :option="option2"></x-chart>
-        </div>
-        <div class="item">
-          <div class="top-wrapper">
-            <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate green">+32%</span></div>
-            <div class="price">0.21232 ≈$2.12</div>
-            <div class="num">量：<span>1982382983</span></div>
-          </div>
-          <x-chart :id="id3" :option="option3"></x-chart>
-        </div>
-        <div class="item">
-          <div class="top-wrapper">
-            <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate red">-32%</span></div>
-            <div class="price">0.21232 ≈$2.12</div>
-            <div class="num">量：<span>1982382983</span></div>
-          </div>
-          <x-chart :id="id4" :option="option4"></x-chart>
-        </div>
-        <div class="item">
-          <div class="top-wrapper">
-            <div class="coin-type"><span class="type">TRUE/BTC</span><span class="rate green">+32%</span></div>
-            <div class="price">0.21232 ≈$2.12</div>
-            <div class="num">量：<span>1982382983</span></div>
-          </div>
-          <x-chart :id="id5" :option="option5"></x-chart>
-        </div> -->
       </div>
     </div>
   </div>
