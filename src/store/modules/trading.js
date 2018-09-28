@@ -30,16 +30,16 @@ const getters = {
 const actions = {
     //initTrading
     initTradings({ commit, state, rootState }, arg) {
-            // console.log(arg,'888888==========99999=====777777')
         commit("initMarketInfo",rootState.tradingList)
         commit("getAssets",{currentCoinId:rootState.currentCoinId,zoneId:rootState.zoneId})
         
         commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
         commit("getDealOrders", rootState.tradeId)//初始化交易历史
-        console.log(rootState,rootState.tradeId,'=======9999999....;;;;;;;')
+
         //交易对基本信息
         //订单记录
         //币种资料
+        commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
       
         commit("initMarketInfo",rootState)
@@ -330,6 +330,8 @@ const mutations = {
     },
     //当前所有委托记录
     listBidOrders(state, params) {
+        console.error()
+        console.log(params,'----')
         api.listBidOrders(params).then(res => {
              console.log("listBidOrders+++++++++++=当前所有委托记录===============>", res)
            // state.orderData = res.datas

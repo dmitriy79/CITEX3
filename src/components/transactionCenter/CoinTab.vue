@@ -56,7 +56,7 @@ export default {
   computed: {
     ...mapState(["tradingCategory","currentCategoryIndex",'tradingList',"currentTradingIndex"]),
     ...mapState('trading',['currentTradingIndex','currentIndex']),
-    //...mapGetters(["filterCoin"]),
+    ...mapGetters(["filterCoin"]),
     ...mapActions(['toggleMarket']),
   },
 
@@ -250,7 +250,7 @@ export default {
       cursor: pointer;
     }
     &.active{
-      background: #181f27;
+      // background: #181f27;
       *{
         color:#fff;
       }
