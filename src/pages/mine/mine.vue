@@ -53,12 +53,13 @@ export default {
   name: "app",
   data() {
     return {
-      currentTab: "property", // currentTab 用于标识当前触发的子组件
+      currentTab: "mine", // currentTab 用于标识当前触发的子组件
       showList: false
     };
   },
   created() {
     this.currentTab = this.$route.path.split('/')[2];
+    console.log(this.$route)
   },
   methods: {
     toggleTab: function(tab) {

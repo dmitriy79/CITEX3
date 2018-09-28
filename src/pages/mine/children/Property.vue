@@ -1,7 +1,6 @@
 <template>
     <div class="member-content">
-        <div class="property-wrapper"  v-if="showProperty">
-      
+        <div class="property-wrapper">
         <div class="member-title">
           <h1>我的资产</h1>
            <div class="member-total">
@@ -74,7 +73,7 @@
                         <img src="@/assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm">
                     </div>
                     <div class="item">
-                        查看<span class="record" @click="fullCoinRecord">充币记录</span>跟踪状态
+                        查看<span class="record" @click="showRecord">充币记录</span>跟踪状态
                     </div>
                     <div class="tips">
                     <p>温馨提示：</p>
@@ -89,51 +88,8 @@
                  </transition>
             </dd>
         </dl>
-        
     </div>
-    <div class="carry-full-coin" v-if="showList">
-        <div class="tabs">
-            <span @click="tabRecord('full')" :class="{active:this.current==='full'}">充币记录</span>
-            <span @click="tabRecord('carry')" :class="{active:this.current==='carry'}">提币记录</span>
-            <div @click="goback">返回</div>
-        </div>
-        <div class="content">
-            <div class="full-coin-wrapper" v-if="this.current==='full'">
-                 <el-table :data="fullCoinRecord"  style="width: 100%">
-                    <el-table-column prop="createTime" label="时间" width=""></el-table-column>
-                    <el-table-column prop="name" label="币种" width="">
-                        <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
-                            
-                            <span style="margin-left: 10px">{{ scope.row.name }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="address" label="类型"></el-table-column>
-                    <el-table-column prop="address" label="数量"></el-table-column>
-                    <el-table-column prop="address" label="状态"></el-table-column>
-                </el-table>
-                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-            </div>
-            <div class="carry-coin-wrapper" v-if="this.current==='carry'">
-                <el-table :data="tableData2"  style="width: 100%">
-                    <el-table-column prop="date" label="时间" width=""></el-table-column>
-                    <el-table-column prop="name" label="币种" width="">
-                        <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
-                            
-                            <span style="margin-left: 10px">{{ scope.row.name }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="address" label="类型"></el-table-column>
-                    <el-table-column prop="address" label="数量"></el-table-column>
-                    <el-table-column prop="address" label="状态"></el-table-column>
-                </el-table>
-                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-             
-            </div>
-        </div>
-    </div>
-    <el-dialog title="提示"   :visible.sync="dialogAuditing" width="30%">
+    <el-dialog title="提示" :visible.sync="dialogAuditing" width="30%">
       <el-form :model="form" class="dialog-wrapper" label-width="120px">
         <el-form-item label="请输入交易密码：">
           <el-input v-model="form.password" auto-complete="off"></el-input>
@@ -181,8 +137,6 @@ export default {
       checked: false, //隐藏小额资产
       isShow1: false,
       isshowEwm: false,
-      showProperty: true,
-      showList: false,
       logoUrl: "",
       coinName: "",
       activeIndex: "",
@@ -330,22 +284,8 @@ export default {
       this.isshowEwm = !this.isshowEwm;
     },
     showRecord() {
-      this.showProperty = false;
-      this.showList = true;
+      this.$router.push('coin-record');
     },
-    //充币记录,提币记录
-    tabRecord(tab) {
-      if (tab == "full") {
-      } else {
-      }
-      console.log(tab, "222299999");
-
-      this.current = tab;
-    },
-    goback() {
-      this.showProperty = true;
-      this.showList = false;
-    }
   },
   computed:{
     ...mapState('assets',['myAssets'])
@@ -633,36 +573,6 @@ export default {
         border-bottom-color: #292f37;
         top: -20px;
       }
-    }
-  }
-}
-.carry-full-coin {
-  height: 920px;
-  .content {
-    div {
-      padding: 0 10px 50px;
-    }
-  }
-  .tabs {
-    height: 40px;
-    margin-bottom: 23px;
-    background: #1b222a;
-    div {
-      text-align: right;
-      flex: 1;
-      padding-right: 20px;
-    }
-    cursor: pointer;
-    line-height: 40px;
-    display: flex;
-    span {
-      display: block;
-      text-align: center;
-      font-size: 15px;
-      width: 144px;
-    }
-    span.active {
-      background: #292f37;
     }
   }
 }

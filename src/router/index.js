@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 //import Home from '@/pages/Home'
 import Login from '@/pages/Login'
-import Personal from '@/pages/Personal'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
 import Notice from '@/pages/Notice'
@@ -32,7 +31,7 @@ const router =  new Router({
       component: Transaction
     },
     {
-      path: '/joinUs',
+      path: '/join-us',
       name: 'JoinUs',
       component: JoinUs
     },
@@ -45,60 +44,63 @@ const router =  new Router({
       name: 'Register',
       component: Register
     },{
-      path: '/personal',
-      name: 'Personal',
-      component: () => import('@/pages/personal/Personal'),
+      path: '/mine',
+      name: 'mine',
+      component: () => import('@/pages/mine/mine'),
       meta: {
         requireAuth: true
       },
       children: [{
         path: 'property',
-        component: () => import('@/pages/personal/children/MineProperty')
+        component: () => import('@/pages/mine/children/Property')
       }, {
         path: 'entrust',
-        component: () => import('@/pages/personal/children/MineEntrust')
+        component: () => import('@/pages/mine/children/Entrust')
       }, {
         path: 'record',
-        component: () => import('@/pages/personal/children/TransactionRecord')
+        component: () => import('@/pages/mine/children/TransactionRecord')
+      }, {
+        path: 'coin-record',
+        component: () => import('@/pages/mine/children/CoinRecord')
       }, {
         path: 'full-coin',
-        component: () => import('@/pages/personal/children/FullCoin')
+        component: () => import('@/pages/mine/children/FullCoin')
       }, {
         path: 'carry-coin',
-        component: () => import('@/pages/personal/children/CarryCoin')
+        component: () => import('@/pages/mine/children/CarryCoin')
       }, {
         path: 'bank-card',
-        component: () => import('@/pages/personal/children/BankCardManage')
+        component: () => import('@/pages/mine/children/BankCardManage')
       }, {
         path: 'coin-count',
-        component: () => import('@/pages/personal/children/CoinCount')
+        component: () => import('@/pages/mine/children/CoinCount')
       }, {
         path: 'phone-authentication',
-        component: () => import('@/pages/personal/children/PhoneAuthentication')
+        component: () => import('@/pages/mine/children/PhoneAuthentication')
       }, {
         path: 'real-authentication',
-        component: () => import('@/pages/personal/children/RealAuthentication')
+        component: () => import('@/pages/mine/children/RealAuthentication')
       }, {
         path: 'google-authenticator',
-        component: () => import('@/pages/personal/children/GoogleAuthenticator')
+        component: () => import('@/pages/mine/children/GoogleAuthenticator')
       }, {
         path: 'recommed',
-        component: () => import('@/pages/personal/children/Recommed')
+        component: () => import('@/pages/mine/children/Recommed')
       }, {
         path: 'modify-password',
-        component: () => import('@/pages/personal/children/ModifyPassword')
+        component: () => import('@/pages/mine/children/ModifyPassword')
       }, {
         path: 'mine-info',
-        component: () => import('@/pages/personal/children/MineInfo')
+        component: () => import('@/pages/mine/children/Info')
       }, {
         path: 'email-authenticator',
-        component: () => import('@/pages/personal/children/EmailAuthenticator')
+        component: () => import('@/pages/mine/children/EmailAuthenticator')
       }, {
         path: 'transaction-passWord',
-        component: () => import('@/pages/personal/children/TransactionPassWord')
+        component: () => import('@/pages/mine/children/TransactionPassWord')
       }]
     },{
-      path: '/findPassword',
+      path: '/find-password',
       name: 'FindPassword',
       component: FindPassword
     },
