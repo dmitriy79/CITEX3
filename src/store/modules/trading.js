@@ -247,7 +247,7 @@ const mutations = {
             url:`websocketAskBid?pairId=${id}`,
             data:'sendParams',
             success:(res)=>{
-                state.AskList=res.ask
+                state.AskList=res.ask.reverse();
                 state.BidList=res.bid
             }
         })

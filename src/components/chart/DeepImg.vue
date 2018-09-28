@@ -37,8 +37,8 @@
         let bidArr = this.bid.map(item => {
           return [item.price, item.totalCount];
         });
-        option.series[0].data = askArr;
-        option.series[1].data = bidArr;
+        option.series[0].data = bidArr;
+        option.series[1].data = askArr;
         HighCharts.chart(this.id, option);
       }
     },
