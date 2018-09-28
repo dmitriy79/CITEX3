@@ -13,7 +13,7 @@ export default class {
 			this.error('Error: WebSocket is not supported..')
       return
     }
-    let wsUri = `${process.env.WS_API}/${arg.url}`
+    let wsUri = `${process.env.WS_API}/scheduling/${arg.url}`
     this.websock = new WebSocket(wsUri)
     this.websock.onmessage = (e) => {
       arg.success(JSON.parse(e.data))
