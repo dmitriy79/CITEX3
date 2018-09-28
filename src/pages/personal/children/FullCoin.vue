@@ -19,7 +19,7 @@
                 <div class="address">
                     
                     钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns"   @success="handleSuccess">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>
-                    <!-- <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm"> -->
+                    <!-- <img src="@/assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm"> -->
                     <div id="qrcode" class="ewm-img"></div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     </el-table-column>
                     <el-table-column prop="type" label="转入币种" >
                         <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="../../assets/images/hours.png" alt=""></span>
+                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
                             
                             <span style="margin-left: 10px">{{ scope.row.type }}</span>
                         </template>

@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import validate  from '../../assets/js/validate'
+import validate  from '@/assets/js/validate'
 
 export default{
    data(){

@@ -71,7 +71,7 @@
                         <label class="name">充币地址</label>
                         <div class="address-wrapper"><span class="address">{{fullAddress}}</span><span class="copy" v-clipboard:copy="fullAddress"
     @success="handleSuccess" v-if="able">复制</span><span class="ewm" @click="showEwm" v-if="able">二维码</span></div>
-                        <img src="../../assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm">
+                        <img src="@/assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm">
                     </div>
                     <div class="item">
                         查看<span class="record" @click="fullCoinRecord">充币记录</span>跟踪状态
@@ -103,7 +103,7 @@
                     <el-table-column prop="createTime" label="时间" width=""></el-table-column>
                     <el-table-column prop="name" label="币种" width="">
                         <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="../../assets/images/hours.png" alt=""></span>
+                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
                             
                             <span style="margin-left: 10px">{{ scope.row.name }}</span>
                         </template>
@@ -119,7 +119,7 @@
                     <el-table-column prop="date" label="时间" width=""></el-table-column>
                     <el-table-column prop="name" label="币种" width="">
                         <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="../../assets/images/hours.png" alt=""></span>
+                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
                             
                             <span style="margin-left: 10px">{{ scope.row.name }}</span>
                         </template>

@@ -14,7 +14,7 @@
                         <el-table-column prop="type" label="推荐返佣金额" ></el-table-column>
                         <el-table-column prop="price" label="币种单位">
                              <template slot-scope="scope">
-                            <span class="coinimg-wrapper"><img src="../../assets/images/hours.png" alt=""></span>
+                            <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
                             
                             <span style="margin-left: 10px">{{ scope.row.type }}</span>
                         </template>

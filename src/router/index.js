@@ -47,55 +47,55 @@ const router =  new Router({
     },{
       path: '/personal',
       name: 'Personal',
-      component: Personal,
+      component: () => import('@/pages/personal/Personal'),
       meta: {
         requireAuth: true
       },
       children: [{
         path: 'property',
-        component: () => import('@/components/personal/MineProperty')
+        component: () => import('@/pages/personal/children/MineProperty')
       }, {
         path: 'entrust',
-        component: () => import('@/components/personal/MineEntrust')
+        component: () => import('@/pages/personal/children/MineEntrust')
       }, {
         path: 'record',
-        component: () => import('@/components/personal/TransactionRecord')
+        component: () => import('@/pages/personal/children/TransactionRecord')
       }, {
         path: 'full-coin',
-        component: () => import('@/components/personal/FullCoin')
+        component: () => import('@/pages/personal/children/FullCoin')
       }, {
         path: 'carry-coin',
-        component: () => import('@/components/personal/CarryCoin')
+        component: () => import('@/pages/personal/children/CarryCoin')
       }, {
         path: 'bank-card',
-        component: () => import('@/components/personal/BankCardManage')
+        component: () => import('@/pages/personal/children/BankCardManage')
       }, {
         path: 'coin-count',
-        component: () => import('@/components/personal/CoinCount')
+        component: () => import('@/pages/personal/children/CoinCount')
       }, {
         path: 'phone-authentication',
-        component: () => import('@/components/personal/PhoneAuthentication')
+        component: () => import('@/pages/personal/children/PhoneAuthentication')
       }, {
         path: 'real-authentication',
-        component: () => import('@/components/personal/RealAuthentication')
+        component: () => import('@/pages/personal/children/RealAuthentication')
       }, {
         path: 'google-authenticator',
-        component: () => import('@/components/personal/GoogleAuthenticator')
+        component: () => import('@/pages/personal/children/GoogleAuthenticator')
       }, {
         path: 'recommed',
-        component: () => import('@/components/personal/Recommed')
+        component: () => import('@/pages/personal/children/Recommed')
       }, {
         path: 'modify-password',
-        component: () => import('@/components/personal/ModifyPassword')
+        component: () => import('@/pages/personal/children/ModifyPassword')
       }, {
         path: 'mine-info',
-        component: () => import('@/components/personal/MineInfo')
+        component: () => import('@/pages/personal/children/MineInfo')
       }, {
         path: 'email-authenticator',
-        component: () => import('@/components/personal/EmailAuthenticator')
+        component: () => import('@/pages/personal/children/EmailAuthenticator')
       }, {
         path: 'transaction-passWord',
-        component: () => import('@/components/personal/TransactionPassWord')
+        component: () => import('@/pages/personal/children/TransactionPassWord')
       }]
     },{
       path: '/findPassword',

@@ -41,7 +41,7 @@
         </div>
 </template>
 <script>
-import date from "../../assets/js/date";
+import date from "@/assets/js/date";
 export default {
   data() {
     return {

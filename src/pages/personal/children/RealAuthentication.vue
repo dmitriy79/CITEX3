@@ -73,7 +73,7 @@
                     
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
-                        <img src="../../assets/images/sfzz.png" alt="">
+                        <img src="@/assets/images/sfzz.png" alt="">
                     </div>
                 </div>
                 
@@ -91,7 +91,7 @@
                      <div  class="default-wrapper"><i class="plus-icon"></i><span>身份证反面</span></div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
-                        <img src="../../assets/images/sfzf.png" alt="">
+                        <img src="@/assets/images/sfzf.png" alt="">
                         
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     <div  class="default-wrapper"><i class="plus-icon"></i><span>手持身份证正面和个人签字</span></div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
-                        <img src="../../assets/images/scsfz.png" alt="">
+                        <img src="@/assets/images/scsfz.png" alt="">
 
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                     <div class="default-wrapper"><i class="plus-icon"></i><span>护照正面</span></div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
-                        <img src="../../assets/images/hz.png" alt="">
+                        <img src="@/assets/images/hz.png" alt="">
                     </div>
                 </div>
                 
@@ -126,7 +126,7 @@
                     <div  class="default-wrapper"><i class="plus-icon"></i><span>手持护照正面和个人签字</span></div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
-                        <img src="../../assets/images/scsfz.png" alt="">
+                        <img src="@/assets/images/scsfz.png" alt="">
 
                     </div>
                 </div>

@@ -18,7 +18,7 @@
         <!-- <div id="qrcode"></div> -->
         <div class="step">第二步: 使用谷歌验证APP扫描一下二维码，或添加密文进行手工验证</div>
         <div class="step_">操作方法：在“Google Authenticator (谷歌身份验证器)” App中，点击“添加新账户 (iOS 下是 + 号)”->“扫描条形码”，扫描以下二维码 或 点击“输入提供的密钥”，手动输入以下密钥。</div>
-        <!-- <img src="../../assets/images/ewm.png" alt="" class="ewm"> -->
+        <!-- <img src="@/assets/images/ewm.png" alt="" class="ewm"> -->
         <div id="qrcode"></div>
        <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
@@ -187,7 +187,7 @@ export default {
 .img-wrapper {
   a {
     margin-right: 20px;
-    background: url(../../assets/images/yza.png);
+    background: url(../../../assets/images/yza.png);
     display: inline-block;
     width: 145px;
     height: 48px;
