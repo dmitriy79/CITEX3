@@ -41,7 +41,7 @@ const actions = {
         //币种资料
         commit("tradingAskBid", rootState.tradeId)//初始化交易页面买卖单交易
         commit("getCoinInfo", rootState.currentCoinId)//初始化交易员币种资料
-        commit("toggleOrder",rootState)
+        commit("toggleOrder", 1)
         //当前交易对基本信息 marketInfo
         commit('setMarket',  { ...rootState, selectId: 0})
         let coinId = rootState.marketInfo.id

@@ -48,7 +48,6 @@
                     <span>{{item.count}}</span>
                     <span>{{item.totalCount}}</span>
                 </dd>
-                
             </dl>
         </div>
         <div class="list-bottom">

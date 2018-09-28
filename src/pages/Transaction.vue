@@ -75,7 +75,7 @@
       </div>
       <div class="panel-right">
         <div class="deepImg-title">深度图</div>
-        <x-chart :id="id" :option="option"></x-chart>
+        <x-chart :id="id" :ask="AskList" :bid="BidList"></x-chart>
         <!-- <deep-img></deep-img> -->
       </div>
     </div>
@@ -93,7 +93,6 @@ import TransactionPrice from "../components/transactionCenter/TransactionPrice";
 import TypeInfo from "../components/transactionCenter/CoinTypeInfo";
 import XChart from "../components/chart/DeepImg.vue";
 // 导入chart组件模拟数据
-import options from "../chart-options/deepImg";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
 export default {
   name: "Transaction",
@@ -112,7 +111,6 @@ export default {
   data() {
     return {
       id: "id",
-      option: options.deep
     };
   },
   created() {
@@ -137,9 +135,8 @@ export default {
   },
   computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo"]),
+     ...mapState("trading", [ "AskList", "BidList", "marketInfo" ]),
      ...mapState(["zoneName"])
-
   }
 };
 </script>
