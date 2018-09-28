@@ -14,7 +14,6 @@
                     <span class="name">价格</span>
                     <input type="number"
                     name="buyPrice"
-                    @keyup="checkNumber"
                     v-model="buyPrice" :class="{border1:hasBorder}">
                      <!-- <input type="number"
                     name="buyPrice"
@@ -26,7 +25,6 @@
                     <span class="name">数量</span>
                     <input type="number" :class="{border2:hasBorder}"
                     name="buyAmount"
-                     @keyup="checkNumber"
                     v-model="buyNums">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
@@ -67,7 +65,6 @@
                     <span  class="name">价格</span>
                     <input type="text" 
                     name="sellPrice" 
-                    @keyup="checkNumber"
                     v-model="sellPrice"> 
                     <span class="unit">{{zoneName}}</span>
                 </div>
@@ -75,7 +72,6 @@
                     <span  class="name">数量</span>
                     <input type="text" 
                     name="sellAmount"
-                    @keyup="checkNumber"
                      v-model="sellNums">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
@@ -110,7 +106,12 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+  mapMutations
+} from "vuex"
 export default {
   name: "LimitedPrice",
   data() {
@@ -121,202 +122,137 @@ export default {
       isAllowed: false,
       isAllowed1: false,
       isDisabled: true,
-     
-      hasBorder:false,
+
+      hasBorder: false,
       percentage: ["25", "50", "75", "100"],
       sellAmount: 0,
       buyAmount: 0,
-      ableTotal:'',//可买入总数
-      buyPrice:'',//买入价
-      buyNums:'',//买入数量
-      sellPrice:'',//买入价格
-      sellNums:'',//买入数量
-      ableSellTotal:'',//可卖总数
+      ableTotal: '', //可买入总数
+      buyPrice: '', //买入价
+      buyNums: 1, //买入数量
+      sellPrice: '', //买入价格
+      sellNums: 1, //买入数量
+      ableSellTotal: '', //可卖总数
       buyParams: {
         tradeCoinPairId: 1,
         //code: 13422,
-        tradePassword:95558
+        tradePassword: 95558
       },
       sellParams: {
         tradeCoinPairId: 1,
         //code: 1123414,
-        tradePassword:95558
+        tradePassword: 95558
       }
     }
   },
-  mounted() {
-     this.token = localStorage.getItem("token")
-      console.log(this.token)
-      // this.$nextTick(() => {
-      //   var currentProperty1=this.$refs.num1.innerText
-      //   var currentProperty2=this.$refs.num2.innerText
-      //   console.log(currentProperty2,currentProperty1)
-      //   if(currentProperty1<=0){
-      //     this.isAllowed=true
-      //     this.isDisabled=true
-      //   }
-      //   else{
-      //     this.isAllowed=false
-      //     this.isDisabled=false
-      //   }
-      //    if(currentProperty2<=0){
-      //     this.isAllowed1=true
-      //     this.isDisabled=true
-      //   }
-      //   else{
-      //     this.isAllowed1=false
-      //     this.isDisabled=false
-      //   }
-      // })
-     if(this.token){
-        this.isDisabled=false
-        
-     }
-     else{
-       this.isDisabled=true
-       this.isAllowed=true
-      this.isAllowed1=true
-     }
+  watch: {
+    buyPrice() {
+      this.totalAmout('buy')
+    },
+    buyNums() {
+      this.totalAmout('buy')
+    },
+    sellPrice() {
+      this.totalAmout('sell')
+    },
+    sellNums() {
+      this.totalAmout('sell')
+    },
+    currentPrcie(val) {
+      this.buyPrice = val;
+      this.sellPrice = val;
+    },
   },
-  created() {
-    const assetsParams = {
-      pageNum: 1,
-      pageSize: 90,
-      coinId: 3
+  mounted() {
+    this.token = localStorage.getItem("token")
+    if (this.token) {
+      this.isDisabled = false
+    } else {
+      this.isDisabled = true
+      this.isAllowed = true
+      this.isAllowed1 = true
     }
-   
-    //this.$store.dispatch("trading/getAssets", assetsParams)
   },
   computed: {
-    ...mapState("trading", ["tradingAssets","currentPrcie","marketInfo","curbuyPrice","cursellPrice"]),
-    
-
-     ...mapState(["zoneName"]),
-    //  sellAmount(){
-  
-    //    this.sellAmount = (this.buyPrice * this.buyNums).toFixed(8);
-    //  }
+    ...mapState("trading", ["tradingAssets", "currentPrcie", "marketInfo", "curbuyPrice", "cursellPrice"]),
+    ...mapState(["zoneName"]),
   },
   methods: {
-   
+
     selectPercentage(e) {
       let target = e.target.dataset
-      console.log(target,'====00000target')
+      console.log(target, '====00000target')
       if (target.id == "buyPre") {
         this.buySelect = target.index;
         let params = this.buyParams;
-      this.$nextTick(() => {
-        var currentProperty1=this.$refs.num1.innerText
-        this.ableTotal=currentProperty1/this.buyPrice
-      console.log(this.ableTotal,target.num)
-       this.buyNums=(target.num / 100)*this.ableTotal
-       this.buyAmount=this.buyNums*this.buyPrice
-      })
+        this.$nextTick(() => {
+          var currentProperty1 = this.$refs.num1.innerText
+          this.ableTotal = currentProperty1 / this.buyPrice
+          console.log(this.ableTotal, target.num)
+          this.buyNums = (target.num / 100) * this.ableTotal
+          this.buyAmount = this.buyNums * this.buyPrice
+        })
       } else if (target.id == "sellPre") {
         this.sellSelect = target.index;
         let params = this.sellParams;
-      this.$nextTick(() => {
-        var currentProperty2=this.$refs.num2.innerText
-        this.ableSellTotal=currentProperty2/this.sellPrice
-      console.log(this.ableSellTotal,target.num)
-       this.sellNums=(target.num / 100)*this.ableSellTotal
-       this.sellAmount=this.sellNums*this.sellPrice
-      })
-
-
-       
+        this.$nextTick(() => {
+          var currentProperty2 = this.$refs.num2.innerText
+          this.ableSellTotal = currentProperty2 / this.sellPrice
+          console.log(this.ableSellTotal, target.num)
+          this.sellNums = (target.num / 100) * this.ableSellTotal
+          this.sellAmount = this.sellNums * this.sellPrice
+        })
       }
     },
-     //买币
-    buyCoin(){
-    if(this.buyNums==''){
-        this.hasBorder=true
+    //买币
+    buyCoin() {
+      if (this.buyNums == '') {
+        this.hasBorder = true
         this.$message({
-                message: '请输入买入数量',
-                type: 'warning'
-                });
+          message: '请输入买入数量',
+          type: 'warning'
+        });
       }
-      if(this.buyPrice==''){
-        this.hasBorder=true
+      if (this.buyPrice == '') {
+        this.hasBorder = true
         this.$message({
-                message: '请输入买入价',
-                type: 'warning'
-                });
+          message: '请输入买入价',
+          type: 'warning'
+        });
       }
-      var buyParams={
-             Price:this.buyPrice,
-             Nums:this.buyNums
-           }
+      var buyParams = {
+        Price: this.buyPrice,
+        Nums: this.buyNums
+      }
       this.$store.dispatch("trading/tradeCoinPairMaxMinPrice", buyParams)
     },
-    sellCoin(){
-        if(this.sellNums==''){
-        this.hasBorder=true
+    sellCoin() {
+      if (this.sellNums == '') {
+        this.hasBorder = true
         this.$message({
-                message: '请输入卖出数量',
-                type: 'warning'
-                });
+          message: '请输入卖出数量',
+          type: 'warning'
+        });
       }
-      if(this.sellPrice==''){
-        this.hasBorder=true
+      if (this.sellPrice == '') {
+        this.hasBorder = true
         this.$message({
-                message: '请输入卖出价',
-                type: 'warning'
-                });
+          message: '请输入卖出价',
+          type: 'warning'
+        });
       }
-      var sellParams={
-             Price:this.sellPrice,
-             Nums:this.sellNums
-           }
-      this.$store.dispatch("trading/tradeCoinPairMaxMinPrice1",sellParams)
+      var sellParams = {
+        Price: this.sellPrice,
+        Nums: this.sellNums
+      }
+      this.$store.dispatch("trading/tradeCoinPairMaxMinPrice1", sellParams)
     },
-    isNumber(value) {
-      let regs = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,8})))$/;
-      let isNumber = regs.test(value)
-      return isNumber
-    },
-
     totalAmout(type) {
       switch (type) {
         case "buy":
-          return (this.buyNums * this.buyPrice).toFixed(8)
+          this.buyAmount = (this.buyNums * this.buyPrice).toFixed(8)
         case "sell":
-          return (this.sellNums * this.sellPrice).toFixed(8)
-      }
-    },
-
-    checkNumber(e) {
-    
-      // let buy = this.buyParams,
-      //     sell = this.sellParams,
-      //     buyAmount = this.buyAmount,
-      //     sellAmount = this.sellAmount,
-      //     isRight = !this.isNumber(e.target.value),
-      //     buyAmounts = this.buyParams.amount,
-      //     buyPrices = this.buyParams.price
-          // console.log(isRight)
- 
-      switch(e.target.name){
-        case 'buyAmount':
-        this.hasBorder=false
-          // this.buyParams.amount = isRight ? buyAmounts : e.target.value
-          this.buyAmount = this.buyPrice ? this.totalAmout('buy') : 0
-          break
-        case "buyPrice":
-        this.hasBorder=false
-          // this.buyParams.price = isRight ? buyPrices : e.target.value
-          this.buyAmount = this.buyNums ? this.totalAmout('buy') : 0
-          break
-        case 'sellAmount':
-        this.hasBorder=false
-          // this.sellParams.amount = isRight ? sell.amount : e.target.value
-          this.sellAmount = this.sellPrice ? this.totalAmout('sell') : 0
-          break
-        case "sellPrice":
-        this.hasBorder=false
-          // this.sellParams.price = !this.isNumber(e.target.value) ? sell.price : e.target.value
-          this.sellAmount = this.sellNums ? this.totalAmout('sell') : 0
-          break
+          this.sellAmount = (this.sellNums * this.sellPrice).toFixed(8)
       }
     },
     ...mapMutations(["searchTradingCoin"])

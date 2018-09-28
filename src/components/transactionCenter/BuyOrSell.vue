@@ -42,7 +42,7 @@
         <div class="line" v-if="isShowLine"></div>
           <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
             <dl v-if="AskList">
-                <dd  v-for="(item,index) in AskList.slice(0,11)">
+                <dd  v-for="(item,index) in AskList.slice(0,11)" @click='$store.dispatch("trading/togglePrice", {currentPrice:item.price})'>
                     <span>卖{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
