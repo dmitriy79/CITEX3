@@ -1,12 +1,6 @@
 import axios from 'axios'
 import webSocket from './socket'
 import qs from 'qs'
-let apiPort = {
-  "coin": '/coin', //管理
-  "payment": '/payment', //支付管理
-  "trade": '/trade', //交易管理
-  "user": '/user', //用户管理
-}
 
 const apiList = [
 
@@ -81,7 +75,6 @@ let res = (res) => {
 }
 apiList.map(item => {
   let name = item.split('/').pop()
-  // let url = process.env.NODE_ENV === 'production' ? `${process.env.API_HOST}/${apiPort[i]}${item[s]}` : `/${item[s]}`
   api[name] = (params, method, headers) => {
     let ajax = method == 'POST' ?
       axios({
