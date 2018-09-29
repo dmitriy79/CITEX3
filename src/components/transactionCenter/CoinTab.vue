@@ -16,17 +16,37 @@
         <div class="coin-list-wrap">
             <div class="title">
                 <span class="coin-type">币种</span>
-                <span class="price">价格<b><i class="up"></i><i class="down"></i></b></span>
-                <span class="rate">涨幅<b><i class="up"></i><i class="down"></i></b></span>
-                <span class="num">24h交易量<b><i class="up"></i><i class="down"></i></b></span>
+                <span class="price" @click="togglePrice">
+                  价格
+                  <b>
+                    <i class="up" :class="{ active: sort == 'price_up'}"></i>
+                    <i class="down" :class="{ active: sort == 'price_down'}"></i>
+                  </b>
+                </span>
+                <span class="rate" @click="toggleRate">
+                  涨幅
+                  <b>
+                    <i class="up" :class="{ active: sort == 'rate_up'}"></i>
+                    <i class="down" :class="{ active: sort == 'rate_down'}"></i>
+                  </b>
+                </span>
+                <span class="num" @click="toggleNum">
+                  24h交易量
+                  <b>
+                    <i class="up" :class="{ active: sort == 'num_up'}"></i>
+                    <i class="down" :class="{ active: sort == 'num_down'}"></i>
+                  </b>
+                </span>
             </div>
             <div class="coin-list"
-            v-for="(item,index) of (searchList || tradingList)"
+            v-for="(item,index) of searchList"
             :class="{'active': index == currentIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.coinId,tradeId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
-                <div class="rate" :class="{red:item.increase}">{{item.increase ? '+' : '-'}}{{item.increase_24H}}%</div>
+                <div class="rate" :class="{ red: item.increase, green: !item.increase}">
+                  {{item.increase ? '+' : '-'}}{{item.increase_24H}}%
+                </div>
                 <div class="num">{{item.amount_24H}}</div>
                 <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"
                 class="ico ico-star-fill" 
@@ -46,7 +66,8 @@ export default {
   data() {
     return {
       searchValue:'',
-      searchList: null
+      searchList: null,
+      sort: '',
     };
   },
 
@@ -54,13 +75,18 @@ export default {
     this.$store.dispatch("initTradingList")
   },
 
+
   watch: {
     searchValue(val) {
       if (val) {
-        this.searchList = this.tradingList.filter(item => item.name.indexOf(val) >= 0);
+        this.searchList = this.tradingList.filter(item => item.name.indexOf(val.toUpperCase()) >= 0);
       } else {
-        this.searchList = null
+        this.searchList = this.tradingList;
       }
+    },
+    tradingList() {
+      this.searchList = this.tradingList;
+      console.log(this.tradingList)
     }
   },
 
@@ -72,7 +98,34 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['toggleTrading'])
+    ...mapMutations(['toggleTrading']),
+    togglePrice() {
+      if (this.sort == 'price_down') {
+        this.sort = 'price_up'
+        this.searchList.sort((a, b) => a.deal_price > b.deal_price);
+      } else {
+        this.sort = 'price_down'
+        this.searchList.sort((a, b) => b.deal_price > a.deal_price);
+      }
+    },
+    toggleRate() {
+      if (this.sort == 'rate_down') {
+        this.sort = 'rate_up'
+        this.searchList.sort((a, b) => a.increase_24H > b.increase_24H);
+      } else {
+        this.sort = 'rate_down'
+        this.searchList.sort((a, b) => b.increase_24H > a.increase_24H);
+      }
+    },
+    toggleNum() {
+      if (this.sort == 'num_down') {
+        this.sort = 'num_up'
+        this.searchList.sort((a, b) => a.amount_24H > b.amount_24H);
+      } else {
+        this.sort = 'num_down'
+        this.searchList.sort((a, b) => b.amount_24H > a.amount_24H);
+      }
+    },
   }
 }
 </script>
@@ -194,33 +247,17 @@ export default {
         height: 0;
         border-width: 4px 4px 0;
         border-style: solid;
-        border-color: #fff transparent transparent;
+        border-color: #696d73 transparent transparent;
       }
     }
     .down.active {
       &::after {
-        content: " ";
-        position: absolute;
-        top: 10px;
-        right: -10px;
-        width: 0;
-        height: 0;
-        border-width: 4px 4px 0;
-        border-style: solid;
-        border-color: #696d73 transparent transparent;
+        border-color: #fff transparent transparent;
       }
     }
     .up.active {
       &::before {
-        position: absolute;
-        top: 4px;
-        right: -10px;
-        width: 0;
-        height: 0;
-        border-width: 0 4px 4px;
-        border-style: solid;
-        border-color: transparent transparent #fff; /*透明 透明  灰*/
-        content: " ";
+        border-color: transparent transparent #fff ;
       }
     }
   }
@@ -235,9 +272,11 @@ export default {
   .rate {
     // width: 8.9%;
     margin-right: 8.4%;
-     color: #ef6e59;
      font-weight:800;
     &.red{
+      color: #ef6e59;
+    }
+    &.green {
       color:#1fc56d;
     }
   }
@@ -261,10 +300,7 @@ export default {
       cursor: pointer;
     }
     &.active{
-      // background: #181f27;
-      *{
-        color:#fff;
-      }
+      background: #181f27;
     }
     &>div {
       display: inline-block;
