@@ -11,14 +11,15 @@
   
         <div class="top-info">
             <div class="flex-c-b info-left">
-              <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text"></span> </div> 
+              <div class="search-item"> <span class="ico-search"></span><span class="input-text"><input type="text" v-model="searchValue"></span> </div> 
               <span class="check-item"><i class="check" :class="{active:this.checked}" @click="handleChecked"></i>隐藏小额资产</span>
             </div>
         </div>
         <dl class="coin-info">
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
-            <dd class="list" v-if=" myAssets.list.length>1" v-for="(item, index) in myAssets.list">
-               <span>{{item.coinName}} </span>
+            
+            <dd class="list" v-if=" searchList.length>0" v-for="(item, index) in searchList">
+               <span>{{item.coinInfo.name}} </span>
                 <span>{{item.total}}</span>
                 <span>{{item.able}}</span>
                 <span>{{item.frozen}}</span>
@@ -118,6 +119,8 @@ export default {
 
   data() {
     return {
+      searchList:null,
+        searchValue:'',
       coinAddress: "",
       ableNum:'',
       coinNum: "",
@@ -182,6 +185,20 @@ export default {
   created() {
     this.$store.dispatch("assets/allAssets")
   },
+  watch: {
+    searchValue(val) {
+      if (val) {
+        this.searchList = this.myAssets.list.filter(item => item.coinInfo.name.indexOf(val.toUpperCase()) >= 0);
+        console.log(this.myAssets.list,this.searchList,'this.searchList')
+      } else {
+        this.searchList = this.myAssets.list;
+      }
+    },
+     myAssets() {
+      this.searchList = this.myAssets.list;
+      console.log(this.searchList)
+    }
+    },
   methods: {
     //确定提币
     dialogAudit() {},
@@ -252,6 +269,13 @@ export default {
     //隐藏小额资产
     handleChecked() {
       this.checked = !this.checked;
+      if(this.checked){
+        this.searchList = this.myAssets.list.filter(item => item.total>=0);
+      }
+      else{
+        this.searchList = this.myAssets.list
+      }
+      
     },
     //复制成功
     handleSuccess() {

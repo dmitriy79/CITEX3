@@ -32,14 +32,7 @@ const mutations = {
         .then(res=>{
             console.log(res,'资产---')
              state.myAssets = res.datas
-            var  property=res.datas.list
-            property.forEach(element => {
-                var id=element.coinId
-                axios.get(`/coin/coin/info/${id}`).then(res=>{
-                    element.name=  res.data.datas.name  
-                })
-               
-            });
+        
         })
     },
     //充币记录

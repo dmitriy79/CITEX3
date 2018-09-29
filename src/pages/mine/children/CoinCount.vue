@@ -41,16 +41,16 @@
            <el-dialog title="修改" :visible.sync="editContent" width="30%">
      <el-form ref="form" :model="form_" label-width="80px" >
                     <el-form-item label="币种">
-                        <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
-                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
+                        <el-select v-model="form_.coinType" placeholder="请选择" @change="selectCoinId">
+                        <el-option v-for="item in allCoin" :label="item.name" :value="item.id" :key="item.coinId"></el-option>
                         
                         </el-select>
                     </el-form-item>
                     <el-form-item label="提币地址">
-                        <el-input v-model="form.coinAddress_"></el-input>
+                        <el-input v-model="form_.coinAddress"></el-input>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="form.mark_"></el-input>
+                        <el-input v-model="form_.mark"></el-input>
                     </el-form-item>
                 </el-form >
       <div slot="footer" class="dialog-footer">
@@ -70,6 +70,8 @@ export default {
             code:'',//谷歌验证码
             coinId:'',
             coinName:'',
+            updateCoinId:'',
+            addressId:'',
             form:{
                 coinType:'',
                 coinAddress:'',
@@ -78,7 +80,9 @@ export default {
                 mark_:'',
             },
             form_:{
-                coinAddress_:'',
+                  coinType:'',
+                coinAddress:'',
+                mark:'',
             },
                   tableData1: [{
             date: '2016-05-02',
@@ -105,6 +109,10 @@ export default {
                 console.log(res,'查询币种')
                this.allCoin=res.datas
             })
+        },
+        selectCoinId(val){
+            this.updateCoinId=val
+            console.log(val,'selectCoinId===.')
         },
         //选择币种
         getCoinId(val){
@@ -156,8 +164,10 @@ export default {
     },
     //修改
        update(){
-           this.$api.update({withdrawAddress:this.form.coinAddress_,id:35,coinId:this.coinId},'POST').then(res=>{
-               console.log(res,'我是新增修改')
+           this.$api.update({withdrawAddress:this.form_.coinAddress,id:this.addressId,coinId:this.updateCoinId},'POST').then(res=>{
+              if(res.message=='成功'){
+                    this.editContent=false
+              }
            })
        },
         handleDelete(scope){
@@ -172,6 +182,8 @@ export default {
             })
         },
         handleUpdate(scope){
+            console.log(scope,'handleUpdate')
+           this.addressId= scope.id
             this.editContent=true
         },
 
@@ -188,6 +200,7 @@ export default {
 </script>
 <style>
 /* .el-table_1_column_5{display: none} */
+
 .el-select-dropdown {
     background: #fff!important;
     border: none;
@@ -197,7 +210,7 @@ export default {
 }
 .el-dialog__body{padding: 0 20px }
 .el-dialog .el-select,.el-dialog .el-input{width:100%!important;}
-.el-dialog .el-select input,.el-dialog .el-input input{color:#333}
+.el-dialog .el-select input,.el-dialog .el-input input,.el-select-dropdown__item.selected{color:#606266!important}
 .el-message-box__input .el-input__inner{color:grey}
 .el-table__expanded-cell[class*="cell"] {
   padding: 0 10px !important;
