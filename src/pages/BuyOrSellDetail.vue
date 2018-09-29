@@ -12,11 +12,11 @@
                             <span>买入量（BTC）</span>
                             <span>累计（BTC）</span>
                         </dt>
-                        <dd v-for="(item,index) in list">
+                        <dd v-for="(item,index) in BidList">
                             <span class="green">买{{index+1}}</span>
-                            <span>{{item.buyprice}}</span>
-                            <span>{{item.buynum}}</span>
-                            <span>{{item.total}}</span>
+                            <span>{{item.price}}</span>
+                            <span>{{item.count}}</span>
+                            <span>{{item.totalCount}}</span>
                         </dd>
                     </dl>
                 </div>
@@ -29,11 +29,11 @@
                             <span>买出量（BTC）</span>
                             <span>累计（BTC）</span>
                         </dt>
-                        <dd v-for="(item,index) in list">
+                        <dd v-for="(item,index) in AskList">
                             <span class="red">卖{{index+1}}</span>
-                            <span>{{item.buyprice}}</span>
-                            <span>{{item.buynum}}</span>
-                            <span>{{item.total}}</span>
+                            <span>{{item.price}}</span>
+                            <span>{{item.count}}</span>
+                            <span>{{item.totalCount}}</span>
                         </dd>
                     </dl>
                 </div>
@@ -43,49 +43,15 @@
     </div>
 </template>
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     data(){
         return{
-            list:[
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-               
-            ],
-            list1:[
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-                {id:1,buyprice:'7547.67',buynum:'0.3000',total:'0.3000'},
-               
-            ]
         }
-    }
+    },
+    computed: {
+        ...mapState("trading", [ "AskList", "BidList"]),
+    },
 }
 </script>
 <style lang="less" scoped>

@@ -88,9 +88,7 @@ export default {
        this.$refs.wrapper.style.height='700px'
      }
   },
-   computed: {
-
-
+  computed: {
     ...mapState("trading", [
       "AskList",
       "BidList","marketInfo"
@@ -99,8 +97,6 @@ export default {
         "tradingList"
     ]
     ),
-
-
   },
   methods: {
 
