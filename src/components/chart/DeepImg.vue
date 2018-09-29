@@ -32,10 +32,10 @@
       initDeepChart() {
         const option = options.deep;
         let askArr = this.ask.map(item => {
-          return [item.price, item.totalCount];
+          return [item.price, item.dealCount];
         });
         let bidArr = this.bid.map(item => {
-          return [item.price, item.totalCount];
+          return [item.price, item.dealCount];
         });
         option.series[0].data = bidArr;
         option.series[1].data = askArr;
