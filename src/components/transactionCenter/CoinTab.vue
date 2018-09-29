@@ -5,7 +5,7 @@
             <i class="ico ico-search"></i>
             <input type="text" v-model="searchValue" placeholder="查询" class="search">
           </div>
-          <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div>
+          <!-- <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div> -->
         </div>
         <ul class="nav-bar">
             <li v-for="(item,index) of tradingCategory" 
@@ -21,7 +21,7 @@
                 <span class="num">24h交易量<b><i class="up"></i><i class="down"></i></b></span>
             </div>
             <div class="coin-list"
-            v-for="(item,index) of tradingList"
+            v-for="(item,index) of (searchList || tradingList)"
             :class="{'active': index == currentIndex}"
             @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.coinId,tradeId:item.id})'>
                 <div class="coin-type">{{item.name}}</div>
@@ -45,12 +45,23 @@ const search = {
 export default {
   data() {
     return {
-      searchValue:''
+      searchValue:'',
+      searchList: null
     };
   },
 
   created() {
     this.$store.dispatch("initTradingList")
+  },
+
+  watch: {
+    searchValue(val) {
+      if (val) {
+        this.searchList = this.tradingList.filter(item => item.name.indexOf(val) >= 0);
+      } else {
+        this.searchList = null
+      }
+    }
   },
 
   computed: {

@@ -44,7 +44,7 @@ const apiList = [
   //    '/trade/trade/bid-ask-order/listBidOrders',       //历史/当前委托订单
   //   '/trade/trade/ask-order/listAskOrders',           //历史/当前委托卖订单
   '/trade/trade/bid-ask-order/listBidOrders', //历史/当前委托买订单（ALL）
-  'trade/bid-order/cancelBuy', //撤销买挂单
+  '/trade/trade/bid-order/cancelBuy', //撤销买挂单
   '/trade/trade/ask-order/cancelSell', //撤销卖挂单
   '/trade/trade/getDealOrderUpDownTen', //涨跌幅排行榜
   '/trade/dealOrder/getUserTransactionRecord', //交易记录

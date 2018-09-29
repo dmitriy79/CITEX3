@@ -8,6 +8,7 @@
                 <table>
                   <tr>
                       <th>创建日期</th>
+                      <th>方向</th>
                       <th>买单状态</th>
                       <th>价格（BTC）</th>
                       <th>数量（ADA）</th>
@@ -16,13 +17,15 @@
                     </tr>
                     <tr v-for='item of orderData.list'>
                       <td>{{item.createTime}}</td>
-                        <td>{{status[item.matchStatus]}}</td>
+                      <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td>
+                      <td>{{status[item.matchStatus]}}</td>
                       <td>{{item.price}}</td>
                       <td>{{item.amount}}</td>
-                    
-                    
-                        <td>{{item.leftAmount}}</td>
-                      <td v-if="active==0"><a href="" class="button-min">撤单</a></td>
+                      <td>{{item.leftAmount}}</td>
+                      <td v-if="active==0">
+                        <span v-if="isBuy(item.userId)" class="button-min" @click='$store.dispatch("trading/canceOrder", { bidOrderId: item.id })'>撤单</span>
+                        <span v-else class="button-min" @click='$store.dispatch("trading/canceSell", { askOrderId: item.id })'>撤单</span>
+                      </td>
                     </tr>
                 </table>
                 
@@ -59,6 +62,9 @@ export default {
     toggleOrder(index){
       this.active=index
       this.$store.dispatch('trading/toggleOrder',this.active+1)
+    },
+    isBuy(userId) {
+      return userId != localStorage.getItem('userId');
     }
   },
   created(){
@@ -164,6 +170,12 @@ table{
       font-size: 12px;
       padding-left: 20px;
       color: #8d9398;
+    }
+  }
+  .button-min {
+    cursor: pointer;
+    &:hover {
+      color: #fff;
     }
   }
 }

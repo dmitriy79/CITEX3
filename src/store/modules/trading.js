@@ -192,6 +192,20 @@ const actions = {
     }, params) {
         // console.log(rootState, state, commit)
     },
+    canceOrder({
+        commit,
+        rootState,
+        state
+    }, params) {
+        commit('canceOrder', params)
+    },
+    canceSell({
+        commit,
+        rootState,
+        state
+    }, params) {
+        commit('canceSell', params)
+    },
     tradingAskBid({
         commit,
         state,
@@ -362,7 +376,7 @@ const mutations = {
             url: `websocketAskBid?pairId=${id}`,
             data: 'sendParams',
             success: (res) => {
-                state.AskList = res.ask.reverse();
+                state.AskList = res.ask;
                 state.BidList = res.bid;
                 state.currentPrcie = res.bid[0].price;
             }
@@ -528,9 +542,14 @@ const mutations = {
     },
     //撤销挂单
     canceOrder(state, params) {
-        api.cancelBuy(params).then(res => {
+        api.cancelBuy(params, 'POST').then(res => {
             // console.log("canceOrder====>", res)
         })
+    },
+    canceSell(state, params) {
+        api.cancelSell(params, 'POST').then(res => {
+
+        });
     },
     //交易记录
     orderRecord(state, params) {

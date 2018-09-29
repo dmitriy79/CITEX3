@@ -284,6 +284,10 @@ export default {
   }
   .buy-list {
     height: 40%;
+    dl {
+      display: flex;
+      flex-direction: column-reverse;
+    }
     dd {
       span:first-child {
         color: #5dc176;
