@@ -3,7 +3,7 @@
          <div class="title"><span>币账户</span></div>
             <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
-                    <el-form-item label="币种">
+                    <el-form-item label="币种" >
                         <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
                         <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
                         
@@ -21,7 +21,7 @@
             </div>
             <div class="table-wrapper">
                  <el-table :data="coinList"  style="width: 100%" :row-class-name="setClassName">
-                    <el-table-column prop="coinName" label="币种" >
+                    <el-table-column prop="coinName" label="币种"  width="180">
 
                     </el-table-column>
                     
@@ -57,7 +57,21 @@
     </el-table-column>
                 </el-table>
             </div>
-                
+           <el-dialog title="提示" :visible.sync="editContent" width="30%">
+      <el-form :model="form" class="dialog-wrapper" label-width="120px">
+        <el-form-item label="请输入交易密码：">
+          <el-input v-model="form.password" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入谷歌验证码：" >
+          <el-input v-model="form.code" auto-complete="off"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAuditing = false">取 消</el-button>
+        <el-button type="primary" @click="confirmFull" :plain="true" >确定</el-button>
+      </div>
+    </el-dialog>     
         </div>        
 </template>
 <script>

@@ -122,7 +122,6 @@ export default {
       isAllowed: false,
       isAllowed1: false,
       isDisabled: true,
-
       hasBorder: false,
       percentage: ["25", "50", "75", "100"],
       sellAmount: 0,

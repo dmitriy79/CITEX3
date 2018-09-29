@@ -27,8 +27,8 @@
 
           <dd @click="toggleTab('real-authentication')"  :class="{active:this.currentTab==='real-authentication'}">
               <i class="ico-users"></i>实名认证</dd>
-          <dd @click="toggleTab('mine-info')"  :class="{active:this.currentTab==='mine-info'}">
-              <i class="ico-msgs"></i>我的消息</dd>
+          <!-- <dd @click="toggleTab('mine-info')"  :class="{active:this.currentTab==='mine-info'}">
+              <i class="ico-msgs"></i>我的消息</dd> -->
           <dd @click="toggleTab('google-authenticator')"  :class="{active:this.currentTab==='google-authenticator'}">
               <i class="ico-google"></i>谷歌验证</dd>
           <!-- <dd @click="toggleTab('recommed')"  :class="{active:this.currentTab==='recommed'}">推荐返佣</dd> -->
@@ -84,7 +84,7 @@ export default {
   margin: 47px auto;
   .content {
     position: relative;
-    margin-left: 180px;
+    margin-left: 200px;
     background: #292f37;
      min-height:1000px;
   }

@@ -28,7 +28,6 @@ export default {
           let category = datas.filter(item => item.zoneSwitch === 1)
           state.zoneName = res.datas[0].zoneName
           state.zoneId = res.datas[0].tradeCoinId
-          console.log(category, 'state.zoneName+++++++_____________3')
           category.push({
             zoneName: '自选',
             id: -1
@@ -37,7 +36,6 @@ export default {
           return category
         }
       }).then(res => {
-        console.log(res, 'toggleTrading+++=00099999999--------------')
         commit('toggleTrading', {
           id: res[0].id,
           callback: callback

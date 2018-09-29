@@ -7,66 +7,123 @@
     </div>
     <div class="content">
         <div class="full-coin-wrapper" v-if="this.current==='full'">
-             <el-table :data="fullCoinRecord"  style="width: 100%">
+             <el-table :data="fullcoinList"  style="width: 100%">
                 <el-table-column prop="createTime" label="时间" width=""></el-table-column>
-                <el-table-column prop="name" label="币种" width="">
+                <el-table-column prop="coinSymbol" label="币种" width="">
                     <template slot-scope="scope">
-                        <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
+                        <!-- <span class="coinimg-wrapper"><img :src="@/assets/images/hours.png" alt=""></span> -->
                         
-                        <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                        <span style="margin-left: 10px">{{ scope.row.coinSymbol }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="address" label="类型"></el-table-column>
-                <el-table-column prop="address" label="数量"></el-table-column>
-                <el-table-column prop="address" label="状态"></el-table-column>
+                <!-- <el-table-column prop="address" label="类型"></el-table-column> -->
+                <el-table-column prop="amount" label="数量"></el-table-column>
+                <el-table-column prop="state" label="状态"></el-table-column>
             </el-table>
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+            <el-pagination v-show="fullcoinTotal || fullcoinTotal>0"	@current-change="handleCurrentChange" :current-page.sync="pageIndex"
+       		 :page-size="pageSize" :total="fullcoinTotal"  background layout="total,prev, pager, next" >	</el-pagination>
+        </div>
         </div>
         <div class="carry-coin-wrapper" v-if="this.current==='carry'">
-            <el-table :data="tableData2"  style="width: 100%">
-                <el-table-column prop="date" label="时间" width=""></el-table-column>
-                <el-table-column prop="name" label="币种" width="">
+            <el-table :data="carrycoinList"  style="width: 100%">
+                <el-table-column prop="createTime" label="时间" width=""></el-table-column>
+                <el-table-column prop="coinSymbol" label="币种" width="">
                     <template slot-scope="scope">
-                        <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span>
+                        <!-- <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span> -->
                         
-                        <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                        <span style="margin-left: 10px">{{ scope.row.coinSymbol }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="address" label="类型"></el-table-column>
-                <el-table-column prop="address" label="数量"></el-table-column>
-                <el-table-column prop="address" label="状态"></el-table-column>
+                <!-- <el-table-column prop="address" label="类型"></el-table-column> -->
+                <el-table-column prop="amount" label="数量"></el-table-column>
+                <el-table-column prop="status" label="状态"></el-table-column>
             </el-table>
-            <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-         
+            <!-- <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination> -->
+         <el-pagination v-show="carrycoinTotal || carrycoinTotal>0"	@current-change="carrycoinChange" :current-page.sync="pageIndex_"
+       		 :page-size="pageSize" :total="carrycoinTotal"  background layout="total,prev, pager, next" >	</el-pagination>
         </div>
     </div>
 </div>
 </template>
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "coin-record",
   data() {
     return {
+         current:'full',
+   
+         pageIndex:1,
+         pageIndex_:1,//提币
+         	pageSize:12,
+              tableData1: [{
+            date: '2016-05-02',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }],
+        tableData2: [{
+            date: '2016-05-02',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }, {
+            date: '2016-05-01',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            date: '2016-05-03',
+            name: 'USDT',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }]
     };
   },
+  created() {
+     this.$store.dispatch("assets/fullcoinRecord",this.pageIndex)
+  },
+ 
   methods: {
+    handleCurrentChange(value){
+			this.pageIndex_ = value
+			 this.$store.dispatch("assets/fullcoinRecord",this.pageIndex_)
+    },
+    //提币分页
+    carrycoinChange(){
+      value
+    },
     goback() {
       history.go(-1);
     },
     //充币记录,提币记录
     tabRecord(tab) {
       if (tab == "full") {
+
       } else {
+         this.$store.dispatch("assets/carrycoinRecord",this.pageIndex_)
       }
       this.current = tab;
     }
-  }
+  },
+   computed: {
+    ...mapState('assets',['fullcoinList','fullcoinTotal','carrycoinList','carrycoinTotal'])
+
+  },
 };
 
 </script>
-<style>
-  
+<style  lang="less" scoped>
+.carry-coin-wrapper{
+   div {
+      padding: 0 20px 50px;
+    }
+}
 .carry-full-coin {
   height: 920px;
   .content {

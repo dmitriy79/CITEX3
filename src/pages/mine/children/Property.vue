@@ -24,8 +24,8 @@
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
                     <div @click="fullCoin(index,item.coinId,item.coinName)">充币</div>
-                    <div @click="carryCoin(index,item.coinId)">提币</div>
-                    <div><router-link to="/Transaction" tag="span">交易</router-link></div>
+                    <div @click="carryCoin(index,item.coinId,item.able)">提币</div>
+                    <!-- <div><router-link to="/Transaction" tag="span">交易</router-link></div> -->
                 </span>
                 <transition name="fade">
                 <div class="carry-coin coin-item" ref="child" style="display:none" >
@@ -37,7 +37,7 @@
                         <div class="item-num">
                             <label class="name">数量</label>
                             <div>
-                                <span>可用：<i class="use-num">465.6373800</i></span>
+                                <span>可用：<i class="use-num">{{ableNum}}</i></span>
                                 <span>限额：<b>800000.0000</b></span>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="item"> 
                         <div class="item-input">
-                            <div class="rate-text"><label class="name">手续费</label><span>范围：50.000000-50.000000</span></div>
+                            <div class="rate-text"><label class="name">手续费</label></div>
                             <input type="text" v-model="rate">
                         </div>
                          <div class="item-input">
@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       coinAddress: "",
+      ableNum:'',
       coinNum: "",
       rate: "",
       realNum: "",
@@ -259,7 +260,24 @@ export default {
         type: "success"
       });
     },
-
+    //提币
+       carryCoin(index,id,ableNum){
+         console.log(id,'tibi Tii')
+        this.coin_Id =id
+        this.ableNum=ableNum
+         this.$refs.child1[index].style.display = 'none'
+        if (this.$refs.child[index].style.display === 'none') {
+        this.$refs.child[index].style.display = 'block'
+       
+      } else {
+        this.$refs.child[index].style.display = 'none'
+      
+      }
+        // this.activeIndex=index
+        //   this.isShow=!this.isShow
+        //    this.isShow1=false
+      },
+    //充币
     fullCoin(index, id, name) {
       console.log(id, "w我是coinid+++++");
       this.$api.allotRechargeAddr({ coinId: id }).then(res => {
@@ -294,7 +312,7 @@ export default {
 </script>
 
 <style>
-.el-input input {
+.el-message-box .el-input input,.el-form-item__content .el-input input {
   color: #000 !important;
 }
 </style>
@@ -520,7 +538,7 @@ export default {
         border: solid transparent;
         content: " ";
         height: 0;
-        right: 45px;
+        right: 10px;
         position: absolute;
         width: 0;
       }
@@ -559,7 +577,7 @@ export default {
         border: solid transparent;
         content: " ";
         height: 0;
-        right: 85px;
+        right: 58px;
         position: absolute;
         width: 0;
       }
