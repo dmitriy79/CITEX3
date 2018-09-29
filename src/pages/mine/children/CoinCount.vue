@@ -31,13 +31,15 @@
                     <el-table-column label="操作" width="100">
                          <template slot-scope="scope">
                             <span @click="handleDelete(scope.row)" type="text" size="small" class="scope-btn">删除</span>
-                            <span type="text" size="small" class="scope-btn">修改</span>
+                            <span @click="handleUpdate(scope.row)" type="text" size="small" class="scope-btn">修改</span>
                         </template>
                     </el-table-column>
                      <!-- <el-table-column prop="id" label="id" width="10"></el-table-column> -->
-                 <el-table-column type="expand" >
-      <template slot-scope="props">
-         <el-form ref="form" :model="form_" label-width="80px" >
+
+                </el-table>
+            </div>
+           <el-dialog title="修改" :visible.sync="editContent" width="30%">
+     <el-form ref="form" :model="form_" label-width="80px" >
                     <el-form-item label="币种">
                         <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
                         <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
@@ -50,26 +52,10 @@
                     <el-form-item label="备注">
                         <el-input v-model="form.mark_"></el-input>
                     </el-form-item>
-                    <span  class="bottom-btn" @click="update">确定</span>
                 </el-form >
-    
-      </template>
-    </el-table-column>
-                </el-table>
-            </div>
-           <el-dialog title="提示" :visible.sync="editContent" width="30%">
-      <el-form :model="form" class="dialog-wrapper" label-width="120px">
-        <el-form-item label="请输入交易密码：">
-          <el-input v-model="form.password" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="请输入谷歌验证码：" >
-          <el-input v-model="form.code" auto-complete="off"></el-input>
-        </el-form-item>
-
-      </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAuditing = false">取 消</el-button>
-        <el-button type="primary" @click="confirmFull" :plain="true" >确定</el-button>
+        <el-button @click="editContent = false">取 消</el-button>
+        <el-button type="primary" @click="update" :plain="true" >确定</el-button>
       </div>
     </el-dialog>     
         </div>        
@@ -78,6 +64,7 @@
 export default {
     data(){
         return{
+            editContent:false,
             allCoin:[],//所有币种
             coinList:[],//我的提币列表
             code:'',//谷歌验证码
@@ -184,6 +171,11 @@ export default {
               }
             })
         },
+        handleUpdate(scope){
+            this.editContent=true
+        },
+
+        
         setClassName({ row, index }) {
       // 通过自己的逻辑返回一个class或者空
       if (row.expand == true) {
@@ -196,6 +188,16 @@ export default {
 </script>
 <style>
 /* .el-table_1_column_5{display: none} */
+.el-select-dropdown {
+    background: #fff!important;
+    border: none;
+}
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: #f5f7fa!important;
+}
+.el-dialog__body{padding: 0 20px }
+.el-dialog .el-select,.el-dialog .el-input{width:100%!important;}
+.el-dialog .el-select input,.el-dialog .el-input input{color:#333}
 .el-message-box__input .el-input__inner{color:grey}
 .el-table__expanded-cell[class*="cell"] {
   padding: 0 10px !important;

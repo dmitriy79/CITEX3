@@ -140,6 +140,13 @@ export default {
   }
 }
 .content {
+   .table-wrapper {
+      padding: 0 10px 50px;
+
+      div {
+        padding: 0 10px 50px;
+      }
+    }
   .items {
     .condition {
       padding: 0 30px;
