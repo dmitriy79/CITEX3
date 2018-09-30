@@ -70,7 +70,7 @@ export default {
             this.coinId=coinInfo[0] 
             this.coinName=coinInfo[1]
             console.log(this.coinName,'999++++++')
-            this.$api.listByUserId({coinKey:this.coinName}).then(res=>{
+            this.$api.walistByUserId({coinKey:this.coinName}).then(res=>{
                 console.log(res,'这是我的账户币种地址++++++000000')
                this.coinList=res.datas
                

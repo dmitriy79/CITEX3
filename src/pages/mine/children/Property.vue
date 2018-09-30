@@ -25,7 +25,7 @@
                 <span>{{item.frozen}}</span>
                 <span class="txt-right">
                     <div @click="fullCoin(index,item.coinId,item.coinName)">充币</div>
-                    <div @click="carryCoin(index,item.coinId,item.able)">提币</div>
+                    <div @click="carryCoin(index,item.coinId,item.able,item.singleMax,item.singleMin,item.coinInfo.name,item.feeValue)">提币</div>
                     <!-- <div><router-link to="/Transaction" tag="span">交易</router-link></div> -->
                 </span>
                 <transition name="fade">
@@ -39,7 +39,7 @@
                             <label class="name">数量</label>
                             <div>
                                 <span>可用：<i class="use-num">{{ableNum}}</i></span>
-                                <span>限额：<b>800000.0000</b></span>
+                                <span>限额：<b>{{singleMax}}</b></span>
                             </div>
                         </div>
                         <input type="text" v-model="coinNum">
@@ -47,7 +47,7 @@
                     <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label></div>
-                            <input type="text" v-model="rate">
+                            <input type="text" v-model="feeValue">
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="tips">
                     <p>温馨提示：</p>
-                    <p>最小提币数量为：555 {{coiname}}</p>
+                    <p>最小提币数量为：{{singleMin}} {{coinName_}}</p>
                     <p>为保障资金安全，当您账户安全策略变更、密码修改、使用新地址提币，我们会对提币进行人工审核</p>
                     <p>请耐心等待工作人员电话或邮件联系</p>
                     <p>请务必确认电脑及浏览器安全，防止信息被篡改或泄漏</p>
@@ -78,7 +78,6 @@
                     </div>
                     <div class="tips">
                     <p>温馨提示：</p>
-                    <p>最小充值数量为：555 {{coiname}}</p>
                     <p>为保障资金安全，当您账户安全策略变更、密码修改、使用新地址提币，我们会对提币进行人工审核</p>
                     <p>请耐心等待工作人员电话或邮件联系</p>
                     <p>请务必确认电脑及浏览器安全，防止信息被篡改或泄漏</p>
@@ -123,12 +122,16 @@ export default {
         searchValue:'',
       coinAddress: "",
       ableNum:'',
+      singleMax:0,
+      singleMin:0,
       coinNum: "",
       rate: "",
       realNum: "",
       coinId: "",
       able: true,
       coiname: "",
+      coinName_:"",//提币name
+      feeValue:'',
       coin_Id: "",
       dialogAuditing: false,
       form: {
@@ -285,10 +288,14 @@ export default {
       });
     },
     //提币
-       carryCoin(index,id,ableNum){
+       carryCoin(index,id,ableNum,singleMax,singleMin,coinName_,feeValue){
          console.log(id,'tibi Tii')
         this.coin_Id =id
         this.ableNum=ableNum
+        this.singleMax=singleMax
+        this.singleMin=singleMin
+        this.coinName_=coinName_
+        this.feeValue=feeValue
          this.$refs.child1[index].style.display = 'none'
         if (this.$refs.child[index].style.display === 'none') {
         this.$refs.child[index].style.display = 'block'

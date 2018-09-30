@@ -29,15 +29,15 @@
                         </div>
                 </div>
                 <div class="table-wrapper">
-                     <el-table :data="tableData1" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column prop="date" label="委托时间" width="160"></el-table-column>
-                    <el-table-column prop="type" label="交易类型" ></el-table-column>
+                     <el-table :data="currentEntrust" style="width: 100%" :row-class-name="setClassName">
+                     <el-table-column prop="createTime" label="委托时间" width="160"></el-table-column>
+                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
                     <el-table-column prop="group" label="交易对" ></el-table-column>
                     <el-table-column prop="direction" label="方向"></el-table-column>
                     <el-table-column prop="price" label="委托价格"></el-table-column>
                     <el-table-column prop="num" label="委托个数（个）"></el-table-column>
                     <el-table-column prop="duenum" label="已成交"></el-table-column>
-                    <el-table-column prop="avarage" label="成交均价"></el-table-column>
+                    <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
                     <el-table-column prop="status" label="状态"></el-table-column>
                      <el-table-column  width="80" label="操作" >
                        
@@ -102,7 +102,7 @@
                         </div>
                 </div>
                                 <div class="table-wrapper">
-                     <el-table :data="tableData1" style="width: 100%" >
+                     <el-table :data="historyEntrust" style="width: 100%" >
                      <el-table-column prop="date" label="委托时间" width="160"></el-table-column>
                     <el-table-column prop="type" label="交易类型" ></el-table-column>
                     <el-table-column prop="group" label="交易对" ></el-table-column>
@@ -166,6 +166,8 @@ export default {
           region: '',
         },
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }],
+      currentEntrust:[],
+      historyEntrust:[],
       tableData1: [
         {
           date: "2016-05-02 11:00:09",
@@ -199,7 +201,8 @@ export default {
     //我的委托记录
     getInfo(){
       var userId=localStorage.getItem('userId')
-      this.$api.listBidOrders({type:1,userId:200011,pageNum:1,pageSize:10}).then(res=>{
+      this.$api.listBidOrders({type:1,pageNum:1,pageSize:10}).then(res=>{
+        this.currentEntrust=res.datas.list
         console.log(res,'我的委托')
       })
     },
