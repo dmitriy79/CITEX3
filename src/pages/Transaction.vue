@@ -50,7 +50,7 @@
               </ul>
             </div>
           </div>
-          <k-line></k-line>
+          <k-line v-if="inited"></k-line>
         </div>
         <div class="right">
           <coin-tab></coin-tab>
@@ -111,6 +111,7 @@ export default {
  
   data() {
     return {
+      inited: false,
       id: "id",
     };
   },
@@ -119,6 +120,7 @@ export default {
   
   mounted() {
     this.$store.dispatch("initTradingList", () => {
+      this.inited = true;
       this.$store.dispatch("trading/initTradings")
     })
   },

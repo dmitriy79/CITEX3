@@ -6,11 +6,17 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+  mapMutations
+} from "vuex"
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
+      inited: false,
       websock: null,
       currency1: '',
       currency2: "ETH",
@@ -24,9 +30,10 @@ export default {
   name: "KLine",
 
   mounted: function() {
-    // setTimeout( () => {
-      this.createKline();
-    // }, )
+    this.$store.dispatch("trading/getKline", {
+      step: '1min',
+      callback: this.createKline
+    })
   },
   methods: {
     changePair: function() {
@@ -45,12 +52,13 @@ export default {
           });
       }
     },
-    createKline: function () {
-const this_vue = this;
-   
-    this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
-    this_vue.feed = this_vue.createFeed();
-    // TradingView.onready(function(configurationData) {
+    createKline: function() {
+      this.inited = true;
+      const this_vue = this;
+
+      this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
+      this_vue.feed = this_vue.createFeed();
+      // TradingView.onready(function(configurationData) {
       this_vue.chart = window.tvWidget = new TradingView.widget({
         fullscreen: false,
         autosize: true,
@@ -70,24 +78,44 @@ const this_vue = this;
         toolbar_bg: "#1e252d",
         // saved_data: this_vue.savedData,
         allow_symbol_change: true,
-        time_frames: [
-          { text: "1y", resolution: "1W" },
-          { text: "6m", resolution: "3D" },
-          { text: "3m", resolution: "1D" },
-          { text: "1m", resolution: "1D" },
-          { text: "1w", resolution: "30" },
-          { text: "3d", resolution: "30" },
-          { text: "1d", resolution: "30" },
-          { text: "6h", resolution: "15" },
-          { text: "1h", resolution: "1" }
-        ],
+        time_frames: [{
+          text: "1y",
+          resolution: "1W"
+        }, {
+          text: "6m",
+          resolution: "3D"
+        }, {
+          text: "3m",
+          resolution: "1D"
+        }, {
+          text: "1m",
+          resolution: "1D"
+        }, {
+          text: "1w",
+          resolution: "30"
+        }, {
+          text: "3d",
+          resolution: "30"
+        }, {
+          text: "1d",
+          resolution: "30"
+        }, {
+          text: "6h",
+          resolution: "15"
+        }, {
+          text: "1h",
+          resolution: "1"
+        }],
         drawings_access: {
           type: "black",
           // tools: [{name: "Regression Trend"}]//todo: moje
-          tools: [
-            { name: "Trend Line", grayed: true },
-            { name: "Trend Angle", grayed: true }
-          ] //todo: bb
+          tools: [{
+            name: "Trend Line",
+            grayed: true
+          }, {
+            name: "Trend Angle",
+            grayed: true
+          }] //todo: bb
         },
         disabled_features: [
           //禁用功能
@@ -147,9 +175,9 @@ const this_vue = this;
           "paneProperties.legendProperties.showStudyArguments": false,
           "paneProperties.legendProperties.showStudyValues": false,
           "symbolWatermarkProperties.color": "rgba(0,0,0, 0)",
-          "paneProperties.background": "#292f37",//背景色
-          "paneProperties.vertGridProperties.color": "#333940",//纵向分割线颜色
-          "paneProperties.horzGridProperties.color": "#333940",//横向分割线颜色
+          "paneProperties.background": "#292f37", //背景色
+          "paneProperties.vertGridProperties.color": "#333940", //纵向分割线颜色
+          "paneProperties.horzGridProperties.color": "#333940", //横向分割线颜色
           "paneProperties.crossHairProperties.color": "#58637a",
           "paneProperties.crossHairProperties.style": 2,
 
@@ -187,8 +215,8 @@ const this_vue = this;
           "scalesProperties.showLeftScale": false,
           "scalesProperties.showRightScale": true,
           "scalesProperties.backgroundColor": "#20334d",
-          "scalesProperties.lineColor": "#333940",//横轴纵轴颜色
-          "scalesProperties.textColor": "#9E9FA6",//横轴纵轴文字颜色
+          "scalesProperties.lineColor": "#333940", //横轴纵轴颜色
+          "scalesProperties.textColor": "#9E9FA6", //横轴纵轴文字颜色
           "scalesProperties.scaleSeriesOnly": false,
           "scalesProperties.fontSize": 13,
           "mainSeriesProperties.priceAxisProperties.autoScale": true,
@@ -208,15 +236,15 @@ const this_vue = this;
           "mainSeriesProperties.candleStyle.wickUpColor": "#3fcfb4",
           "mainSeriesProperties.candleStyle.wickDownColor": "#fe4761",
           "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
-          "mainSeriesProperties.hollowCandleStyle.upColor": "#5DC176",//k线柱涨颜色
-          "mainSeriesProperties.hollowCandleStyle.downColor": "#EF6E59",//k线柱跌颜色
+          "mainSeriesProperties.hollowCandleStyle.upColor": "#5DC176", //k线柱涨颜色
+          "mainSeriesProperties.hollowCandleStyle.downColor": "#EF6E59", //k线柱跌颜色
           "mainSeriesProperties.hollowCandleStyle.drawWick": true,
           "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
           "mainSeriesProperties.hollowCandleStyle.borderColor": "#3fcfb4",
           "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#3fcfb4",
           "mainSeriesProperties.hollowCandleStyle.borderDownColor": "#EF6E59",
           "mainSeriesProperties.hollowCandleStyle.wickColor": "#737375",
-          "mainSeriesProperties.hollowCandleStyle.wickUpColor": "#5DC176",//k线柱竖线涨颜色
+          "mainSeriesProperties.hollowCandleStyle.wickUpColor": "#5DC176", //k线柱竖线涨颜色
           "mainSeriesProperties.hollowCandleStyle.wickDownColor": "#EF6E59",
           "mainSeriesProperties.haStyle.upColor": "#3fcfb4",
           "mainSeriesProperties.haStyle.downColor": "#fe4761",
@@ -244,7 +272,7 @@ const this_vue = this;
           "mainSeriesProperties.areaStyle.linewidth": 1,
           "mainSeriesProperties.areaStyle.priceSource": "close",
           "mainSeriesProperties.areaStyle.transparency": 80,
-         
+
         },
         custom_css_url: "chart.css"
       });
@@ -253,95 +281,77 @@ const this_vue = this;
       this_vue.chart.onChartReady(function() {
         document.getElementById('chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
         let chart = this_vue.chart.chart();
-        let mas = [
-          {
-            day: 5,
-            color: "#821f68"
-          },
-          {
-            day: 10,
-            color: "#5c7798"
-          },
-          {
-            day: 30,
-            color: "#397d51"
-          },
-          {
-            day: 60,
-            color: "#60407f"
-          }
-        ];
-        var buttons = [
-          {
+        let mas = [{
+          day: 5,
+          color: "#821f68"
+        }, {
+          day: 10,
+          color: "#5c7798"
+        }, {
+          day: 30,
+          color: "#397d51"
+        }, {
+          day: 60,
+          color: "#60407f"
+        }];
+        var buttons = [{
             label: "分时",
             resolution: "1",
             chartType: 3
-          },
-          {
+          }, {
             label: "1分钟",
             resolution: "1"
-          },
-           {
-            label: "3分钟",
-            resolution: "3"
-          },
-          {
+          }, {
             label: "5分钟",
             resolution: "5"
-          },
-          {
+          }, {
             label: "15分钟",
             resolution: "15"
-          },
-          {
+          }, {
             label: "30分钟",
             resolution: "30"
-          },
-          {
+          }, {
             label: "1小时",
             resolution: "60"
-          },
-           {
+          }, {
             label: "2小时",
             resolution: "120"
-          },
-          {
+          }, {
             label: "4小时",
             resolution: "240"
           },
-          
+
           {
             label: "12小时",
             resolution: "720"
-          },
-          {
+          }, {
             label: "日线",
             resolution: "1D"
           },
-          
+
           {
             label: "周线",
             resolution: "W"
           },
-          
+
         ];
         mas.forEach(item => {
           chart.createStudy(
             "Moving Average",
             false,
-            false,
-            [item.day],
+            false, [item.day],
             entity => {
               this_vue.chart.MAStudies.push(entity);
-            },
-            { "plot.color": item.color }
+            }, {
+              "plot.color": item.color
+            }
           );
         });
         chart.onIntervalChanged().subscribe(null, function(interval, obj) {
           this_vue.chart.changingInterval = false;
         });
         buttons.forEach((item, index) => {
-          let button = this_vue.chart.createButton();      
+          let button = this_vue.chart.createButton();
           item.resolution === this_vue.chart.interval &&
             updateSelectedIntervalButton(button);
           button
@@ -352,8 +362,7 @@ const this_vue = this;
             )
             .html("<span>" + item.label + "</span>")
             .on("click", function() {
-              if (
-                !this_vue.chart.changingInterval &&
+              if (!this_vue.chart.changingInterval &&
                 !button.hasClass("selected")
               ) {
                 let chartType = +button.attr("data-chart-type");
@@ -371,27 +380,33 @@ const this_vue = this;
               }
             });
         });
+
         function updateSelectedIntervalButton(button) {
           this_vue.chart.selectedIntervalButton &&
             this_vue.chart.selectedIntervalButton.removeClass("selected");
           button.addClass("selected");
           this_vue.chart.selectedIntervalButton = button;
         }
+
         function showMAStudies(visible) {
           this_vue.chart.MAStudies.forEach(item => {
             chart.setEntityVisibility(item, visible);
           });
         }
 
-        this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {'Plot.color': '#238031'});
-        this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {'Plot.color': '#850058'});
+        this_vue.chart.chart().createStudy('Moving Average', false, false, [5], null, {
+          'Plot.color': '#238031'
+        });
+        this_vue.chart.chart().createStudy('Moving Average', false, false, [10], null, {
+          'Plot.color': '#850058'
+        });
       });
     },
     createFeed: function() {
       let this_vue = this;
       let Datafeed = {};
-      var currentCoinId=this_vue.currentCoinId
-  // console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
+      var currentCoinId = this_vue.currentCoinId
+      // console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
         // console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
         this._datafeed = datafeed;
@@ -411,8 +426,8 @@ const this_vue = this;
 
             var datesRangeRight = parseInt(new Date().valueOf() / 1000);
 
-            //	BEWARE: please note we really need 2 bars, not the only last one
-            //	see the explanation below. `10` is the `large enough` value to work around holidays
+            //  BEWARE: please note we really need 2 bars, not the only last one
+            //  see the explanation below. `10` is the `large enough` value to work around holidays
             var datesRangeLeft =
               datesRangeRight - that.periodLengthSeconds(resolution, 10);
 
@@ -428,7 +443,7 @@ const this_vue = this;
                 function(bars) {
                   that._requestsPending--;
 
-                  //	means the subscription was cancelled while waiting for data
+                  //    means the subscription was cancelled while waiting for data
                   if (!that._subscribers.hasOwnProperty(listenerGUID)) {
                     return;
                   }
@@ -438,8 +453,7 @@ const this_vue = this;
                   }
 
                   var lastBar = bars[bars.length - 1];
-                  if (
-                    !isNaN(_subscriptionRecord.lastBarTime) &&
+                  if (!isNaN(_subscriptionRecord.lastBarTime) &&
                     lastBar.time < _subscriptionRecord.lastBarTime
                   ) {
                     return;
@@ -447,14 +461,13 @@ const this_vue = this;
 
                   var subscribers = _subscriptionRecord.listeners;
 
-                  //	BEWARE: this one isn't working when first update comes and this update makes a new bar. In this case
-                  //	_subscriptionRecord.lastBarTime = NaN
-                  var isNewBar =
-                    !isNaN(_subscriptionRecord.lastBarTime) &&
+                  //    BEWARE: this one isn't working when first update comes and this update makes a new bar. In this case
+                  //    _subscriptionRecord.lastBarTime = NaN
+                  var isNewBar = !isNaN(_subscriptionRecord.lastBarTime) &&
                     lastBar.time > _subscriptionRecord.lastBarTime;
 
-                  //	Pulse updating may miss some trades data (ie, if pulse period = 10 secods and new bar is started 5 seconds later after the last update, the
-                  //	old bar's last 5 seconds trades will be lost). Thus, at fist we should broadcast old bar updates when it's ready.
+                  //    Pulse updating may miss some trades data (ie, if pulse period = 10 secods and new bar is started 5 seconds later after the last update, the
+                  //    old bar's last 5 seconds trades will be lost). Thus, at fist we should broadcast old bar updates when it's ready.
                   if (isNewBar) {
                     if (bars.length < 2) {
                       throw new Error(
@@ -475,7 +488,7 @@ const this_vue = this;
                   }
                 },
 
-                //	on error
+                //  on error
                 function() {
                   that._requestsPending--;
                 }
@@ -588,11 +601,11 @@ const this_vue = this;
           var now = new Date();
           console.log(
             "CHART LOGS: " +
-              now.toLocaleTimeString() +
-              "." +
-              now.getMilliseconds() +
-              "> " +
-              message
+            now.toLocaleTimeString() +
+            "." +
+            now.getMilliseconds() +
+            "> " +
+            message
           );
         }
       };
@@ -618,7 +631,7 @@ const this_vue = this;
           });
         }
       };
-     //通过商品名称解析商品信息
+      //通过商品名称解析商品信息
       Datafeed.Container.prototype.resolveSymbol = function(
         symbolName,
         onSymbolResolvedCallback,
@@ -634,26 +647,26 @@ const this_vue = this;
 
           this._logMessage(
             "GOWNO :: onResultReady inject " +
-              this_vue.currency1 +
-              ":" +
-              this_vue.currency2
+            this_vue.currency1 +
+            ":" +
+            this_vue.currency2
           );
           onSymbolResolvedCallback({
-            name: this_vue.currency1 + "/" + this_vue.currency2,//商品名称
-            timezone: "Asia/Shangha",//商品的交易所时区
+            name: this_vue.currency1 + "/" + this_vue.currency2, //商品名称
+            timezone: "Asia/Shangha", //商品的交易所时区
             pricescale: adjustScale(),
-            minmov: 1,//最小波动
+            minmov: 1, //最小波动
             minmov2: 0,
-            ticker: this_vue.currency1 + ":" + this_vue.currency2,//商品体系中此商品的唯一标识符
-            description: "",//商品说明
-            session: "24x7",//商品交易时间
-            type: "bitcoin",//仪表的可选类型
+            ticker: this_vue.currency1 + ":" + this_vue.currency2, //商品体系中此商品的唯一标识符
+            description: "", //商品说明
+            session: "24x7", //商品交易时间
+            type: "bitcoin", //仪表的可选类型
             "exchange-traded": "myExchange",
             // "exchange-listed": "myExchange",
-            has_intraday: true,//布尔值显示商品是否具有日内（分钟）历史数据, 如果它为false，则当图表中的该商品处于活动状态时，日内周期的所有按钮将被禁用。 如果设置为true，则由datafeed直接提供的所有周期必须在intraday_multipliers数组中设定。
-            intraday_multipliers: ["1","3","5","15","30","60","120","240","720"], //这是一个包含日内周期(分钟单位)的数组
-            has_weekly_and_monthly: false,//布尔值显示商品是否具有以W和M为单位的历史数据
-            has_no_volume: false,//布尔表示商品是否拥有成交量数据
+            has_intraday: true, //布尔值显示商品是否具有日内（分钟）历史数据, 如果它为false，则当图表中的该商品处于活动状态时，日内周期的所有按钮将被禁用。 如果设置为true，则由datafeed直接提供的所有周期必须在intraday_multipliers数组中设定。
+            intraday_multipliers: ["1", "3", "5", "15", "30", "60", "120", "240", "720"], //这是一个包含日内周期(分钟单位)的数组
+            has_weekly_and_monthly: false, //布尔值显示商品是否具有以W和M为单位的历史数据
+            has_no_volume: false, //布尔表示商品是否拥有成交量数据
             regular_session: "24x7"
           });
         });
@@ -668,65 +681,44 @@ const this_vue = this;
         firstDataRequest
       ) {
         // console.log(resolution,'resolution====================================>>>>>>>>')
-        if(firstDataRequest) {
-          if(resolution==1){
-            resolution='1min'
+        if (firstDataRequest) {
+          if (resolution == 1) {
+            resolution = '1min'
           }
-          if(resolution==3){
-            resolution='3min'
+          if (resolution == 5) {
+            resolution = '5min'
           }
-           if(resolution==5){
-            resolution='5min'
+          if (resolution == 15) {
+            resolution = '15min'
           }
-           if(resolution==15){
-            resolution='15min'
+          if (resolution == 30) {
+            resolution = '30min'
           }
-           if(resolution==30){
-            resolution='30min'
+          if (resolution == 60) {
+            resolution = '60min'
           }
-          if(resolution==60){
-            resolution='60min'
+          if (resolution == 120) {
+            resolution = '120min'
           }
-          if(resolution==120){
-            resolution='120min'
+          if (resolution == 240) {
+            resolution = '240min'
           }
-          if(resolution==240){
-            resolution='240min'
+          if (resolution == 720) {
+            resolution = '720min'
           }
-          if(resolution==720){
-            resolution='720min'
+          if (resolution == '1D') {
+            resolution = '1day'
           }
-          if(resolution=='1D'){
-            resolution='1day'
+          if (resolution == 'W') {
+            resolution = '10080min'
           }
-           if(resolution=='W'){
-            resolution='10080min'
-          }  
-          this_vue.$store.dispatch("trading/getKline", {step:resolution})
-         
+          
           console.log('k line data 2 ', this_vue.klineHistory)
-          // setTimeout( function () {
-            onHistoryCallback(this_vue.klineHistory)
-          // }, 1000)
-         /* this_vue.$api.getKDatas2({step:resolution,tradeCoinPariId:currentCoinId}).then(res=>{
-            console.log(res,'----------------..>>>>>>>>>>>>>')
-        var kline=[]
-          res.datas.list.forEach(function(bar) {
-            kline.push({
-             time: Number(bar.endTime),
-               open: Number(bar.openPrice),
-               close: Number(bar.closePrice),
-               high: Number(bar.topPrice),
-               low: Number(bar.floorPrice),
-               volume: Number(bar.total)
-             });
-            //console.log(kline,'999999++++我是我是历史数据kline=====')
-           });
-         
-         onHistoryCallback(klineHistory)
-      })*/
+          onHistoryCallback(this_vue.klineHistory)
         } else {
-            onHistoryCallback([], {noData : true});
+          onHistoryCallback([], {
+            noData: true
+          });
         }
       };
 
@@ -737,82 +729,81 @@ const this_vue = this;
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-             if(resolution==1){
-            resolution='1min'
-          }
-          if(resolution==3){
-            resolution='3min'
-          }
-           if(resolution==5){
-            resolution='5min'
-          }
-           if(resolution==15){
-            resolution='15min'
-          }
-           if(resolution==30){
-            resolution='30min'
-          }
-          if(resolution==60){
-            resolution='60min'
-          }
-          if(resolution==120){
-            resolution='120min'
-          }
-          if(resolution==240){
-            resolution='240min'
-          }
-          if(resolution==720){
-            resolution='720min'
-          }
-          if(resolution=='1D'){
-            resolution='1day'
-          }
-           if(resolution=='W'){
-            resolution='10080min'
-          }  
-      this_vue.$store.dispatch("trading/websocketKline", {step:resolution}) 
-      if(this_vue.klineCurrent){
-        onRealtimeCallback(this_vue.klineCurrent)
-      }
-     
-   /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
-       //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
-        ws.onopen = () => {
-            // Web Socket 已连接上，使用 send() 方法发送数据
-              ws.send('++++++++ws33333++++++++++')
-              //console.log('数据发送中8888++++++...实时是银行业')
-          }
-          ws.onmessage = evt => {
-           var content=JSON.parse(evt.data)
-          var kline=[]
-          content.list.forEach(function(item){
-              kline.push({
-             time: Number(item.endTime),
-               open: Number(item.openingPrice),
-               close: Number(item.closeingPrice),
-               high: Number(item.topPrice),
-               low: Number(item.floorPrice),
-               volume: Number(item.total)
-             });
-           // console.log(kline,'9999')
-          })
-         
-          //console.log(kline[0],'我是k线图')
-          onRealtimeCallback(kline[0])
-          }
-          ws.onclose = function () {
-            // 关闭 websocket
-            //console.log('连接已关闭...')
-          }
-          ws.onerror=function(){
-           // console.log("我是错误+++++++")
-          }
-           // 组件销毁时调用，中断websocket链接
-          this.over = () => {
-            ws.close()
-          }*/
-     
-  
+        if (resolution == 1) {
+          resolution = '1min'
+        }
+        if (resolution == 5) {
+          resolution = '5min'
+        }
+        if (resolution == 15) {
+          resolution = '15min'
+        }
+        if (resolution == 30) {
+          resolution = '30min'
+        }
+        if (resolution == 60) {
+          resolution = '60min'
+        }
+        if (resolution == 120) {
+          resolution = '120min'
+        }
+        if (resolution == 240) {
+          resolution = '240min'
+        }
+        if (resolution == 720) {
+          resolution = '720min'
+        }
+        if (resolution == '1D') {
+          resolution = '1day'
+        }
+        if (resolution == 'W') {
+          resolution = '10080min'
+        }
+        this_vue.$store.dispatch("trading/websocketKline", {
+          step: resolution
+        })
+        if (this_vue.klineCurrent) {
+          onRealtimeCallback(this_vue.klineCurrent)
+        }
+
+        /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
+            //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
+             ws.onopen = () => {
+                 // Web Socket 已连接上，使用 send() 方法发送数据
+                   ws.send('++++++++ws33333++++++++++')
+                   //console.log('数据发送中8888++++++...实时是银行业')
+               }
+               ws.onmessage = evt => {
+                var content=JSON.parse(evt.data)
+               var kline=[]
+               content.list.forEach(function(item){
+                   kline.push({
+                  time: Number(item.endTime),
+                    open: Number(item.openingPrice),
+                    close: Number(item.closeingPrice),
+                    high: Number(item.topPrice),
+                    low: Number(item.floorPrice),
+                    volume: Number(item.total)
+                  });
+                // console.log(kline,'9999')
+               })
+              
+               //console.log(kline[0],'我是k线图')
+               onRealtimeCallback(kline[0])
+               }
+               ws.onclose = function () {
+                 // 关闭 websocket
+                 //console.log('连接已关闭...')
+               }
+               ws.onerror=function(){
+                // console.log("我是错误+++++++")
+               }
+                // 组件销毁时调用，中断websocket链接
+               this.over = () => {
+                 ws.close()
+               }*/
+
+
       };
 
       Datafeed.Container.prototype.unsubscribeBars = function(listenerGUID) {
@@ -837,18 +828,17 @@ const this_vue = this;
       this.currency1 = newVal[0];
       this.currency2 = newVal[1];
       this.changePair();
-    }
+    },
   },
-   computed: {
+  computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo","klineHistory"]),
-      ...mapState([
-        "currentCoinId"
-    ]
-    ),
+    ...mapState("trading", ["marketInfo", "klineHistory"]),
+    ...mapState([
+      "currentCoinId"
+    ]),
 
   },
- 
+
 };
 </script>
 

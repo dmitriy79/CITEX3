@@ -19,7 +19,7 @@ const state = {
     currentIndex: 0,
     historyList: [],
     currentPrcie: '', //交易区当前价格
-    klineHistory: [],
+    klineHistory: null,
     klineCurrent: {},
     step: '',
     curbuyPrice: '',
@@ -36,6 +36,7 @@ const actions = {
         state,
         rootState
     }, arg) {
+    
         // commit("initMarketInfo",rootState.tradingList)
         commit("getAssets", {
             currentCoinId: rootState.currentCoinId,
@@ -100,11 +101,13 @@ const actions = {
         rootState,
         state
     }, params) {
+    ;
         // console.log(rootState.currentCoinId,'我是lk线图===============》')
         state.step = params.step
         commit('getKline', {
             currentCoinId: rootState.tradeId,
-            step: params.step
+            step: params.step,
+            callback: params.callback
         }) //币种
     },
 
@@ -395,6 +398,7 @@ const mutations = {
     },
     //k线历史数据
     getKline(state, params) {
+    
         var resolution = params.step
         var currentCoinId = params.currentCoinId
         api.getKDatas2({
@@ -416,7 +420,8 @@ const mutations = {
             }
             console.log('k line data', kline)
             state.klineHistory = kline
-
+        
+            params.callback && params.callback();
         })
     },
     //K线实时数据
