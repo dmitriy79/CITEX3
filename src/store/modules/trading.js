@@ -377,7 +377,7 @@ const mutations = {
             data: 'sendParams',
             success: (res) => {
                 state.AskList = res.ask;
-                state.BidList = res.bid;
+                state.BidList = res.bid.reverse();
                 state.currentPrcie = res.bid[0].price;
             }
         })

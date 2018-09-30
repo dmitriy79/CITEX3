@@ -10,8 +10,8 @@
                       <th>创建日期</th>
                       <th>方向</th>
                       <th>买单状态</th>
-                      <th>价格（BTC）</th>
-                      <th>数量（ADA）</th>
+                      <th>价格（{{zoneName}}）</th>
+                      <th>数量（{{marketInfo.name}}）</th>
                       <th>未成交数量</th>
                       <th v-if="this.active==0">操作</th>
                     </tr>
@@ -73,7 +73,8 @@ export default {
   },
   computed:{
     // ...mapState(['token']),
-    ...mapState('trading',['orderData'])
+    ...mapState('trading',['orderData', 'marketInfo']),
+    ...mapState(["zoneName"])
   }
 }
 </script>

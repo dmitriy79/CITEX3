@@ -2,8 +2,8 @@
     <div class="transaction-price" ref="wrapper">
          <div class="list buy-list">
             <div class="title">
-                    <span>成交价格(ETH)	</span>
-                    <span>数量(IOST)</span>
+                    <span>成交价格({{zoneName}})	</span>
+                    <span>数量({{marketInfo.name}})</span>
                     <span>时间</span>
                 </div>
             <dl v-if="historyList">
@@ -38,7 +38,8 @@ export default {
   methods: {
   },
   computed: {
-    ...mapState("trading", ["historyList"]),
+    ...mapState('trading',['historyList', 'marketInfo']),
+    ...mapState(["zoneName"])
   },
 };
 </script>
