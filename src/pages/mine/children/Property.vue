@@ -42,12 +42,12 @@
                                 <span>限额：<b>{{singleMax}}</b></span>
                             </div>
                         </div>
-                        <input type="text" v-model="coinNum">
+                        <input type="text" v-model="coinNum" @keyup="getfee">
                     </div>
                     <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label></div>
-                            <input type="text" v-model="feeValue">
+                            <input type="text" v-model="finalfee">
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
@@ -125,6 +125,7 @@ export default {
       singleMax:0,
       singleMin:0,
       coinNum: "",
+      finalfee:'',
       rate: "",
       realNum: "",
       coinId: "",
@@ -189,6 +190,8 @@ export default {
     this.$store.dispatch("assets/allAssets")
   },
   watch: {
+   
+    
     searchValue(val) {
       if (val) {
         this.searchList = this.myAssets.list.filter(item => item.coinInfo.name.indexOf(val.toUpperCase()) >= 0);
@@ -202,7 +205,12 @@ export default {
       console.log(this.searchList)
     }
     },
+
   methods: {
+    getfee(){
+        this.finalfee=this.feeValue*this.coinNum
+        this.realNum=this.coinNum- this.finalfee
+    },
     //确定提币
     dialogAudit() {},
     carrycoins() {
