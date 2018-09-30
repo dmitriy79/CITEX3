@@ -40,8 +40,8 @@
             </div>
             <div class="coin-list"
             v-for="(item,index) of searchList"
-            :class="{'active': index == currentIndex}"
-            @click='$store.dispatch("trading/toggleMarket", {selectId:index,coinId:item.coinId,tradeId:item.id})'>
+            :class="{'active': false}"
+            @click='$router.push(`/transaction/${item.name}_${zoneName}`)'>
                 <div class="coin-type">{{item.name}}</div>
                 <div class="price">{{item.deal_price}}</div>
                 <div class="rate" :class="{ red: item.increase, green: !item.increase}">
@@ -93,9 +93,10 @@ export default {
 
   computed: {
     ...mapState(["tradingCategory","currentCategoryIndex",'tradingList',"currentTradingIndex"]),
-    ...mapState('trading',['currentTradingIndex','currentIndex']),
+    ...mapState('trading',['currentTradingIndex']),
     ...mapGetters(["filterCoin"]),
     ...mapActions(['toggleMarket']),
+    ...mapState(["zoneName"])
   },
 
   methods: {

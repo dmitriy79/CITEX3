@@ -7,7 +7,6 @@ import FindPassword from '@/pages/FindPassword'
 import Notice from '@/pages/Notice'
 import NoticeDetail from '@/pages/NoticeDetail'
 import JoinUs from '@/pages/JoinUs'
-import Transaction from '@/pages/Transaction'
 // import ApplyChannel from  '@/components/channel/ApplyChannel'
 // import ApplyChannelText from  '@/components/channel/ApplyChannelText'
 // import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
@@ -26,9 +25,9 @@ const router =  new Router({
       component: () => import(/* webpackChunkName: "Home" */ '@/pages/Home')
     },
     {
-      path: '/transaction',
+      path: '/transaction/:pair?',
       name: 'Transaction',
-      component: Transaction
+      component: () => import('@/pages/Transaction')
     },
     {
       path: '/join-us',

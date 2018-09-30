@@ -36,6 +36,7 @@ const apiList = [
   '/payment/userProperty/uplistByUserId', //我的资产
 
   '/trade/trade/getTopTradeCoinPairs', //GET 主要币种模块展示  
+  '/trade/trade/getTradeInfo',
   '/trade/trade/getTradeInfoByZone', //交易区列表(根据交易区ID查询)
   '/trade/trade/getKDatas', //启用获取k线  GET
   '/trade/dealOrder/getUserTransactionRecord', //交易记录

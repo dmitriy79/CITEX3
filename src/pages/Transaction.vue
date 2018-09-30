@@ -118,6 +118,13 @@ export default {
   created() {
   },
   
+  watch: {
+    '$route.params.pair': function (pair) {
+      const [coinId, tradeId] = pair.split('_');
+      this.$store.dispatch("trading/toggleMarket", { coinId, tradeId });
+    }
+  },
+
   mounted() {
     this.$store.dispatch("initTradingList", () => {
       this.inited = true;

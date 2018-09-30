@@ -25,6 +25,9 @@ export default {
   },
   methods: {
 
+  },
+  mounted() {
+    this.$store.dispatch("getAllCoin");
   }
 }
 </script>

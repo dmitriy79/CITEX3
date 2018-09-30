@@ -13,6 +13,7 @@ export default {
     zoneName: '', //交易区类型
     zoneId: '', //交易区id
     tradeId: '', //交易对id
+    allCoin: [],
   },
   actions: {
 
@@ -70,6 +71,9 @@ export default {
       var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
       var D = date.getDate() + ' '
       return Y + M + D
+    },
+    getAllCoin({commit, state }) {
+      commit('getAllCoin');
     }
   },
 
@@ -103,6 +107,12 @@ export default {
       state.tradingCategory = tradingCategory
       // state.currentCategoryIndex = tradingCategory[0].id
 
+    },
+    //查询币种
+    getAllCoin(state) {
+      api.all().then(res=>{
+        state.allCoin = res.datas
+      })
     },
     setToken(state) {
       state.userToken = localStorage.getItem('token')

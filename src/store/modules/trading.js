@@ -16,7 +16,6 @@ const state = {
     orderData: {}, //订单委托/历史记录
     AskList: [], //卖单
     BidList: [], //买单 
-    currentIndex: 0,
     historyList: [],
     currentPrcie: '', //交易区当前价格
     klineHistory: null,
@@ -101,7 +100,6 @@ const actions = {
         rootState,
         state
     }, params) {
-    ;
         // console.log(rootState.currentCoinId,'我是lk线图===============》')
         state.step = params.step
         commit('getKline', {
@@ -139,37 +137,36 @@ const actions = {
     }, params) {
         console.log("交易对ID====>", state, rootState, params)
         if (params) {
-            state.currentIndex = params.selectId
-            state.currentTradingIndex = params.selectId
+            let { coinId, tradeId } = params;
+            let [coinItem] = rootState.allCoin.filter( item => item.nameShort == coinId);
+            let [tradeItem] = rootState.allCoin.filter( item => item.nameShort == tradeId);
+            coinId = coinItem.id;
+            tradeId = tradeItem.id;
             state.marketInfo = rootState.tradingList[params.selectId]
-            rootState.currentCoinId = params.coinId
-            rootState.tradeId = params.tradeId
+            rootState.currentCoinId = coinId
+            rootState.tradeId = tradeId
 
             // console.log(state.marketInfo,'=============>state.marketInfo')
             commit('setMarket', { ...rootState,
                 ...params
             })
-            commit('getCoinInfo', params.coinId) //币种
+            commit('getCoinInfo', coinId) //币种
 
-            commit('getDealOrders', rootState.tradeId) //成交历史
+            commit('getDealOrders', tradeId) //成交历史
             commit('getKline', {
-                currentCoinId: rootState.tradeId,
+                currentCoinId: tradeId,
                 step: state.step
             }) //历史k线
 
-
-            setTimeout(() => {
-                // console.log(arg,'888888==========99999=====777777')
-                commit('tradingAskBid', rootState.tradeId) //买卖挂单
-                commit('websocketKline', {
-                    zoneId: rootState.tradeId,
-                    step: state.step
-                }) //我的资产
-                commit("getAssets", {
-                    currentCoinId: rootState.currentCoinId,
-                    zoneId: rootState.zoneId
-                })
-            }, 500)
+            commit('tradingAskBid', tradeId) //买卖挂单
+            commit('websocketKline', {
+                zoneId: tradeId,
+                step: state.step
+            }) //我的资产
+            commit("getAssets", {
+                currentCoinId: coinId,
+                zoneId: tradeId
+            })
         }
 
     },
@@ -566,7 +563,6 @@ const mutations = {
     //切换币种 资料显示
     setMarket(state, params) {
         console.log(params)
-        state.currentTradingIndex = params.selectId
         state.marketInfo = params.tradingList[params.selectId]
     },
     //获取币种资料
