@@ -405,7 +405,7 @@ const mutations = {
             if (res.datas.list.length) {
                 res.datas.list.forEach(function(bar) {
                     kline.push({
-                        time: Number(bar.startTime),
+                        time: Number(bar.startTime.time),
                         open: Number(bar.openPrice),
                         close: Number(bar.closePrice),
                         high: Number(bar.topPrice),
