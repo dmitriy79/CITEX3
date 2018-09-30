@@ -89,7 +89,7 @@ module.exports = {
       },
       labels: {
         formatter: function() {
-          return this.value + 'k'
+          return this.value
         },
         style: {
           color: "#94979b"

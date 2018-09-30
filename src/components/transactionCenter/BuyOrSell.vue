@@ -23,9 +23,9 @@
             <div class="top-title list">
               <div class="name">
                     <span></span>
-                    <span>价格（ETH）</span>
-                    <span>数量（IOST)</span>
-                    <span>累计（IOST）</span>
+                    <span>价格（{{zoneName}}）</span>
+                    <span>数量（{{marketInfo.name}})</span>
+                    <span>累计（{{marketInfo.name}}）</span>
                 </div>
             </div>
         <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
@@ -35,7 +35,7 @@
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
-                    <span>{{item.totalCount}}</span>
+                    <span>{{item.dealCount}}</span>
                 </dd>
             </dl>
         </div>
@@ -97,6 +97,7 @@ export default {
         "tradingList"
     ]
     ),
+    ...mapState(["zoneName"])
   },
   methods: {
 

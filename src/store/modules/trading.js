@@ -377,7 +377,7 @@ const mutations = {
             data: 'sendParams',
             success: (res) => {
                 state.AskList = res.ask;
-                state.BidList = res.bid;
+                state.BidList = res.bid.reverse();
                 state.currentPrcie = res.bid[0].price;
             }
         })
@@ -405,7 +405,7 @@ const mutations = {
             if (res.datas.list.length) {
                 res.datas.list.forEach(function(bar) {
                     kline.push({
-                        time: Number(bar.startTime),
+                        time: Number(bar.startTime.time),
                         open: Number(bar.openPrice),
                         close: Number(bar.closePrice),
                         high: Number(bar.topPrice),
