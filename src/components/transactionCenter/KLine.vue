@@ -16,7 +16,6 @@ import {
 export default {
   data() {
     return {
-      inited: false,
       websock: null,
       currency1: '',
       currency2: "ETH",
@@ -30,30 +29,16 @@ export default {
   name: "KLine",
 
   mounted: function() {
-    this.$store.dispatch("trading/getKline", {
-      step: '1min',
-      callback: this.createKline
-    })
+    this.recreateKline();
   },
   methods: {
-    changePair: function() {
-      let this_vue = this;
-      if (this.chart && this.feed) {
-        this.feed._fireEvent("pair_change");
-        this.chart.activeChart().resetData();
-        this.chart
-          .activeChart()
-          .setSymbol(this.currency1 + ":" + this.currency2, function() {
-            console.log(
-              "GOWNO :: proba zmiany",
-              this_vue.currency1,
-              this_vue.currency2
-            );
-          });
-      }
+    recreateKline() {
+      this.$store.dispatch("trading/getKline", {
+        step: '1min',
+        callback: this.createKline
+      })
     },
     createKline: function() {
-      this.inited = true;
       const this_vue = this;
 
       this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
@@ -824,10 +809,11 @@ export default {
     }
   },
   watch: {
-    pair: function(newVal, oldVal) {
+    marketInfo: function(newVal, oldVal) {
       this.currency1 = newVal[0];
       this.currency2 = newVal[1];
-      this.changePair();
+      this.recreateKline();
+      // this.changePair();
     },
   },
   computed: {
