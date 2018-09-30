@@ -208,8 +208,13 @@ export default {
 
   methods: {
     getfee(){
+     
         this.finalfee=this.feeValue*this.coinNum
         this.realNum=this.coinNum- this.finalfee
+        if(this.coinNum==''){
+           this.finalfee=''
+           this.realNum=''
+        }
     },
     //确定提币
     dialogAudit() {},
@@ -352,7 +357,7 @@ export default {
 
 <style>
 .el-message-box .el-input input,.el-form-item__content .el-input input {
-  color: #000 !important;
+  /* color: #000 !important; */
 }
 </style>
 

@@ -8,13 +8,13 @@
             <div class="items" v-if="this.currentTab==='current'">
                 <div class="condition">
                     <div class="left">
-                        方向：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
+                        方向：<span v-for="(item,index) in conditionList" :class="{active:index==bidOrAsk}" @click="tabCondition(index)">{{item.name}}</span>
                     </div>
                     <div class="right "><span>交易对：</span>
-                     <el-form ref="form" :model="form" label-width="80px" >
+                     <el-form ref="form" :model="form" label-width="80px" size="small">
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
-                    </el-form-item><span>/</span>
+                    </el-form-item><span class="devide">/</span>
                  
                             <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
                            
@@ -25,25 +25,30 @@
                                   </el-select>
                               </el-form-item>
                             </el-form>
-                            
+                            <div class="button button-min search" >搜索</div>
                         </div>
                 </div>
                 <div class="table-wrapper">
                      <el-table :data="currentEntrust" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column prop="createTime" label="委托时间" width="160"></el-table-column>
-                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
-                    <el-table-column prop="group" label="交易对" ></el-table-column>
-                    <el-table-column prop="direction" label="方向"></el-table-column>
-                    <el-table-column prop="price" label="委托价格"></el-table-column>
-                    <el-table-column prop="num" label="委托个数（个）"></el-table-column>
-                    <el-table-column prop="duenum" label="已成交"></el-table-column>
-                    <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
-                    <el-table-column prop="status" label="状态"></el-table-column>
-                     <el-table-column  width="80" label="操作" >
-                       
+                     <el-table-column  label="委托时间" width="160">
                        <template slot-scope="scope">
-                           <span v-if="scope.row.status=='未成交'" class="txt-b">撤销</span>
-                           <span v-if="scope.row.status=='部分成交'" class="txt-b" @click="details(scope.row)"> 详情</span>
+                           <span>{{scope.row.createTime | date-format}}</span>
+                        </template>
+
+                     </el-table-column>
+                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
+                    <el-table-column prop="coinTypeName" label="交易对" ></el-table-column>
+                    <el-table-column prop="bidOrSell" label="方向"></el-table-column>
+                    <el-table-column prop="price" label="委托价格"></el-table-column>
+                    <el-table-column prop="amount" label="委托个数（个）"></el-table-column>
+                    <el-table-column prop="dealAmount" label="已成交"></el-table-column>
+                    <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
+                    <el-table-column prop="matchStatus" label="状态"></el-table-column>
+                     <el-table-column  width="80" label="操作" >
+   
+                       <template slot-scope="scope">
+                           <span v-if="scope.row.matchStatus=='未成交'" class="txt-b">撤销</span>
+                           <span v-if="scope.row.matchStatus=='部分成交'||scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
                            
                         </template>
                         
@@ -73,15 +78,15 @@
       </template>
     </el-table-column>
   </el-table>
-                  
-                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+                <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage" :current-page.sync="pageIndex"
+       		 :page-size="pageSize" :total="currentTotal"  background layout="total,prev, pager, next" >	</el-pagination>
                 </div>
                
             </div>
             <div class="items" v-if="this.currentTab==='history'">
                  <div class="condition">
                     <div class="left">
-                        方向：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
+                        方向：<span v-for="(item,index) in conditionList" :class="{active:index==bidOrAsk_}" @click="tabCondition_(index)">{{item.name}}</span>
                     </div>
                      <div class="right "><span>交易对：</span>
                      <el-form ref="form" :model="form" label-width="80px" >
@@ -102,10 +107,10 @@
                         </div>
                 </div>
                                 <div class="table-wrapper">
-                     <el-table :data="historyEntrust" style="width: 100%" >
+                     <el-table :data="currentEntrust" style="width: 100%" >
                      <el-table-column prop="date" label="委托时间" width="160"></el-table-column>
-                    <el-table-column prop="type" label="交易类型" ></el-table-column>
-                    <el-table-column prop="group" label="交易对" ></el-table-column>
+                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
+                    <el-table-column prop="coinTypeName" label="交易对" ></el-table-column>
                     <el-table-column prop="direction" label="方向"></el-table-column>
                     <el-table-column prop="price" label="委托价格"></el-table-column>
                     <el-table-column prop="num" label="委托个数（个）"></el-table-column>
@@ -147,7 +152,8 @@
     </el-table-column>
   </el-table>
                   
-                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage_" :current-page.sync="pageIndex_"
+       		 :page-size="pageSize" :total="currentTotal"  background layout="total,prev, pager, next" >	</el-pagination>
                 </div>
             </div>
         </div>
@@ -158,53 +164,83 @@ export default {
   data() {
     return {
       currentTab: "current",
-      currentIndex: 0, //当前方向
+      pageIndex: 1,
+      pageIndex_:1,//历史委托默认显示页数
+      historyTotal:0,
+      currentTotal: 0, //当前委托分页总数
+      currentIndex: 1, //当前委托 还是历史委托
+    bidOrAsk_:0,//当前方向 买或者卖 历史委托
+      bidOrAsk:0,//当前方向 买或者卖 当前委托
       showUl: false,
+      pageSize:10,
       showDetails: false, //是否显示交易详情
-     form: {
-          name: '',
-          region: '',
-        },
+      form: {
+        name: "",
+        region: ""
+      },
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }],
-      currentEntrust:[],
-      historyEntrust:[],
-      tableData1: [
-        {
-          date: "2016-05-02 11:00:09",
-          type: "币币交易",
-          group: "YEE/BTC",
-          direction: "买入",
-          price: "0.00000890",
-          num: "466.79",
-          duenum: "466.79",
-          avarage: "0.00000890",
-          status: "未成交"
-        },
-        {
-          date: "2016-05-02 11:00:09",
-          type: "币币交易",
-          group: "YEE/BTC",
-          direction: "卖出",
-          price: "0.00000890",
-          num: "466.79",
-          duenum: "466.79",
-          avarage: "0.00000890",
-          status: "部分成交"
-        }
-      ]
+      currentEntrust: [],
+      historyEntrust: [],
+
     };
   },
-  mounted () {
-    this.getInfo()
+  mounted() {
+    this.getInfo();
   },
   methods: {
+    //当前委托分页
+    Changepage(val) {
+         this.pageIndex = val
+         this.getInfo()
+    },
+    Changepage_(val){
+      this.pageIndex_ = val
+         this.getInfo()
+    },
     //我的委托记录
-    getInfo(){
-      var userId=localStorage.getItem('userId')
-      this.$api.listBidOrders({type:1,pageNum:1,pageSize:10}).then(res=>{
-        this.currentEntrust=res.datas.list
-        console.log(res,'我的委托')
-      })
+    getInfo() {
+      var userId = localStorage.getItem("userId");
+      if(this.currentIndex==1){
+        this.bidOrAsk=this.bidOrAsk
+      }
+      else{
+        this.bidOrAsk=this.bidOrAsk_
+      }
+      this.$api
+        .listBidOrders({ type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk })
+        .then(res => {
+          var EntrustList = res.datas.list;
+          this.currentTotal=EntrustList.total
+          EntrustList.forEach(element => {
+            element.dealAmount = element.amount - element.leftAmount;
+            element.coinTypeName =
+              element.tradeCoinNameShort + "/" + element.unitCoinNameShort;
+            if (element.bidOrSell == 1) {
+              element.bidOrSell = "买";
+            }
+            if (element.bidOrSell == 0) {
+              element.bidOrSell = "卖";
+            }
+            if (element.matchStatus == 0) {
+              element.matchStatus = "未成交";
+            }
+            if (element.matchStatus == 1) {
+              element.matchStatus = "部分成交";
+            }
+            if (element.matchStatus == 2) {
+              element.matchStatus = "完全成交";
+            }
+            if (element.matchStatus == 3) {
+              element.matchStatus = "用户撤单";
+            }
+            if (element.matchStatus == 4) {
+              element.matchStatus = "系统撤单";
+            }
+          });
+          this.currentEntrust = res.datas.list;
+          this.currentTotal = res.datas.total;
+          console.log(res, "我的委托");
+        });
     },
     setClassName1({ row, index }) {
       // 通过自己的逻辑返回一个class或者空
@@ -213,11 +249,28 @@ export default {
         return "row-expand-cover";
       }
     },
-    tab(item) {
+    tab(item) { 
+      if (item == "current") {
+        this.currentIndex=1
+        this.getInfo()
+      }
+      else{
+        this.currentIndex=2
+        this.getInfo()
+
+      }
       this.currentTab = item;
     },
     tabCondition(index) {
-      this.currentIndex = index;
+      
+      this.bidOrAsk=index
+      this.getInfo()
+    },
+    //历史委托
+     tabCondition_(index) {
+      console.log(index,'index tabCondition_')
+      this.bidOrAsk_=index
+      this.getInfo()
     },
     //是否显示交易对
     showCoinType() {
@@ -228,7 +281,7 @@ export default {
       this.showDetails = !this.showDetails;
     },
     setClassName({ row, index }) {
-      if (row.status == "未成交") {
+      if (row.status == "部分成交") {
         return "row-expand-cover";
       }
     }
@@ -236,6 +289,7 @@ export default {
 };
 </script>
 <style>
+
 .el-table__expanded-cell[class*="cell"] {
   padding: 0 10px !important;
 }
@@ -261,6 +315,12 @@ export default {
 </style>
 
 <style lang="less" scoped>
+.search{    margin-left: -80px;}
+.devide{
+      height: 32px;
+    line-height: 32px;
+    padding: 0 5px;
+}
 .tabs {
   height: 40px;
   margin-bottom: 23px;
@@ -286,6 +346,8 @@ export default {
       font-size: 14px;
       color: #fff;
       display: flex;
+          height: 32px;
+    line-height: 32px;
       .left {
         span {
           padding: 3px 4px;
@@ -300,13 +362,12 @@ export default {
       .right {
         margin-left: 30px;
         display: flex;
-       .el-form{
-        display: flex
-
-       }
-     .el-input{
-    width: 100% !important;
-}
+        .el-form {
+          display: flex;
+        }
+        .el-input {
+          width: 100% !important;
+        }
         .coin-type {
           position: relative;
           cursor: pointer;
