@@ -17,15 +17,15 @@
                     </el-form-item><span class="devide">/</span>
                  
                             <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
-                           
+                         
                               <el-form-item>
-                                  <el-select v-model="form.region" placeholder="BTC">
-                                  <el-option label="BTC" value="BTC"></el-option>
-                                  <el-option label="ETH" value="ETH"></el-option>
+                                  <el-select v-model="form.region" placeholder="ETH" @change="selectCoin">
+                             <el-option v-for="item in coinList" :label="item.zoneName"  :value="item.id" 
+     :key="item.id"></el-option> 
                                   </el-select>
                               </el-form-item>
                             </el-form>
-                            <div class="button button-min search" >搜索</div>
+                            <div class="button button-min search" @click="searchCoin">搜索</div>
                         </div>
                 </div>
                 <div class="table-wrapper">
@@ -89,7 +89,7 @@
                         方向：<span v-for="(item,index) in conditionList" :class="{active:index==bidOrAsk_}" @click="tabCondition_(index)">{{item.name}}</span>
                     </div>
                      <div class="right "><span>交易对：</span>
-                     <el-form ref="form" :model="form" label-width="80px" >
+                     <el-form ref="form" :model="form" label-width="80px" size="small">
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
                     </el-form-item><span>/</span>
@@ -160,11 +160,13 @@
     </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
       currentTab: "current",
       pageIndex: 1,
+      tradeCoinPairId:1,
       pageIndex_:1,//历史委托默认显示页数
       historyTotal:0,
       currentTotal: 0, //当前委托分页总数
@@ -176,18 +178,41 @@ export default {
       showDetails: false, //是否显示交易详情
       form: {
         name: "",
-        region: ""
+   
       },
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }],
       currentEntrust: [],
       historyEntrust: [],
+      coinList:[],
 
     };
   },
+  computed: {
+    
+  },
   mounted() {
     this.getInfo();
+    this.classificationList()
   },
   methods: {
+      //下拉选择币种
+        selectCoin(val){
+          this.tradeCoinPairId=val
+          
+        },
+        //搜索
+        searchCoin(){
+          this.$api.listBidOrders({type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,tradeCoinNameShort:this.form.name ,tradeCoinPairId:this.tradeCoinPairId}).then(res=>{
+              this.currentEntrust = res.datas.list;
+          })
+        },
+    //获取交易区
+    classificationList(){
+      this.$api.classificationList().then(res=>{
+        console.log(res,'classificationList')
+        this.coinList=res.datas
+      })
+    },
     //当前委托分页
     Changepage(val) {
          this.pageIndex = val
@@ -315,7 +340,8 @@ export default {
 </style>
 
 <style lang="less" scoped>
-.search{    margin-left: -80px;}
+.entrust-wrapper{height: 1000px;;}
+// .search{    margin-left: -80px;}
 .devide{
       height: 32px;
     line-height: 32px;

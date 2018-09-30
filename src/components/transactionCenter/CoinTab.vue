@@ -59,6 +59,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex"
+
 const search = {
 
 }

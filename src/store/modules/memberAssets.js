@@ -7,13 +7,14 @@ const state = {
     fullcoinList:[],//充币记录
     carrycoinList:[],//提币记录
     fullcoinTotal:0,
-    carrycoinTotal:0
+    carrycoinTotal:0,
+    myAssetsTotal:0,//我的资产总条数
+
 }
 const getters = {}
 const actions = {
     //我的资产
     allAssets({ commit, state }, params) {
-        console.log(params,"allAssets")
         commit("allAssets", params)
     },
     //充币记录
@@ -28,11 +29,10 @@ const actions = {
 const mutations = {
     //总资产列表
     allAssets(state,params){
-        api.uplistByUserId({pageNum:1,pageSize:90,collet:0})
+        api.userPropertylistByUserId({pageNum:params,pageSize:14,collet:0})
         .then(res=>{
-            console.log(res,'资产---')
              state.myAssets = res.datas
-        
+             state.myAssetsTotal=res.datas.total
         })
     },
     //充币记录

@@ -10,7 +10,7 @@
                         类型：<span v-for="(item,index) in conditionList" :class="{active:index==currentIndex}" @click="tabCondition(index)">{{item.name}}</span>
                     </div>
                     <div class="right "><span>交易对：</span>
-                     <el-form ref="form" :model="form" label-width="80px" >
+                     <el-form ref="form" :model="form" label-width="80px" size="small">
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
                     </el-form-item><span>/</span>
@@ -28,7 +28,7 @@
                 <div class="table-wrapper">
                      <el-table :data="recordList" style="width: 100%"   height="750">
                         <el-table-column prop="dealTime" label="交易时间" width="165"></el-table-column>
-                        <el-table-column prop="type" label="方向" ></el-table-column>
+                        <el-table-column prop="direction" label="方向" ></el-table-column>
                         <el-table-column prop="tradeCoinShortName" label="交易币种" ></el-table-column>
                         <el-table-column prop="dealPrice" label="单价"></el-table-column>
                         <el-table-column prop="dealAmount" label="数量（个）"></el-table-column>
@@ -36,6 +36,8 @@
                         
                         <el-table-column prop="askRateAmountString" label="手续费"></el-table-column>
                     </el-table>
+                     <el-pagination v-show="total || total>0"	@current-change="Change" :current-page.sync="pageNum"
+       		 :page-size="pageSize" :total="total"  background layout="total,prev, pager, next" >	</el-pagination>
                 </div>
             </div>
         </div>
@@ -49,10 +51,13 @@ export default {
       currentIndex: 0, //当前方向
       showUl: false,
       recordList: [],
+      total:0,
       form: {
         name: "",
         region: ""
       },
+      pageNum:1,
+      pageSize:14,
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }]
     };
   },
@@ -62,32 +67,36 @@ export default {
   methods: {
     //获取交易记录
     getUserTransactionRecord() {
-      this.$api.getUserTransactionRecord().then(res => {
+      this.$api.getUserTransactionRecord({pageNum:this.pageNum,pageSize:14,type:this.currentIndex}).then(res => {
         console.log(res, "交易记录9999");
         if (res.message == "success") {
-          var content = res.datas;
-          content.forEach(element => {
-            element.dealTime = date.timestampToTimeAll(element.dealTime);
-          });
+          var content = res.datas.list;
+          this.total=res.datas.total
           this.recordList = content;
         }
       });
+    },
+    //Change 切换分页
+    Change(val){
+      this.pageNum=val
+      this.getUserTransactionRecord()
     },
     tab(item) {
       this.currentTab = item;
     },
     tabCondition(index) {
       this.currentIndex = index;
-      this.$api.getUserTransactionRecord({ type: index }).then(res => {
-        console.log(res, "交易记录9999");
-        if (res.message == "success") {
-          var content = res.datas;
-          content.forEach(element => {
-            element.dealTime = date.timestampToTimeAll(element.dealTime);
-          });
-          this.recordList = content;
-        }
-      });
+      this.getUserTransactionRecord()
+      // this.$api.getUserTransactionRecord({ type: index }).then(res => {
+      //   console.log(res, "交易记录9999");
+      //   if (res.message == "success") {
+      //     var content = res.datas;
+      //     content.forEach(element => {
+      //       element.dealTime = date.timestampToTimeAll(element.dealTime);
+      //     });
+      //     this.recordList = content;
+      //   }
+      // });
     },
     //是否显示交易对
     showCoinType() {

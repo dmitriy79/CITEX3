@@ -19,13 +19,13 @@
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
             
             <dd class="list" v-if=" searchList.length>0" v-for="(item, index) in searchList">
-               <span>{{item.coinInfo.name}} </span>
-                <span>{{item.total}}</span>
-                <span>{{item.able}}</span>
-                <span>{{item.frozen}}</span>
+               <span>{{item.nameShort}} </span>
+                <span>{{item.total || '0.00000000'}}</span>
+                <span>{{item.able || '0.00000000'}}</span>
+                <span>{{item.frozen || '0.00000000'}}</span>
                 <span class="txt-right">
                     <div @click="fullCoin(index,item.coinId,item.coinName)">充币</div>
-                    <div @click="carryCoin(index,item.coinId,item.able,item.singleMax,item.singleMin,item.coinInfo.name,item.feeValue)">提币</div>
+                    <div @click="carryCoin(index,item.coinId,item.able,item.singleMax,item.singleMin,item.nameShort,item.feeValue)">提币</div>
                     <!-- <div><router-link to="/Transaction" tag="span">交易</router-link></div> -->
                 </span>
                 <transition name="fade">
@@ -88,6 +88,9 @@
                  </transition>
             </dd>
         </dl>
+          <el-pagination v-show="myAssetsTotal || myAssetsTotal>0"	@current-change="Change" :current-page.sync="pageIndex"
+       		 :page-size="pageSize" :total="myAssetsTotal"  background layout="total,prev, pager, next" >	</el-pagination>
+        
     </div>
     <el-dialog title="提示" :visible.sync="dialogAuditing" width="30%">
       <el-form :model="form" class="dialog-wrapper" label-width="120px">
@@ -118,6 +121,8 @@ export default {
 
   data() {
     return {
+      pageIndex:1,
+      pageSize:14,
       searchList:null,
         searchValue:'',
       coinAddress: "",
@@ -150,51 +155,18 @@ export default {
       activeIndex: "",
       propertyLists: [],
       fullCoinRecordList: [],
-      tableData1: [
-        {
-          date: "2016-05-02",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1517 弄"
-        }
-      ],
-      tableData2: [
-        {
-          date: "2016-05-02",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "USDT",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
     };
   },
+
   created() {
-    this.$store.dispatch("assets/allAssets")
+    this.$store.dispatch("assets/allAssets",this.pageIndex)
   },
   watch: {
    
     
     searchValue(val) {
       if (val) {
-        this.searchList = this.myAssets.list.filter(item => item.coinInfo.name.indexOf(val.toUpperCase()) >= 0);
+        this.searchList = this.myAssets.list.filter(item => item.nameShort.indexOf(val.toUpperCase()) >= 0);
         console.log(this.myAssets.list,this.searchList,'this.searchList')
       } else {
         this.searchList = this.myAssets.list;
@@ -207,6 +179,12 @@ export default {
     },
 
   methods: {
+    //切换分页
+    Change(value){
+    this.pageIndex = value
+     this.$store.dispatch("assets/allAssets",this.pageIndex)
+    },
+
     getfee(){
      
         this.finalfee=this.feeValue*this.coinNum
@@ -286,7 +264,7 @@ export default {
     handleChecked() {
       this.checked = !this.checked;
       if(this.checked){
-        this.searchList = this.myAssets.list.filter(item => item.total>=0);
+        this.searchList = this.myAssets.list.filter(item => item.total>0);
       }
       else{
         this.searchList = this.myAssets.list
@@ -350,7 +328,7 @@ export default {
     },
   },
   computed:{
-    ...mapState('assets',['myAssets'])
+    ...mapState('assets',['myAssets','myAssetsTotal'])
   }
 };
 </script>

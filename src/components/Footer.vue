@@ -64,10 +64,10 @@ export default {
          {title:'币种新闻',id:1}
        ],*/
        [
-         {title:'帮助中心',id:1,path:'/'},
+        //  {title:'帮助中心',id:1,path:'/'},
          {title:'问题反馈',id:1,path:'/'},
          {title:'API 文档',id:1,path:'/'},
-         {title:'公告',id:1,path:'/notice'},
+         {title:'公告中心',id:1,path:'/notice'},
       ]],
       currentCode:null,
     }
