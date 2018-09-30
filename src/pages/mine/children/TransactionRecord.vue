@@ -54,30 +54,6 @@ export default {
         region: ""
       },
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }]
-      // tableData1: [
-      //   {
-      //     date: "2016-05-02 11:00:09",
-      //     type: "币币交易",
-      //     group: "YEE/BTC",
-      //     direction: "买入",
-      //     price: "0.00000890",
-      //     num: "466.79",
-      //     duenum: "466.79",
-      //     avarage: "0.00000890",
-      //     status: "未成交"
-      //   },
-      //   {
-      //     date: "2016-05-02 11:00:09",
-      //     type: "币币交易",
-      //     group: "YEE/BTC",
-      //     direction: "卖出",
-      //     price: "0.00000890",
-      //     num: "466.79",
-      //     duenum: "466.79",
-      //     avarage: "0.00000890",
-      //     status: "部分成交"
-      //   }
-      // ]
     };
   },
   created() {

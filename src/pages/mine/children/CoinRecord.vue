@@ -53,36 +53,9 @@ export default {
   data() {
     return {
          current:'full',
-   
          pageIndex:1,
          pageIndex_:1,//提币
          	pageSize:12,
-              tableData1: [{
-            date: '2016-05-02',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }],
-        tableData2: [{
-            date: '2016-05-02',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: 'USDT',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
     };
   },
   created() {
@@ -91,12 +64,12 @@ export default {
  
   methods: {
     handleCurrentChange(value){
-			this.pageIndex_ = value
-			 this.$store.dispatch("assets/fullcoinRecord",this.pageIndex_)
+			this.pageIndex = value
+			 this.$store.dispatch("assets/fullcoinRecord",this.pageIndex)
     },
     //提币分页
-    carrycoinChange(){
-      value
+    carrycoinChange(value){
+      	this.pageIndex_ = value
     },
     goback() {
       history.go(-1);
