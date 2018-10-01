@@ -8,7 +8,11 @@
           <!-- <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div> -->
         </div>
         <ul class="nav-bar">
-            <li v-for="(item, index) of allCoin" @click="selectZone(index)">
+            <li
+              v-for="(item, index) of allCoin"
+              @click="selectZone(index)"
+              :class="{ active: index == selectedZoneIndex}"
+            >
               {{item.zoneCoinName}}
             </li>
             <li>
@@ -43,8 +47,8 @@
             <div
               class="coin-list"
               v-for="(item, index) of (searchList || allCoin[selectedZoneIndex].list)"
-              :class="{'active': false}"
-              @click='selectCoin(item)'
+              :class="{'active': item.id == selectedId }"
+              @click='selectCoin(item, index)'
             >
               <div class="coin-type">{{item.name}}</div>
               <div class="price">{{item.deal_price}}</div>
@@ -74,10 +78,14 @@ export default {
       searchList: null,
       sort: '',
       selectedZoneIndex: 0,
+      selectedId: 0,
     };
   },
 
   created() {
+    // 默认打开选中的交易区
+    this.selectedZoneIndex = this.allCoin.findIndex( item => item.zoneCoinName == this.zoneName);
+    this.selectedId = this.marketInfo.id;
   },
 
 
@@ -95,7 +103,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["allCoin", 'zoneName']),
+    ...mapState(["allCoin", 'zoneName', 'marketInfo']),
   },
 
   methods: {
@@ -131,7 +139,8 @@ export default {
     },
     selectCoin(item) {
       let zone = this.allCoin[this.selectedZoneIndex];
-      this.$store.dispatch('setZone', zone)
+      this.selectedId = item.id;
+      this.$store.dispatch('setZone', zone);
       this.$router.push(`/transaction/${item.name}_${zone.zoneCoinName}`)
     }
   }
