@@ -7,7 +7,7 @@
         </div>
         <ul>
       <li v-for="(item,index) in dealOrder.up" v-if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
+            <div class="type" @click="jumpToTrade(item)">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
             <div class="rate green">{{item.range}}%<i class="ico-ups"></i></div>
           </li>
         </ul>
@@ -18,7 +18,7 @@
         </div>
         <ul>
            <li v-for="(item,index) in dealOrder.fall" v-if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
+            <div class="type" @click="jumpToTrade(item)">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
             <div class="rate red">-{{item.range}}%<i class="ico-downs"></i></div>
           </li>
          
@@ -41,6 +41,11 @@ export default {
     dealOrder: Object
   },
   mounted() {
+  },
+  methods: {
+    jumpToTrade(item) {
+      this.$router.push(`/transaction/${item.trade_coin_short_name}_${item.unit_coin_short_name}`)
+    }
   }
 }
 </script>

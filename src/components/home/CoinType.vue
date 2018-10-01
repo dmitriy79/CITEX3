@@ -4,7 +4,10 @@
       <div class="coin-block">
         <div class="item" v-for="(item,index) in coinList">
           <div class="top-wrapper">
-            <div class="coin-type"><span class="type">{{item.name}}</span><span class="rate green">{{item.increaseNum}}%</span></div>
+            <div class="coin-type">
+              <span class="type" @click="jumpToTrade(item.name)">{{item.name}}</span>
+              <span class="rate green">{{item.increaseNum}}%</span>
+            </div>
             <div class="price">{{item.price}} ≈${{item.price*0.1452}}</div>
             <div class="num">量：<span>{{item.amount_24H}}</span></div>
           </div>
@@ -42,6 +45,11 @@ export default {
   },
   components: {
     XChart
+  },
+  methods: {
+    jumpToTrade(name) {
+      this.$router.push(`/transaction/${name.replace('/', '_')}`)
+    }
   }
 }
 
