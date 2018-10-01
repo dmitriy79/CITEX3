@@ -16,7 +16,11 @@ export default class {
     let wsUri = `${process.env.WS_API}/scheduling/${arg.url}`
     this.websock = new WebSocket(wsUri)
     this.websock.onmessage = (e) => {
-      arg.success(JSON.parse(e.data))
+      try {
+        arg.success(JSON.parse(e.data || "{}"))
+      } catch (e) {
+        console.error('json 解析失败, 数据为', e.data)
+      }
       console.log(wsUri, "====>WebSocket接收数据")
     }
     this.websock.onclose = (e) => {
