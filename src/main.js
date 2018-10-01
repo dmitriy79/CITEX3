@@ -79,6 +79,7 @@ const i18n = new VueI18n({
 
 router.beforeEach((to, from, next) => {
   NProgress.start();
+	window.scrollTo(0,0);
   next();
 });
 
