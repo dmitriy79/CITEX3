@@ -15,7 +15,10 @@
             >
               {{item.zoneCoinName}}
             </li>
-            <li @click="selectZone(-1)">
+            <li
+              @click="selectZone(-1)"
+              :class="{ active: -1 == selectedZoneIndex}"
+            >
               <span class="ico-star-fill" ></span>
             </li>
         </ul>
