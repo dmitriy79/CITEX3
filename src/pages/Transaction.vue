@@ -126,9 +126,12 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("initTradingList", () => {
-      this.inited = true;
-      this.$store.dispatch("trading/initTradings")
+    this.$store.dispatch("initTradingList", {
+      pair: this.$route.params.pair,
+      callback: () => {
+        this.inited = true;
+        this.$store.dispatch("trading/initTradings")
+      }
     })
   },
   methods: {

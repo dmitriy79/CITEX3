@@ -138,27 +138,22 @@ const actions = {
         console.log("交易对ID====>", state, rootState, params)
         if (params) {
             let { coinId, tradeId } = params;
-            let [coinItem] = rootState.allCoin.filter( item => item.nameShort == coinId);
-            let [tradeItem] = rootState.allCoin.filter( item => item.nameShort == tradeId);
-            coinId = coinItem.id;
-            tradeId = tradeItem.id;
-            state.marketInfo = rootState.tradingList[params.selectId]
+            let [zone] = rootState.allCoin.filter( item => item.zoneCoinName == tradeId);
+            let [coin] = zone.list.filter( item => item.name == coinId);
+            tradeId = zone.zoneCoinId;
+            coinId = coin.id;
+            state.marketInfo = coin
             rootState.currentCoinId = coinId
             rootState.tradeId = tradeId
 
-            // console.log(state.marketInfo,'=============>state.marketInfo')
-            commit('setMarket', { ...rootState,
-                ...params
-            })
             commit('getCoinInfo', coinId) //币种
 
-            commit('getDealOrders', tradeId) //成交历史
+            commit('getDealOrders', coinId) //成交历史
             commit('getKline', {
-                currentCoinId: tradeId,
+                currentCoinId: coinId,
                 step: state.step
             }) //历史k线
-
-            commit('tradingAskBid', tradeId) //买卖挂单
+            commit('tradingAskBid', coinId) //买卖挂单
             commit('websocketKline', {
                 zoneId: tradeId,
                 step: state.step

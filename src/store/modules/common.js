@@ -21,26 +21,35 @@ export default {
     initTradingList({
       commit,
       state
-    }, callback) {
+    }, params) {
       api.classificationList({}).then(res => {
         // console.log(res,'交易列表=++++++===》')
         if (res.datas) {
           let datas = res.datas
           let category = datas.filter(item => item.zoneSwitch === 1)
-          state.zoneName = res.datas[0].zoneName
-          state.zoneId = res.datas[0].tradeCoinId
+          if (params.pair) {
+            var [coinName, zoneName] = params.pair.split('_');
+            let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
+            let [coin] = zone.list.filter( item => item.name == coinName);
+            var coinId = coin.id;
+            state.zoneName = zone.zoneCoinName
+            state.zoneId = zone.zoneCoinId
+          } else {
+            var coinId = category[0].id;
+            state.zoneName = res.datas[0].zoneName
+            state.zoneId = res.datas[0].tradeCoinId
+          }
+
           category.push({
             zoneName: '自选',
             id: -1
           })
-          commit('setTradingCategory', category)
-          return category
+          commit('setTradingCategory', category);
+          commit('toggleTrading', {
+            id: coinId,
+            callback: params.callback
+          })
         }
-      }).then(res => {
-        commit('toggleTrading', {
-          id: res[0].id,
-          callback: callback
-        })
       })
     },
     //收藏币种
@@ -110,7 +119,7 @@ export default {
     },
     //查询币种
     getAllCoin(state) {
-      api.all().then(res=>{
+      api.getTradeInfo().then(res=>{
         state.allCoin = res.datas
       })
     },
