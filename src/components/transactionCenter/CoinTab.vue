@@ -15,7 +15,7 @@
             >
               {{item.zoneCoinName}}
             </li>
-            <li>
+            <li @click="selectZone(-1)">
               <span class="ico-star-fill" ></span>
             </li>
         </ul>
@@ -92,13 +92,13 @@ export default {
   watch: {
     searchValue(val) {
       if (val) {
-        this.searchList = this.allCoin[this.selectedZoneIndex].list.filter(item => item.name.indexOf(val.toUpperCase()) >= 0);
+        this.searchList = this.getCoinList().filter(item => item.name.indexOf(val.toUpperCase()) >= 0);
       } else {
-        this.searchList = this.allCoin[this.selectedZoneIndex].list;
+        this.searchList = this.getCoinList();
       }
     },
     selectedZoneIndex() {
-      this.searchList = this.allCoin[this.selectedZoneIndex].list;
+      this.searchList = this.getCoinList();
     }
   },
 
@@ -107,6 +107,19 @@ export default {
   },
 
   methods: {
+    getCoinList() {
+      if (this.selectedZoneIndex == -1) {
+        let list = [];
+        this.allCoin.map( zone => {
+          zone.list.map( coin => {
+            coin.collect && list.push(coin);
+          });
+        });
+        return list;
+      } else {
+        return this.allCoin[this.selectedZoneIndex].list;
+      }
+    },
     togglePrice() {
       if (this.sort == 'price_down') {
         this.sort = 'price_up'
