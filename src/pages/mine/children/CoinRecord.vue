@@ -8,7 +8,12 @@
     <div class="content">
         <div class="full-coin-wrapper" v-if="this.current==='full'">
              <el-table :data="fullcoinList"  style="width: 100%">
-                <el-table-column prop="createTime" label="时间" width=""></el-table-column>
+                
+                <el-table-column  label="时间" width="">
+                  <template slot-scope="scope">
+                           <span>{{scope.row.createTime | dateTime-format}}</span>
+                        </template>
+                </el-table-column>
                 <el-table-column prop="coinSymbol" label="币种" width="">
                     <template slot-scope="scope">
                         <!-- <span class="coinimg-wrapper"><img :src="@/assets/images/hours.png" alt=""></span> -->
@@ -26,7 +31,11 @@
         </div>
         <div class="carry-coin-wrapper" v-if="this.current==='carry'">
             <el-table :data="carrycoinList"  style="width: 100%">
-                <el-table-column prop="createTime" label="时间" width=""></el-table-column>
+               <el-table-column  label="时间" width="">
+                  <template slot-scope="scope">
+                           <span>{{scope.row.createTime | dateTime-format}}</span>
+                        </template>
+                </el-table-column>
                 <el-table-column prop="coinSymbol" label="币种" width="">
                     <template slot-scope="scope">
                         <!-- <span class="coinimg-wrapper"><img src="@/assets/images/hours.png" alt=""></span> -->

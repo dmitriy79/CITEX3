@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="tab-transaction">
+        <div class="tab-transaction">{{tradingList}}
             <div class="tab">
                 <span v-for='(item,index) of tradingCategory' 
                 :class='{active:currentCategoryIndex == item.id}' 
@@ -18,7 +18,7 @@
                         <div>24h交易量</div>
                     </dt>
                     <dd v-for='(item,index) of tradingList'>
-                        <div class="transaction-list-title"> <i class="ico-star"></i><img src="../../assets/images/b.png" alt="" /><span>{{item.type}}</span></div>
+                        <div class="transaction-list-title"> <i class="ico-star"></i><span>{{item.name}}</span></div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
                         <div>{{item.minPrice_24H}}</div>
