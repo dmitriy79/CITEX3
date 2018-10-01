@@ -2,9 +2,9 @@
     <div class="container">
         <div class="tab-transaction">
             <div class="tab">
-                <span v-for='(item,index) of tradingCategory' 
-                :class='{active:currentCategoryIndex == item.id}' 
-                @click='toggleTrading(item.id)'>{{item.zoneName}}</span>
+                <span v-for='(item,index) of allCoin' 
+                :class='{active:index == selectedZoneIndex}' 
+                @click='selectZone(index)'>{{item.zoneCoinName}}</span>
             </div>
             <div class="content">
                 <dl class="transaction-list">
@@ -17,7 +17,7 @@
                         <div>昨日收盘价</div>
                         <div>24h交易量</div>
                     </dt>
-                    <dd v-for='(item,index) of tradingList'>
+                    <dd v-for='(item,index) of allCoin[selectedZoneIndex].list' @click="jumpToTrade(item.name)">
                         <div class="transaction-list-title"> <i class="ico-star"></i><span>{{item.name}}</span></div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
@@ -35,15 +35,23 @@
 import { mapState, mapMutations } from "vuex"
 export default {
   data() {
-    return {};
+    return {
+      selectedZoneIndex: 0
+    };
   },
   created() {
   },
   computed: {
-    ...mapState(["tradingCategory", "tradingList", "currentCategoryIndex"])
+    ...mapState(["allCoin"]),
   },
   methods: {
-    ...mapMutations(["toggleTrading"])
+    jumpToTrade(name) {
+      let zone = this.allCoin[this.selectedZoneIndex].zoneCoinName;
+      this.$router.push(`/transaction/${name}_${zone}`)
+    },
+    selectZone(index) {
+      this.selectedZoneIndex = index;
+    },
   }
 };
 </script>
@@ -114,6 +122,7 @@ export default {
         align-items: center;
         height: 40px;
         border-bottom: 1px solid #3b4249;
+        cursor: pointer;
         &:last-child {
           border-bottom: none;
         }

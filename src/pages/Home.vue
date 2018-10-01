@@ -80,6 +80,7 @@ export default {
     };
   },
   created() {
+    this.$store.dispatch("initTradingList", {});
     this.$store.dispatch("home/initHome")
     this.$store.dispatch("home/officaliCycle")
   },

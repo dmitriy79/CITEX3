@@ -209,7 +209,8 @@ const mutations = {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消', //replace(/[^\d]/g,'')
                     inputPattern: '',
-                    inputErrorMessage: ''
+                    inputErrorMessage: '',
+                    inputType: 'password'
                 }).then(({
                     value
                 }) => {
@@ -263,7 +264,8 @@ const mutations = {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消', //replace(/[^\d]/g,'')
                     inputPattern: '',
-                    inputErrorMessage: ''
+                    inputErrorMessage: '',
+                    inputType: 'password'
                 }).then(({
                     value
                 }) => {
