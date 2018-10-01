@@ -34,6 +34,15 @@
                         <label class="name">提币地址</label>
                         <input type="text" v-model="coinAddress">
                     </div>
+                         <el-form ref="form" :model="form_address" label-width="80px" >
+                             <el-form-item label="提币地址">
+                              <el-select v-model="form_address.address" placeholder="请选择提币地址" @change="selectAddress">
+                                <el-option v-for="item in addressList" :label="item.withdrawAddress"  :value="item.id"  :key="item.id"></el-option>
+                                <el-option value=""> <span @click="addAddress">添加提币地址</span></el-option> 
+                               
+                              </el-select>
+                            </el-form-item>
+                        </el-form>
                     <div class="item">
                         <div class="item-num">
                             <label class="name">数量</label>
@@ -42,16 +51,16 @@
                                 <span>限额：<b>{{singleMax}}</b></span>
                             </div>
                         </div>
-                        <input type="text" v-model="coinNum" @keyup="getfee">
+                        <input type="number" v-model="coinNum" @keyup="getfee">
                     </div>
                     <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label></div>
-                            <input type="text" v-model="finalfee">
+                            <input type="number" v-model="finalfee">
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
-                            <input type="text" v-model="realNum">
+                            <input type="number" v-model="realNum">
                         </div>
 
                     </div>
@@ -107,6 +116,18 @@
         <el-button type="primary" @click="confirmFull" :plain="true" >确定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="提示" :visible.sync="Addressdialog" width="30%">
+      <el-form :model="form" class="dialog-wrapper" label-width="120px">
+        <el-form-item label="添加提币地址：">
+          <el-input v-model="form.address_" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="Addressdialog = false">取 消</el-button>
+        <el-button type="primary" @click="confirmAdd" :plain="true" >确定</el-button>
+      </div>
+    </el-dialog>
     </div>
     
 </template>
@@ -121,7 +142,10 @@ export default {
 
   data() {
     return {
+      coinKey:'',
+      addressList:[],
       pageIndex:1,
+      tradeCoinPairId:'',
       pageSize:14,
       searchList:null,
         searchValue:'',
@@ -136,10 +160,15 @@ export default {
       coinId: "",
       able: true,
       coiname: "",
+      Addressdialog:false,//添加提币地址对话框
+      address_:'',
       coinName_:"",//提币name
       feeValue:'',
       coin_Id: "",
       dialogAuditing: false,
+      form_address:{
+        address:''
+      },
       form: {
         code: "",
         password: ""
@@ -161,6 +190,9 @@ export default {
   created() {
     this.$store.dispatch("assets/allAssets",this.pageIndex)
   },
+  mounted () {
+    this.getAddress()
+  },
   watch: {
    
     
@@ -179,6 +211,28 @@ export default {
     },
 
   methods: {
+    //确认添加提币地址
+    confirmAdd(){
+        this.addressList.push({
+          withdrawAddress:this.form.address_
+        })
+        this.Addressdialog=false
+    },
+    //添加提币地址
+    addAddress(){
+      console.log("add Addressdialog")
+      this.Addressdialog=true
+    },
+    //获取提币地址
+    getAddress(){
+      this.$api.walistByUserId({coinKey:this.coinName_}).then(res=>{
+        console.log(res,'walistByUserId')
+        this.addressList=res.datas
+      })
+    },
+    selectAddress(val){
+      this.tradeCoinPairId=val
+    },
     //切换分页
     Change(value){
     this.pageIndex = value
@@ -192,6 +246,12 @@ export default {
         if(this.coinNum==''){
            this.finalfee=''
            this.realNum=''
+        }
+        if(this.coinNum>this.ableNum){
+          this.$message({
+            message: "提币数量超出可用额度",
+            type: "warning"
+          });
         }
     },
     //确定提币
@@ -287,6 +347,7 @@ export default {
         this.singleMin=singleMin
         this.coinName_=coinName_
         this.feeValue=feeValue
+        this.getAddress()
          this.$refs.child1[index].style.display = 'none'
         if (this.$refs.child[index].style.display === 'none') {
         this.$refs.child[index].style.display = 'block'
@@ -333,9 +394,13 @@ export default {
 };
 </script>
 
-<style>
+ <style >
+
 .el-message-box .el-input input,.el-form-item__content .el-input input {
-  /* color: #000 !important; */
+ color: #000 !important;
+}
+.el-select {
+    width: 100%!important;
 }
 </style>
 
