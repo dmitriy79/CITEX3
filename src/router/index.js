@@ -4,8 +4,6 @@ import Router from 'vue-router'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
-import Notice from '@/pages/Notice'
-import NoticeDetail from '@/pages/NoticeDetail'
 import JoinUs from '@/pages/JoinUs'
 // import ApplyChannel from  '@/components/channel/ApplyChannel'
 // import ApplyChannelText from  '@/components/channel/ApplyChannelText'
@@ -104,20 +102,10 @@ const router =  new Router({
       component: FindPassword
     },
     {
-      path: '/notice',
-      name: 'Notice',
-      component: Notice
-    },
-    {
       path: '/buyOrSellDetail',
       name: 'BuyOrSellDetail',
       component: BuyOrSellDetail
       
-    },
-    {
-      path: '/noticeDetail',
-      name: 'NoticeDetail',
-      component: NoticeDetail
     }
   ],
   

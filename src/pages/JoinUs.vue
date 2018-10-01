@@ -2,7 +2,7 @@
   <div>
     <div class="joinUs-wrapper">
       <h1 class="header-logo">
-      <a href="/Home" class="ico-logo">
+      <a href="/" class="ico-logo">
         <span>ibtop.com</span>
       </a>
       </h1>

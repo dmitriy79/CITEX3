@@ -67,7 +67,7 @@ export default {
          {title:'帮助中心',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001012532-%E5%B8%AE%E5%8A%A9%E4%B8%AD%E5%BF%83'},
          {title:'问题反馈',id:1,path:'/'},
          {title:'API 文档',id:1,path:'/'},
-         {title:'公告中心',id:1,path:'/notice'},
+         {title:'公告中心',id:1,path:'', href: 'https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83'},
       ]],
       currentCode:null,
     }

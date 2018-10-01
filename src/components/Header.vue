@@ -1,7 +1,7 @@
 <template>
   <div class="header header-top" id="header">
     <h1 class="header-logo">
-        <a href="/Home" class="ico-logo">
+        <a href="/" class="ico-logo">
           <span>ibtop.com</span>
         </a>
       </h1>
@@ -13,17 +13,11 @@
       <router-link v-if="!showLi" to="/ApplyMountCoin" tag="div">上币申请</router-link>
     </div>
     <ul class="header-nav-right">
-      <!-- <li class="nav-right-help">帮助中心</li>
-        <li class="nav-right-download">App下载</li> -->
-      <!-- <li>
-          <router-link to="/mine" tag="div"  v-if="this.token" >个人中心</router-link>
-        </li>  -->
       <li>
         <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001012532-%E5%B8%AE%E5%8A%A9%E4%B8%AD%E5%BF%83" target="_blank">帮助中心</a>
-        <!-- <router-link to="/" tag="div">帮助中心</router-link> -->
       </li>
       <li>
-        <router-link to="/notice" tag="div">公告中心</router-link>
+        <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">公告中心</a>
       </li>
       <li v-if="this.token">
         <router-link to="/mine/property" tag="div" v-if="this.token">{{userName}} </router-link>
