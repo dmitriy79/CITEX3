@@ -122,6 +122,9 @@
         <el-form-item label="添加提币地址：">
           <el-input v-model="form.address_" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="请输入谷歌验证码：" >
+          <el-input v-model="form.code_" auto-complete="off"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="Addressdialog = false">取 消</el-button>
@@ -171,7 +174,8 @@ export default {
       },
       form: {
         code: "",
-        password: ""
+        password: "",
+        code_:""
       },
       fullAddress: "",
       current: "full",
@@ -194,12 +198,9 @@ export default {
     this.getAddress()
   },
   watch: {
-   
-    
     searchValue(val) {
       if (val) {
         this.searchList = this.myAssets.list.filter(item => item.nameShort.indexOf(val.toUpperCase()) >= 0);
-        console.log(this.myAssets.list,this.searchList,'this.searchList')
       } else {
         this.searchList = this.myAssets.list;
       }
@@ -216,7 +217,10 @@ export default {
         this.addressList.push({
           withdrawAddress:this.form.address_
         })
-        this.Addressdialog=false
+        this.$api.add({coinId:this.coin_Id,withdrawAddress:this.form.address_,coinName:this.coinName_,code:this.form.code_}).then(res=>{
+          console.log(res,'confirmAdd data')
+        })
+        // this.Addressdialog=false
     },
     //添加提币地址
     addAddress(){

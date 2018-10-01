@@ -4,7 +4,7 @@
           <div class="footer-nav">
             <dl v-for='(item,index) in footLink'>
               <dt>{{links[index]}}</dt>
-                <dd v-for="item in item"><router-link :to="item.path" v-if="item.path"   target="_blank">{{item.title}}</router-link></dd>
+                <dd v-for="item in item"><router-link  :to="item.path" v-if="item.path"   target="_blank">{{item.title}}</router-link><a :href="item.href" v-else target="_blank">{{item.title}}</a></dd>
             </dl>
             <dl class="footer-nav-block">
                 <dt>联系我们</dt>
@@ -46,8 +46,8 @@ export default {
 
       links:['关于','帮助','服务'],
       footLink:[[
-       {title:'关于我们',id:1,path:'/',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/articles/360016545951'},
-        {title:'加入我们',id:2,path:'/JoinUs'},
+       {title:'关于我们',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/articles/360016545951'},
+        {title:'加入我们',id:2,path:'/join-us'},
         {title:'使用条款',id:3,path:'/'},
         {title:'隐私政策',id:4,path:'/'},
      ],
@@ -64,7 +64,7 @@ export default {
          {title:'币种新闻',id:1}
        ],*/
        [
-        //  {title:'帮助中心',id:1,path:'/'},
+         {title:'帮助中心',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001012532-%E5%B8%AE%E5%8A%A9%E4%B8%AD%E5%BF%83'},
          {title:'问题反馈',id:1,path:'/'},
          {title:'API 文档',id:1,path:'/'},
          {title:'公告中心',id:1,path:'/notice'},

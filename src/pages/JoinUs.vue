@@ -105,9 +105,14 @@ export default {
   }
 }
 </script>
+<style>
+html{background: #fff}
+</style>
+
 <style lang="less" scoped>
+
 .container {
-  margin: 80px auto;
+  margin: 80px auto 20px;
   overflow: hidden;
   background: #fff;
 }
@@ -119,7 +124,7 @@ export default {
 .header-logo {
   position: absolute;
   left: 70px;
-  top: 20px;
+  top: 20px;font-size:0;
 
   span {
     font-size: 0;
@@ -133,13 +138,15 @@ export default {
 }
 
 .item {
+  position: relative;
   color: #555555;
   padding: 15px 30px 0;
   background: #F5F8FA;
   width: 540px;
   float: left;
   border-radius: 4px;
-
+    height: 600px;
+        margin-bottom: 60px;
   &:nth-child(1), &:nth-child(3) {
     margin-right: 120px;
   }
@@ -148,9 +155,11 @@ export default {
     text-align: center;
     margin-top: 30px;
     font-size: 14px;
-    padding-bottom: 58px;
     color: #555555;
-
+position: absolute;
+    bottom: 58px;
+    left: 170px;
+ 
     span {
       font-size: 14px;
       color: #2286FF;
