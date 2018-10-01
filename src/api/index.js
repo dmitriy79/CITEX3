@@ -3,8 +3,9 @@ import webSocket from './socket'
 import qs from 'qs'
 
 const apiList = [
-
   '/user/banner/listByType', //公告列表
+  '/user/notice/list', //公告列表
+  '/user/noticeType/listType', //公告类型
   '/user/trade/getTradeInfoByZone',
   '/user/user/login', //登陆
   '/user/user/logout', //退出
