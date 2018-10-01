@@ -30,14 +30,14 @@
                 </span>
                 <transition name="fade">
                 <div class="carry-coin coin-item" ref="child" style="display:none" >
-                    <div class="item">
+                    <!-- <div class="item">
                         <label class="name">提币地址</label>
                         <input type="text" v-model="coinAddress">
-                    </div>
+                    </div> -->
                          <el-form ref="form" :model="form_address" label-width="80px" >
                              <el-form-item label="提币地址">
                               <el-select v-model="form_address.address" placeholder="请选择提币地址" @change="selectAddress">
-                                <el-option v-for="item in addressList" :label="item.withdrawAddress"  :value="item.id"  :key="item.id"></el-option>
+                                <el-option v-for="item in addressList" :label="item.withdrawAddress"  :value="[item.coinId+','+item.withdrawAddress]"  :key="item.id"></el-option>
                                 <el-option value=""> <span @click="addAddress">添加提币地址</span></el-option> 
                                
                               </el-select>
@@ -168,6 +168,7 @@ export default {
       coinName_:"",//提币name
       feeValue:'',
       coin_Id: "",
+      carryIndex:'',
       dialogAuditing: false,
       form_address:{
         address:''
@@ -217,8 +218,17 @@ export default {
         this.addressList.push({
           withdrawAddress:this.form.address_
         })
+        console.log(this.coin_Id,'this.coin_Id')
         this.$api.add({coinId:this.coin_Id,withdrawAddress:this.form.address_,coinName:this.coinName_,code:this.form.code_}).then(res=>{
           console.log(res,'confirmAdd data')
+          if(res.message='成功'){
+             this.$message({
+              message: "提币地址添加成功",
+              type: "success"
+            });
+            this.Addressdialog=false
+          }
+
         })
         // this.Addressdialog=false
     },
@@ -235,7 +245,11 @@ export default {
       })
     },
     selectAddress(val){
-      this.tradeCoinPairId=val
+      var addressInfo=val.toString().split(',')
+      console.log(addressInfo,'addressInfo')
+      this.coin_Id=addressInfo[0]
+      this.form_address.address=addressInfo[1]
+      // this.tradeCoinPairId=val
     },
     //切换分页
     Change(value){
@@ -251,7 +265,7 @@ export default {
            this.finalfee=''
            this.realNum=''
         }
-        if(this.coinNum>this.ableNum){
+        if(this.coinNum>this.ableNum&&his.coinNum>this.singleMax){
           this.$message({
             message: "提币数量超出可用额度",
             type: "warning"
@@ -261,7 +275,7 @@ export default {
     //确定提币
     dialogAudit() {},
     carrycoins() {
-      if (this.coinAddress && this.coinNum && this.realNum && this.rate) {
+      if ( this.form_address.address && this.coinNum && this.realNum && this.finalfee) {
         this.dialogAuditing = true;
       } else {
         if (this.realNum == "") {
@@ -270,7 +284,7 @@ export default {
             type: "warning"
           });
         }
-        if (this.rate == "") {
+        if (this.finalfee == "") {
           this.$message({
             message: "手续费不能为空",
             type: "warning"
@@ -282,7 +296,7 @@ export default {
             type: "warning"
           });
         }
-        if (this.coinAddress == "") {
+        if (this.form_address.address == "") {
           this.$message({
             message: "提币不能为空",
             type: "warning"
@@ -298,13 +312,19 @@ export default {
             coin_id: this.coin_Id,
             code: this.form.code,
             tradePassword: this.form.password,
-            to: this.coinAddress,
+            to: this.form_address.address,
             amount: this.coinNum
           })
           .then(res => {
             console.log(res, "99999+++++w我呀提币");
             if (res.message == "成功") {
+              this.$refs.child[this.carryIndex].style.display = 'none'
               this.dialogAuditing = false;
+              this.$store.dispatch("assets/allAssets",this.pageIndex)
+                 this.$message({
+                message: '提币成功',
+                type: "success"
+              });
             } else {
               this.$message({
                 message: res.message,
@@ -346,6 +366,7 @@ export default {
        carryCoin(index,id,ableNum,singleMax,singleMin,coinName_,feeValue){
          console.log(id,'tibi Tii')
         this.coin_Id =id
+        this.carryIndex=index
         this.ableNum=ableNum
         this.singleMax=singleMax
         this.singleMin=singleMin
@@ -400,9 +421,10 @@ export default {
 
  <style >
 
-.el-message-box .el-input input,.el-form-item__content .el-input input {
+.el-message-box .el-input input{
  color: #000 !important;
 }
+
 .el-select {
     width: 100%!important;
 }

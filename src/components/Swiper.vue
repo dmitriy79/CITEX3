@@ -83,7 +83,7 @@ export default {
   }
   a.link_ {
     display: block;
-    height:500rpx;
+    height:500px;
     width:100%;
   }
   &-container-horizontal {}
@@ -102,6 +102,7 @@ export default {
   }
   &-img {
     width:100%;
+        height: 100%;
   }
 }
 

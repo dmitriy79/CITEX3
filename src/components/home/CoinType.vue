@@ -11,11 +11,11 @@
             <div class="price">{{item.price}} ≈${{item.price*0.1452}}</div>
             <div class="num">量：<span>{{item.amount_24H}}</span></div>
           </div>
-          <x-chart :id="id1" :option="option1" v-if="index==0"></x-chart>
-          <x-chart :id="id2" :option="option2" v-if="index==1"></x-chart>
+          <x-chart :id="id1" :option="option1" ></x-chart>
+          <!-- <x-chart :id="id2" :option="option2" v-if="index==1"></x-chart>
           <x-chart :id="id3" :option="option3" v-if="index==2"></x-chart>
           <x-chart :id="id4" :option="option4" v-if="index==3"></x-chart>
-          <x-chart :id="id5" :option="option5" v-if="index==4"></x-chart>
+          <x-chart :id="id5" :option="option5" v-if="index==4"></x-chart> -->
         </div>
       </div>
     </div>

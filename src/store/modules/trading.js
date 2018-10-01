@@ -192,17 +192,7 @@ const mutations = {
             pageNum: 1,
             pageSize: 7
         }).then(res => {
-            res.datas.list.forEach(element => {
-                var date = new Date(parseInt(element.createTime));
-                var h = date.getHours();
-                h = h < 10 ? ('0' + h) : h;
-                var minute = date.getMinutes();
-                var second = date.getSeconds();
-                minute = minute < 10 ? ('0' + minute) : minute;
-                second = second < 10 ? ('0' + second) : second;
-                element.createTime = h + ':' + minute + ':' + second;
-            });
-            console.log(res.datas)
+            console.log(res.datas,'listBidOrders====>')
             state.orderData = res.datas
         })
     },

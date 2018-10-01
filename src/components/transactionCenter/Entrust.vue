@@ -16,8 +16,9 @@
                       <th v-if="this.active==0">操作</th>
                     </tr>
                     <tr v-for='item of orderData.list'>
-                      <td>{{item.createTime}}</td>
-                      <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td>
+                      <td>{{item.createTime|dateTime-format}}</td>
+                      <!-- <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td> -->
+                      <td>{{item.bidOrSell==0?'卖':'买'}}</td>
                       <td>{{status[item.matchStatus]}}</td>
                       <td>{{item.price}}</td>
                       <td>{{item.amount}}</td>

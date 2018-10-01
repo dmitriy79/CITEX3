@@ -19,7 +19,8 @@
           <router-link to="/mine" tag="div"  v-if="this.token" >个人中心</router-link>
         </li>  -->
       <li>
-        <router-link to="/" tag="div">帮助中心</router-link>
+        <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001012532-%E5%B8%AE%E5%8A%A9%E4%B8%AD%E5%BF%83" target="_blank">帮助中心</a>
+        <!-- <router-link to="/" tag="div">帮助中心</router-link> -->
       </li>
       <li>
         <router-link to="/notice" tag="div">公告中心</router-link>

@@ -198,7 +198,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 /* .el-table_1_column_5{display: none} */
 
 .el-select-dropdown {

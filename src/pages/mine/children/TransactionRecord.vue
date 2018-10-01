@@ -14,20 +14,24 @@
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
                     </el-form-item><span>/</span>
-                              <el-form-item>
-                                  <el-select v-model="form.region" placeholder="BTC">
-                                  <el-option label="BTC" value="BTC"></el-option>
-                                  <el-option label="ETH" value="ETH"></el-option>
+                               <el-form-item>
+                                  <el-select v-model="form.zoneId" placeholder="ETH" @change="selectCoin">
+                             <el-option v-for="item in coinList" :label="item.zoneName"  :value="item.tradeCoinId" 
+     :key="item.tradeCoinId"></el-option> 
                                   </el-select>
                               </el-form-item>
                             </el-form>
-                            
+                            <div class="button button-min search" @click="searchCoin">搜索</div>
                         </div>
                     </div>
                 </div>
                 <div class="table-wrapper">
                      <el-table :data="recordList" style="width: 100%"   height="750">
-                        <el-table-column prop="dealTime" label="交易时间" width="165"></el-table-column>
+                        <el-table-column prop="dealTime" label="交易时间" width="165">
+                           <template slot-scope="scope">
+                           <span>{{scope.row.dealTime | dateTime-format}}</span>
+                        </template>
+                        </el-table-column>
                         <el-table-column prop="direction" label="方向" ></el-table-column>
                         <el-table-column prop="tradeCoinShortName" label="交易币种" ></el-table-column>
                         <el-table-column prop="dealPrice" label="单价"></el-table-column>
@@ -52,19 +56,51 @@ export default {
       showUl: false,
       recordList: [],
       total:0,
+      coinList:[],
+      tradeCoinId:1,
       form: {
         name: "",
-        region: ""
+        region: "",
+        zoneId:1,
       },
       pageNum:1,
       pageSize:14,
+      tradeCoinPairId:1,
       conditionList: [{ name: "全部" }, { name: "买" }, { name: "卖" }]
     };
   },
   created() {
     this.getUserTransactionRecord();
   },
+  mounted () {
+    this.classificationList()
+  },
   methods: {
+         //下拉选择币种
+        selectCoin(val){
+          console.log(val,'val selectCoin')
+          this.tradeCoinId=val
+          
+        },
+    //搜索
+    searchCoin(val){
+      this.tradeCoinPairId=val
+      this.$api.getUserTransactionRecord({pageNum:this.pageNum,pageSize:14,type:this.currentIndex,tradeCoinId:this.tradeCoinId,tradeCoinNameShort:this.form.name}).then(res => {
+        console.log(res, "交易记录9999getUserTransactionRecord");
+        if (res.message == "success") {
+          var content = res.datas.list;
+          this.total=res.datas.total
+          this.recordList = content;
+        }
+      });
+    },
+       //获取交易区
+    classificationList(){
+      this.$api.classificationList().then(res=>{
+        console.log(res,'classificationList')
+        this.coinList=res.datas
+      })
+    },
     //获取交易记录
     getUserTransactionRecord() {
       this.$api.getUserTransactionRecord({pageNum:this.pageNum,pageSize:14,type:this.currentIndex}).then(res => {
@@ -106,6 +142,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.search{    margin-left: 10px;}
 .tabs {
   height: 40px;
   margin-bottom: 23px;
@@ -138,6 +175,8 @@ export default {
       font-size: 14px;
       color: #fff;
       display: flex;
+          height: 32px;
+    line-height: 32px;
       .left {
         span {
           padding: 3px 4px;

@@ -20,8 +20,8 @@
                          
                               <el-form-item>
                                   <el-select v-model="form.region" placeholder="ETH" @change="selectCoin">
-                             <el-option v-for="item in coinList" :label="item.zoneName"  :value="item.id" 
-     :key="item.id"></el-option> 
+                             <el-option v-for="item in coinList" :label="item.zoneName"  :value="item.tradeCoinId" 
+     :key="item.tradeCoinId"></el-option> 
                                   </el-select>
                               </el-form-item>
                             </el-form>
@@ -32,23 +32,40 @@
                      <el-table :data="currentEntrust" style="width: 100%" :row-class-name="setClassName">
                      <el-table-column  label="委托时间" width="160">
                        <template slot-scope="scope">
-                           <span>{{scope.row.createTime | date-format}}</span>
+                           <span>{{scope.row.createTime | dateTime-format}}</span>
                         </template>
 
                      </el-table-column>
                     <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
-                    <el-table-column prop="coinTypeName" label="交易对" ></el-table-column>
-                    <el-table-column prop="bidOrSell" label="方向"></el-table-column>
+                    <el-table-column  label="交易对" >
+                       <template slot-scope="scope">
+                           <span>{{scope.row.tradeCoinNameShort}}/{{scope.row.unitCoinNameShort}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="bidOrSell" label="方向">
+                         <template slot-scope="scope">
+                           <span>{{scope.row.bidOrSell==1?scope.row.bidOrSell='卖':scope.row.bidOrSell='买'}}</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="price" label="委托价格"></el-table-column>
                     <el-table-column prop="amount" label="委托个数（个）"></el-table-column>
-                    <el-table-column prop="dealAmount" label="已成交"></el-table-column>
+                    <el-table-column prop="dealAmount" label="已成交">
+                       <template slot-scope="scope">
+                           <span>{{scope.row.amount-scope.row.leftAmount}}</span>
+                        </template>
+                    </el-table-column>
                     <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
-                    <el-table-column prop="matchStatus" label="状态"></el-table-column>
+                    <el-table-column label="状态" prop="matchStatus">
+                      <!-- 未成交 部分成交 完全成交 用户撤单 系统撤单 -->
+                        <template slot-scope="scope">
+                           <span >{{scope.row.matchStatus}}</span>
+                        </template>
+                    </el-table-column>
                      <el-table-column  width="80" label="操作" >
    
                        <template slot-scope="scope">
-                           <span v-if="scope.row.matchStatus=='未成交'" class="txt-b">撤销</span>
-                           <span v-if="scope.row.matchStatus=='部分成交'||scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
+                           <span v-if="scope.row.matchStatus=='未成交'||scope.row.matchStatus=='部分成交'" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
+                           <span v-if="scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
                            
                         </template>
                         
@@ -66,12 +83,12 @@
                   <span>手续费</span>
             </dt>
               <dd>
-                  <span>2018-09-23 11:00:32</span>
-                  <span>0.0000890</span>
-                  <span>466.78</span>
-                  <span>0.0415434</span>
-                  <span>278.98</span>
-                  <span>0.9647000YEE</span>
+                  <span>{{props.row.createTime|dateTime-format}}</span>
+                  <span>{{props.row.price}}</span>
+                  <span>{{props.row.amount}}</span>
+                  <span>{{(props.row.amount-props.row.leftAmount)*props.row.price}}</span>
+                  <span>{{props.row.leftAmount}}</span>
+                  <span>{{(props.row.amount-props.row.leftAmount)*props.row.rate+''+props.row.tradeCoinNameShort}}</span>
               </dd>
           </dl>
     
@@ -84,44 +101,66 @@
                
             </div>
             <div class="items" v-if="this.currentTab==='history'">
-                 <div class="condition">
+                         <div class="condition">
                     <div class="left">
                         方向：<span v-for="(item,index) in conditionList" :class="{active:index==bidOrAsk_}" @click="tabCondition_(index)">{{item.name}}</span>
                     </div>
-                     <div class="right "><span>交易对：</span>
+                    <div class="right "><span>交易对：</span>
                      <el-form ref="form" :model="form" label-width="80px" size="small">
                      <el-form-item >
                         <el-input v-model="form.name"></el-input>
-                    </el-form-item><span>/</span>
+                    </el-form-item><span class="devide">/</span>
                  
                             <!-- <span class="coin-type" @click="showCoinType">BTC<i class="ico-down"></i></span> -->
-                           
+                         
                               <el-form-item>
-                                  <el-select v-model="form.region" placeholder="BTC">
-                                  <el-option label="BTC" value="BTC"></el-option>
-                                  <el-option label="ETH" value="ETH"></el-option>
+                                  <el-select v-model="form.region" placeholder="ETH" @change="selectCoin">
+                             <el-option v-for="item in coinList" :label="item.zoneName"  :value="item.tradeCoinId" 
+     :key="item.tradeCoinId"></el-option> 
                                   </el-select>
                               </el-form-item>
                             </el-form>
-                            
+                            <div class="button button-min search" @click="searchCoin">搜索</div>
                         </div>
                 </div>
-                                <div class="table-wrapper">
-                     <el-table :data="currentEntrust" style="width: 100%" >
-                     <el-table-column prop="date" label="委托时间" width="160"></el-table-column>
-                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
-                    <el-table-column prop="coinTypeName" label="交易对" ></el-table-column>
-                    <el-table-column prop="direction" label="方向"></el-table-column>
-                    <el-table-column prop="price" label="委托价格"></el-table-column>
-                    <el-table-column prop="num" label="委托个数（个）"></el-table-column>
-                    <el-table-column prop="duenum" label="已成交"></el-table-column>
-                    <el-table-column prop="avarage" label="成交均价"></el-table-column>
-                    <el-table-column prop="status" label="状态"></el-table-column>
-                     <el-table-column  width="80" label="操作" >
-                       
+                           <div class="table-wrapper">
+                     <el-table :data="historyEntrust" style="width: 100%" :row-class-name="setClassName">
+                     <el-table-column  label="委托时间" width="160">
                        <template slot-scope="scope">
-                           <span v-if="scope.row.status=='未成交'" class="txt-b">撤销</span>
-                           <span v-if="scope.row.status=='部分成交'" class="txt-b" @click="details(scope.row)"> 详情</span>
+                           <span>{{scope.row.createTime | dateTime-format}}</span>
+                        </template>
+
+                     </el-table-column>
+                    <!-- <el-table-column prop="type" label="交易类型" ></el-table-column> -->
+                    <el-table-column  label="交易对" >
+                       <template slot-scope="scope">
+                           <span>{{scope.row.tradeCoinNameShort}}/{{scope.row.unitCoinNameShort}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="bidOrSell" label="方向">
+                         <template slot-scope="scope">
+                           <span>{{scope.row.bidOrSell==1?scope.row.bidOrSell='卖':scope.row.bidOrSell='买'}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="price" label="委托价格"></el-table-column>
+                    <el-table-column prop="amount" label="委托个数（个）"></el-table-column>
+                    <el-table-column prop="dealAmount" label="已成交">
+                       <template slot-scope="scope">
+                           <span>{{scope.row.amount-scope.row.leftAmount}}</span>
+                        </template>
+                    </el-table-column>
+                    <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
+                    <el-table-column label="状态" prop="matchStatus">
+                      <!-- 未成交 部分成交 完全成交 用户撤单 系统撤单 -->
+                        <template slot-scope="scope">
+                           <span >{{scope.row.matchStatus}}</span>
+                        </template>
+                    </el-table-column>
+                     <el-table-column  width="80" label="操作" >
+   
+                       <template slot-scope="scope">
+                           <span v-if="scope.row.matchStatus=='未成交'||scope.row.matchStatus=='部分成交'" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
+                           <span v-if="scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
                            
                         </template>
                         
@@ -135,24 +174,23 @@
                   <span>价格</span>
                   <span>数量</span>
                   <span>成交额</span>
-   
+                  <span>剩余数量</span>
                   <span>手续费</span>
             </dt>
               <dd>
-                  <span>2018-09-23 11:00:32</span>
-                  <span>0.0000890</span>
-                  <span>466.78</span>
-                  <span>0.0415434</span>
-
-                  <span>0.9647000YEE</span>
+                  <span>{{props.row.createTime|dateTime-format}}</span>
+                  <span>{{props.row.price}}</span>
+                  <span>{{props.row.amount}}</span>
+                  <span>{{(props.row.amount-props.row.leftAmount)*props.row.price}}</span>
+                  <span>{{props.row.leftAmount}}</span>
+                  <span>{{(props.row.amount-props.row.leftAmount)*props.row.rate+''+props.row.tradeCoinNameShort}}</span>
               </dd>
           </dl>
     
       </template>
     </el-table-column>
   </el-table>
-                  
-      <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage_" :current-page.sync="pageIndex_"
+                <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage" :current-page.sync="pageIndex"
        		 :page-size="pageSize" :total="currentTotal"  background layout="total,prev, pager, next" >	</el-pagination>
                 </div>
             </div>
@@ -195,6 +233,34 @@ export default {
     this.classificationList()
   },
   methods: {
+    //撤销买卖单
+    cancel(id,direction){
+      if(direction=='买'){
+        this.$api.cancelBuy({bidOrderId:id},'POST').then(res=>{
+          console.log(res,'cancelBuy')
+          if(res.message='成功'){
+             this.$message({
+                message: '撤销成功',
+                type: 'success'
+                });
+              this.getInfo()
+          }
+         
+        })
+      }
+      else{
+        this.$api.cancelSell({askOrderId:id},'POST').then(res=>{
+          if(res.message='成功'){
+             this.$message({
+                message: '撤销成功',
+                type: 'success'
+                });
+                 this.getInfo()
+          }
+        })
+      }
+      console.log(id,direction,'direction')
+    },
       //下拉选择币种
         selectCoin(val){
           this.tradeCoinPairId=val
@@ -202,9 +268,42 @@ export default {
         },
         //搜索
         searchCoin(){
-          this.$api.listBidOrders({type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,tradeCoinNameShort:this.form.name ,tradeCoinPairId:this.tradeCoinPairId}).then(res=>{
-              this.currentEntrust = res.datas.list;
-          })
+          if(this.currentIndex==1){
+        this.bidOrAsk=this.bidOrAsk
+      }
+      else{
+        this.bidOrAsk=this.bidOrAsk_
+      }
+      this.$api
+        .listBidOrders({ type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,unCoinId:this.tradeCoinPairId ,tradeCoinNameShort:this.form.name})
+        .then(res => {
+          var EntrustList = res.datas.list;
+          this.currentTotal=EntrustList.total
+          EntrustList.forEach(element => {
+            if (element.matchStatus == 0) {
+              element.matchStatus = "未成交";
+            }
+            if (element.matchStatus == 1) {
+              element.matchStatus = "部分成交";
+            }
+            if (element.matchStatus == 2) {
+              element.matchStatus = "完全成交";
+            }
+            if (element.matchStatus == 3) {
+              element.matchStatus = "用户撤单";
+            }
+            if (element.matchStatus == 4) {
+              element.matchStatus = "系统撤单";
+            }
+          });
+          this.currentEntrust = res.datas.list;
+            this.historyEntrust=res.datas.list;
+          this.currentTotal = res.datas.total;
+          console.log(res, "我的委托");
+        });
+          // this.$api.listBidOrders({type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,tradeCoinNameShort:this.form.name ,unCoinId:this.tradeCoinPairId}).then(res=>{
+          //     this.currentEntrust = res.datas.list;
+          // })
         },
     //获取交易区
     classificationList(){
@@ -224,7 +323,6 @@ export default {
     },
     //我的委托记录
     getInfo() {
-      var userId = localStorage.getItem("userId");
       if(this.currentIndex==1){
         this.bidOrAsk=this.bidOrAsk
       }
@@ -237,15 +335,6 @@ export default {
           var EntrustList = res.datas.list;
           this.currentTotal=EntrustList.total
           EntrustList.forEach(element => {
-            element.dealAmount = element.amount - element.leftAmount;
-            element.coinTypeName =
-              element.tradeCoinNameShort + "/" + element.unitCoinNameShort;
-            if (element.bidOrSell == 1) {
-              element.bidOrSell = "买";
-            }
-            if (element.bidOrSell == 0) {
-              element.bidOrSell = "卖";
-            }
             if (element.matchStatus == 0) {
               element.matchStatus = "未成交";
             }
@@ -263,6 +352,7 @@ export default {
             }
           });
           this.currentEntrust = res.datas.list;
+          this.historyEntrust=res.datas.list;
           this.currentTotal = res.datas.total;
           console.log(res, "我的委托");
         });
@@ -306,7 +396,7 @@ export default {
       this.showDetails = !this.showDetails;
     },
     setClassName({ row, index }) {
-      if (row.status == "部分成交") {
+      if (row.matchStatus == "未成交"||row.matchStatus=='部分成交') {
         return "row-expand-cover";
       }
     }
@@ -340,8 +430,9 @@ export default {
 </style>
 
 <style lang="less" scoped>
+.txt-b{cursor: pointer;}
 .entrust-wrapper{height: 1000px;;}
-// .search{    margin-left: -80px;}
+.search{    margin-left: 10px;}
 .devide{
       height: 32px;
     line-height: 32px;

@@ -109,6 +109,11 @@ export default {
 }
 </script>
 
+<style>
+.el-select {
+    width: 50%!important;
+}
+</style>
 
 <style lang="less" scoped>
 .carrycoin-wrapper{

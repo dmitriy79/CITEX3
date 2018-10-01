@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="tab-transaction">{{tradingList}}
+        <div class="tab-transaction">
             <div class="tab">
                 <span v-for='(item,index) of tradingCategory' 
                 :class='{active:currentCategoryIndex == item.id}' 
