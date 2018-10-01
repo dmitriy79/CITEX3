@@ -20,7 +20,6 @@ export default {
         if (res.datas) {
           state.allCoin = res.datas
           let datas = res.datas
-          let category = datas.filter(item => item.zoneSwitch === 1)
           if (params.pair) {
             var [coinName, zoneName] = params.pair.split('_');
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
@@ -30,9 +29,9 @@ export default {
             state.zoneName = zone.zoneCoinName;
             state.zoneCoinId = zone.zoneCoinId;
           } else {
-            var coinId = category[0].id;
-            state.zoneName = res.datas[0].zoneName
-            state.zoneCoinId = res.datas[0].zoneCoinId;
+            state.marketInfo = datas[0].list[0];
+            state.zoneName = datas[0].zoneCoinName;
+            state.zoneCoinId = datas[0].zoneCoinId;
           }
           params.callback && params.callback();
           // commit('toggleTrading', {
