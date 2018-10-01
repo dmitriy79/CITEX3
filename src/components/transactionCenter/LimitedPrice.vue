@@ -173,8 +173,8 @@ export default {
     }
   },
   computed: {
-    ...mapState("trading", ["tradingAssets", "currentPrcie", "marketInfo", "curbuyPrice", "cursellPrice"]),
-    ...mapState(["zoneName"]),
+    ...mapState("trading", ["tradingAssets", "currentPrcie", "curbuyPrice", "cursellPrice"]),
+    ...mapState(["zoneName", 'marketInfo']),
   },
   methods: {
 

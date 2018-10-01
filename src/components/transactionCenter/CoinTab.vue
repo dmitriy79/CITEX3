@@ -8,9 +8,11 @@
           <!-- <div class="change button" @click="$store.dispatch('trading/testClick','sss')"><b class="ico-changecny"></b><i>CNY</i></div> -->
         </div>
         <ul class="nav-bar">
-            <li v-for="(item,index) of tradingCategory" 
-            :class="{active: item.id == currentCategoryIndex}" 
-            @click="$store.dispatch('toggleTrading',item.id)"><span v-if="item.id == -1" class="ico-star-fill" ></span>{{item.zoneName}}
+            <li v-for="(item, index) of allCoin" @click="selectZone(index)">
+              {{item.zoneCoinName}}
+            </li>
+            <li>
+              <span class="ico-star-fill" ></span>
             </li>
         </ul>
         <div class="coin-list-wrap">
@@ -38,19 +40,21 @@
                   </b>
                 </span>
             </div>
-            <div class="coin-list"
-            v-for="(item,index) of searchList"
-            :class="{'active': false}"
-            @click='$router.push(`/transaction/${item.name}_${zoneName}`)'>
-                <div class="coin-type">{{item.name}}</div>
-                <div class="price">{{item.deal_price}}</div>
-                <div class="rate" :class="{ red: item.increase, green: !item.increase}">
-                  {{item.increase ? '+' : '-'}}{{item.increase_24H}}%
-                </div>
-                <div class="num">{{item.amount_24H}}</div>
-                <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"
-                class="ico ico-star-fill" 
-                :class="{'ico-star':!item.collect}"></div>
+            <div
+              class="coin-list"
+              v-for="(item, index) of (searchList || allCoin[selectedZoneIndex].list)"
+              :class="{'active': false}"
+              @click='$router.push(`/transaction/${item.name}_${zoneName}`)'
+            >
+              <div class="coin-type">{{item.name}}</div>
+              <div class="price">{{item.deal_price}}</div>
+              <div class="rate" :class="{ red: item.increase, green: !item.increase}">
+                {{item.increase ? '+' : '-'}}{{item.increase_24H}}%
+              </div>
+              <div class="num">{{item.amount_24H}}</div>
+              <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"
+              class="ico ico-star-fill" 
+              :class="{'ico-star':!item.collect}"></div>
             </div>
         </div>
         <div class="tab-content">
@@ -69,6 +73,7 @@ export default {
       searchValue:'',
       searchList: null,
       sort: '',
+      selectedZoneIndex: 0,
     };
   },
 
@@ -79,27 +84,21 @@ export default {
   watch: {
     searchValue(val) {
       if (val) {
-        this.searchList = this.tradingList.filter(item => item.name.indexOf(val.toUpperCase()) >= 0);
+        this.searchList = this.allCoin[this.selectedZoneIndex].list.filter(item => item.name.indexOf(val.toUpperCase()) >= 0);
       } else {
-        this.searchList = this.tradingList;
+        this.searchList = this.allCoin[this.selectedZoneIndex].list;
       }
     },
-    tradingList() {
-      this.searchList = this.tradingList;
-      console.log(this.tradingList)
+    selectedZoneIndex() {
+      this.searchList = this.allCoin[this.selectedZoneIndex].list;
     }
   },
 
   computed: {
-    ...mapState(["tradingCategory","currentCategoryIndex",'tradingList',"currentTradingIndex"]),
-    ...mapState('trading',['currentTradingIndex']),
-    ...mapGetters(["filterCoin"]),
-    ...mapActions(['toggleMarket']),
-    ...mapState(["zoneName"])
+    ...mapState(["allCoin", 'zoneName']),
   },
 
   methods: {
-    ...mapMutations(['toggleTrading']),
     togglePrice() {
       if (this.sort == 'price_down') {
         this.sort = 'price_up'
@@ -127,6 +126,9 @@ export default {
         this.searchList.sort((a, b) => b.amount_24H > a.amount_24H);
       }
     },
+    selectZone(index) {
+      this.selectedZoneIndex = index;
+    }
   }
 }
 </script>

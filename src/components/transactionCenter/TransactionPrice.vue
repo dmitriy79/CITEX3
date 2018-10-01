@@ -38,8 +38,8 @@ export default {
   methods: {
   },
   computed: {
-    ...mapState('trading',['historyList', 'marketInfo']),
-    ...mapState(["zoneName"])
+    ...mapState('trading',['historyList']),
+    ...mapState(["zoneName", 'marketInfo'])
   },
 };
 </script>

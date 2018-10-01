@@ -29,15 +29,9 @@ export default {
   name: "KLine",
 
   mounted: function() {
-    this.recreateKline();
+    this.createKline();
   },
   methods: {
-    recreateKline() {
-      this.$store.dispatch("trading/getKline", {
-        step: '1min',
-        callback: this.createKline
-      })
-    },
     createKline: function() {
       const this_vue = this;
 
@@ -390,7 +384,7 @@ export default {
     createFeed: function() {
       let this_vue = this;
       let Datafeed = {};
-      var currentCoinId = this_vue.currentCoinId
+      var currentCoinId = this_vue.marketInfo.coinId;
       // console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
         // console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
@@ -744,9 +738,7 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-        this_vue.$store.dispatch("trading/websocketKline", {
-          step: resolution
-        })
+
         if (this_vue.klineCurrent) {
           onRealtimeCallback(this_vue.klineCurrent)
         }
@@ -812,17 +804,13 @@ export default {
     marketInfo: function(newVal, oldVal) {
       this.currency1 = newVal[0];
       this.currency2 = newVal[1];
-      this.recreateKline();
+      this.createKline();
       // this.changePair();
     },
   },
   computed: {
-    // ...mapState(["marketInfo"]),
-    ...mapState("trading", ["marketInfo", "klineHistory"]),
-    ...mapState([
-      "currentCoinId"
-    ]),
-
+    ...mapState(["marketInfo"]),
+    ...mapState("trading", ["klineHistory"]),
   },
 
 };

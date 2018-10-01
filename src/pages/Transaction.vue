@@ -1,10 +1,10 @@
 
 <template>
-  <div >
+  <div>
     <div class="transaction-wrap">
       <div class="transaction-top">
         <div class="left">
-          <div class="title" v-if="marketInfo">
+          <div class="title" v-if="inited">
             <div class="title-left">
               <div class="symbol">
                 <span>{{marketInfo.name}}</span>/<span>{{zoneName}}</span>
@@ -50,10 +50,10 @@
               </ul>
             </div>
           </div>
-          <k-line v-if="inited"></k-line>
+          <k-line v-if="klineHistory"></k-line>
         </div>
         <div class="right">
-          <coin-tab></coin-tab>
+          <coin-tab v-if="inited"></coin-tab>
         </div>
       </div>
       <div class="transaction-middle">
@@ -120,8 +120,8 @@ export default {
   
   watch: {
     '$route.params.pair': function (pair) {
-      const [coinId, tradeId] = pair.split('_');
-      this.$store.dispatch("trading/toggleMarket", { coinId, tradeId });
+      const [coinName, zoneName] = pair.split('_');
+      this.$store.dispatch("trading/toggleMarket", { coinName, zoneName });
     }
   },
 
@@ -135,21 +135,12 @@ export default {
     })
   },
   methods: {
-    // getDeepImg() {
-    //   this.$api
-    //     .getTradeInfoByTradeCoinPairId({ id: 2, quantity: 100 })
-    //     .then(res => {
-    //       console.log(res.datas.bid_list, "99303039");
-    //     });
-    // }
-    // ...mapMutations({ toggleMarket: "trading/toggleMarket" }),
-    // ...mapMutations({ toggleMarket: "trading/initMarketInfo" })
     
   },
   computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", [ "AskList", "BidList", "marketInfo" ]),
-     ...mapState(["zoneName"])
+     ...mapState("trading", [ "AskList", "BidList", 'klineHistory']),
+     ...mapState(['marketInfo', "zoneName"])
   }
 };
 </script>

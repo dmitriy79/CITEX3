@@ -3,17 +3,11 @@ import Axios from 'axios'
 export default {
   state: {
     pageLoading: false,
-    isMember: true,
     tradingList: {}, //主币区交易对列表
-    tradingCategory: [], //主币分类
-    currentCategoryIndex: 1,
-    marketInfo: {},
-    currentTradingIndex: 0,
-    currentCoinId: 2, //当前币种id
+    marketInfo: {}, // 当前交易区信息 coinId：币种id，id：交易对 id
     zoneName: '', //交易区类型
-    zoneId: '', //交易区id
-    tradeId: '', //交易对id
-    allCoin: [],
+    zoneCoinId: '',
+    allCoin: null,
   },
   actions: {
 
@@ -22,9 +16,9 @@ export default {
       commit,
       state
     }, params) {
-      api.classificationList({}).then(res => {
-        // console.log(res,'交易列表=++++++===》')
+      api.getTradeInfo().then(res=>{
         if (res.datas) {
+          state.allCoin = res.datas
           let datas = res.datas
           let category = datas.filter(item => item.zoneSwitch === 1)
           if (params.pair) {
@@ -32,25 +26,21 @@ export default {
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
             let [coin] = zone.list.filter( item => item.name == coinName);
             var coinId = coin.id;
-            state.zoneName = zone.zoneCoinName
-            state.zoneId = zone.zoneCoinId
+            state.marketInfo = coin;
+            state.zoneName = zone.zoneCoinName;
+            state.zoneCoinId = zone.zoneCoinId;
           } else {
             var coinId = category[0].id;
             state.zoneName = res.datas[0].zoneName
-            state.zoneId = res.datas[0].tradeCoinId
+            state.zoneCoinId = res.datas[0].zoneCoinId;
           }
-
-          category.push({
-            zoneName: '自选',
-            id: -1
-          })
-          commit('setTradingCategory', category);
-          commit('toggleTrading', {
-            id: coinId,
-            callback: params.callback
-          })
+          params.callback && params.callback();
+          // commit('toggleTrading', {
+          //   id: coinId,
+          //   callback: params.callback
+          // })
         }
-      })
+      });
     },
     //收藏币种
     favoriteCoin({
@@ -59,7 +49,7 @@ export default {
     }, params) {
       api.collect(params).then(res => {
         commit('toggleTrading', {
-          id: state.currentCategoryIndex
+          id: params.coinId
         }) //刷新列表
       })
     },
@@ -70,19 +60,6 @@ export default {
       commit('toggleTrading', {
         id
       }) //刷新列表
-    },
-    timestampToTime({
-      commit,
-      state
-    }, timestamp) {
-      var date = new Date(timestamp)
-      var Y = date.getFullYear() + '-'
-      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-      var D = date.getDate() + ' '
-      return Y + M + D
-    },
-    getAllCoin({commit, state }) {
-      commit('getAllCoin');
     }
   },
 
@@ -110,19 +87,6 @@ export default {
     setTradingList(state, tradingList) {
       state.tradingList = tradingList
     },
-    //设置主币分类
-    setTradingCategory(state, tradingCategory) {
-      // console.log(tradingCategory,'11111111111交易区+++++')
-      state.tradingCategory = tradingCategory
-      // state.currentCategoryIndex = tradingCategory[0].id
-
-    },
-    //查询币种
-    getAllCoin(state) {
-      api.getTradeInfo().then(res=>{
-        state.allCoin = res.datas
-      })
-    },
     setToken(state) {
       state.userToken = localStorage.getItem('token')
     },
@@ -141,14 +105,10 @@ export default {
         id: params.id
       }).then(res => {
         if (res.datas.list.length > 0) {
-          state.tradingList = res.datas.list
-          state.marketInfo = res.datas.list[0]
-          state.currentCoinId = res.datas.list[0].coinId
-          state.tradeId = res.datas.list[0].id
+          state.tradingList = res.datas.list;
+          state.marketInfo = res.datas.list[0];
           params.callback && params.callback();
         }
-        console.log(state.tradingList, '---------.......>>>>>>>>>切换交易对')
-        state.currentCategoryIndex = id
       })
     },
     //搜索币种

@@ -974,9 +974,7 @@ export default {
     }
   },
    computed: {
-    // ...mapState(["marketInfo"]),
-     ...mapState("trading", ["marketInfo"])
-    
+    ...mapState(["marketInfo"])
 
   },
   data: function() {

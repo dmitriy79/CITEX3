@@ -68,13 +68,12 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('trading/toggleOrder',this.active+1)
     this.token = localStorage.getItem("token")
   },
   computed:{
     // ...mapState(['token']),
-    ...mapState('trading',['orderData', 'marketInfo']),
-    ...mapState(["zoneName"])
+    ...mapState('trading',['orderData']),
+    ...mapState(["zoneName", 'marketInfo'])
   }
 }
 </script>

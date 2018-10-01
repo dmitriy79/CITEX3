@@ -91,13 +91,13 @@ export default {
   computed: {
     ...mapState("trading", [
       "AskList",
-      "BidList","marketInfo"
+      "BidList"
     ]),
     ...mapState("common",[
         "tradingList"
     ]
     ),
-    ...mapState(["zoneName"])
+    ...mapState(["zoneName", 'marketInfo'])
   },
   methods: {
 
