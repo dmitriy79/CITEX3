@@ -106,16 +106,11 @@ export default {
 
     //交易对切换
     toggleTrading(state, params) {
-
-      api.getTradeInfoByZone({
-        id: params.id
-      }).then(res => {
-        if (res.datas.list.length > 0) {
-          state.tradingList = res.datas.list;
-          state.marketInfo = res.datas.list[0];
-          params.callback && params.callback();
+      api.getTradeInfo().then(res=>{
+        if (res.datas) {
+          state.allCoin = res.datas
         }
-      })
+      });
     },
     //搜索币种
     searchTradingCoin(state, params) {

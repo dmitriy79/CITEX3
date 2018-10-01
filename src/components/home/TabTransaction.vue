@@ -18,7 +18,14 @@
                         <div>24h交易量</div>
                     </dt>
                     <dd v-for='(item,index) of allCoin[selectedZoneIndex].list' @click="jumpToTrade(item.name)">
-                        <div class="transaction-list-title"> <i class="ico-star"></i><span>{{item.name}}</span></div>
+                        <div class="transaction-list-title">
+                          <i
+                            @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id, collect:item.collect ? '0':'1'})"
+                            class="ico ico-star-fill" 
+                            :class="{'ico-star':!item.collect}">
+                          </i>
+                          <span>{{item.name}}</span>
+                        </div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
                         <div>{{item.minPrice_24H}}</div>
