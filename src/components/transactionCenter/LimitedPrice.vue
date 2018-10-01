@@ -63,14 +63,14 @@
                 <span class="label">卖出<i></i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
-                    <input type="text" 
+                    <input type="number" 
                     name="sellPrice" 
                     v-model="sellPrice"> 
                     <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
                     <span  class="name">数量</span>
-                    <input type="text" 
+                    <input type="number" 
                     name="sellAmount"
                      v-model="sellNums">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
@@ -112,6 +112,8 @@ import {
   mapActions,
   mapMutations
 } from "vuex"
+const numReg = /^\d+(?:\.\d{1,4})?$/;
+const coinReg = /^\d+(?:\.\d{1,8})?$/;
 export default {
   name: "LimitedPrice",
   data() {
@@ -128,9 +130,9 @@ export default {
       buyAmount: 0,
       ableTotal: '', //可买入总数
       buyPrice: '', //买入价
-      buyNums: 1, //买入数量
+      buyNums: 0, //买入数量
       sellPrice: '', //买入价格
-      sellNums: 1, //买入数量
+      sellNums: 0, //买入数量
       ableSellTotal: '', //可卖总数
       buyParams: {
         tradeCoinPairId: 1,
@@ -145,17 +147,33 @@ export default {
     }
   },
   watch: {
-    buyPrice() {
-      this.totalAmout('buy')
+    buyPrice(newVal, oldVal) {
+      if (coinReg.test(newVal)) {
+        this.totalAmout('buy');
+      } else {
+        this.buyPrice = oldVal;
+      }
     },
-    buyNums() {
-      this.totalAmout('buy')
+    buyNums(newVal, oldVal) {
+      if (numReg.test(newVal)) {
+        this.totalAmout('buy');
+      } else {
+        this.buyNums = oldVal;
+      }
     },
-    sellPrice() {
-      this.totalAmout('sell')
+    sellPrice(newVal, oldVal) {
+      if (coinReg.test(newVal)) {
+        this.totalAmout('sell');
+      } else {
+        this.sellPrice = oldVal;
+      }
     },
-    sellNums() {
-      this.totalAmout('sell')
+    sellNums(newVal, oldVal) {
+      if (numReg.test(newVal)) {
+        this.totalAmout('sell');
+      } else {
+        this.sellNums = oldVal;
+      }
     },
     currentPrcie(val) {
       this.buyPrice = val;
