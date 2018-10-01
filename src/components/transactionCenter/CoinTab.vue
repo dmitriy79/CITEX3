@@ -44,7 +44,7 @@
               class="coin-list"
               v-for="(item, index) of (searchList || allCoin[selectedZoneIndex].list)"
               :class="{'active': false}"
-              @click='$router.push(`/transaction/${item.name}_${zoneName}`)'
+              @click='selectCoin(item)'
             >
               <div class="coin-type">{{item.name}}</div>
               <div class="price">{{item.deal_price}}</div>
@@ -128,6 +128,11 @@ export default {
     },
     selectZone(index) {
       this.selectedZoneIndex = index;
+    },
+    selectCoin(item) {
+      let zone = this.allCoin[this.selectedZoneIndex];
+      this.$store.dispatch('setZone', zone)
+      this.$router.push(`/transaction/${item.name}_${zone.zoneCoinName}`)
     }
   }
 }

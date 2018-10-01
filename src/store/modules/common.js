@@ -60,7 +60,14 @@ export default {
       commit('toggleTrading', {
         id
       }) //刷新列表
-    }
+    },
+    setZone({
+      commit,
+      state
+    }, zone) {
+      state.zoneName = zone.zoneCoinName;
+      state.zoneCoinId = zone.zoneCoinId;
+    },
   },
 
   getters: {
