@@ -437,13 +437,11 @@ export default {
  color: #000 !important;
 }
 
-/* .el-select {
+.el-select {
     width: 100%!important;
-} */
-.el-pagination{height: 30px;}
-.el-select-dropdown{
-  background: #FFF!important;
 }
+.el-pagination{height: 30px;}
+
 </style>
 
 <style lang="less" scoped>

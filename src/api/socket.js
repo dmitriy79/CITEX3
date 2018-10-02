@@ -17,6 +17,7 @@ export default class {
     this.websock = new WebSocket(wsUri)
     this.websock.onmessage = (resp = {}) => {
       try {
+        debugger
         arg.success(JSON.parse(resp.data || "{}"))
       } catch (e) {
         console.error('json 解析失败, 数据为', resp)

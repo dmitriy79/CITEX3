@@ -18,13 +18,13 @@
                         </el-select>
                     </el-form-item>
                      <el-form-item label="转出数量">
-                        <el-input v-model="form.number"></el-input>
+                        <el-input v-model="form.number" type="number"></el-input>
                     </el-form-item>
                      <el-form-item label="转出手续费">
-                        <el-input v-model="form.poundage"></el-input>
+                        <el-input v-model="form.poundage" type="number"></el-input>
                     </el-form-item>
                      <el-form-item label="谷歌验证" placeholder="请输入注册时的证件号码后四位">
-                        <el-input v-model="form.code"></el-input>
+                        <el-input v-model="form.code" type="number"></el-input>
                     </el-form-item>
                     <el-form-item label="交易密码">
                         <el-input v-model="form.password" type="password"></el-input>
