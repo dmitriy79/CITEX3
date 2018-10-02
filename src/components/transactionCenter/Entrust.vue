@@ -61,8 +61,10 @@ export default {
   },
   methods: {
     toggleOrder(index){
-      this.active=index
-      this.$store.dispatch('trading/toggleOrder',this.active+1)
+      this.active = index;
+      this.$store.dispatch('trading/toggleOrder', {
+        type: index + 1
+      });
     },
     isBuy(userId) {
       return userId != localStorage.getItem('userId');

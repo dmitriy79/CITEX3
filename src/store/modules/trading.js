@@ -180,12 +180,19 @@ const actions = {
             tradeCoinPairId: rootState.marketInfo.id,
             obj: obj
         })
+    },
+    toggleOrder({ commit, state, rootState }, params) {
+        commit('listBidOrders', {
+            type: params.type,
+            tradeCoinPairId: rootState.marketInfo.id
+        })
     }
 }
 const mutations = {
     listBidOrders(state, params) {
         var userId = localStorage.getItem('userId');
         const { type, tradeCoinPairId } = params;
+        state.orderData = [];
         api.listBidOrders({
             type, tradeCoinPairId,
             userId: userId,
