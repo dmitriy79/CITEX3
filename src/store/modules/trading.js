@@ -363,6 +363,16 @@ const mutations = {
             url: `websocketKline?pairId=${id}&uuid=1&step=${step}`,
             data: 'sendParams',
             success: (res) => {
+                res.list.map(bar => {
+                    state.klineHistory.push({
+                        time: Number(bar.startTime),
+                        open: Number(bar.openPrice),
+                        close: Number(bar.closePrice),
+                        high: Number(bar.topPrice),
+                        low: Number(bar.floorPrice),
+                        volume: Number(bar.total)
+                    })
+                });
                 console.log(res,'websocketKline===>')
             }
         })
