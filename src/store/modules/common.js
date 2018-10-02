@@ -17,9 +17,23 @@ export default {
       state
     }, params) {
       api.getTradeInfo().then(res=>{
-        if (res.datas) {
-          state.allCoin = res.datas
-          let datas = res.datas
+        let datas = res.datas
+        if (datas) {
+          // allCoin 的本地处理
+          let token = localStorage.getItem('token');
+          if (!token) {
+            let star = localStorage.getItem('star') || '[]';
+            star = JSON.parse(star);
+            datas.map(zone => {
+              zone.list.map(coin => {
+                let index = star.findIndex(item => item.id == coin.id);
+                if (index >= 0) {
+                  coin.collect = true;
+                }
+              });
+            });
+          }
+          state.allCoin = datas;
           if (params.pair) {
             var [coinName, zoneName] = params.pair.split('_');
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
@@ -46,11 +60,43 @@ export default {
       commit,
       state
     }, params) {
-      api.collect(params).then(res => {
-        commit('toggleTrading', {
-          id: params.coinId
-        }) //刷新列表
-      })
+      let token = localStorage.getItem('token');
+      const { trade_coin_pair_id, collect } = params;
+      if (token) {
+        api.collect(params).then(res => {
+          commit('toggleTrading', { id: trade_coin_pair_id }) //刷新列表
+        })
+      } else {
+        let star = localStorage.getItem('star') || '[]';
+        star = JSON.parse(star);
+        if (collect == '1') {
+          // 收藏逻辑
+          let coin = null;
+          state.allCoin.map(zone => {
+            zone.list.map(item => {
+              if (item.id == trade_coin_pair_id) {
+                coin = item;
+                item.collect = true;
+              }
+            });
+          });
+          state.allCoin = JSON.parse(JSON.stringify(state.allCoin));
+          star.push(coin);
+          localStorage.setItem('star', JSON.stringify(star));
+        } else {
+          // 取消收藏逻辑
+          let index = star.findIndex( item => item.id == trade_coin_pair_id);
+          star.splice(index, 1);
+          state.allCoin.map(zone => {
+            zone.list.map(item => {
+              if (item.id == trade_coin_pair_id) {
+                item.collect = false;
+              }
+            });
+          });
+          localStorage.setItem('star', JSON.stringify(star));
+        }
+      }
     },
     toggleTrading({
       commit,

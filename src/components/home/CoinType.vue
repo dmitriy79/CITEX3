@@ -6,9 +6,9 @@
           <div class="top-wrapper">
             <div class="coin-type">
               <span class="type" @click="jumpToTrade(item.name)">{{item.name}}</span>
-              <span class="rate green">{{item.increaseNum}}%</span>
+              <span class="rate green">{{item.increaseNum | decimal(2)}}%</span>
             </div>
-            <div class="price">{{item.price}} ≈${{item.price*0.1452}}</div>
+            <div class="price">{{item.price}}</div>
             <div class="num">量：<span>{{item.amount_24H}}</span></div>
           </div>
           <x-chart :id="id1" :option="option1" ></x-chart>

@@ -180,12 +180,19 @@ const actions = {
             tradeCoinPairId: rootState.marketInfo.id,
             obj: obj
         })
+    },
+    toggleOrder({ commit, state, rootState }, params) {
+        commit('listBidOrders', {
+            type: params.type,
+            tradeCoinPairId: rootState.marketInfo.id
+        })
     }
 }
 const mutations = {
     listBidOrders(state, params) {
         var userId = localStorage.getItem('userId');
         const { type, tradeCoinPairId } = params;
+        state.orderData = [];
         api.listBidOrders({
             type, tradeCoinPairId,
             userId: userId,
@@ -379,6 +386,19 @@ const mutations = {
                 }
                 state.klineCurrent=currentkline[0]
                 console.log(currentkline[0],'websocketKline===>')
+
+                // res.list.map(bar => {
+                //     state.klineHistory.push({
+                //         time: Number(bar.startTime),
+                //         open: Number(bar.openPrice),
+                //         close: Number(bar.closePrice),
+                //         high: Number(bar.topPrice),
+                //         low: Number(bar.floorPrice),
+                //         volume: Number(bar.total)
+                //     })
+                // });
+                // console.log(res,'websocketKline===>')
+
             }
         })
     },
