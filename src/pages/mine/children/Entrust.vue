@@ -30,7 +30,7 @@
                 </div>
                 <div class="table-wrapper">
                      <el-table :data="currentEntrust" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column  label="委托时间" width="160">
+                     <el-table-column  label="委托时间" width="170">
                        <template slot-scope="scope">
                            <span>{{scope.row.createTime | dateTime-format}}</span>
                         </template>
@@ -44,11 +44,11 @@
                     </el-table-column>
                     <el-table-column prop="bidOrSell" label="方向">
                          <template slot-scope="scope">
-                           <span>{{scope.row.bidOrSell==1?scope.row.bidOrSell='卖':scope.row.bidOrSell='买'}}</span>
+                           <span>{{scope.row.bidOrSell==1?'买':'卖'}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="price" label="委托价格"></el-table-column>
-                    <el-table-column prop="amount" label="委托个数（个）"></el-table-column>
+                    <el-table-column prop="amount" label="委托个数（个）" width="160"></el-table-column>
                     <el-table-column prop="dealAmount" label="已成交">
                        <template slot-scope="scope">
                            <span>{{scope.row.amount-scope.row.leftAmount}}</span>
@@ -125,7 +125,7 @@
                 </div>
                            <div class="table-wrapper">
                      <el-table :data="historyEntrust" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column  label="委托时间" width="160">
+                     <el-table-column  label="委托时间" width="170">
                        <template slot-scope="scope">
                            <span>{{scope.row.createTime | dateTime-format}}</span>
                         </template>

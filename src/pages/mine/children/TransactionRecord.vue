@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="table-wrapper">
-                     <el-table :data="recordList" style="width: 100%"   height="750">
+                     <el-table :data="recordList" style="width: 100%"  >
                         <el-table-column prop="dealTime" label="交易时间" width="165">
                            <template slot-scope="scope">
                            <span>{{scope.row.dealTime | dateTime-format}}</span>

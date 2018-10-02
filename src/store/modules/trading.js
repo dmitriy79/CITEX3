@@ -311,6 +311,7 @@ const mutations = {
             url: `websocketAskBid?pairId=${id}`,
             data: 'sendParams',
             success: (res) => {
+                console.log(res,'websocketAskBid')
                 state.AskList = res.ask || [];
                 state.BidList = res.bid || [];
                 state.BidList.reverse();
@@ -320,7 +321,6 @@ const mutations = {
     },
     //成交历史
     getDealOrders(state, id) {
-        console.log("成交历史========>", id)
         new webSocket({
             url: `websocketSSCJ?pairId=${id}`,
             data: 'sendParams',
@@ -340,7 +340,7 @@ const mutations = {
             if (res.datas.list.length) {
                 res.datas.list.forEach(function(bar) {
                     kline.push({
-                        time: Number(bar.startTime.time),
+                        time: Number(bar.startTime),
                         open: Number(bar.openPrice),
                         close: Number(bar.closePrice),
                         high: Number(bar.topPrice),
@@ -356,6 +356,7 @@ const mutations = {
             url: `websocketKline?pairId=${id}&uuid=1&step=${step}`,
             data: 'sendParams',
             success: (res) => {
+                console.log(res,'websocketKline===>')
             }
         })
     },

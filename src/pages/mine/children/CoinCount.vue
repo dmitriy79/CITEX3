@@ -20,8 +20,8 @@
                 
             </div>
             <div class="table-wrapper">
-                 <el-table :data="coinList"  style="width: 100%" :row-class-name="setClassName">
-                    <el-table-column prop="coinName" label="币种"  width="180">
+                 <el-table :data="coinList"  style="width: 100%" :row-class-name="setClassName" height="740">
+                    <el-table-column prop="coinName" label="币种"  width="80">
 
                     </el-table-column>
                     
@@ -42,7 +42,7 @@
      <el-form ref="form" :model="form_" label-width="80px" >
                     <el-form-item label="币种">
                         <el-select v-model="form_.coinType" placeholder="请选择" @change="selectCoinId">
-                        <el-option v-for="item in allCoin" :label="item.name" :value="item.id" :key="item.coinId"></el-option>
+                        <el-option v-for="item in allCoin" :label="item.name" :value="item.id" :key="item.id"></el-option>
                         
                         </el-select>
                     </el-form-item>
@@ -64,7 +64,7 @@
 export default {
     data(){
         return{
-            editContent:false,
+            editContent:false,//修改弹窗是否显示
             allCoin:[],//所有币种
             coinList:[],//我的提币列表
             code:'',//谷歌验证码
@@ -75,8 +75,7 @@ export default {
             form:{
                 coinType:'',
                 coinAddress:'',
-                mark:'',
-                
+                mark:'', 
                 mark_:'',
             },
             form_:{
@@ -84,11 +83,6 @@ export default {
                 coinAddress:'',
                 mark:'',
             },
-                  tableData1: [{
-            date: '2016-05-02',
-            type: 'USDT',
-            num: '1'
-          }],
         }
     },
     mounted () {
@@ -123,6 +117,20 @@ export default {
         },
         //添加
          add() {
+             console.log(this.form.coinType,'this.form.coinType====>')
+        if(this.form.coinAddress==''){
+             this.$message({
+                    type: 'warning',
+                    message:'请输入提币地址'
+                });
+        }
+          if(this.form.coinType==''){
+             this.$message({
+                    type: 'warning',
+                    message:'请选择币种'
+                });
+        }
+        if(this.form.coinType&&this.form.coinAddress){
         this.$prompt('请输入谷歌验证码', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',//replace(/[^\d]/g,'')
@@ -160,6 +168,8 @@ export default {
             message: '取消输入'
           });       
         });
+        }
+
  
     },
     //修改
@@ -167,6 +177,15 @@ export default {
            this.$api.update({withdrawAddress:this.form_.coinAddress,id:this.addressId,coinId:this.updateCoinId},'POST').then(res=>{
               if(res.message=='成功'){
                     this.editContent=false
+                     this.$message({
+                    type: 'success',
+                    message:'修改成功'
+                });
+                this.form={
+                    coinType:'',
+                    coinAddress:'',
+                    mark:'',
+                }
               }
            })
        },
@@ -211,7 +230,7 @@ export default {
 .el-dialog__body{padding: 0 20px }
 .el-dialog .el-select,.el-dialog .el-input{width:100%!important;}
 .el-dialog .el-select input,.el-dialog .el-input input,.el-select-dropdown__item.selected{color:#606266!important}
-.el-message-box__input .el-input__inner{color:grey}
+.el-message-box .el-message-box__input .el-input input{color:grey!important}
 .el-table__expanded-cell[class*="cell"] {
   padding: 0 10px !important;
 }

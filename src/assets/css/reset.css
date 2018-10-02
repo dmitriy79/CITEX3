@@ -105,17 +105,19 @@ input:-webkit-autofill {
 .el-pagination.is-background .el-pager li:not(.disabled):hover {
   color: #fff;
 }
-
+.el-pagination{
+  height: 30px;
+}
 .el-input__inner {
   background: rgba(255, 255, 255, 0.06)!important;
   border: none
 }
 
 .el-select-dropdown {
-  background: #292f37!important;
+  background: #292f37;
   border: none
 }
-
+.el-message-box .el-message-box__input .el-input input,.el-dialog__body .el-input input{color:grey!important}
 .el-select-dropdown__item.hover,
 .el-select-dropdown__item:hover {
   background: #1b222a!important;

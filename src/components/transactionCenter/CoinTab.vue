@@ -301,6 +301,9 @@ export default {
   .price {
     width: 16.7%;
     margin-right: 7.4%;
+    b{
+      margin-left: 5px!important;
+    }
   }
   .rate {
     // width: 8.9%;

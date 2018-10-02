@@ -4,7 +4,7 @@
         <div class="member-title">
           <h1>我的资产</h1>
            <div class="member-total">
-            <div class="member-assets">总资产折合：0.00048100 BTC<i>≈<b>21.23</b>CNY</i></div>
+            <div class="member-assets">总资产折合：{{mineTotal}} BTC<i><b></b></i></div>
              <div @click="showRecord" class="button button-min" ><i class="ico ico-order"></i>提币&充币记录</div>
              </div>
         </div>
@@ -19,10 +19,10 @@
             <dt><span>币种</span><span>总数（个）</span><span>可用（个）</span><span>冻结（个）</span><span class="txt-right">操作</span></dt>
             
             <dd class="list" v-if=" searchList.length>0" v-for="(item, index) in searchList">
-               <span>{{item.nameShort}} </span>
-                <span>{{item.total || '0.00000000'}}</span>
-                <span>{{item.able || '0.00000000'}}</span>
-                <span>{{item.frozen || '0.00000000'}}</span>
+               <span class="name">{{item.nameShort}} </span>
+                <span class="total">{{item.total || '0.00000000'}}</span>
+                <span class="able">{{item.able || '0.00000000'}}</span>
+                <span class="frozen">{{item.frozen || '0.00000000'}}</span>
                 <span class="txt-right">
                     <div @click="fullCoin(index,item.coinId,item.coinName)">充币</div>
                     <div @click="carryCoin(index,item.coinId,item.able,item.singleMax,item.singleMin,item.nameShort,item.feeValue)">提币</div>
@@ -145,6 +145,7 @@ export default {
 
   data() {
     return {
+      mineTotal:'',//我的总资产
       coinKey:'',
       addressList:[],
       pageIndex:1,
@@ -197,6 +198,7 @@ export default {
   },
   mounted () {
     this.getAddress()
+    this.getUserTotalProperty()
   },
   watch: {
     searchValue(val) {
@@ -213,6 +215,12 @@ export default {
     },
 
   methods: {
+    //计算资产总和
+    getUserTotalProperty(){
+      this.$api.getUserTotalProperty().then(res=>{
+       this.mineTotal= res.datas
+      })
+    },
     //确认添加提币地址
     confirmAdd(){
         this.addressList.push({
@@ -221,14 +229,18 @@ export default {
         console.log(this.coin_Id,'this.coin_Id')
         this.$api.add({coinId:this.coin_Id,withdrawAddress:this.form.address_,coinName:this.coinName_,code:this.form.code_}).then(res=>{
           console.log(res,'confirmAdd data')
-          if(res.message='成功'){
+          if(res.status==200){
              this.$message({
               message: "提币地址添加成功",
               type: "success"
             });
             this.Addressdialog=false
+            return
           }
-
+           this.$message({
+              message:res.message,
+              type: "warning"
+            });
         })
         // this.Addressdialog=false
     },
@@ -364,7 +376,7 @@ export default {
     },
     //提币
        carryCoin(index,id,ableNum,singleMax,singleMin,coinName_,feeValue){
-         console.log(id,'tibi Tii')
+         console.log(index,'tibi Tii')
         this.coin_Id =id
         this.carryIndex=index
         this.ableNum=ableNum
@@ -421,16 +433,21 @@ export default {
 
  <style >
 
-.el-message-box .el-input input{
+.dialog-wrapper .el-input .el-input__inner{
  color: #000 !important;
 }
 
-.el-select {
+/* .el-select {
     width: 100%!important;
+} */
+.el-pagination{height: 30px;}
+.el-select-dropdown{
+  background: #FFF!important;
 }
 </style>
 
 <style lang="less" scoped>
+
 .el-input {
   width: 100% !important;
 }
@@ -443,15 +460,19 @@ export default {
   opacity: 0;
 }
 .property-wrapper {
-  height: 920px;
+  min-height: 920px;
   color: #fff;
   .coin-info {
     font-size: 14px;
+    margin-bottom: 50px;
+        color: #999EA4!important;
     dt {
       border-top: 1px solid #3b4148;
+      border-bottom: 1px solid #3b4148;
     }
     .txt-right {
       text-align: right;
+      float: right;
       &>div{
         display:inline-block;
         padding:4px 8px;
@@ -461,15 +482,20 @@ export default {
     }
   }
   .list {
-    display: flex;
-    position: relative;
-    height: 48px;
-    border-top: 1px solid #3b4148;
+    // display: flex;
+    // position: relative;
+    // height: 48px;
+    border-bottom: 1px solid #3b4148;
     align-items: center;
+    padding: 14px 0;
     span {
-      flex: 1;
+     display: inline-block;
       font-size: 14px;
     }
+    .name{width: 100px;}
+    .total{width: 150px;text-align: right}
+    .able,.frozen{    width: 180px;
+    text-align: right;}
     .wrap-img {
       width: 20px;
       height: 20px;
@@ -570,10 +596,10 @@ export default {
     .coin-item {
       z-index: 999;
       border: 1px solid #898c91;
-      padding: 20px 30px 100px;
+      padding: 20px 30px;
       border-radius: 2px;
-      position: absolute;
-      top: 48px;
+      position: relative;
+      top: 15px;
       background: #181f27;
       width: 100%;
       .item {

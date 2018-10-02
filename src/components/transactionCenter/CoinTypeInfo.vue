@@ -37,7 +37,7 @@
             <div class="right">
                 <div class="right-title">{{coinInfo.coinName}}简介</div>
                 <div class="info">{{coinInfo.introdution}}</div>
-                <div class="more">了解更多</div>
+                <!-- <div class="more">了解更多</div> -->
             </div>
         </div>
     </div>

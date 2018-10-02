@@ -35,7 +35,7 @@
                     <span>买{{index+1}}</span>
                     <span>{{item.price}}</span>
                     <span>{{item.count}}</span>
-                    <span>{{item.dealCount}}</span>
+                    <span>{{item.totalCount}}</span>
                 </dd>
             </dl>
         </div>
