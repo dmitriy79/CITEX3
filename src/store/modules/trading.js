@@ -352,11 +352,33 @@ const mutations = {
             console.log('k line data', kline)
             state.klineHistory = kline;
         });
-        new webSocket({
-            url: `websocketKline?pairId=${id}&uuid=1&step=${step}`,
+        function guid() {    
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
+                   var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
+                 return v.toString(16);   
+            
+            
+         });}
+       var uuid=guid()
+       new webSocket({
+            url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
             data: 'sendParams',
             success: (res) => {
-                console.log(res,'websocketKline===>')
+                var currentkline = []
+                if (res.list.length) {
+                    res.list.forEach(function(bar) {
+                        currentkline.push({
+                            time: Number(bar.startTime),
+                            open: Number(bar.openPrice),
+                            close: Number(bar.closePrice),
+                            high: Number(bar.topPrice),
+                            low: Number(bar.floorPrice),
+                            volume: Number(bar.total)
+                        });
+                    });
+                }
+                state.klineCurrent=currentkline[0]
+                console.log(currentkline[0],'websocketKline===>')
             }
         })
     },

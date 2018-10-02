@@ -12,10 +12,14 @@
                     </el-form-item>
                    
                     <el-form-item label="转出地址">
-                        <el-select v-model="form.address" placeholder="选择提现地址">
+                        <el-select v-model="form.address" placeholder="请选择提币地址" @change="selectAddress"> 
+                            <el-option v-for="item in coinList" :label="item.withdrawAddress" :value="[item.coinId+','+item.withdrawAddress]" :key="item.id"></el-option>
+                            <el-option value=""> <span @click="addAddress">添加提币地址</span></el-option> 
+                       </el-select>
+                        <!-- <el-select v-model="form.address" placeholder="选择提现地址">
                         <el-option v-for="item in coinList" :label="item.withdrawAddress" :value="item.withdrawAddress" :key="item.id"></el-option>
                       
-                        </el-select>
+                        </el-select> -->
                     </el-form-item>
                      <el-form-item label="转出数量">
                         <el-input v-model="form.number" type="number"></el-input>
@@ -36,6 +40,20 @@
                 <div class="bottom-btn" @click="carryCoin">立即转出</div>
             </div>
         </div>
+          <el-dialog title="提示" :visible.sync="Addressdialog" width="30%">
+      <el-form :model="form" class="dialog-wrapper" label-width="120px">
+        <el-form-item label="添加提币地址：">
+          <el-input v-model="form.address_" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入谷歌验证码：" >
+          <el-input v-model="form.code_" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="Addressdialog = false">取 消</el-button>
+        <el-button type="primary" @click="confirmAdd" :plain="true" >确定</el-button>
+      </div>
+    </el-dialog>
     </div>
     
 </template>
@@ -43,7 +61,7 @@
 export default {
     data(){
         return{
-            
+            Addressdialog:false,
             coinList:[],
             allCoin:[],//所有币种
             coinId:'',
@@ -54,7 +72,8 @@ export default {
                 number:'',
                 poundage:'',
                 code:'',
-                password:''
+                password:'',
+                address_:''
         }
         }
     },
@@ -63,6 +82,47 @@ export default {
         //this.getlistByUserId()
     },
     methods: {
+    selectAddress(val){
+       var addressInfo=val.toString().split(',')
+      this.form.address=addressInfo[1]
+    },
+    //添加提币地址
+    addAddress(){
+        if(this.form.coinType==''){
+            this.$message({
+              message: "请选择提币地址",
+              type: "warning"
+            });
+        }
+        else{
+             this.Addressdialog=true
+        }
+      console.log("add Addressdialog")
+     
+    },
+    //确认添加提币地址
+    confirmAdd(){
+        this.coinList.push({
+          withdrawAddress:this.form.address_
+        })
+        console.log(this.coin_Id,'this.coin_Id')
+        this.$api.add({coinId:this.coinId,withdrawAddress:this.form.address_,coinName:this.coinName,code:this.form.code_}).then(res=>{
+          console.log(res,'confirmAdd data')
+          if(res.status==200){
+             this.$message({
+              message: "提币地址添加成功",
+              type: "success"
+            });
+            this.Addressdialog=false
+            return
+          }
+           this.$message({
+              message:res.message,
+              type: "warning"
+            });
+        })
+        // this.Addressdialog=false
+    },
          //选择币种
         getCoinId(val){
             this.form.address=''
@@ -110,9 +170,10 @@ export default {
 </script>
 
 <style>
-.el-select {
+.carrycoin-wrapper .el-select {
     width: 50%!important;
 }
+.carrycoin-wrapper .dialog-wrapper .el-input{width: 100%}
 </style>
 
 <style lang="less" scoped>

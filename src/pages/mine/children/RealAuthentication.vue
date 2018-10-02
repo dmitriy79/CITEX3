@@ -3,7 +3,7 @@
         <div class="title"  v-if="isShow"><span>身份认证</span></div>
         <div class="title"  v-if="!isShow"><span>证件上传</span></div>
         <div v-if="isAssess">
-                    <div class="identity-wrapper" v-if="isShow"> 
+          <div class="identity-wrapper" v-if="isShow"> 
             <div class="form-wrapper">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="选择地区" >
@@ -147,7 +147,7 @@
         </div>
         </div>
 
-      <div  class="wrapper">
+      <!-- <div  class="wrapper">
           <div class="text-o">恭喜你通过实名认证</div>
            <el-form ref="form" :model="form" label-width="80px" >
               <el-form-item label="姓名" >
@@ -163,7 +163,7 @@
                   <el-input v-model="form.cardNum" disabled></el-input>
               </el-form-item>
            </el-form>
-      </div>
+      </div> -->
  
     </div>
 </template>
@@ -229,7 +229,7 @@ export default {
             let form = new FormData();   
        
             form.append('file',img1);  
-console.log(form,'98+++++++++++')
+console.log(img1,'98+++++++++++')
 
             this.$api.upload({file:img1},'POST').then(res=>{
               console.log(res,'99999我是上传')
@@ -291,12 +291,15 @@ console.log(form,'98+++++++++++')
     next() {
         console.log(this.type,'type00000')
       var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-       if(this.form.passportId==''){
+      if(this.show){
+        if(this.form.passportId==''){
           this.$message({
           message: "护照不能为空",
           type: "warning"
         });
       }
+      }
+       
      
       if (!regIdNo.test(this.form.number)&&this.reginVal==1) {
         this.$message({
@@ -349,7 +352,13 @@ console.log(form,'98+++++++++++')
                 message: "提交成功",
                 type: "success"
                 }); 
-               this.isShow=false,1000
+               this.isShow=false
+           }
+           else{
+              this.$message({
+                message: res.message,
+                type: "warning"
+                }); 
            }
          })
       }
@@ -365,7 +374,7 @@ console.log(form,'98+++++++++++')
                 message: "提交成功",
                 type: "success"
                 }); 
-               this.isShow=false,1000
+               this.isShow=false
            }
          })
       }

@@ -219,8 +219,7 @@ export default {
 </script>
 <style scoped>
 /* .el-table_1_column_5{display: none} */
-
-.el-select-dropdown {
+ .el-select-dropdown {
     background: #fff!important;
     border: none;
 }

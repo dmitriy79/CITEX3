@@ -20,7 +20,7 @@ const apiList = [
   '/user/user/reset', //修改邮箱 或者 登录密码 或者 交易密码
   '/user/user/audit', //实名认证
   '/user/user/enableGooleAutu', //启用谷歌验证码
-  '/user/s3/upload', //通用文件上传
+  // '/user/s3/upload', //通用文件上传
 
   '/coin/coin/info/all', //GET 查询全部币种列表
 
@@ -33,7 +33,7 @@ const apiList = [
   '/payment/withdrawAddr/update', //更新提币地址
   '/payment/withdrawAddr/delete', //删除提币地址
   '/payment/userProperty/uplistByUserId', //我的资产
-
+  '/user/oss/upload',//上传图片
   '/trade/trade/getTopTradeCoinPairs', //GET 主要币种模块展示  
   '/trade/trade/getTradeInfo',
   '/trade/trade/getTradeInfoByZone', //交易区列表(根据交易区ID查询)
