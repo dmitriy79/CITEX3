@@ -58,14 +58,14 @@
                     <el-table-column label="状态" prop="matchStatus">
                       <!-- 未成交 部分成交 完全成交 用户撤单 系统撤单 -->
                         <template slot-scope="scope">
-                           <span >{{scope.row.matchStatus}}</span>
+                             <span >{{status[scope.row.matchStatus]}}</span>
                         </template>
                     </el-table-column>
                      <el-table-column  width="80" label="操作" >
    
                        <template slot-scope="scope">
-                           <span v-if="scope.row.matchStatus=='未成交'||scope.row.matchStatus=='部分成交'" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
-                           <span v-if="scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
+                           <span v-if="scope.row.matchStatus==0||scope.row.matchStatus==1" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
+                           <span v-if="scope.row.matchStatus==2||scope.row.matchStatus==3||scope.row.matchStatus==4" class="txt-b" @click="details(scope.row)"> 详情</span>
                            
                         </template>
                         
@@ -150,17 +150,16 @@
                         </template>
                     </el-table-column>
                     <!-- <el-table-column prop="avarage" label="成交均价"></el-table-column> -->
-                    <el-table-column label="状态" prop="matchStatus">
-                      <!-- 未成交 部分成交 完全成交 用户撤单 系统撤单 -->
+                    <el-table-column label="状态" >
                         <template slot-scope="scope">
-                           <span >{{scope.row.matchStatus}}</span>
+                           <span >{{status[scope.row.matchStatus]}}</span>
                         </template>
                     </el-table-column>
                      <el-table-column  width="80" label="操作" >
    
                        <template slot-scope="scope">
-                           <span v-if="scope.row.matchStatus=='未成交'||scope.row.matchStatus=='部分成交'" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
-                           <span v-if="scope.row.matchStatus=='完全成交'||scope.row.matchStatus=='用户撤单'||scope.row.matchStatus=='系统撤单'" class="txt-b" @click="details(scope.row)"> 详情</span>
+                           <span v-if="scope.row.matchStatus==0||scope.row.matchStatus==1" class="txt-b" @click="cancel(scope.row.id,scope.row.bidOrSell)">撤销</span>
+                           <span v-if="scope.row.matchStatus==2||scope.row.matchStatus==3||scope.row.matchStatus==4" class="txt-b" @click="details(scope.row)"> 详情</span>
                            
                         </template>
                         
@@ -222,7 +221,13 @@ export default {
       currentEntrust: [],
       historyEntrust: [],
       coinList:[],
-
+      status:[
+        "未成交",
+        "部分成交",
+        "完全成交",
+        "用户撤单”",
+        "系统撤单",
+      ]
     };
   },
   computed: {
@@ -277,33 +282,13 @@ export default {
       this.$api
         .listBidOrders({ type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,unCoinId:this.tradeCoinPairId ,tradeCoinNameShort:this.form.name})
         .then(res => {
-          var EntrustList = res.datas.list;
+            var EntrustList = res.datas.list;
           this.currentTotal=EntrustList.total
-          EntrustList.forEach(element => {
-            if (element.matchStatus == 0) {
-              element.matchStatus = "未成交";
-            }
-            if (element.matchStatus == 1) {
-              element.matchStatus = "部分成交";
-            }
-            if (element.matchStatus == 2) {
-              element.matchStatus = "完全成交";
-            }
-            if (element.matchStatus == 3) {
-              element.matchStatus = "用户撤单";
-            }
-            if (element.matchStatus == 4) {
-              element.matchStatus = "系统撤单";
-            }
-          });
           this.currentEntrust = res.datas.list;
             this.historyEntrust=res.datas.list;
           this.currentTotal = res.datas.total;
           console.log(res, "我的委托");
         });
-          // this.$api.listBidOrders({type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,tradeCoinNameShort:this.form.name ,unCoinId:this.tradeCoinPairId}).then(res=>{
-          //     this.currentEntrust = res.datas.list;
-          // })
         },
     //获取交易区
     classificationList(){
@@ -334,23 +319,6 @@ export default {
         .then(res => {
           var EntrustList = res.datas.list;
           this.currentTotal=EntrustList.total
-          EntrustList.forEach(element => {
-            if (element.matchStatus == 0) {
-              element.matchStatus = "未成交";
-            }
-            if (element.matchStatus == 1) {
-              element.matchStatus = "部分成交";
-            }
-            if (element.matchStatus == 2) {
-              element.matchStatus = "完全成交";
-            }
-            if (element.matchStatus == 3) {
-              element.matchStatus = "用户撤单";
-            }
-            if (element.matchStatus == 4) {
-              element.matchStatus = "系统撤单";
-            }
-          });
           this.currentEntrust = res.datas.list;
           this.historyEntrust=res.datas.list;
           this.currentTotal = res.datas.total;
@@ -396,7 +364,7 @@ export default {
       this.showDetails = !this.showDetails;
     },
     setClassName({ row, index }) {
-      if (row.matchStatus == "未成交"||row.matchStatus=='部分成交') {
+      if (row.matchStatus == 0||row.matchStatus==1) {
         return "row-expand-cover";
       }
     }

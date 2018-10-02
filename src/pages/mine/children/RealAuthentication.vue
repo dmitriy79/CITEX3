@@ -56,10 +56,10 @@
             </div>
         </div>
 
-               <div class="upload-wrapper" ><!--v-if="!isShow"-->
+               <div class="upload-wrapper" v-if="!isShow"><!--v-if="!isShow"-->
           
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
-            <div class="identity-wrapper">  <!-- v-if="showImg"-->
+            <div class="identity-wrapper" v-if="showImg">  <!-- v-if="showImg"-->
               <div class="content">
                 <div  class="content-item">
                     <div class="default-wrapper">
@@ -117,6 +117,16 @@
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/hz.png" alt="">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <div  class="content-item">
+                    <div class="default-wrapper"><i class="plus-icon"></i><span>护照反面</span></div>
+                    <div class="case">示例</div>
+                    <div  class="default-wrapper">
+                        <img src="@/assets/images/sfzf.png" alt="">
                     </div>
                 </div>
                 
@@ -368,6 +378,12 @@ console.log(form,'98+++++++++++')
   }
 };
 </script>
+<style>
+.el-select {
+    width: 50%!important;
+}
+</style>
+
 <style lang="less" scoped>
  .file{width: 100%;position:absolute;left: 0;top: 0;bottom: 0;opacity: 0;}
 .wrapper{padding: 0 20px}
