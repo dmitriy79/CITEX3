@@ -16,7 +16,7 @@ const state = {
     historyList: [],
     currentPrcie: '', //交易区当前价格
     klineHistory: null,
-    klineCurrent: {},
+    klineCurrent: null,
     step: '1min',
     curbuyPrice: '',
     cursellPrice: '',
@@ -356,6 +356,7 @@ const mutations = {
                     });
                 });
             }
+            state.klineCurrent = kline[0]
             console.log('k line data', kline)
             state.klineHistory = kline;
         });

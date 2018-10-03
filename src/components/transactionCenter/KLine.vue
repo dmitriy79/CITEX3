@@ -740,8 +740,8 @@ export default {
         }
 
         if (this_vue.klineCurrent) {
-          onRealtimeCallback(this_vue.klineCurrent)
           console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
+          onRealtimeCallback(this_vue.klineCurrent)
         }
 
         /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
