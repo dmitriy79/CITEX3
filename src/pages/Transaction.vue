@@ -10,8 +10,13 @@
                 <span>{{marketInfo.name}}</span>/<span>{{zoneName}}</span>
               </div>
               <div class="price-wrap">
-                <span class="rate" :class="{red:!marketInfo.increase}">{{marketInfo.increase ? '+':'-'}}<i>{{marketInfo.increase_24H}}%</i></span>
-                <span class="price" :class="{red:!marketInfo.increase}">{{marketInfo.deal_price}}</span>&nbsp;
+                <span class="price" :class="{red:!marketInfo.increase}">
+                  {{marketInfo.deal_price}}
+                </span>
+                <span class="rate" :class="{red:!marketInfo.increase}">
+                  涨幅{{marketInfo.increase ? '+':'-'}}
+                  <i>{{marketInfo.increase_24H}}%</i>
+                </span>
                 <!-- <span class="price-val">≈ <i>0000.43</i> CNY</span> -->
               </div>
             </div>

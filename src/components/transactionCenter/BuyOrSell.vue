@@ -1,60 +1,42 @@
 <template>
-    <div class="buyOrSell-wrapper" ref="wrapper">
-        <div class="title">
-                   <div class="wrap-img">
-                       <!-- <img src="../../assets/images/icon-line.png" alt="" > -->
-                       <span class="ico-col" @click="showAll"></span>
-                       <span class="ico-colsp" @click="showBuy"></span>
-                       <span class="ico-cols" @click="showSell"></span>
-                       <!-- <img src="../../assets/images/icon-line2.png" alt="" @click="showBuy">
-                       <img src="../../assets/images/icon-line1.png" alt="" @click="showSell"> -->
-                   </div>
-                   <div class="concat-deep-wrap">
-                       <!-- <div class="concat-deep" @click="showDeep">合并深度<span>{{currentDeep}}</span><i  :class="{active:isActive}"></i></div> -->
-                       <transition name="fade">
-                            <div class="dropdown" v-if="isShow">
-                            <div @click="changeDeep">0.000001</div>
-                            <div @click="changeDeep">0.00001</div>
-                            <div @click="changeDeep">0.0001</div>
-                            </div>
-                        </transition>
-                   </div>
-            </div>
-            <div class="top-title list">
-              <div class="name">
-                    <span></span>
-                    <span>价格（{{zoneName}}）</span>
-                    <span>数量（{{marketInfo.name}})</span>
-                    <span>累计（{{marketInfo.name}}）</span>
-                </div>
-            </div>
-        <div class="list buy-list" v-if="buyList" ref="buyList" :class="{active:isSelect}">
-            
-            <dl v-if="BidList">
-                <dd  v-for="(item,index) in BidList.slice(0,11)" @click='$store.dispatch("trading/togglePrice", {currentPrice:item.price})'>
-                    <span>买{{index+1}}</span>
-                    <span>{{item.price}}</span>
-                    <span>{{item.count}}</span>
-                    <span>{{item.totalCount}}</span>
-                </dd>
-            </dl>
-        </div>
-        <div class="line" v-if="isShowLine"></div>
-          <div class="list sell-list" v-if="sellList" ref="sellList" :class="{active:isSelect_}">
-            <dl v-if="AskList">
-                <dd  v-for="(item,index) in AskList.slice(0,11)" @click='$store.dispatch("trading/togglePrice", {currentPrice:item.price})'>
-                    <span>卖{{index+1}}</span>
-                    <span>{{item.price}}</span>
-                    <span>{{item.count}}</span>
-                    <span>{{item.totalCount}}</span>
-                </dd>
-            </dl>
-        </div>
-<!--         <div class="list-bottom">
-           <span :class="{'ico-uos':isShow,'ico-downs':isShow1}"></span> <span class="left" :class="{red:isShow1,green:isShow}"></span><span class="right" >&nbsp;≈&nbsp;<i>8000.12 </i>CNY</span><span></span>
-           <router-link to="/BuyOrSellDetail" tag="span" class="more">更多</router-link>
-        </div> -->
+  <div class="buyOrSell-wrapper" ref="wrapper">
+    <div class="title">
+       <div class="wrap-img">
+         <span class="ico-col" @click="changeType(0)"></span>
+         <span class="ico-colsp" @click="changeType(1)"></span>
+         <span class="ico-cols" @click="changeType(2)"></span>
+       </div>
     </div>
+    <div class="top-title list">
+      <div class="name">
+        <span></span>
+        <span>价格（{{zoneName}}）</span>
+        <span>数量（{{marketInfo.name}})</span>
+        <span>累计（{{marketInfo.name}}）</span>
+      </div>
+    </div>
+    <div v-if="showType != 2" class="list buy-list" :class="{ 'active reverse': showType == 1}">
+      <dl v-if="BidList">
+        <dd v-for="(item, index) in BidList.slice(0, maxNum)" @click='togglePrice(item.price)'>
+          <span>买{{ index + 1 }}</span>
+          <span>{{ item.price }}</span>
+          <span>{{ item.count }}</span>
+          <span>{{ item.totalCount }}</span>
+        </dd>
+      </dl>
+    </div>
+    <div v-if="showType == 0" class="line"></div>
+      <div v-if="showType != 1" class="list sell-list" :class="{ active: showType == 2}">
+        <dl v-if="AskList">
+          <dd v-for="(item, index) in AskList.slice(0, maxNum)" @click='togglePrice(item.price)'>
+            <span>卖{{ index + 1 }}</span>
+            <span>{{ item.price }}</span>
+            <span>{{ item.count }}</span>
+            <span>{{ item.totalCount }}</span>
+          </dd>
+        </dl>
+    </div>
+  </div>
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
@@ -62,81 +44,32 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
-         websock: null,
-      name: "BuySell",
-      isShow: false,
-      isActive: false,
-      isSelect:false,
-      isSelect_:false,
-      sellList:true,
-      buyList:true,
-      currentDeep: 0.000001,
-      isShow:false,
-      isShow1:false,
-      buyLists:[],
-      sellLists:[],
-      buyListsAll:[],
-      sellListsAll:[],
-      isShowLine:true
+      showType: 0, // 默认展示全部, 1: 买单，2: 卖单
+      maxNum: 11,
     };
   },
   
   mounted () {
-    // console.log(this.$store.state.tradingList,'+++++(((((9999999h哈哈哈哈哈哈我是99999')
-     this.token = localStorage.getItem("token")
-     if(this.token!==null){
-       this.$refs.wrapper.style.height='700px'
+     this.token = localStorage.getItem('token');
+     if(this.token !== null){
+       this.$refs.wrapper.style.height = '700px'
      }
   },
+  watch: {
+    showType() {
+      this.maxNum = this.showType == 0 ? 11 : 50;
+    }
+  },
   computed: {
-    ...mapState("trading", [
-      "AskList",
-      "BidList"
-    ]),
-    ...mapState("common",[
-        "tradingList"
-    ]
-    ),
-    ...mapState(["zoneName", 'marketInfo'])
+    ...mapState('trading', ['AskList', 'BidList']),
+    ...mapState(['zoneName', 'marketInfo'])
   },
   methods: {
-
-    showDeep() {
-      this.isShow = !this.isShow;
-      this.isActive = !this.isActive;
+    togglePrice(currentPrice) {
+      this.$store.dispatch('trading/togglePrice', { currentPrice })
     },
-    changeDeep(e) {
-      this.currentDeep = e.target.innerText;
-      this.isShow = false;
-    },
-        showBuy(){
-  console.log(AskList)
-        this.buyList=true
-        this.sellList=false
-        this.isSelect=true
-
-        this.buyLists=this.buyListsAll.slice(0,23)
-        this.isShow1=false
-        this.isShowLine=false
-
-    },
-    showSell(){
-     this.sellLists=this.sellListsAll.slice(0,23)
-        this.buyList=false
-        this.sellList=true
-        this.isSelect_=true
-        this.isShow1=true
-        this.isShowLine=false
-    },
-    showAll(){
-      this.isSelect=false
-      this.isSelect_=false
-       this.sellLists=this.sellListsAll.slice(0,11)
-             this.buyLists=this.buyListsAll.slice(0,11)
-        this.buyList=true
-        this.sellList=true
-        this.isShowLine=true
-
+    changeType(showType) {
+      this.showType = showType;
     },
   }
 }
@@ -237,7 +170,6 @@ export default {
     }
   }
   .list {
-    margin-bottom: 25px;
 
     .name {
       color: #e4e5e7;
@@ -281,7 +213,13 @@ export default {
     }
   }
   .buy-list {
-    height: 40%;
+    height: 42%;
+    overflow-y: auto;
+    &.reverse {
+      dl {
+        flex-direction: column;
+      }
+    }
     dl {
       display: flex;
       flex-direction: column-reverse;
@@ -292,18 +230,19 @@ export default {
       }
     }
     &.active {
-      height: 84%;
+      height: 90%;
     }
   }
   .sell-list {
     height: 40%;
+    overflow-y: auto;
     dd {
       span:first-child {
         color: #ff7758;
       }
     }
     &.active {
-      height: 84%;
+      height: 90%;
     }
   }
   .list-bottom {
