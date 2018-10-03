@@ -57,6 +57,7 @@ const apiList = [
   '/trade/trade/getUserTotalProperty', //计算用户资产总和
   '/trade/trade_coin_pair/tradeCoinPairMaxMinPrice', //
   '/payment/userProperty/userPropertylistByUserId',//我的资产
+  '/user/user/saveIdtyImage'
 ];
 
 let api = {}

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title"  v-if="isShow"><span>身份认证</span></div>
-        <div class="title"  v-if="!isShow"><span>证件上传</span></div>
+        <div class="title"  v-if="isShow1"><span>证件上传</span></div>
         <div v-if="isAssess">
           <div class="identity-wrapper" v-if="isShow"> 
             <div class="form-wrapper">
@@ -56,25 +56,26 @@
             </div>
         </div>
 
-               <div class="upload-wrapper" v-if="!isShow"><!--v-if="!isShow"-->
+               <div class="upload-wrapper" v-if="isShow1"><!--v-if="!isShow"-->
           
             <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
             <div class="identity-wrapper" v-if="showImg">  <!-- v-if="showImg"-->
-              <div class="content">
+              <div class="content" >
                 <div  class="content-item">
-                    <div class="default-wrapper">
+                    <div class="default-wrapper" >
                      <!-- 
                         <i class="plus-icon"  v-if="!file" ></i><span>身份证正面</span>
                         <input type="file" class="file" @change="uploadChange"/> -->
-                      <el-upload
+                      <el-upload 
                         class="avatar-uploader"
                         action="/user/oss/upload"
                         :show-file-list="false"
-                        :on-success="() => {}"
+                        :on-success="handleSuccess1"
                         :before-upload="() => {}">
-                        <img v-if="imgUrl" :src="imgUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <img v-if="imgUrl1" :src="imgUrl1" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>身份证正面</span>
                       </el-upload>
+                      
                     </div>
                     
                     <div class="case">示例</div>
@@ -94,7 +95,18 @@
             </div>
             <div class="content content_">
                 <div  class="content-item">
-                     <div  class="default-wrapper"><i class="plus-icon"></i><span>身份证反面</span></div>
+                     <div  class="default-wrapper">
+                   
+                        <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="handleSuccess2"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl2" :src="imgUrl2" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>身份证反面</span>
+                      </el-upload>
+                    </div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/sfzf.png" alt="">
@@ -103,10 +115,21 @@
                 </div>
                
             </div>
-            <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
+           
             <div class="content content_">
                 <div class="content-item">
-                    <div  class="default-wrapper"><i class="plus-icon"></i><span>手持身份证正面和个人签字</span></div>
+                    <div  class="default-wrapper">
+                      <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="handleSuccess3"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl3" :src="imgUrl3" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>手持身份证正面和个人签字</span>
+                      </el-upload>
+                      
+                    </div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/scsfz.png" alt="">
@@ -119,7 +142,18 @@
             <div class="passport-wrapper" v-if="!showImg">
               <div class="content">
                 <div  class="content-item">
-                    <div class="default-wrapper"><i class="plus-icon"></i><span>护照正面</span></div>
+                    <div class="default-wrapper">
+                      <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="handleSuccess4"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl4" :src="imgUrl4" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>护照正面</span>
+                      </el-upload>
+                      
+                      </div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/hz.png" alt="">
@@ -129,7 +163,17 @@
             </div>
             <div class="content">
                 <div  class="content-item">
-                    <div class="default-wrapper"><i class="plus-icon"></i><span>护照反面</span></div>
+                    <div class="default-wrapper">
+                       <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="handleSuccess5"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl5" :src="imgUrl5" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>护照反面</span>
+                      </el-upload>
+                      </div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/sfzf.png" alt="">
@@ -139,7 +183,18 @@
             </div>
             <div class="content content_">
                 <div class="content-item">
-                    <div  class="default-wrapper"><i class="plus-icon"></i><span>手持护照正面和个人签字</span></div>
+                    <div  class="default-wrapper">
+                      <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="handleSuccess6"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl6" :src="imgUrl6" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i><span>手持护照正面和个人签字</span>
+                      </el-upload>
+                  
+                    </div>
                     <div class="case">示例</div>
                     <div  class="default-wrapper">
                         <img src="@/assets/images/scsfz.png" alt="">
@@ -149,13 +204,20 @@
                 
             </div>
             </div>
-             <div  class="bottom-btn" >确定</div>
+             <div  class="bottom-btn"  @click="confirm">确定</div>
         </div>
         </div>
 
-      <!-- <div  class="wrapper">
-          <div class="text-o">恭喜你通过实名认证</div>
-           <el-form ref="form" :model="form" label-width="80px" >
+      <div  class="wrapper" v-if="assess">
+         <img src="@/assets/images/assess.png" alt="">
+          <div class="text-o">
+            <span>您提交的个人信息已经通过审核</span> 
+            <div class="tips">您已成功成为ib.top交易平台的实名认证，并拥有平台提币的资质。为构建健康、和谐、安全的平台环境，请您务必遵守《ibtop.com渠道服务商服务协议》</div>
+          <div  class="bottom-btn" ><router-link to="/transaction" tag="div">去交易</router-link></div>
+
+          </div>
+          
+           <!-- <el-form ref="form" :model="form" label-width="80px" >
               <el-form-item label="姓名" >
                   <el-input v-model="form.cardName" disabled ></el-input>
               </el-form-item>
@@ -168,9 +230,23 @@
               <el-form-item label="证件号码" >
                   <el-input v-model="form.cardNum" disabled></el-input>
               </el-form-item>
-           </el-form>
-      </div> -->
- 
+           </el-form> -->
+      </div>
+       <div  class="wrapper" v-if="assessing">
+         <img src="@/assets/images/assessing.png" alt="">
+          <div class="text-o">
+            <span>您的实名认证申请正在审核中</span> 
+            <div class="tips">您提供的实名认证信息需人工审核，正在审核中，请您耐心等待</div>
+          </div>
+      </div>
+      <div  class="wrapper" v-if="noAssess">
+         <img src="@/assets/images/no-assess.png" alt="">
+          <div class="text-o">
+            <span>很遗憾，您的实名认证申请未通过审核</span> 
+            <div class="tips">由于您提供的申请信息不符合实际，实名认证申请未通过审核，请核实信息后重新提交申请。</div>
+          <div  class="bottom-btn" @click="resubmit">重新提交申请</div>
+          </div>
+      </div>
     </div>
 </template>
 
@@ -178,17 +254,29 @@
 export default {
   data() {
     return {
-      imgUrl:'',
+      assess:false,//实名认证是通过
+      fontAddress:'',//正面照片
+      backAddress:'',//反面照片
+      handAddress:'',//手持
+      imgUrl1:'',
+      imgUrl2:'',
+       imgUrl3:'',
+      imgUrl4:'',
+      imgUrl5:'',
+      imgUrl6:'',
       	file:'',
       showImg:true,
         radio: '1',
       isShow: true,
+      isShow1: false,
       countryType:'',
       reginVal:1,
       type:0,
       realName:'',
       show:false,
       isAssess:true,
+      assessing:false,
+      noAssess:false,
       imgData: {
             accept: 'image/gif, image/jpeg, image/png, image/jpg',
        },
@@ -208,40 +296,28 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    //上传证件
-    uploadChange(event){
-      
-            let reader =new FileReader();  
-            let img1=event.target.files[0];
-            this.file=img1
-            console.log(img1,'上传文件')
-            let type=img1.type;//文件的类型，判断是否是图片  
-            let size=img1.size;//文件的大小，判断图片的大小  
-            if(this.imgData.accept.indexOf(type) == -1){  
-                this.$message({
-					          message: '请选择正确的图片格式！',
-					          type: 'warning'
-		        		});
-                return false;  
-            }  
-            if(size>3145728){  
-                 this.$message({
-					          message: '请选择3M以内的图片！',
-					          type: 'warning'
-		        		});
-                return false;  
-            }  
-           
-            let form = new FormData();   
-       
-            form.append('file',img1);  
-console.log(img1,'98+++++++++++')
-
-            this.$api.upload({file:img1},'POST').then(res=>{
-              console.log(res,'99999我是上传')
-            })
- 
+    resubmit(){
+      this.isShow=true
     },
+     handleSuccess1(file){
+      this.imgUrl1=file.datas
+    },
+      handleSuccess2(file){
+      this.imgUrl2=file.datas
+    },
+       handleSuccess3(file){
+      this.imgUrl3=file.datas
+    },
+       handleSuccess4(file){
+      this.imgUrl4=file.datas
+    },
+       handleSuccess5(file){
+      this.imgUrl5=file.datas
+    },
+       handleSuccess6(file){
+      this.imgUrl6=file.datas
+    },
+
     //获取用户信息
       getUserInfo(){
             this.$api.getValidateById().then(res=>{
@@ -249,12 +325,34 @@ console.log(img1,'98+++++++++++')
                 var content =res.datas
              this.form.cardName=content.user_real_name
              this.form.cardNum=content.document_id
+             console.log(content.validate,'content.validate')
              if(content.document_type==1){
                this.form.cardType='身份证'
              }
              if(content.document_type==2){
                this.form.cardType='护照'
              }
+             if(content.validate==0){
+               this.noAssess=true
+                this.isShow=false
+                this.isShow1=false
+             }
+             if(content.validate==1){
+               this.assess=true
+                this.isShow=false
+                this.isShow1=false
+             }
+             if(content.validate==2){
+                this.isShow=false
+                this.isShow1=false
+               this.assessing=true
+             }
+            if(content.validate==null){
+               this.isShow=true
+                this.isShow=true
+                this.isShow1=false
+             }
+            
             //  this.form.cardType=
             /*    if(content.validate==1){
                     this.isAssess=false
@@ -295,7 +393,6 @@ console.log(img1,'98+++++++++++')
        console.log(val)
     },
     next() {
-        console.log(this.type,'type00000')
       var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
       if(this.show){
         if(this.form.passportId==''){
@@ -359,6 +456,7 @@ console.log(img1,'98+++++++++++')
                 type: "success"
                 }); 
                this.isShow=false
+               this.isShow1=true
            }
            else{
               this.$message({
@@ -381,6 +479,7 @@ console.log(img1,'98+++++++++++')
                 type: "success"
                 }); 
                this.isShow=false
+               this.isShow1=true
            }
          })
       }
@@ -389,6 +488,39 @@ console.log(img1,'98+++++++++++')
   
       // this.isShow=false
       // this.$refs.title.innerHTML="证件上传"
+    },
+    //确认上传图片
+    confirm(){
+      if(this.reginVal==1){
+        this.fontAddress=this.imgUrl1
+        this.backAddress=this.imgUrl2
+        this.handAddress=this.imgUrl3
+        this.countryType=1
+        this.document_id=this.form.number
+        this.document_type=1
+      }
+      else{
+        this.fontAddress=this.imgUrl4
+        this.backAddress=this.imgUrl5
+        this.handAddress=this.imgUrl6
+        this.document_id=this.form.passportId
+        this.document_type=2
+      }
+      this.$api.saveIdtyImage({
+        id_card_front:this.fontAddress,
+        id_card_back:this.backAddress,
+        id_card_hand:this.handAddress,
+        user_real_name:this.realName,
+        country_id:this.countryType,
+        document_id:this.document_id,
+        document_type:this.document_type,
+        }).then(res=>{
+          if(res.message=='success'){
+            this.isShow1=false
+            this.assessing=true
+          }
+          
+      })
     }
   }
 };
@@ -397,11 +529,31 @@ console.log(img1,'98+++++++++++')
 .el-select {
     width: 50%!important;
 }
+.el-upload.el-upload--text,.avatar-uploader{height: 100%;    width: 100%;}
 </style>
 
 <style lang="less" scoped>
+.el-icon-plus{    font-size: 25px;
+    color: #fff;
+    line-height: 200px;}
  .file{width: 100%;position:absolute;left: 0;top: 0;bottom: 0;opacity: 0;}
-.wrapper{padding: 0 20px}
+.wrapper{    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 900px;
+    .tips{font-size: 12px;
+    color: #FFFFFF;
+    line-height: 28px;
+    opacity: 0.5;}
+    .bottom-btn{
+background: #54585e;height: 40px;    font-size: 14px;}
+   
+    .text-o{    width: 453px;
+    margin-left: 105px;
+     span{    font-size: 20px;
+    margin-bottom: 13px;
+    display: block;}}
+    }
 .plus-icon {
   display: inline-block;
   position: absolute;

@@ -277,7 +277,13 @@ export default {
            this.finalfee=''
            this.realNum=''
         }
-        if(this.coinNum>this.ableNum&&his.coinNum>this.singleMax){
+        if(this.coinNum>this.ableNum){
+          this.$message({
+            message: "提币数量超出可用额度",
+            type: "warning"
+          });
+        }
+        if(this.coinNum>this.ableNum&&this.coinNum>this.singleMax){
           this.$message({
             message: "提币数量超出可用额度",
             type: "warning"
@@ -287,7 +293,14 @@ export default {
     //确定提币
     dialogAudit() {},
     carrycoins() {
-      if ( this.form_address.address && this.coinNum && this.realNum && this.finalfee) {
+      if(this.coinNum>this.ableNum){
+          this.$message({
+            message: "提币数量超出可用额度",
+            type: "warning"
+          });
+        }
+      else{
+           if ( this.form_address.address && this.coinNum && this.realNum && this.finalfee) {
         this.dialogAuditing = true;
       } else {
         if (this.realNum == "") {
@@ -315,9 +328,12 @@ export default {
           });
         }
       }
+      }
+   
     },
     //最终确定提币
     confirmFull() {
+      
       if (this.form.password && this.form.code) {
         this.$api
           .withdraw({

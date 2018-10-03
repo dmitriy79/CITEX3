@@ -55,7 +55,7 @@
             >
               <div class="coin-type">{{item.name}}</div>
               <div class="price">{{item.deal_price}}</div>
-              <div class="rate" :class="{ red: item.increase, green: !item.increase}">
+              <div class="rate" :class="{ red: !item.increase, green: item.increase}">
                 {{item.increase ? '+' : '-'}}{{item.increase_24H}}%
               </div>
               <div class="num">{{item.amount_24H}}</div>

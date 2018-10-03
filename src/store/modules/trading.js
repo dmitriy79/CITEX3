@@ -371,6 +371,7 @@ const mutations = {
             url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
             data: 'sendParams',
             success: (res) => {
+                console.log(res,'websocketKline====>res')
                 var currentkline = []
                 if (res.list.length) {
                     res.list.forEach(function(bar) {
