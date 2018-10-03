@@ -16,7 +16,7 @@ const state = {
     historyList: [],
     currentPrcie: '', //交易区当前价格
     klineHistory: null,
-    klineCurrent: {},
+    klineCurrent: null,
     step: '1min',
     curbuyPrice: '',
     cursellPrice: '',
@@ -356,18 +356,18 @@ const mutations = {
                     });
                 });
             }
+            state.klineCurrent = kline[0]
             console.log('k line data', kline)
             state.klineHistory = kline;
         });
         function guid() {    
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
-                   var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
-                 return v.toString(16);   
-            
-            
-         });}
-       var uuid=guid()
-       new webSocket({
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
+                return v.toString(16);   
+            });
+        }
+        var uuid = guid();
+        new webSocket({
             url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
             data: 'sendParams',
             success: (res) => {

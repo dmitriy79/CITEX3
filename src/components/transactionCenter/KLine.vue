@@ -640,6 +640,7 @@ export default {
             description: "", //商品说明
             session: "24x7", //商品交易时间
             type: "bitcoin", //仪表的可选类型
+            pricescale: 100000000,
             "exchange-traded": "myExchange",
             // "exchange-listed": "myExchange",
             has_intraday: true, //布尔值显示商品是否具有日内（分钟）历史数据, 如果它为false，则当图表中的该商品处于活动状态时，日内周期的所有按钮将被禁用。 如果设置为true，则由datafeed直接提供的所有周期必须在intraday_multipliers数组中设定。
@@ -742,6 +743,7 @@ export default {
         if (!Object.keys(this_vue.klineCurrent).length === 0) {
           onRealtimeCallback(this_vue.klineCurrent)
           console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
+          onRealtimeCallback(this_vue.klineCurrent)
         }
 
         /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
