@@ -63,12 +63,18 @@
               <div class="content">
                 <div  class="content-item">
                     <div class="default-wrapper">
-                    <img v-if="file" :src="imgUrl"/>
-                     
+                     <!-- 
                         <i class="plus-icon"  v-if="!file" ></i><span>身份证正面</span>
-                        <input type="file" class="file" @change="uploadChange"/>
-              
-                      
+                        <input type="file" class="file" @change="uploadChange"/> -->
+                      <el-upload
+                        class="avatar-uploader"
+                        action="/user/oss/upload"
+                        :show-file-list="false"
+                        :on-success="() => {}"
+                        :before-upload="() => {}">
+                        <img v-if="imgUrl" :src="imgUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
                     </div>
                     
                     <div class="case">示例</div>

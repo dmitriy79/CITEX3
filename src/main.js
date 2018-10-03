@@ -17,7 +17,8 @@ import {
 	Button,
 	Radio,
 	RadioGroup,
-	Dialog
+	Dialog,
+	Upload
 } from 'element-ui'
 
 import App from './App'
@@ -61,6 +62,7 @@ Vue.use(Button)
 Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Dialog);
+Vue.use(Upload);
 
 // Vue.use(MessageBox)
 Vue.prototype.$message = Message
