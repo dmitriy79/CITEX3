@@ -6,10 +6,11 @@
     <section v-else>
       <home-swiper :list="banner"></home-swiper>
       <div class="container notice">
-        <div class="notice-title">公告：</div>
-        <transition name="fade">
+        <a class="notice-title" href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">公告：IB.TOP上线公告</a>
+
+        <!-- <transition name="fade">
           <a @click="noticeDetail" v-if="official.length>0">{{official[officialIndex].title}}</a>
-        </transition>
+        </transition> -->
         <div class="notice-more">
           <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">更多</a>
         </div>
@@ -147,7 +148,8 @@ html {
     }
   }
   &-title {
-    width: 60px;
+    // width: 60px;
+    cursor: pointer;
     font-weight: 800;
     font-size: 13px;
   }

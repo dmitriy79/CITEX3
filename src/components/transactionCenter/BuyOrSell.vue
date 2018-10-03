@@ -110,7 +110,7 @@ export default {
       this.isShow = false;
     },
         showBuy(){
-  
+  console.log(AskList)
         this.buyList=true
         this.sellList=false
         this.isSelect=true
@@ -118,6 +118,7 @@ export default {
         this.buyLists=this.buyListsAll.slice(0,23)
         this.isShow1=false
         this.isShowLine=false
+
     },
     showSell(){
      this.sellLists=this.sellListsAll.slice(0,23)
