@@ -24,8 +24,8 @@
                       <td>{{item.amount}}</td>
                       <td>{{item.leftAmount}}</td>
                       <td v-if="active==0">
-                        <span v-if="isBuy(item.userId)" class="button-min" @click='$store.dispatch("trading/canceOrder", { bidOrderId: item.id })'>撤单</span>
-                        <span v-else class="button-min" @click='$store.dispatch("trading/canceSell", { askOrderId: item.id })'>撤单</span>
+                        <span v-if="item.bidOrSell == 0" class="button-min" @click='$store.dispatch("trading/canceSell", { askOrderId: item.id })'>撤单</span>
+                        <span v-else class="button-min" @click='$store.dispatch("trading/canceOrder", { bidOrderId: item.id })'>撤单</span>
                       </td>
                     </tr>
                 </table>
