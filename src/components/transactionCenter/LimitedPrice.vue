@@ -150,6 +150,9 @@ export default {
     buyPrice(newVal, oldVal) {
       if (coinReg.test(newVal)) {
         this.totalAmout('buy');
+        this.buyPrice = parseFloat(newVal);
+      } else if (newVal == '') {
+        this.buyPrice = 0;
       } else {
         this.buyPrice = oldVal;
       }
@@ -157,6 +160,9 @@ export default {
     buyNums(newVal, oldVal) {
       if (numReg.test(newVal)) {
         this.totalAmout('buy');
+        this.buyNums = parseFloat(newVal);
+      } else if (newVal == '') {
+        this.buyNums = 0;
       } else {
         this.buyNums = oldVal;
       }
@@ -164,6 +170,9 @@ export default {
     sellPrice(newVal, oldVal) {
       if (coinReg.test(newVal)) {
         this.totalAmout('sell');
+        this.sellPrice = parseFloat(newVal);
+      } else if (newVal == '') {
+        this.sellPrice = 0;
       } else {
         this.sellPrice = oldVal;
       }
@@ -171,6 +180,9 @@ export default {
     sellNums(newVal, oldVal) {
       if (numReg.test(newVal)) {
         this.totalAmout('sell');
+        this.sellNums = parseFloat(newVal);
+      } else if (newVal == '') {
+        this.sellNums = 0;
       } else {
         this.sellNums = oldVal;
       }

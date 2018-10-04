@@ -240,7 +240,6 @@ export default {
   methods: {
     //撤销买卖单
     cancel(id,direction){
-      debugger;
       if(direction== 1){
         this.$api.cancelBuy({bidOrderId:id},'POST').then(res=>{
           console.log(res,'cancelBuy')
