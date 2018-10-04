@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+import valid from '@/utils/valid';
 export default {
   data() {
     return {

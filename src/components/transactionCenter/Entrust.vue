@@ -65,9 +65,6 @@ export default {
       this.$store.dispatch('trading/toggleOrder', {
         type: index + 1
       });
-    },
-    isBuy(userId) {
-      return userId != localStorage.getItem('userId');
     }
   },
   created(){
