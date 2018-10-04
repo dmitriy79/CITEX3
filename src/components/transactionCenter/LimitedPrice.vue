@@ -150,7 +150,7 @@ export default {
     buyPrice(newVal, oldVal) {
       if (coinReg.test(newVal)) {
         this.totalAmout('buy');
-        this.buyPrice = parseFloat(newVal);
+        this.buyPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
         this.buyPrice = 0;
       } else {
@@ -160,7 +160,7 @@ export default {
     buyNums(newVal, oldVal) {
       if (numReg.test(newVal)) {
         this.totalAmout('buy');
-        this.buyNums = parseFloat(newVal);
+        this.buyNums = this.toNumber(newVal);
       } else if (newVal == '') {
         this.buyNums = 0;
       } else {
@@ -170,7 +170,7 @@ export default {
     sellPrice(newVal, oldVal) {
       if (coinReg.test(newVal)) {
         this.totalAmout('sell');
-        this.sellPrice = parseFloat(newVal);
+        this.sellPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
         this.sellPrice = 0;
       } else {
@@ -180,7 +180,7 @@ export default {
     sellNums(newVal, oldVal) {
       if (numReg.test(newVal)) {
         this.totalAmout('sell');
-        this.sellNums = parseFloat(newVal);
+        this.sellNums = this.toNumber(newVal);;
       } else if (newVal == '') {
         this.sellNums = 0;
       } else {
@@ -207,7 +207,12 @@ export default {
     ...mapState(["zoneName", 'marketInfo']),
   },
   methods: {
-
+    toNumber(s) {
+      s = s.toString();
+      s = s.replace(/^0+\./,'0.');
+      s = s.replace(/^0+([0-9])/,'$1');
+      return s;
+    },
     selectPercentage(e) {
       let target = e.target.dataset
       console.log(target, '====00000target')
