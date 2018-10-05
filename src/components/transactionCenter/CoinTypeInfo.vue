@@ -143,6 +143,8 @@ export default {
         color: #94979b;
         font-size: 12px;
         line-height: 26px;
+        height: 286px;
+        overflow-y: auto;
       }
       .more {
         font-size: 12px;

@@ -184,6 +184,7 @@ const actions = {
     toggleOrder({ commit, state, rootState }, params) {
         commit('listBidOrders', {
             type: params.type,
+            size: params.size,
             tradeCoinPairId: rootState.marketInfo.id
         })
     }
@@ -197,7 +198,7 @@ const mutations = {
             type, tradeCoinPairId,
             userId: userId,
             pageNum: 1,
-            pageSize: 7
+            pageSize: params.size || 10
         }).then(res => {
             console.log(res.datas,'listBidOrders====>')
             state.orderData = res.datas
@@ -466,17 +467,6 @@ const mutations = {
         }).catch(error => {
             console.log("error===>", error)
         })
-    },
-    //撤销挂单
-    canceOrder(state, params) {
-        api.cancelBuy(params, 'POST').then(res => {
-            // console.log("canceOrder====>", res)
-        })
-    },
-    canceSell(state, params) {
-        api.cancelSell(params, 'POST').then(res => {
-
-        });
     },
     //交易记录
     orderRecord(state, params) {

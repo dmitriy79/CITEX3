@@ -56,7 +56,7 @@
               <div class="coin-type">{{item.name}}</div>
               <div class="price">{{item.deal_price}}</div>
               <div class="rate" :class="{ red: !item.increase, green: item.increase}">
-                {{item.increase ? '+' : '-'}}{{item.increase_24H}}%
+                {{item.increase ? '+' : '-'}}{{item.increase_24H | decimal(2)}}%
               </div>
               <div class="num">{{item.amount_24H}}</div>
               <div @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id,collect:item.collect?'0':'1'})"

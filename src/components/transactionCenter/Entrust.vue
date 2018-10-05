@@ -7,7 +7,7 @@
             <dl class="entrust-panel" style="display:block" v-if="this.token">
                 <table>
                   <tr>
-                      <th>创建日期</th>
+                      <th>时间</th>
                       <th>方向</th>
                       <th>买单状态</th>
                       <th>价格（{{zoneName}}）</th>
@@ -16,7 +16,7 @@
                       <th v-if="this.active==0">操作</th>
                     </tr>
                     <tr v-for='item of orderData.list'>
-                      <td>{{item.createTime|dateTime-format}}</td>
+                      <td>{{item.updatatime | dateTime-format }}</td>
                       <!-- <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td> -->
                       <td>{{item.bidOrSell==0?'卖':'买'}}</td>
                       <td>{{status[item.matchStatus]}}</td>
@@ -24,8 +24,7 @@
                       <td>{{item.amount}}</td>
                       <td>{{item.leftAmount}}</td>
                       <td v-if="active==0">
-                        <span v-if="item.bidOrSell == 0" class="button-min" @click='$store.dispatch("trading/canceSell", { askOrderId: item.id })'>撤单</span>
-                        <span v-else class="button-min" @click='$store.dispatch("trading/canceOrder", { bidOrderId: item.id })'>撤单</span>
+                        <span class="button-min" @click='cancelOrder(item.id, item.bidOrSell)'>撤单</span>
                       </td>
                     </tr>
                 </table>
@@ -54,7 +53,7 @@ export default {
         "未成交",
         "部分成交",
         "完全成交",
-        "用户撤单”",
+        "用户撤单",
         "系统撤单",
       ]
     };
@@ -63,8 +62,42 @@ export default {
     toggleOrder(index){
       this.active = index;
       this.$store.dispatch('trading/toggleOrder', {
-        type: index + 1
+        type: index + 1,
+        size: index == 0 ? 50 : 10
       });
+    },
+    cancelOrder(id, direction) {
+      if (direction == 1) {
+        this.$api.cancelBuy({ bidOrderId: id }, 'POST').then(res => {
+          if (res.message == '成功') {
+            this.$message({
+              message: '撤销成功',
+              type: 'success'
+            });
+            this.toggleOrder(this.active);
+          } else {
+            this.$message({
+              message: res.message,
+              type: 'error'
+            });
+          }
+        });
+      } else {
+        this.$api.cancelSell({askOrderId:id},'POST').then(res=>{
+          if (res.message == '成功') {
+            this.$message({
+              message: '撤销成功',
+              type: 'success'
+            });
+            this.toggleOrder(this.active);
+          } else {
+            this.$message({
+              message: res.message,
+              type: 'error'
+            });
+          }
+        })
+      }
     }
   },
   created(){
@@ -139,6 +172,7 @@ table{
 .entrust-panel {
   display: none;
   height: 294px;
+  overflow-y: auto;
   tr {
     width: 100%;
   }

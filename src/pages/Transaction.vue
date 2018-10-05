@@ -15,7 +15,7 @@
                 </span>
                 <span class="rate" :class="{red:!marketInfo.increase}">
                   涨幅{{marketInfo.increase ? '+':'-'}}
-                  <i>{{marketInfo.increase_24H}}%</i>
+                  <i>{{marketInfo.increase_24H | decimal(2)}}%</i>
                 </span>
                 <!-- <span class="price-val">≈ <i>0000.43</i> CNY</span> -->
               </div>

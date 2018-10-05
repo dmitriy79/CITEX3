@@ -234,7 +234,7 @@ export default {
     }
   }
   .sell-list {
-    height: 40%;
+    height: 42%;
     overflow-y: auto;
     dd {
       span:first-child {
