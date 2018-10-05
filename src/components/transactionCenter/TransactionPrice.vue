@@ -7,7 +7,7 @@
                     <span>时间</span>
                 </div>
             <dl v-if="historyList">
-                <dd v-for="item in historyList">
+                <dd v-for="item in historyList" :class="'color' + item.bidAsk">
                     <span>{{item.dealPrice}}</span>
                     <span>{{item.dealAmount}}</span>
                     <span>{{item.dealTime | time-format}}</span>
@@ -70,9 +70,17 @@ export default {
     }
   dd {
     display: flex;
+    color: #9e9fa6;
+    &.color2 {
+      // 卖
+      color: #ff7758;
+    }
+    &.color1 {
+      // 买
+      color: #5dc176;
+    }
     span {
       font-size: 12px;
-      color: #9e9fa6;
       height: 26px;
       line-height: 26px;
     }

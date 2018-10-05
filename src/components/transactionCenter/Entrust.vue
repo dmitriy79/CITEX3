@@ -1,8 +1,11 @@
 <template>
     <div class="entrust-wrapper">
-        <ul class="tab-nav">
-            <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="toggleOrder(index)">{{item.name}}</li>
-        </ul>
+        <div class="tab-nav">
+          <ul>
+              <li v-for="(item,index) of navs"  :class="{active:active==index}" @click="toggleOrder(index)">{{item.name}}</li>
+          </ul>
+          <a class="more" href="/#/mine/entrust">更多委托</a>
+        </div>
         <div class="entrust-list" >
             <dl class="entrust-panel" style="display:block" v-if="this.token">
                 <table>
@@ -16,7 +19,7 @@
                       <th v-if="this.active==0">操作</th>
                     </tr>
                     <tr v-for='item of orderData.list'>
-                      <td>{{item.updatatime | dateTime-format }}</td>
+                      <td>{{item.updatetime | dateTime-format }}</td>
                       <!-- <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td> -->
                       <td>{{item.bidOrSell==0?'卖':'买'}}</td>
                       <td>{{status[item.matchStatus]}}</td>
@@ -156,6 +159,10 @@ table{
   background: #181f27;
   display: flex;
   margin-bottom: 6px;
+  ul {
+    display: flex;
+    flex: 1;
+  }
   li {
     line-height: 30px;
     padding: 0 13px;
@@ -166,6 +173,14 @@ table{
     &.active {
       background: #292f37;
       color: #ffffff;
+    }
+  }
+  .more {
+    font-size: 12px;
+    line-height: 30px;
+    margin-right: 10px;
+    &:hover {
+      color: #fff;
     }
   }
 }
