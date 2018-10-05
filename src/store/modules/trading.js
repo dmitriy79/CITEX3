@@ -35,7 +35,7 @@ const actions = {
     }, arg) {
 
         const { id, coinId } = rootState.marketInfo;
-        console.log(rootState.marketInfo)
+        console.log(rootState.marketInfo,'marketInfo=====>')
         // commit("initMarketInfo",rootState.tradingList)
         commit("getAssets", {
             coinId: coinId,
@@ -59,6 +59,11 @@ const actions = {
             id: id,
             step: state.step
         }) //历史k线
+    },
+    //k线图
+    getKline({ commit, rootState, state }, params){
+        state.step=params.resolution
+         commit('getKline',{id: rootState.marketInfo.id,step:state.step})  //币种
     },
     tradingBuy({
         commit,
@@ -261,7 +266,6 @@ const mutations = {
         state,
         rootState
     }, params) {
-        console.log(params, '-----00000000000+++++++')
         api.tradeCoinPairMaxMinPrice({
             tradeCoinPairId: params.tradeCoinPairId,
             price: params.obj.Nums
@@ -345,7 +349,7 @@ const mutations = {
             tradeCoinPariId: id
         }).then(res => {
             var kline = []
-            if (res.datas.list.length) {
+            if (res.datas.list.length>0) {
                 res.datas.list.forEach(function(bar) {
                     kline.push({
                         time: Number(bar.startTime),

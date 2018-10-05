@@ -273,6 +273,7 @@ export default {
 .transaction-wrap {
   background: #3b4249;
   padding: 8px 0 9px 17px;
+      min-width: 1300px;
   .transaction-top {
     overflow: hidden;
     display: flex;

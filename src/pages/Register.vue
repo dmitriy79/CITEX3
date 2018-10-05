@@ -15,10 +15,10 @@
               <input type="text" placeholder="请输入邮箱验证码" v-model="code">
             </div>
             <div class="input-wrapper">
-              <input type="password" placeholder="请输入密码" v-model="passWord" v-on:blur="blurPassword">
+              <input type="password" placeholder="请输入密码" v-model="passWord" >
             </div>
             <div class="input-wrapper">
-              <input type="password" placeholder="请输入确认密码" v-model="confirmPassword" v-on:blur="blurConfirmPassword">
+              <input type="password" placeholder="请输入确认密码" v-model="confirmPassword" >
             </div>
             <div id="register_yanzhengma" class="register-yzm"></div>
           </div>
@@ -109,6 +109,8 @@ export default {
               this.content = '获取邮箱验证码'
               this.wait = 60
               this.canClick = true
+              this.$refs.sendEmail.removeAttribute('disabled')
+            this.$refs.sendEmail.style.cursor = "pointer"
             }
           }, 1000)
         }
@@ -172,19 +174,43 @@ export default {
         });
         return;
       }
-
+      if(this.confirmPassword==''){
+        this.$message({
+          message: '确认密码不能为空',
+          type: 'warning'
+        });
+        return;
+      }
+      if(this.confirmPassword!==this.passWord){
+        this.$message({
+          message: '两次输入的密码不一致',
+          type: 'warning'
+        });
+        return;
+      }
       this.blurConfirmPassword()
-
-      if(this.email&&this.code&&this.inviteCode&&this.$refs.isAgree.className){
+      if(localStorage.getItem('registerYanzhengma')==''){
+         this.$message({
+          message: '请选择滑动验证码',
+          type: 'warning'
+        });
+      }
+      console.log(localStorage.getItem('registerYanzhengma'),'222')
+      if(this.email!==''&&this.code!==''&&this.$refs.isAgree.className!==''){
               this.$api.register({email: this.email,
           passWord: this.passWord,
           code: this.code,
-          inviteCode: this.inviteCode,
           NECaptchaValidate: localStorage.getItem('registerYanzhengma')}).then(res=>{
             var returnData = res.message
              if (returnData == '成功') {
               this.$router.push({ path: "/Login" });
+              return
             }
+             this.$message({
+          message: returnData,
+          type: 'warning'
+        });
+        this.loadYanzhengma()
           })
       }
     }
@@ -203,7 +229,7 @@ export default {
 
 .register {
   background: #292f37;
-  padding:100px 0;
+  padding:60px 0;
   display: flex;
   align-items: center;
   .container{

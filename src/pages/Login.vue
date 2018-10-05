@@ -15,7 +15,7 @@
 
       <div class="input-bar">
             <!-- <a class="find-password">忘记密码？</a> -->
-             <router-link to="/FindPassword" tag="a" class="find-password">忘记密码？</router-link>
+             <router-link to="/find-password" tag="a" class="find-password">忘记密码？</router-link>
             <router-link to="/register" tag="a">注册</router-link>
           </div>          
           <div class="button" @click="login">登录</div>
@@ -130,7 +130,7 @@
             this.$router.push({
               path: "/"
             });
-            window.location.reload();
+            // window.location.reload();
           }
         })
       }
@@ -147,8 +147,8 @@ html,body{
 }
 
 .login {
-  padding:60px 0;
   background-color:#292f37 !important;
+    padding:60px 0;
   .button {
     width: 100%;
   }
@@ -161,9 +161,10 @@ html,body{
     width: 400px;
     h1{
       color:lighten(#292F37,80%);
-      font-size:32px;
+      font-size:34px;
       color:#fff;
-      line-height:4;
+      opacity: 0.8;
+      margin-bottom: 40px
     }
     input {
       width: 100%;
@@ -196,8 +197,8 @@ html,body{
 
 .container {
   display: flex;
-  align-items: center;
-  padding:40px 0;
+  // align-items: center;
+
   justify-content: space-between;
 }
 

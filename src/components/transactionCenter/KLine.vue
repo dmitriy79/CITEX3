@@ -341,6 +341,7 @@ export default {
             )
             .html("<span>" + item.label + "</span>")
             .on("click", function() {
+              console.log('111111111')
               if (!this_vue.chart.changingInterval &&
                 !button.hasClass("selected")
               ) {
@@ -660,7 +661,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-        // console.log(resolution,'resolution====================================>>>>>>>>')
+         console.log(firstDataRequest,'resolution====================================>>>>>>>>')
         if (firstDataRequest) {
           if (resolution == 1) {
             resolution = '1min'
@@ -693,7 +694,9 @@ export default {
             resolution = '10080min'
           }
           
-          console.log('k line data 2 ', this_vue.klineHistory)
+          console.log('k line data 2333 ', this_vue.klineHistory)
+      this_vue.$store.dispatch('trading/getKline', { resolution })
+
           onHistoryCallback(this_vue.klineHistory)
         } else {
           onHistoryCallback([], {
@@ -741,7 +744,6 @@ export default {
         }
 
         if (!Object.keys(this_vue.klineCurrent).length === 0) {
-          onRealtimeCallback(this_vue.klineCurrent)
           console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
           onRealtimeCallback(this_vue.klineCurrent)
         }

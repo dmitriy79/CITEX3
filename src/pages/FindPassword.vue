@@ -131,7 +131,7 @@
 
     changeFixed(clientHeight){                        //动态修改样式
       console.log(clientHeight,'w9999999');
-      this.$refs.content.style.height = (clientHeight-480)+'px';
+      this.$refs.content.style.height = (clientHeight)+'px';
 
     },
     //重置密码
