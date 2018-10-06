@@ -89,21 +89,22 @@ export default {
                   this.$refs.btns.style.cursor = "not-allowed"
                   this.address=res.message  
                 }
-                   })
+           })
             // this.address=val
         },
-    qrcode () {
-      let qrcode = new QRCode('qrcode', {
-        width: 100,
-        height: 100, // 高度
-        text: this.address, // 二维码内容
-        render:'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
-        background: '#f0f',
-        foreground: '#ff0'
-      })
+        qrcode () {
+            document.getElementById('qrcode').innerHTML = '';
+          let qrcode = new QRCode('qrcode', {
+            width: 100,
+            height: 100, // 高度
+            text: this.address, // 二维码内容
+            render:'canvas', // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
+            background: '#f0f',
+            foreground: '#ff0'
+          })
 
-      console.log(qrcode,'0999999')
-    },
+          console.log(qrcode,'0999999')
+        },
       
         showEwm(){
             console.log('wos我是二维码')
