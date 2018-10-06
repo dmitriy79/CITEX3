@@ -5,6 +5,9 @@
                 <span v-for='(item,index) of allCoin' 
                 :class='{active:index == selectedZoneIndex}' 
                 @click='selectZone(index)'>{{item.zoneCoinName}}</span>
+                <span @click="selectZone(-1)" :class="{ active: -1 == selectedZoneIndex}">
+                  <span class="ico-star-fill"></span>
+                </span>
             </div>
             <div class="content">
                 <dl class="transaction-list">
@@ -17,7 +20,7 @@
                         <div>昨日收盘价</div>
                         <div>24h交易量</div>
                     </dt>
-                    <dd v-for='(item,index) of allCoin[selectedZoneIndex].list' @click="jumpToTrade(item.name)">
+                    <dd v-for='(item,index) of (searchList || allCoin[selectedZoneIndex].list)' @click="jumpToTrade(item.name)">
                         <div class="transaction-list-title">
                           <i
                             @click.stop="$store.dispatch('favoriteCoin',{trade_coin_pair_id:item.id, collect:item.collect ? '0':'1'})"
@@ -43,15 +46,34 @@ import { mapState, mapMutations } from "vuex"
 export default {
   data() {
     return {
+      searchList: null,
       selectedZoneIndex: 0
     };
   },
   created() {
   },
+  watch: {
+    selectedZoneIndex() {
+      this.searchList = this.getCoinList();
+    }
+  },
   computed: {
     ...mapState(["allCoin"]),
   },
   methods: {
+    getCoinList() {
+      if (this.selectedZoneIndex == -1) {
+        let list = [];
+        this.allCoin.map( zone => {
+          zone.list.map( coin => {
+            coin.collect && list.push(coin);
+          });
+        });
+        return list;
+      } else {
+        return this.allCoin[this.selectedZoneIndex].list;
+      }
+    },
     jumpToTrade(name) {
       let zone = this.allCoin[this.selectedZoneIndex].zoneCoinName;
       this.$router.push(`/transaction/${name}_${zone}`)

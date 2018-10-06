@@ -30,7 +30,6 @@
                 </div>
                 <div class="buy-rate">
                     <button 
-                    :class="{active:buySelect==index,Allowed:isAllowed}" 
                     v-for="(item,index) in percentage" 
                     @click="selectPercentage"
                     :data-index="index"
@@ -46,12 +45,12 @@
                 </div>
                    <button 
                 class="buy-button transaction-btn"
-                :class="{Allowed:isAllowed}"
+                :class="{Allowed: isDisabled}"
                 @click='buyCoin' 
                 :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button> 
                 <!-- <button 
                 class="buy-button transaction-btn"
-                :class="{Allowed:isAllowed}"
+                :class="{Allowed:isDisabled}"
                 @click='$store.dispatch("trading/tradingBuy", buyParams)' 
                 :disabled="isDisabled">买入<span v-if="marketInfo">{{marketInfo.name}}</span></button>  -->
             </div>
@@ -77,7 +76,6 @@
                 </div>
                 <div class="buy-rate">
                     <button
-                    :class="{active:sellSelect==index,Allowed:isAllowed1}"
                     v-for="(item,index) in percentage"
                     :data-index="index"
                     data-id="sellPre"
@@ -92,11 +90,11 @@
                     <span class="unit">{{zoneName}}</span>
                 </div>
                 <!-- <button class="sell-button transaction-btn"
-                :class="{Allowed:isAllowed}"
+                :class="{Allowed:isDisabled}"
                  @click='$store.dispatch("trading/tradingSell", sellParams)'
                 :disabled="isDisabled">卖出<span v-if="marketInfo">{{marketInfo.name}}</span></button> -->
                 <button class="sell-button transaction-btn"
-                :class="{Allowed:isAllowed}"
+                :class="{Allowed:isDisabled}"
                  @click='sellCoin'
                 :disabled="isDisabled">卖出<span v-if="marketInfo">{{marketInfo.name}}</span></button>
             </div>
@@ -118,11 +116,7 @@ export default {
   name: "LimitedPrice",
   data() {
     return {
-      sellSelect: 0,
-      buySelect: 0,
       token: "",
-      isAllowed: false,
-      isAllowed1: false,
       isDisabled: true,
       hasBorder: false,
       percentage: ["25", "50", "75", "100"],
@@ -156,6 +150,9 @@ export default {
       } else {
         this.buyPrice = oldVal;
       }
+      this.ableTotal = this.curbuyPrice / this.buyPrice;
+      this.buyNums = Math.min(this.toFixedDecimal(this.ableTotal, 4), this.buyNums);
+      this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4);
     },
     buyNums(newVal, oldVal) {
       if (numReg.test(newVal) && newVal.toString().length <= 15) {
@@ -198,8 +195,6 @@ export default {
       this.isDisabled = false
     } else {
       this.isDisabled = true
-      this.isAllowed = true
-      this.isAllowed1 = true
     }
   },
   computed: {
@@ -217,22 +212,16 @@ export default {
       let target = e.target.dataset
       console.log(target, '====00000target')
       if (target.id == "buyPre") {
-        this.buySelect = target.index;
         let params = this.buyParams;
         this.$nextTick(() => {
-          var currentProperty1 = this.$refs.num1.innerText
-          this.ableTotal = currentProperty1 / this.buyPrice;
+          this.ableTotal = this.curbuyPrice / this.buyPrice;
           this.buyNums = this.toFixedDecimal(target.num / 100 * this.ableTotal, 4);
           this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4);
         })
       } else if (target.id == "sellPre") {
-        this.sellSelect = target.index;
         let params = this.sellParams;
         this.$nextTick(() => {
-          var currentProperty2 = this.$refs.num2.innerText
-          this.ableSellTotal = currentProperty2 / this.sellPrice
-          console.log(this.ableSellTotal, target.num)
-          this.sellNums = this.toFixedDecimal(target.num / 100* this.ableSellTotal, 4);
+          this.sellNums = this.toFixedDecimal(target.num / 100* this.cursellPrice, 4);
           this.sellAmount = this.toFixedDecimal(this.sellNums * this.sellPrice, 4);
         })
       }
@@ -384,16 +373,13 @@ export default {
     .buy-panel {
       width: 48%;
       margin-right: 5.7%;
-      .active {
+      button:hover {
         background: #1fc56d !important;
       }
     }
     .sell-panel {
       width: 48%;
       margin-right: 3.1%;
-      .active {
-        background: #ef6e59 !important;
-      }
     }
     .input-text {
       .label {
@@ -484,11 +470,8 @@ export default {
     transition: 0.4s;
 
     &:hover {
-      border-color: #fff;
       color: #fff;
-    }
-    &.active {
-      color: #ffffff;
+      background: #ef6e59 !important;
       border: none;
     }
   }
