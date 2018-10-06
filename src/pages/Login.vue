@@ -115,7 +115,6 @@
           var token = datasList[0];
           localStorage.setItem("token", token)
           localStorage.setItem("userName", this.userName)
-          localStorage.setItem("loginPassword", this.passWord)
           if (returnData !== '成功') {
             this.$message({
               message: returnData,
