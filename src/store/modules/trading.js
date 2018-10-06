@@ -319,27 +319,39 @@ const mutations = {
     },
     //买卖挂单 websocketAskBid
     tradingAskBid(state, id) {
-        new webSocket({
-            url: `websocketAskBid?pairId=${id}`,
-            data: 'sendParams',
-            success: (res) => {
-                console.log(res,'websocketAskBid')
-                state.AskList = res.ask || [];
-                state.BidList = res.bid || [];
-                state.BidList.reverse();
-                state.currentPrcie = res.bid[0].price;
-            }
-        })
+        function createAskBid() {
+            new webSocket({
+                url: `websocketAskBid?pairId=${id}`,
+                data: 'sendParams',
+                success: (res) => {
+                    console.log(res,'websocketAskBid')
+                    state.AskList = res.ask || [];
+                    state.BidList = res.bid || [];
+                    state.BidList.reverse();
+                    state.currentPrcie = res.bid[0].price;
+                },
+                fail: (res) => {
+                    createAskBid();
+                }
+            })
+        }
+        createAskBid();
     },
     //成交历史
     getDealOrders(state, id) {
-        new webSocket({
-            url: `websocketSSCJ?pairId=${id}`,
-            data: 'sendParams',
-            success: (res) => {
-                state.historyList = res
-            }
-        })
+        function createDealOrders() {
+            new webSocket({
+                url: `websocketSSCJ?pairId=${id}`,
+                data: 'sendParams',
+                success: (res) => {
+                    state.historyList = res
+                },
+                fail: (res) => {
+                    createDealOrders();
+                }
+            })
+        }
+        createDealOrders();
     },
     //k线历史数据
     getKline(state, params) {
@@ -372,41 +384,34 @@ const mutations = {
             });
         }
         var uuid = guid();
-        new webSocket({
-            url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
-            data: 'sendParams',
-            success: (res) => {
-                console.log(res,'websocketKline====>res')
-                var currentkline = []
-                if (res.list.length) {
-                    res.list.forEach(function(bar) {
-                        currentkline.push({
-                            time: Number(bar.startTime),
-                            open: Number(bar.openPrice),
-                            close: Number(bar.closePrice),
-                            high: Number(bar.topPrice),
-                            low: Number(bar.floorPrice),
-                            volume: Number(bar.total)
+
+        function createKline() {
+            new webSocket({
+                url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
+                data: 'sendParams',
+                success: (res) => {
+                    console.log(res,'websocketKline====>res')
+                    var currentkline = []
+                    if (res.list.length) {
+                        res.list.forEach(function(bar) {
+                            currentkline.push({
+                                time: Number(bar.startTime),
+                                open: Number(bar.openPrice),
+                                close: Number(bar.closePrice),
+                                high: Number(bar.topPrice),
+                                low: Number(bar.floorPrice),
+                                volume: Number(bar.total)
+                            });
                         });
-                    });
+                    }
+                    state.klineCurrent=currentkline[0];
+                },
+                fail: (res) => {
+                    createKline();
                 }
-                state.klineCurrent=currentkline[0]
-                console.log(currentkline[0],'websocketKline===>')
-
-                // res.list.map(bar => {
-                //     state.klineHistory.push({
-                //         time: Number(bar.startTime),
-                //         open: Number(bar.openPrice),
-                //         close: Number(bar.closePrice),
-                //         high: Number(bar.topPrice),
-                //         low: Number(bar.floorPrice),
-                //         volume: Number(bar.total)
-                //     })
-                // });
-                // console.log(res,'websocketKline===>')
-
-            }
-        })
+            })
+        }
+        createKline();
     },
     //当前or历史 卖单 记录
     listAskOrders(state, params) {

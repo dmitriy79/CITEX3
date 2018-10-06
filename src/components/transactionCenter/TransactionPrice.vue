@@ -2,13 +2,15 @@
     <div class="transaction-price" ref="wrapper">
          <div class="list buy-list">
             <div class="title">
-                    <span>成交价格({{zoneName}})	</span>
+                    <span>成交价格({{zoneName}})</span>
+                    <span>方向</span>
                     <span>数量({{marketInfo.name}})</span>
                     <span>时间</span>
                 </div>
             <dl v-if="historyList">
                 <dd v-for="item in historyList" :class="'color' + item.bidAsk">
                     <span>{{item.dealPrice}}</span>
+                    <span>{{item.bidAsk == 1 ? '买' : '卖'}}</span>
                     <span>{{item.dealAmount}}</span>
                     <span>{{item.dealTime | time-format}}</span>
                 </dd>
