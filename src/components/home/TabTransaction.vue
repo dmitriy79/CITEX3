@@ -55,6 +55,9 @@ export default {
   watch: {
     selectedZoneIndex() {
       this.searchList = this.getCoinList();
+    },
+    allCoin() {
+      this.searchList = this.getCoinList();
     }
   },
   computed: {
