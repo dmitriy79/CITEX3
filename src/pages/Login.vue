@@ -112,9 +112,7 @@
         }).then(res => {
           var returnData = res.message
           var datasList = res.datas.split("|")
-          var token = datasList[0]
-          var userId = datasList[1]
-          localStorage.setItem("userId", userId)
+          var token = datasList[0];
           localStorage.setItem("token", token)
           localStorage.setItem("userName", this.userName)
           localStorage.setItem("loginPassword", this.passWord)

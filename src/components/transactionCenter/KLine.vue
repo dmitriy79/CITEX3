@@ -748,44 +748,6 @@ export default {
           onRealtimeCallback(this_vue.klineCurrent)
         }
 
-        /*let ws= new WebSocket('ws://47.94.213.6:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=1&step=60')
-            //let ws= new WebSocket('ws://47.93.194.146:13080/websocketKline?pairId=2&uuid=2&userId=200011&unitPriceCoinId=1&initlength=100&step=3600')
-             ws.onopen = () => {
-                 // Web Socket 已连接上，使用 send() 方法发送数据
-                   ws.send('++++++++ws33333++++++++++')
-                   //console.log('数据发送中8888++++++...实时是银行业')
-               }
-               ws.onmessage = evt => {
-                var content=JSON.parse(evt.data)
-               var kline=[]
-               content.list.forEach(function(item){
-                   kline.push({
-                  time: Number(item.endTime),
-                    open: Number(item.openingPrice),
-                    close: Number(item.closeingPrice),
-                    high: Number(item.topPrice),
-                    low: Number(item.floorPrice),
-                    volume: Number(item.total)
-                  });
-                // console.log(kline,'9999')
-               })
-              
-               //console.log(kline[0],'我是k线图')
-               onRealtimeCallback(kline[0])
-               }
-               ws.onclose = function () {
-                 // 关闭 websocket
-                 //console.log('连接已关闭...')
-               }
-               ws.onerror=function(){
-                // console.log("我是错误+++++++")
-               }
-                // 组件销毁时调用，中断websocket链接
-               this.over = () => {
-                 ws.close()
-               }*/
-
-
       };
 
       Datafeed.Container.prototype.unsubscribeBars = function(listenerGUID) {

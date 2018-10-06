@@ -196,12 +196,10 @@ const actions = {
 }
 const mutations = {
     listBidOrders(state, params) {
-        var userId = localStorage.getItem('userId');
         const { type, tradeCoinPairId } = params;
         state.orderData = [];
         api.listBidOrders({
             type, tradeCoinPairId,
-            userId: userId,
             pageNum: 1,
             pageSize: params.size || 10
         }).then(res => {

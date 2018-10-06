@@ -20,7 +20,6 @@
                     </tr>
                     <tr v-for='item of orderData.list'>
                       <td>{{item.updateTime | dateTime-format }}</td>
-                      <!-- <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td> -->
                       <td>{{item.bidOrSell==0?'卖':'买'}}</td>
                       <td>{{status[item.matchStatus]}}</td>
                       <td>{{item.price}}</td>

@@ -78,8 +78,7 @@ export default {
         }
     },
     mounted () {
-        this.getCoin()  
-        //this.getlistByUserId()
+        this.getCoin()
     },
     methods: {
     selectAddress(val){
