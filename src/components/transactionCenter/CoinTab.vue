@@ -124,8 +124,9 @@ export default {
       }
     },
     togglePrice() {
+      this.searchList = this.allCoin[this.selectedZoneIndex].list;
       if (this.sort == 'price_down') {
-        this.sort = 'price_up'
+        this.sort = 'price_up';
         this.searchList.sort((a, b) => a.deal_price > b.deal_price);
       } else {
         this.sort = 'price_down'
@@ -133,6 +134,7 @@ export default {
       }
     },
     toggleRate() {
+      this.searchList = this.allCoin[this.selectedZoneIndex].list;
       if (this.sort == 'rate_down') {
         this.sort = 'rate_up'
         this.searchList.sort((a, b) => a.increase_24H > b.increase_24H);
@@ -142,6 +144,7 @@ export default {
       }
     },
     toggleNum() {
+      this.searchList = this.allCoin[this.selectedZoneIndex].list;
       if (this.sort == 'num_down') {
         this.sort = 'num_up'
         this.searchList.sort((a, b) => a.amount_24H > b.amount_24H);

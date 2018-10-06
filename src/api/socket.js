@@ -24,13 +24,17 @@ export default class {
       console.log(wsUri, "====>WebSocket接收数据")
     }
     this.websock.onclose = (e) => {
-      this.websock.close()
-      arg.fail(e)
-      console.log(wsUri, `====>WebSocket连接关闭:::errorCode = ${e.code}`)
+      if (e.code != 1000) {
+        arg.fail(e)
+        console.log(wsUri, `====>WebSocket连接关闭:::errorCode = ${e.code}`)
+      }
     }
     this.websock.onopen = (e) => {
       console.log(wsUri, "====>WebSocket连接成功")
     }
+  }
+  closeSocket() {
+    this.websock.close(1000);
   }
   sendSocket() {
     if (this.websock.readyState === this.websock.OPEN) {

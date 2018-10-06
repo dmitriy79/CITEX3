@@ -318,7 +318,8 @@ const mutations = {
     //买卖挂单 websocketAskBid
     tradingAskBid(state, id) {
         function createAskBid() {
-            new webSocket({
+            window.createAskBid && window.createAskBid.closeSocket();
+            window.createAskBid = new webSocket({
                 url: `websocketAskBid?pairId=${id}`,
                 data: 'sendParams',
                 success: (res) => {
@@ -338,7 +339,8 @@ const mutations = {
     //成交历史
     getDealOrders(state, id) {
         function createDealOrders() {
-            new webSocket({
+            window.createDealOrders && window.createDealOrders.closeSocket();
+            window.createDealOrders = new webSocket({
                 url: `websocketSSCJ?pairId=${id}`,
                 data: 'sendParams',
                 success: (res) => {
@@ -384,7 +386,8 @@ const mutations = {
         var uuid = guid();
 
         function createKline() {
-            new webSocket({
+            window.createKline && window.createKline.closeSocket();
+            window.createKline = new webSocket({
                 url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
                 data: 'sendParams',
                 success: (res) => {
