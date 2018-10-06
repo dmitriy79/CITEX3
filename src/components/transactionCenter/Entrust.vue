@@ -19,7 +19,7 @@
                       <th v-if="this.active==0">操作</th>
                     </tr>
                     <tr v-for='item of orderData.list'>
-                      <td>{{item.updatetime | dateTime-format }}</td>
+                      <td>{{item.updateTime | dateTime-format }}</td>
                       <!-- <td>{{isBuy(item.userId) ? '买入' : '卖出'}}</td> -->
                       <td>{{item.bidOrSell==0?'卖':'买'}}</td>
                       <td>{{status[item.matchStatus]}}</td>
