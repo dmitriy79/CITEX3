@@ -221,10 +221,9 @@ export default {
         let params = this.buyParams;
         this.$nextTick(() => {
           var currentProperty1 = this.$refs.num1.innerText
-          this.ableTotal = currentProperty1 / this.buyPrice
-          console.log(this.ableTotal, target.num)
-          this.buyNums = (target.num / 100) * this.ableTotal
-          this.buyAmount = this.buyNums * this.buyPrice
+          this.ableTotal = currentProperty1 / this.buyPrice;
+          this.buyNums = this.toFixedDecimal(target.num / 100 * this.ableTotal, 4);
+          this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4);
         })
       } else if (target.id == "sellPre") {
         this.sellSelect = target.index;
@@ -233,10 +232,14 @@ export default {
           var currentProperty2 = this.$refs.num2.innerText
           this.ableSellTotal = currentProperty2 / this.sellPrice
           console.log(this.ableSellTotal, target.num)
-          this.sellNums = (target.num / 100) * this.ableSellTotal
-          this.sellAmount = this.sellNums * this.sellPrice
+          this.sellNums = this.toFixedDecimal(target.num / 100* this.ableSellTotal, 4);
+          this.sellAmount = this.toFixedDecimal(this.sellNums * this.sellPrice, 4);
         })
       }
+    },
+    toFixedDecimal(num, decimal) {
+      let dec = Math.pow(10, decimal);
+      return Math.floor(num * dec) / dec;
     },
     //买币
     buyCoin() {
