@@ -14,7 +14,7 @@
                     <el-form-item label="转出地址">
                         <el-select v-model="form.address" placeholder="请选择提币地址" @change="selectAddress"> 
                             <el-option v-for="item in coinList" :label="item.withdrawAddress" :value="[item.coinId+','+item.withdrawAddress]" :key="item.id"></el-option>
-                            <el-option value=""> <span @click="addAddress">添加提币地址</span></el-option> 
+                            <el-option value=""> <div @click="addAddress">添加提币地址</div></el-option> 
                        </el-select>
                         <!-- <el-select v-model="form.address" placeholder="选择提现地址">
                         <el-option v-for="item in coinList" :label="item.withdrawAddress" :value="item.withdrawAddress" :key="item.id"></el-option>

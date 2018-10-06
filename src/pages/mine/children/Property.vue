@@ -4,7 +4,7 @@
         <div class="member-title">
           <h1>我的资产</h1>
            <div class="member-total">
-            <div class="member-assets">总资产折合：{{mineTotal}} BTC<i><b></b></i></div>
+            <div class="member-assets">总资产折合≈{{mineTotal}} BTC<i><b></b></i></div>
              <div @click="showRecord" class="button button-min" ><i class="ico ico-order"></i>提币&充币记录</div>
              </div>
         </div>
@@ -29,7 +29,7 @@
                     <!-- <div><router-link to="/Transaction" tag="span">交易</router-link></div> -->
                 </span>
                 <transition name="fade">
-                <div class="carry-coin coin-item" ref="child" style="display:none" >
+                <div class="carry-coin coin-item" ref="child" v-if="showlist===index" >
                     <!-- <div class="item">
                         <label class="name">提币地址</label>
                         <input type="text" v-model="coinAddress">
@@ -38,7 +38,7 @@
                              <el-form-item label="提币地址">
                               <el-select v-model="form_address.address" placeholder="请选择提币地址" @change="selectAddress">
                                 <el-option v-for="item in addressList" :label="item.withdrawAddress"  :value="[item.coinId+','+item.withdrawAddress]"  :key="item.id"></el-option>
-                                <el-option value=""> <span @click="addAddress">添加提币地址</span></el-option> 
+                                <el-option value=""> <div @click="addAddress" >添加提币地址</div></el-option> 
                                
                               </el-select>
                             </el-form-item>
@@ -56,11 +56,11 @@
                     <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label></div>
-                            <input type="number" v-model="finalfee">
+                            <input type="number" v-model="finalfee" readonly>
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
-                            <input type="number" v-model="realNum">
+                            <input type="number" v-model="realNum" readonly>
                         </div>
 
                     </div>
@@ -75,7 +75,7 @@
                 </div>
                 </transition>
                 <transition name="fade">
-                <div class="full-coin coin-item" ref="child1" style="display:none" >
+                <div class="full-coin coin-item" ref="child1" v-if="showlist1===index" >
                     <div class="item">
                         <label class="name">充币地址</label>
                         <div class="address-wrapper"><span class="address">{{fullAddress}}</span><span class="copy" v-clipboard:copy="fullAddress"
@@ -190,6 +190,8 @@ export default {
       activeIndex: "",
       propertyLists: [],
       fullCoinRecordList: [],
+      showlist:-1,
+      showlist1:-1,
     };
   },
 
@@ -201,6 +203,7 @@ export default {
     this.getUserTotalProperty()
   },
   watch: {
+
     searchValue(val) {
       if (val) {
         this.searchList = this.myAssets.list.filter(item => item.nameShort.indexOf(val.toUpperCase()) >= 0);
@@ -270,7 +273,7 @@ export default {
     },
 
     getfee(){
-     
+   
         this.finalfee=this.feeValue*this.coinNum
         this.realNum=this.coinNum- this.finalfee
         if(this.coinNum==''){
@@ -392,7 +395,13 @@ export default {
     },
     //提币
        carryCoin(index,id,ableNum,singleMax,singleMin,coinName_,feeValue){
-         console.log(index,'tibi Tii')
+         console.log(id,'tibi Tii')
+         this.showlist1 = -1;
+           if (this.showlist === index) {
+          this.showlist = -1;
+          } else {
+          this.showlist = index;
+          }
         this.coin_Id =id
         this.carryIndex=index
         this.ableNum=ableNum
@@ -401,21 +410,17 @@ export default {
         this.coinName_=coinName_
         this.feeValue=feeValue
         this.getAddress()
-         this.$refs.child1[index].style.display = 'none'
-        if (this.$refs.child[index].style.display === 'none') {
-        this.$refs.child[index].style.display = 'block'
-       
-      } else {
-        this.$refs.child[index].style.display = 'none'
-      
-      }
-        // this.activeIndex=index
-        //   this.isShow=!this.isShow
-        //    this.isShow1=false
       },
     //充币
     fullCoin(index, id, name) {
-      console.log(id, "w我是coinid+++++");
+           this.showlist = -1;
+  if (this.showlist1 === index) {
+this.showlist1 = -1;
+} else {
+this.showlist1 = index;
+}
+      console.log(index, "w我是充币+++++");
+     
       this.$api.allotRechargeAddr({ coinId: id }).then(res => {
         if (res.message == "成功") {
           console.log(res.datas, "成功");
@@ -427,12 +432,7 @@ export default {
         }
         this.coiname = name;
       });
-      this.$refs.child[index].style.display = "none";
-      if (this.$refs.child1[index].style.display === "none") {
-        this.$refs.child1[index].style.display = "block";
-      } else {
-        this.$refs.child1[index].style.display = "none";
-      }
+
     },
     showEwm() {
       this.isshowEwm = !this.isshowEwm;
@@ -465,14 +465,14 @@ export default {
 .el-input {
   width: 100% !important;
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
+// .fade-enter-active,
+// .fade-leave-active {
+//   transition: opacity 0.5s;
+// }
+// .fade-enter,
+// .fade-leave-to {
+//   opacity: 0;
+// }
 .property-wrapper {
   min-height: 920px;
   color: #fff;

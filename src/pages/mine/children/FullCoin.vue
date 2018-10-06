@@ -20,7 +20,7 @@
                     
                     钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns"   @success="handleSuccess">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>
                     <!-- <img src="@/assets/images/ewm.png" alt="" class="ewm-img" v-if="isshowEwm"> -->
-                    <div id="qrcode" class="ewm-img"></div>
+                    <div id="qrcode" class="ewm-img" ref="qrcode"></div>
                 </div>
             </div>
             
@@ -82,11 +82,14 @@ export default {
                      this.copyData=res.datas
                          this.$refs.btns.removeAttribute('disabled')
                   this.$refs.btns.style.cursor = ""
+                  this.$refs.qrcode.style.display="none"
+              
                   
                 }
                 else{
                    this.$refs.btns.setAttribute('disabled', 'disabled')
                   this.$refs.btns.style.cursor = "not-allowed"
+                  this.$refs.qrcode.style.display="none"
                   this.address=res.message  
                 }
            })
@@ -109,6 +112,7 @@ export default {
         showEwm(){
             console.log('wos我是二维码')
             this.isshowEwm=!this.isshowEwm
+           this.$refs.qrcode.style.display="block"
             this.qrcode()
         },
         getFullcoinList(){//

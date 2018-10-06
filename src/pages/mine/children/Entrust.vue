@@ -30,7 +30,7 @@
                 </div>
                 <div class="table-wrapper">
                      <el-table :data="currentEntrust" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column  label="委托时间" width="170">
+                     <el-table-column  label="时间" width="170">
                        <template slot-scope="scope">
                            <span>{{scope.row.createTime | dateTime-format}}</span>
                         </template>
@@ -125,9 +125,9 @@
                 </div>
                            <div class="table-wrapper">
                      <el-table :data="historyEntrust" style="width: 100%" :row-class-name="setClassName">
-                     <el-table-column  label="委托时间" width="170">
+                     <el-table-column  label="时间" width="170">
                        <template slot-scope="scope">
-                           <span>{{scope.row.createTime | dateTime-format}}</span>
+                           <span>{{scope.row.updatatime | dateTime-format}}</span>
                         </template>
 
                      </el-table-column>
@@ -139,7 +139,7 @@
                     </el-table-column>
                     <el-table-column prop="bidOrSell" label="方向">
                          <template slot-scope="scope">
-                           <span>{{scope.row.bidOrSell==1?scope.row.bidOrSell='卖':scope.row.bidOrSell='买'}}</span>
+                           <span>{{scope.row.bidOrSell==1?'买':'卖'}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="price" label="委托价格"></el-table-column>
@@ -182,7 +182,9 @@
                   <span>{{props.row.amount}}</span>
                   <span>{{(props.row.amount-props.row.leftAmount)*props.row.price}}</span>
                   <span>{{props.row.leftAmount}}</span>
-                  <span>{{(props.row.amount-props.row.leftAmount)*props.row.rate+''+props.row.tradeCoinNameShort}}</span>
+                  <span v-if="props.row.bidOrSell==0">{{(props.row.amount-props.row.leftAmount)*props.row.price*props.row.rate+''+props.row.tradeCoinNameShort}}</span>
+
+                  <span v-if="props.row.bidOrSell==1">{{(props.row.amount-props.row.leftAmount)*props.row.rate+''+props.row.tradeCoinNameShort}}</span>
               </dd>
           </dl>
     
@@ -225,7 +227,7 @@ export default {
         "未成交",
         "部分成交",
         "完全成交",
-        "用户撤单”",
+        "用户撤单",
         "系统撤单",
       ]
     };
@@ -243,19 +245,24 @@ export default {
       if(direction== 1){
         this.$api.cancelBuy({bidOrderId:id},'POST').then(res=>{
           console.log(res,'cancelBuy')
-          if(res.message='成功'){
+          if(res.message=='成功'){
              this.$message({
                 message: '撤销成功',
                 type: 'success'
                 });
               this.getInfo()
           }
-         
+         else{
+            this.$message({
+                message: res.message,
+                type: 'warning'
+                });
+         }
         })
       }
       else{
         this.$api.cancelSell({askOrderId:id},'POST').then(res=>{
-          if(res.message='成功'){
+          if(res.message=='成功'){
              this.$message({
                 message: '撤销成功',
                 type: 'success'

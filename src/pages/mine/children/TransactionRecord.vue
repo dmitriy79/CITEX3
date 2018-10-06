@@ -37,8 +37,7 @@
                         <el-table-column prop="dealPrice" label="单价"></el-table-column>
                         <el-table-column prop="dealAmount" label="数量（个）"></el-table-column>
                         <el-table-column prop="dealTotal" label="金额"></el-table-column>
-                        
-                        <el-table-column prop="askRateAmountString" label="手续费"></el-table-column>
+                        <el-table-column prop="RateAmountString" label="手续费"></el-table-column>
                     </el-table>
                      <el-pagination v-show="total || total>0"	@current-change="Change" :current-page.sync="pageNum"
        		 :page-size="pageSize" :total="total"  background layout="total,prev, pager, next" >	</el-pagination>
@@ -108,6 +107,14 @@ export default {
         if (res.message == "success") {
           var content = res.datas.list;
           this.total=res.datas.total
+          content.forEach(element => {
+            if(element.direction=='买'){
+              element.RateAmountString=element.bidRateAmount
+            }
+            if(element.direction=='卖'){
+              element.RateAmountString=element.askRateAmount
+            }
+          });
           this.recordList = content;
         }
       });

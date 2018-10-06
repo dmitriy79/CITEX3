@@ -78,7 +78,8 @@ export default {
     },
     //提币分页
     carrycoinChange(value){
-      	this.pageIndex_ = value
+        this.pageIndex_ = value
+                 this.$store.dispatch("assets/carrycoinRecord",this.pageIndex_)
     },
     goback() {
       history.go(-1);
