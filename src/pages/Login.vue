@@ -130,7 +130,7 @@
             this.$router.push({
               path: "/"
             });
-            // window.location.reload();
+            window.location.reload();
           }
         })
       }
