@@ -148,7 +148,7 @@ export default {
   },
   watch: {
     buyPrice(newVal, oldVal) {
-      if (coinReg.test(newVal)) {
+      if (coinReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('buy');
         this.buyPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
@@ -158,7 +158,7 @@ export default {
       }
     },
     buyNums(newVal, oldVal) {
-      if (numReg.test(newVal)) {
+      if (numReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('buy');
         this.buyNums = this.toNumber(newVal);
       } else if (newVal == '') {
@@ -168,7 +168,7 @@ export default {
       }
     },
     sellPrice(newVal, oldVal) {
-      if (coinReg.test(newVal)) {
+      if (coinReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('sell');
         this.sellPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
@@ -178,7 +178,7 @@ export default {
       }
     },
     sellNums(newVal, oldVal) {
-      if (numReg.test(newVal)) {
+      if (numReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('sell');
         this.sellNums = this.toNumber(newVal);;
       } else if (newVal == '') {
