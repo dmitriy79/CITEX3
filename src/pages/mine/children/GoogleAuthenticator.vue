@@ -24,7 +24,7 @@
                 <el-form ref="form" :model="form" label-width="80px" >
                     
                     <el-form-item  class="secret-text" >
-                     <span class="secret">密文</span> <el-input v-model="this.password"></el-input>  <span class="refresh" @click="refresh">刷新</span>
+                     <span class="secret">密文</span> <el-input v-model="this.password" readonly></el-input>  <span class="refresh" @click="refresh">刷新</span>
                     </el-form-item>
                     <div class="step">第三步: 填入手机显示的动态密码以激活谷歌两步验证： </div>
                     <div class="step">谷歌身份验证器配置完成后，会显示一个 6 位数字，每隔 30 秒变化一次。这个数字即为您的谷歌验证码。</div>
@@ -130,7 +130,7 @@ export default {
         // content.split("|")[0]
         this.password=content.split("|")[0]
         this.ewm = content.split("|")[1];
-
+          document.getElementById('qrcode').innerHTML = '';
         let qrcode = new QRCode("qrcode", {
           width: 150,
           height: 150, // 高度
