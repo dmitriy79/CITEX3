@@ -55,7 +55,7 @@
               </ul>
             </div>
           </div>
-          <k-line v-if="klineHistory"></k-line>
+          <k-line></k-line>
         </div>
         <div class="right">
           <coin-tab v-if="inited"></coin-tab>
@@ -144,7 +144,7 @@ export default {
   },
   computed: {
     // ...mapState(["marketInfo"]),
-     ...mapState("trading", [ "AskList", "BidList", 'klineHistory']),
+     ...mapState("trading", [ "AskList", "BidList"]),
      ...mapState(['marketInfo', "zoneName"])
   }
 };

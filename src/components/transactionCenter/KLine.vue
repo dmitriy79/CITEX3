@@ -693,11 +693,10 @@ export default {
           if (resolution == 'W') {
             resolution = '10080min'
           }
-          
-          console.log('k line data 2333 ', this_vue.klineHistory)
-      this_vue.$store.dispatch('trading/getKline', { resolution })
-
-          onHistoryCallback(this_vue.klineHistory)
+          this_vue.$store.dispatch('trading/getKline', {
+            resolution,
+            callback: (result) => onHistoryCallback(result)
+          })
         } else {
           onHistoryCallback([], {
             noData: true
@@ -777,7 +776,7 @@ export default {
   },
   computed: {
     ...mapState(["marketInfo"]),
-    ...mapState("trading", ["klineHistory","klineCurrent"]),
+    ...mapState("trading", ["klineCurrent"]),
   },
 
 };

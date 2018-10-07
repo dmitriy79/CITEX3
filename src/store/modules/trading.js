@@ -15,7 +15,6 @@ const state = {
     BidList: [], //买单 
     historyList: [],
     currentPrcie: '', //交易区当前价格
-    klineHistory: null,
     klineCurrent: null,
     step: '1min',
     curbuyPrice: '',
@@ -55,15 +54,15 @@ const actions = {
             tradeCoinPairId: id
         })
 
-        commit('getKline', {
-            id: id,
-            step: state.step
-        }) //历史k线
     },
     //k线图
     getKline({ commit, rootState, state }, params){
-        state.step=params.resolution
-         commit('getKline',{id: rootState.marketInfo.id,step:state.step})  //币种
+        state.step = params.resolution
+        commit('getKline',{
+            id: rootState.marketInfo.id,
+            step: state.step,
+            callback: params.callback
+        })  //币种
     },
     tradingBuy({
         commit,
@@ -121,11 +120,6 @@ const actions = {
                 type: 1, // 当前
                 tradeCoinPairId: id
             })
-
-            commit('getKline', {
-                id: id,
-                step: state.step
-            }) //历史k线
 
         }
 
@@ -355,7 +349,7 @@ const mutations = {
     },
     //k线历史数据
     getKline(state, params) {
-        const { step, id } = params;
+        const { step, id, callback } = params;
         api.getKDatas2({
             step,
             tradeCoinPariId: id
@@ -374,8 +368,7 @@ const mutations = {
                 });
             }
             state.klineCurrent = kline[0]
-            console.log('k line data', kline)
-            state.klineHistory = kline;
+            callback && callback(kline);
         });
         function guid() {    
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
@@ -405,7 +398,7 @@ const mutations = {
                             });
                         });
                     }
-                    state.klineCurrent=currentkline[0];
+                    state.klineCurrent = currentkline[0];
                 },
                 fail: (res) => {
                     createKline();
