@@ -25,17 +25,23 @@
                     <span class="name">数量</span>
                     <input type="number" :class="{border2:hasBorder}"
                     name="buyAmount"
-                    v-model="buyNums">
+                    v-model="buyNums"
+                    @keydown="toggleBuyIndex"
+                    >
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
-                    <button 
-                    v-for="(item,index) in percentage" 
-                    @click="selectPercentage"
-                    :data-index="index"
-                    data-id="buyPre"
-                    :data-num="item"
-                    :disabled="isDisabled">{{item}}%</button>
+                    <button
+                      data-id="buyPre"
+                      v-for="(item, index) in percentage"
+                      @click="selectPercentage"
+                      :data-index="index"
+                      :data-num="item"
+                      :disabled="isDisabled"
+                      :class="{ active: index == buyNumIndex }"
+                    >
+                      {{item}}%
+                    </button>
                 </div>
              
                 <div class="total-price">
@@ -71,18 +77,21 @@
                     <span  class="name">数量</span>
                     <input type="number" 
                     name="sellAmount"
-                     v-model="sellNums">
+                     v-model="sellNums"
+                    @keydown="toggleSellIndex">
                     <span class="unit" v-if="marketInfo">{{marketInfo.name}}</span>
                 </div>
                 <div class="buy-rate">
                     <button
-                    v-for="(item,index) in percentage"
-                    :data-index="index"
-                    data-id="sellPre"
-                    :data-num="item"
-                    @click="selectPercentage" 
-                    ref="rateBtn"
-                    :disabled="isDisabled">{{item}}%</button>
+                      v-for="(item,index) in percentage"
+                      :data-index="index"
+                      data-id="sellPre"
+                      :data-num="item"
+                      @click="selectPercentage" 
+                      ref="rateBtn"
+                      :disabled="isDisabled"
+                      :class="{ active: index == sellNumIndex }"
+                    >{{item}}%</button>
                 </div>
                 <div class="total-price">
                     <span  class="name">交易额</span>
@@ -137,7 +146,9 @@ export default {
         tradeCoinPairId: 1,
         //code: 1123414,
         tradePassword: 95558
-      }
+      },
+      buyNumIndex: -1,
+      sellNumIndex: -1
     }
   },
   watch: {
@@ -202,6 +213,12 @@ export default {
     ...mapState(["zoneName", 'marketInfo']),
   },
   methods: {
+    toggleBuyIndex() {
+      this.buyNumIndex = -1
+    },
+    toggleSellIndex() {
+      this.sellNumIndex = -1
+    },
     toNumber(s) {
       s = s.toString();
       s = s.replace(/^0+\./,'0.');
@@ -213,6 +230,7 @@ export default {
       console.log(target, '====00000target')
       if (target.id == "buyPre") {
         let params = this.buyParams;
+        this.buyNumIndex = target.index;
         this.$nextTick(() => {
           this.ableTotal = this.curbuyPrice / this.buyPrice;
           this.buyNums = this.toFixedDecimal(target.num / 100 * this.ableTotal, 4);
@@ -220,6 +238,7 @@ export default {
         })
       } else if (target.id == "sellPre") {
         let params = this.sellParams;
+        this.sellNumIndex = target.index;
         this.$nextTick(() => {
           this.sellNums = this.toFixedDecimal(target.num / 100* this.cursellPrice, 4);
           this.sellAmount = this.toFixedDecimal(this.sellNums * this.sellPrice, 4);
@@ -373,7 +392,8 @@ export default {
     .buy-panel {
       width: 48%;
       margin-right: 5.7%;
-      button:hover {
+      button:hover, button.active {
+        color: #fff;
         background: #1fc56d !important;
       }
     }
@@ -469,7 +489,7 @@ export default {
     border-radius: 2px;
     transition: 0.4s;
 
-    &:hover {
+    &:hover, &.active {
       color: #fff;
       background: #ef6e59 !important;
       border: none;
