@@ -211,13 +211,29 @@ export default {
         this.searchList = this.myAssets.list;
       }
     },
-     myAssets() {
+    myAssets() {
       this.searchList = this.myAssets.list;
       console.log(this.searchList)
-    }
     },
+    coinNum(newVal, oldVal) {
+      const numReg = /^\d+(?:\.\d{1,4})?$/;
+      if (numReg.test(newVal) && newVal.toString().length <= 15) {
+        this.coinNum = Math.min(this.toNumber(newVal), this.ableNum);
+      } else if (newVal == '') {
+        this.coinNum = 0;
+      } else {
+        this.coinNum = oldVal;
+      }
+    }
+  },
 
   methods: {
+    toNumber(s) {
+      s = s.toString();
+      s = s.replace(/^0+\./,'0.');
+      s = s.replace(/^0+([0-9])/,'$1');
+      return s;
+    },
     //计算资产总和
     getUserTotalProperty(){
       this.$api.getUserTotalProperty().then(res=>{

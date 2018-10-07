@@ -6,7 +6,7 @@
                 <el-form ref="form" :model="form" label-width="80px" >
                      <el-form-item label="币种转出">
                         <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
-                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
+                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name + ',' + item.feeValue]" :key="item.id"></el-option>
                         
                         </el-select>
                     </el-form-item>
@@ -60,80 +60,85 @@
 <script>
 export default {
     data(){
-        return{
-            Addressdialog:false,
-            coinList:[],
-            allCoin:[],//所有币种
-            coinId:'',
-            coinName:'',
-            form: {
-                address:'',
-                coinType:'',
-                number:'',
-                poundage:'',
-                code:'',
-                password:'',
-                address_:''
+      return{
+        Addressdialog:false,
+        coinList:[],
+        allCoin:[],//所有币种
+        coinId:'',
+        coinName:'',
+        form: {
+          address:'',
+          coinType:'',
+          number:'',
+          poundage:'',
+          code:'',
+          password:'',
+          address_:''
         }
-        }
+      }
     },
     mounted () {
         this.getCoin()
     },
     methods: {
-    selectAddress(val){
-       var addressInfo=val.toString().split(',')
-      this.form.address=addressInfo[1]
-    },
-    //添加提币地址
-    addAddress(){
-        if(this.form.coinType==''){
-            this.$message({
-              message: "请选择提币地址",
-              type: "warning"
-            });
+      getfee() {
+        this.finalfee = this.feeValue * this.form.coinNum
+        if(this.coinNum == ''){
+           this.finalfee = ''
         }
-        else{
-             this.Addressdialog=true
-        }
-      console.log("add Addressdialog")
-     
-    },
-    //确认添加提币地址
-    confirmAdd(){
-        this.coinList.push({
-          withdrawAddress:this.form.address_
-        })
-        console.log(this.coin_Id,'this.coin_Id')
-        this.$api.add({coinId:this.coinId,withdrawAddress:this.form.address_,coinName:this.coinName,code:this.form.code_}).then(res=>{
-          console.log(res,'confirmAdd data')
-          if(res.status==200){
-             this.$message({
-              message: "提币地址添加成功",
-              type: "success"
-            });
-            this.Addressdialog=false
-            return
+      },
+      selectAddress(val){
+        var addressInfo=val.toString().split(',')
+        this.form.address=addressInfo[1]
+      },
+      //添加提币地址
+      addAddress(){
+          if(this.form.coinType==''){
+              this.$message({
+                message: "请选择提币地址",
+                type: "warning"
+              });
           }
-           this.$message({
-              message:res.message,
-              type: "warning"
-            });
-        })
-        // this.Addressdialog=false
-    },
+          else{
+               this.Addressdialog=true
+          }
+        console.log("add Addressdialog")
+       
+      },
+      //确认添加提币地址
+      confirmAdd(){
+          this.coinList.push({
+            withdrawAddress:this.form.address_
+          })
+          console.log(this.coin_Id,'this.coin_Id')
+          this.$api.add({coinId:this.coinId,withdrawAddress:this.form.address_,coinName:this.coinName,code:this.form.code_}).then(res=>{
+            console.log(res,'confirmAdd data')
+            if(res.status==200){
+               this.$message({
+                message: "提币地址添加成功",
+                type: "success"
+              });
+              this.Addressdialog=false
+              return
+            }
+             this.$message({
+                message:res.message,
+                type: "warning"
+              });
+          })
+          // this.Addressdialog=false
+      },
          //选择币种
         getCoinId(val){
             this.form.address=''
-            var coinInfo=val.toString().split(',')
-            this.coinId=coinInfo[0] 
-            this.coinName=coinInfo[1]
-            console.log(this.coinName,'999++++++')
+            var coinInfo = val.toString().split(',')
+            this.coinId = coinInfo[0] 
+            this.coinName = coinInfo[1]
+            this.feeValue = coinInfo[2];
             this.$api.walistByUserId({coinKey:this.coinName}).then(res=>{
-                console.log(res,'这是我的账户币种地址++++++000000')
                this.coinList=res.datas
-               
             })
+            console.log(val)
         },
          //根据用户获取提币地址列表
         getlistByUserId(){
@@ -154,7 +159,7 @@ export default {
            this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.form.number}).then(res=>{
                console.log(res,'88888++++++转出')
                if(res.message=='成功'){
-                  this.$router.push({ path: "/personal" });
+                  window.location.reload();
                }
                else{
                    this.$message({
