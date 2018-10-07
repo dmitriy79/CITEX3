@@ -22,12 +22,12 @@
                         </el-select> -->
                     </el-form-item>
                      <el-form-item label="转出数量">
-                        <el-input v-model="form.number" type="number"></el-input>
+                        <el-input v-model="carryNumber" type="number" ></el-input>
                     </el-form-item>
                      <el-form-item label="转出手续费">
                         <el-input v-model="form.poundage" type="number"></el-input>
                     </el-form-item>
-                     <el-form-item label="谷歌验证" placeholder="请输入注册时的证件号码后四位">
+                     <el-form-item label="谷歌验证" placeholder="">
                         <el-input v-model="form.code" type="number"></el-input>
                     </el-form-item>
                     <el-form-item label="交易密码">
@@ -66,6 +66,7 @@ export default {
         allCoin:[],//所有币种
         coinId:'',
         coinName:'',
+        carryNumber:'',//转出数量
         form: {
           address:'',
           coinType:'',
@@ -73,14 +74,37 @@ export default {
           poundage:'',
           code:'',
           password:'',
-          address_:''
+          address_:'',
+          
         }
       }
     },
+  
     mounted () {
         this.getCoin()
     },
+    watch: {
+       carryNumber(newVal, oldVal) {
+           console.log(newVal, oldVal,'00====>')
+      const numReg = /^\d+(?:\.\d{1,4})?$/;
+      if (numReg.test(newVal) && newVal.toString().length <= 15) {
+        this.carryNumber =this.toNumber(newVal);
+      } else if (newVal == '') {
+        this.carryNumber = 0;
+      } else {
+        this.carryNumber = oldVal;
+      }
+    } 
+    },
+    
     methods: {
+            toNumber(s) {
+      s = s.toString();
+      s = s.replace(/^0+\./,'0.');
+      s = s.replace(/^0+([0-9])/,'$1');
+      return s;
+    },
+     
       getfee() {
         this.finalfee = this.feeValue * this.form.coinNum
         if(this.coinNum == ''){
@@ -95,7 +119,7 @@ export default {
       addAddress(){
           if(this.form.coinType==''){
               this.$message({
-                message: "请选择提币地址",
+                message: "请选择币种",
                 type: "warning"
               });
           }
@@ -156,7 +180,7 @@ export default {
         },
        //转出
        carryCoin(){
-           this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.form.number}).then(res=>{
+           this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.carryNumber}).then(res=>{
                console.log(res,'88888++++++转出')
                if(res.message=='成功'){
                   window.location.reload();

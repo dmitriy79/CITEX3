@@ -29,7 +29,7 @@
                     <div class="step">第三步: 填入手机显示的动态密码以激活谷歌两步验证： </div>
                     <div class="step">谷歌身份验证器配置完成后，会显示一个 6 位数字，每隔 30 秒变化一次。这个数字即为您的谷歌验证码。</div>
                     <el-form-item label="谷歌验证码">
-                        <el-input v-model="form.code" placeholder="请输入程序上显示的6位数谷歌验证码"></el-input>
+                        <el-input v-model="form.code" placeholder="请输入程序上显示的6位数谷歌验证码" maxlength="6" ></el-input>
                     </el-form-item>
                     <el-form-item label="交易密码">
                         <el-input v-model="form.tradePassword" type="password"></el-input>
@@ -88,7 +88,26 @@ export default {
       },
       //启用谷歌验证码
     open(){
-        this.$api.enableGooleAutu({secret:this.password,tradePassword:this.form.tradePassword,code:this.form.code}).then(res=>{
+      if(this.password==''){
+        this.$message({
+          message: "密文不能为空",
+          type: "warning"
+          }); 
+      }
+         if(this.form.tradePassword==''){
+        this.$message({
+          message: "交易密码不能为空",
+          type: "warning"
+          }); 
+      }
+        if(this.form.code==''){
+        this.$message({
+          message: "谷歌验证码不能为空",
+          type: "warning"
+          }); 
+      }
+      if(this.password&&this.form.tradePassword&&this.form.code){
+         this.$api.enableGooleAutu({secret:this.password,tradePassword:this.form.tradePassword,code:this.form.code}).then(res=>{
      
            if(res.message=='成功'){
                 this.$message({
@@ -107,6 +126,8 @@ export default {
            
            console.log(res,'我是启用谷歌验证码')
         })
+      }
+       
     },
     
     //刷新

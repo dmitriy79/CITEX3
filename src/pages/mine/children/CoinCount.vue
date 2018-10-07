@@ -42,7 +42,7 @@
      <el-form ref="form" :model="form_" label-width="80px" >
                     <el-form-item label="币种">
                         <el-select v-model="form_.coinType" placeholder="请选择" @change="selectCoinId">
-                        <el-option v-for="item in allCoin" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name]" :key="item.id"></el-option>
                         
                         </el-select>
                     </el-form-item>
@@ -105,7 +105,10 @@ export default {
             })
         },
         selectCoinId(val){
-            this.updateCoinId=val
+            // this.updateCoinId=val
+            var coinInfo=val.toString().split(',')
+            this.updateCoinId=coinInfo[0] 
+            this.coinName=coinInfo[1]
             console.log(val,'selectCoinId===.')
         },
         //选择币种
@@ -174,7 +177,7 @@ export default {
     },
     //修改
        update(){
-           this.$api.update({withdrawAddress:this.form_.coinAddress,id:this.addressId,coinId:this.updateCoinId},'POST').then(res=>{
+           this.$api.update({withdrawAddress:this.form_.coinAddress,id:this.addressId,coinId:this.updateCoinId,coinName:this.coinName},'POST').then(res=>{
               if(res.message=='成功'){
                     this.editContent=false
                      this.$message({
@@ -186,6 +189,7 @@ export default {
                     coinAddress:'',
                     mark:'',
                 }
+                this.getlistByUserId()
               }
            })
        },

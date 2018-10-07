@@ -111,10 +111,8 @@
           NECaptchaValidate: localStorage.getItem('registerYanzhengma')
         }).then(res => {
           var returnData = res.message
-          var datasList = res.datas.split("|")
-          var token = datasList[0];
-          localStorage.setItem("token", token)
-          localStorage.setItem("userName", this.userName)
+         
+          console.log(returnData !== '成功','returnData !')
           if (returnData !== '成功') {
             this.$message({
               message: returnData,
@@ -124,11 +122,17 @@
           }
 
           if (returnData == '成功') {
+          
             this.$router.push({
               path: "/"
             });
             window.location.reload();
+               var datasList = res.datas.split("|")
+          var token = datasList[0];
+          localStorage.setItem("token", token)
+          localStorage.setItem("userName", this.userName)
           }
+          
         })
       }
     }

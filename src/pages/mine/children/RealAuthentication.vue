@@ -11,10 +11,10 @@
                         <el-radio v-model="radio" label="2" @change="selectRegin">其他国家及地区</el-radio>
                     </el-form-item>
                     <el-form-item label="姓氏">
-                        <el-input v-model="form.surname"></el-input>
+                        <el-input v-model="form.surname" maxlength="20" ></el-input>
                     </el-form-item>
                     <el-form-item label="名字">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.name" maxlength="40" ></el-input>
                     </el-form-item>
                     <el-form-item label="国籍" v-if="show">
                         <el-select v-model="form.country" placeholder="请选择" @change="selectCountry" >
@@ -40,10 +40,10 @@
                     </el-form-item> -->
                    
                     <el-form-item label="证件号码" v-if="!show">
-                        <el-input v-model="form.number" @keyup.native="proving"></el-input>
+                        <el-input v-model="form.number" @keyup.native="proving" maxlength="18" ></el-input>
                     </el-form-item>
                     <el-form-item label="护照ID" v-if="show">
-                        <el-input v-model="form.passportId" @keyup.native="proving"></el-input>
+                        <el-input v-model="form.passportId" @keyup.native="proving" maxlength="20" ></el-input>
                     </el-form-item>
                     <div  class="bottom-btn" @click="next">下一步</div>
                 </el-form >
@@ -445,7 +445,7 @@ export default {
         this.type=2
       }
       if(this.reginVal==1){
-         if(this.realName&&this.countryType&&this.form.number&&this.type){
+         if(this.form.name&&this.form.surname&&this.countryType&&this.form.number&&this.type){
            this.$api.audit(
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.number,document_type:this.type}
          ).then(res=>{
