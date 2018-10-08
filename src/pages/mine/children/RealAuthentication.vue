@@ -498,6 +498,24 @@ export default {
         this.countryType=1
         this.document_id=this.form.number
         this.document_type=1
+        if(this.fontAddress==''){
+        this.$message({
+                message: '请上传身份证正面图片',
+                type: "warning"
+                }); 
+      }
+       if(this.backAddress==''){
+        this.$message({
+                message: '请上传身份证反面图片',
+                type: "warning"
+                }); 
+      }
+      if(this.backAddress==''){
+        this.$message({
+                message: '请上传手持身份证图片',
+                type: "warning"
+                }); 
+      }
       }
       else{
         this.fontAddress=this.imgUrl4
@@ -505,8 +523,27 @@ export default {
         this.handAddress=this.imgUrl6
         this.document_id=this.form.passportId
         this.document_type=2
+        if(this.fontAddress==''){
+        this.$message({
+                message: '请上传护照正面图片',
+                type: "warning"
+                }); 
       }
-      this.$api.saveIdtyImage({
+       if(this.backAddress==''){
+        this.$message({
+                message: '请上传护照反面图片',
+                type: "warning"
+                }); 
+      }
+      if(this.handAddress==''){
+        this.$message({
+                message: '请上传手持护照图片',
+                type: "warning"
+                }); 
+      }
+      }
+      if(this.fontAddress&&his.backAddress&&this.handAddress){
+        this.$api.saveIdtyImage({
         id_card_front:this.fontAddress,
         id_card_back:this.backAddress,
         id_card_hand:this.handAddress,
@@ -521,6 +558,8 @@ export default {
           }
           
       })
+      }
+      
     }
   }
 };
