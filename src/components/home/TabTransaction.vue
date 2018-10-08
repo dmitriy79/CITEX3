@@ -30,7 +30,7 @@
                           <span>{{item.name}}</span>
                         </div>
                         <div>{{item.deal_price}}</div>
-                        <div class="red" :class="{green : item.increase}">{{item.increase_24H}}%</div>
+                        <div class="red" :class="{green : item.increase}">{{item.increase_24H | decimal(2)}}%</div>
                         <div>{{item.minPrice_24H}}</div>
                         <div>{{item.maxPrice_24H}}</div>
                         <div>{{item.yesterdayDealPrice}}</div>

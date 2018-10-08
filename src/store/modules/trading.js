@@ -368,6 +368,7 @@ const mutations = {
                 });
             }
             state.klineCurrent = kline[0]
+            state.klineHistory = kline;
             callback && callback(kline);
         });
         function guid() {    
@@ -399,6 +400,8 @@ const mutations = {
                         });
                     }
                     state.klineCurrent = currentkline[0];
+                    state.klineHistory.push(currentkline[0]);
+                    callback && callback(state.klineHistory);
                 },
                 fail: (res) => {
                     createKline();
