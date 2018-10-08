@@ -167,7 +167,8 @@ const actions = {
     }, obj) {
         commit('tradeCoinPairMaxMinPrice', {
             tradeCoinPairId: rootState.marketInfo.id,
-            obj: obj
+            obj: obj,
+            rootState
         })
     },
     tradeCoinPairMaxMinPrice1({
@@ -177,7 +178,8 @@ const actions = {
     }, obj) {
         commit('tradeCoinPairMaxMinPrice1', {
             tradeCoinPairId: rootState.marketInfo.id,
-            obj: obj
+            obj: obj,
+            rootState
         })
     },
     toggleOrder({ commit, state, rootState }, params) {
@@ -201,10 +203,7 @@ const mutations = {
             state.orderData = res.datas
         })
     },
-    tradeCoinPairMaxMinPrice({
-        state,
-        rootState
-    }, params) {
+    tradeCoinPairMaxMinPrice(state, params) {
         api.tradeCoinPairMaxMinPrice({
             tradeCoinPairId: params.tradeCoinPairId,
             price: params.obj.Nums
@@ -226,7 +225,6 @@ const mutations = {
                         amount: params.obj.Nums
                     }, "POST").then(res => {
                         if (res.message === '成功') {
-
                             Vue.prototype.$message({
                                 message: '成功',
                                 type: 'success'
@@ -237,11 +235,20 @@ const mutations = {
                                 type: 'warning'
                             });
                         }
-
+                        const { id, coinId } = params.rootState.marketInfo;
+                        api.listBidOrders({
+                            type: 1,
+                            tradeCoinPairId: id,
+                            pageNum: 1,
+                            pageSize: 50
+                        }).then(res => {
+                            state.orderData = res.datas
+                        });
+                        mutations.getAssets(state, {
+                            coinId: coinId,
+                            zoneCoinId: params.rootState.zoneCoinId
+                        });
                     })
-                    console.log(value, '我是交易密码')
-
-
                 }).catch(() => {
 
                 });
@@ -254,10 +261,7 @@ const mutations = {
             }
         })
     },
-    tradeCoinPairMaxMinPrice1({
-        state,
-        rootState
-    }, params) {
+    tradeCoinPairMaxMinPrice1(state, params) {
         api.tradeCoinPairMaxMinPrice({
             tradeCoinPairId: params.tradeCoinPairId,
             price: params.obj.Nums
@@ -292,11 +296,20 @@ const mutations = {
                                 type: 'warning'
                             });
                         }
-
-                    })
-                    console.log(value, '我是交易密码')
-
-
+                        const { id, coinId } = params.rootState.marketInfo;
+                        api.listBidOrders({
+                            type: 1,
+                            tradeCoinPairId: id,
+                            pageNum: 1,
+                            pageSize: 50
+                        }).then(res => {
+                            state.orderData = res.datas
+                        });
+                        mutations.getAssets(state, {
+                            coinId: coinId,
+                            zoneCoinId: params.rootState.zoneCoinId
+                        });
+                    });
                 }).catch(() => {
 
                 });
