@@ -15,7 +15,18 @@
         <span>累计（{{marketInfo.name}}）</span>
       </div>
     </div>
-    <div v-if="showType != 2" class="list buy-list" :class="{ 'active reverse': showType == 1}">
+    <div v-if="showType != 1" class="list sell-list" :class="{ 'active reverse': showType == 2}">
+      <dl v-if="AskList">
+        <dd v-for="(item, index) in AskList.slice(0, maxNum)" @click='togglePrice(item.price)'>
+          <span>卖{{ index + 1 }}</span>
+          <span>{{ item.price }}</span>
+          <span>{{ item.count }}</span>
+          <span>{{ item.totalCount }}</span>
+        </dd>
+      </dl>
+    </div>
+    <div v-if="showType == 0" class="line"></div>
+    <div v-if="showType != 2" class="list buy-list" :class="{ active: showType == 1}">
       <dl v-if="BidList">
         <dd v-for="(item, index) in BidList.slice(0, maxNum)" @click='togglePrice(item.price)'>
           <span>买{{ index + 1 }}</span>
@@ -24,17 +35,6 @@
           <span>{{ item.totalCount }}</span>
         </dd>
       </dl>
-    </div>
-    <div v-if="showType == 0" class="line"></div>
-      <div v-if="showType != 1" class="list sell-list" :class="{ active: showType == 2}">
-        <dl v-if="AskList">
-          <dd v-for="(item, index) in AskList.slice(0, maxNum)" @click='togglePrice(item.price)'>
-            <span>卖{{ index + 1 }}</span>
-            <span>{{ item.price }}</span>
-            <span>{{ item.count }}</span>
-            <span>{{ item.totalCount }}</span>
-          </dd>
-        </dl>
     </div>
   </div>
 </template>
@@ -215,15 +215,6 @@ export default {
   .buy-list {
     height: 42%;
     overflow-y: auto;
-    &.reverse {
-      dl {
-        flex-direction: column;
-      }
-    }
-    dl {
-      display: flex;
-      flex-direction: column-reverse;
-    }
     dd {
       span:first-child {
         color: #5dc176;
@@ -236,6 +227,15 @@ export default {
   .sell-list {
     height: 42%;
     overflow-y: auto;
+    &.reverse {
+      dl {
+        flex-direction: column;
+      }
+    }
+    dl {
+      display: flex;
+      flex-direction: column-reverse;
+    }
     dd {
       span:first-child {
         color: #ff7758;
