@@ -139,8 +139,9 @@ export default {
       }
     })
   },
+  destroyed() {
+  },
   methods: {
-    
   },
   computed: {
     // ...mapState(["marketInfo"]),
