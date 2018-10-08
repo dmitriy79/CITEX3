@@ -6,7 +6,7 @@
                 <el-form ref="form" :model="form" label-width="80px" >
                      <el-form-item label="币种转出">
                         <el-select v-model="form.coinType" placeholder="请选择" @change="getCoinId">
-                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name + ',' + item.feeValue]" :key="item.id"></el-option>
+                        <el-option v-for="item in allCoin" :label="item.name" :value="[item.id+','+item.name + ',' + item.feeValue+ ','+item.singleMin +','+item.singleMax]" :key="item.id"></el-option>
                         
                         </el-select>
                     </el-form-item>
@@ -22,13 +22,15 @@
                         </el-select> -->
                     </el-form-item>
                      <el-form-item label="转出数量">
-                        <el-input v-model="carryNumber" type="number" ></el-input>
+                         <span style="display:none">{{feeValue}}</span>
+                        <el-input v-model="carryNumber" type="number" @input="getfee"  oninput="if(value.length>16)value=value.slice(0,16)"></el-input>
+                        <span>转出数量范围：{{singleMin}}-{{singleMax}}</span>
                     </el-form-item>
                      <el-form-item label="转出手续费">
-                        <el-input v-model="form.poundage" type="number"></el-input>
+                        <el-input v-model="form.poundage" type="number" readonly></el-input>
                     </el-form-item>
-                     <el-form-item label="谷歌验证" placeholder="">
-                        <el-input v-model="form.code" type="number"></el-input>
+                     <el-form-item label="谷歌验证码" placeholder="">
+                        <el-input v-model="form.code" type="number"  oninput="if(value.length>6)value=value.slice(0,6)" placeholder="请输入程序上显示的6位数谷歌验证码"></el-input>
                     </el-form-item>
                     <el-form-item label="交易密码">
                         <el-input v-model="form.password" type="password"></el-input>
@@ -58,11 +60,16 @@
     
 </template>
 <script>
+
 export default {
+    
     data(){
       return{
         Addressdialog:false,
+        singleMax:'',
+        singleMin:'',
         coinList:[],
+        feeValue:'',
         allCoin:[],//所有币种
         coinId:'',
         coinName:'',
@@ -83,34 +90,63 @@ export default {
     mounted () {
         this.getCoin()
     },
+    filters: {
+    //保留2位小数点过滤器 不四舍五入
+    carryNumber(value) {
+      var toFixedNum = Number(value).toFixed(3);
+      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1);
+      console.log(realVal,'realVal')
+      return realVal;
+    }
+  },
     watch: {
-       carryNumber(newVal, oldVal) {
-           console.log(newVal, oldVal,'00====>')
-      const numReg = /^\d+(?:\.\d{1,4})?$/;
-      if (numReg.test(newVal) && newVal.toString().length <= 15) {
-        this.carryNumber =this.toNumber(newVal);
-      } else if (newVal == '') {
-        this.carryNumber = 0;
-      } else {
-        this.carryNumber = oldVal;
-      }
-    } 
+    //    carryNumber(newVal, oldVal) {
+    //        console.log(newVal, oldVal,'00====>')
+    //   const numReg = /^\d+(?:\.\d{1,4})?$/;
+    //   if (numReg.test(newVal) && newVal.toString().length <= 15) {
+    //     this.carryNumber =this.toNumber(newVal);
+    //   } else if (newVal == '') {
+    //     this.carryNumber = 0;
+    //   } else {
+    //     this.carryNumber = oldVal;
+    //   }
+    // } 
     },
-    
+  
     methods: {
+        getfee(){
+            if(this.form.coinType==''){
+                   this.$message({
+					          message: '币种不能为空',
+					          type: 'warning'
+                        });
+                       
+                        return 
+            }
+          console.log(typeof(this.singleMax),this.singleMin,this.singleMax,this.carryNumber,this.carryNumber>this.singleMax,'singleMin')
+            if(this.carryNumber<Number(this.singleMin)){
+                this.$message({
+                message: "提币数量不能小于最小提币数量",
+                type: "warning"
+              });
+               return 
+            }
+            if(this.carryNumber>Number(this.singleMax)){
+                this.$message({
+                message: "提币数量不能大于最大提币数量",
+                type: "warning"
+              });
+            }
+            this.form.poundage=this.carryNumber*this.feeValue
+            console.log(this.form.poundage,'this.form.poundage')
+        },
             toNumber(s) {
       s = s.toString();
       s = s.replace(/^0+\./,'0.');
       s = s.replace(/^0+([0-9])/,'$1');
       return s;
     },
-     
-      getfee() {
-        this.finalfee = this.feeValue * this.form.coinNum
-        if(this.coinNum == ''){
-           this.finalfee = ''
-        }
-      },
+
       selectAddress(val){
         var addressInfo=val.toString().split(',')
         this.form.address=addressInfo[1]
@@ -155,10 +191,13 @@ export default {
          //选择币种
         getCoinId(val){
             this.form.address=''
+             this.carryNumber=''
             var coinInfo = val.toString().split(',')
             this.coinId = coinInfo[0] 
             this.coinName = coinInfo[1]
             this.feeValue = coinInfo[2];
+            this.singleMin = coinInfo[3];
+            this.singleMax = coinInfo[4];
             this.$api.walistByUserId({coinKey:this.coinName}).then(res=>{
                this.coinList=res.datas
             })
@@ -175,12 +214,38 @@ export default {
         getCoin(){
             this.$api.all().then(res=>{
                 console.log(res,'查询币种')
+             
                this.allCoin=res.datas
             })
         },
        //转出
        carryCoin(){
-           this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.carryNumber}).then(res=>{
+           if(this.coinId==''){
+               this.$message({
+					          message: '币种不能为空',
+					          type: 'warning'
+		        		});
+           }
+           if(this.form.code==''){
+               this.$message({
+					          message: '谷歌验证码不能为空',
+					          type: 'warning'
+		        		});
+           }
+            if(this.form.address==''){
+               this.$message({
+					          message: '转出地址不能为空',
+					          type: 'warning'
+		        		});
+           }
+            if(this.carryNumber==''){
+               this.$message({
+					          message: '转出数量不能为空',
+					          type: 'warning'
+		        		});
+           }
+           if(this.coinId&&this.form.code&&this.form.password&&this.form.address&&this.carryNumber){
+                         this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.carryNumber}).then(res=>{
                console.log(res,'88888++++++转出')
                if(res.message=='成功'){
                   window.location.reload();
@@ -192,6 +257,8 @@ export default {
 		        		});
                }
            })
+           }
+ 
        }
     }
 }

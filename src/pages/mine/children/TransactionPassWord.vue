@@ -5,13 +5,13 @@
                 <div class="form-wrapper" v-if="!show">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="登录密码">
-                        <el-input v-model="form.loginPassword" type="password"></el-input>
+                        <el-input @input="validate" v-model="form.loginPassword" :type="inputType"></el-input><img src="@/assets/images/show.png" alt="" @click="change">
                     </el-form-item>
                      <el-form-item label="设置交易密码">
-                        <el-input v-model="form.tranPassword"  type="password"></el-input>
+                        <el-input @input="validate" v-model="form.tranPassword"  :type="inputType1"></el-input><img src="@/assets/images/show.png" alt="" @click="change1">
                     </el-form-item>
                      <el-form-item label="确认交易密码">
-                        <el-input v-model="form.confirmPassword"  type="password"></el-input>
+                        <el-input @input="validate" v-model="form.confirmPassword"  :type="inputType2"></el-input><img src="@/assets/images/show.png" alt="" @click="change2">
                     </el-form-item>
                     
                     <div  class="bottom-btn" @click="setTradePassword">确定</div>
@@ -21,13 +21,13 @@
               <div class="form-wrapper" v-if="show">
                 <el-form ref="form" :model="form" label-width="80px" >
                     <el-form-item label="新密码">
-                        <el-input v-model="form.newPassword" type="password"></el-input>
+                        <el-input @input="validate" v-model="form.newPassword" :type="inputType" ></el-input><img src="@/assets/images/show.png" alt="" @click="change">
                     </el-form-item>
                      <el-form-item label="确认新密码">
-                        <el-input v-model="form.confirmPassword_" type="password"></el-input>
+                        <el-input @input="validate" v-model="form.confirmPassword_" :type="inputType1"></el-input><img src="@/assets/images/show.png" alt="" @click="change1">
                     </el-form-item>
                      <el-form-item label="谷歌验证码">
-                        <el-input v-model="form.code" placeholder="谷歌验证码为6位纯数字"></el-input>
+                        <el-input v-model="form.code" placeholder="谷歌验证码为6位纯数字" type="number"  oninput="if(value.length>6)value=value.slice(0,6)"></el-input>
                     </el-form-item>
                     
                     <div  class="bottom-btn" @click="reset">确定</div>
@@ -44,6 +44,9 @@ import validate  from '@/assets/js/validate'
 export default {
     data(){
         return{
+               inputType:'password',
+               inputType1:'password',
+            inputType2:'password',
             show:false,
             tradePassword:'',
             loginPassword:'',
@@ -64,6 +67,38 @@ form: {
     //    this.loginPassword=localStorage.getItem('loginPassword') 
     },
     methods: {
+                validate(x){
+            this.$nextTick(x => {
+                this.form.tranPassword = this.form.tranPassword.replace(/\W+/g, '');
+                this.form.loginPassword = this.form.loginPassword.replace(/\W+/g, '');
+                this.form.confirmPassword = this.form.confirmPassword.replace(/\W+/g, '');
+                this.form.tranPassword = this.form.tranPassword.replace(/\W+/g, '');
+                this.form.confirmPassword_ = this.form.confirmPassword_.replace(/\W+/g, '');
+                this.form.newPassword = this.form.newPassword.replace(/\W+/g, '');
+               
+            })
+        },
+        change(){
+             if(this.inputType=='password'){
+                this.inputType='text'
+                return 
+            }
+            this.inputType='password'
+        },
+         change1(){
+             if(this.inputType1=='password'){
+                this.inputType1='text'
+                return 
+            }
+            this.inputType1='password'
+        },
+          change2(){
+             if(this.inputType2=='password'){
+                this.inputType2='text'
+                return 
+            }
+            this.inputType2='password'
+        },
         getUserInfo(){
             this.$api.getValidateById().then(res=>{
                 console.log(res,'我是用户信息')
@@ -234,7 +269,13 @@ form: {
 }
 </script>
 <style lang="less" scoped>
-.wrapper{padding: 0 20px}
+.wrapper{padding: 0 20px;
+img{position: relative;cursor: pointer;
+    left: -28px;
+    width: 18px;
+    top: 3px;
+}
+}
 .text-o{font-size: 13px;
 color: #FF9535;}
  .title{
