@@ -4,7 +4,7 @@
         <div class="member-title">
           <h1>我的资产</h1>
            <div class="member-total">
-            <div class="member-assets">总资产折合≈{{mineTotal}} BTC<i><b></b></i></div>
+            <div class="member-assets">总资产折合≈{{mineTotal | decimal(8)}} BTC<i><b></b></i></div>
              <div @click="showRecord" class="button button-min" ><i class="ico ico-order"></i>提币&充币记录</div>
              </div>
         </div>

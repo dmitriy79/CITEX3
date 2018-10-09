@@ -36,6 +36,15 @@
                 
             </div>
         </div>
+            <el-dialog title="提示" :visible.sync="tradeDialog" width="30%">
+                <div class="txt-c">交易密码设置成功,为了您的账号安全</div>
+                <div class="txt-c">及找回请设置谷歌验证码</div>
+             
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary"> <router-link to="/mine/google-authenticator">  设置谷歌验证码</router-link> </el-button>
+        <el-button  @click="tradeConfirm" :plain="true" >暂不设置</el-button>
+      </div>
+    </el-dialog>
     </div>
 </template>
 <script>
@@ -44,6 +53,7 @@ import validate  from '@/assets/js/validate'
 export default {
     data(){
         return{
+            tradeDialog:false,
                inputType:'password',
                inputType1:'password',
             inputType2:'password',
@@ -67,6 +77,10 @@ form: {
     //    this.loginPassword=localStorage.getItem('loginPassword') 
     },
     methods: {
+        tradeConfirm(){
+            this.tradeDialog=false
+            this.show=true
+        },
                 validate(x){
             this.$nextTick(x => {
                 this.form.tranPassword = this.form.tranPassword.replace(/\W+/g, '');
@@ -200,11 +214,15 @@ form: {
             if(this.form.loginPassword&&this.form.tranPassword&&(this.form.confirmPassword==this.form.tranPassword)){
                     this.$api.setTradePassword({userPassword:this.form.loginPassword,tradePassword:this.form.tranPassword}).then(res=>{
                 if(res.message=='成功'){
-                    this.$message({
-                    message: res.message,
-                    type: 'success'
-                    });
-                    this.show=true
+                    this.tradeDialog=true
+                    // this.$message({
+                    // message: res.message,
+                    // type: 'success'
+                    // });
+                    // if(!this.tradeDialog){
+                    //     this.show=true
+                    // }
+
                 
                 }
                 else{
@@ -249,6 +267,7 @@ form: {
                 message: '交易密码修改成功',
                 type: 'success'
                 }); 
+               
                 this.form={
                     newPassword:'',
                     confirmPassword_:'',
@@ -269,6 +288,8 @@ form: {
 }
 </script>
 <style lang="less" scoped>
+.dialog-footer,.txt-c{text-align: center}
+.txt-c{line-height: 25px}
 .wrapper{padding: 0 20px;
 img{position: relative;cursor: pointer;
     left: -28px;

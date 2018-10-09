@@ -58,7 +58,7 @@
 
                <div class="upload-wrapper" v-if="isShow1"><!--v-if="!isShow"-->
           
-            <div class="mark">注：请确保照片的内容完整并清晰可见，仅支持jpg图片格式。</div>
+            <div class="mark">注：请确保照片的内容完整并清晰可见，支持jpg，JPEG，png图片格式。</div>
             <div class="identity-wrapper" v-if="showImg">  <!-- v-if="showImg"-->
               <div class="content" >
                 <div  class="content-item">
@@ -491,6 +491,7 @@ export default {
     },
     //确认上传图片
     confirm(){
+      console.log(this.imgUrl1,'this.imgUrl1')
       if(this.reginVal==1){
         this.fontAddress=this.imgUrl1
         this.backAddress=this.imgUrl2
@@ -542,7 +543,7 @@ export default {
                 }); 
       }
       }
-      if(this.fontAddress&&his.backAddress&&this.handAddress){
+      if(this.fontAddress&&this.backAddress&&this.handAddress){
         this.$api.saveIdtyImage({
         id_card_front:this.fontAddress,
         id_card_back:this.backAddress,
@@ -556,7 +557,12 @@ export default {
             this.isShow1=false
             this.assessing=true
           }
-          
+          else{
+                  this.$message({
+                message: res.message,
+                type: "warning"
+                }); 
+          }
       })
       }
       

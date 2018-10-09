@@ -127,7 +127,7 @@
                      <el-table :data="historyEntrust" style="width: 100%" :row-class-name="setClassName">
                      <el-table-column  label="时间" width="170">
                        <template slot-scope="scope">
-                           <span>{{scope.row.updatatime | dateTime-format}}</span>
+                           <span>{{scope.row.updateTime | dateTime-format}}</span>
                         </template>
 
                      </el-table-column>
@@ -177,7 +177,7 @@
                   <span>手续费</span>
             </dt>
               <dd>
-                  <span>{{props.row.createTime|dateTime-format}}</span>
+                  <span>{{props.row.updateTime|dateTime-format}}</span>
                   <span>{{props.row.price}}</span>
                   <span>{{props.row.amount}}</span>
                   <span>{{(props.row.amount-props.row.leftAmount)*props.row.price}}</span>
@@ -340,6 +340,7 @@ export default {
       }
     },
     tab(item) { 
+      this.form.name=''
       if (item == "current") {
         this.currentIndex=1
         this.getInfo()

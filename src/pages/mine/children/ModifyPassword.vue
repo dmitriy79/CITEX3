@@ -111,6 +111,7 @@ export default {
                  if(res.message=='成功'){
                     localStorage.removeItem("token")
                     this.$router.push({path: '/login'});
+                     window.location.reload();
                 }  
                 else{
                       this.$message({

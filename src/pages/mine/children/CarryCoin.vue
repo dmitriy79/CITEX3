@@ -23,7 +23,7 @@
                     </el-form-item>
                      <el-form-item label="转出数量">
                          <span style="display:none">{{feeValue}}</span>
-                        <el-input v-model="carryNumber" type="number" @input="getfee"  oninput="if(value.length>16)value=value.slice(0,16)"></el-input>
+                        <el-input v-model="carryNumber" type="number" @input="getfee"  oninput="if(value.length>15)value=value.slice(0,15)"></el-input>
                         <span>转出数量范围：{{singleMin}}-{{singleMax}}</span>
                     </el-form-item>
                      <el-form-item label="转出手续费">
@@ -90,31 +90,18 @@ export default {
     mounted () {
         this.getCoin()
     },
-    filters: {
-    //保留2位小数点过滤器 不四舍五入
-    carryNumber(value) {
-      var toFixedNum = Number(value).toFixed(3);
-      var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1);
-      console.log(realVal,'realVal')
-      return realVal;
-    }
-  },
+
     watch: {
-    //    carryNumber(newVal, oldVal) {
-    //        console.log(newVal, oldVal,'00====>')
-    //   const numReg = /^\d+(?:\.\d{1,4})?$/;
-    //   if (numReg.test(newVal) && newVal.toString().length <= 15) {
-    //     this.carryNumber =this.toNumber(newVal);
-    //   } else if (newVal == '') {
-    //     this.carryNumber = 0;
-    //   } else {
-    //     this.carryNumber = oldVal;
-    //   }
-    // } 
+
     },
   
     methods: {
-        getfee(){
+        getfee(x){
+           
+            this.$nextTick(x => {
+                this.carryNumber = Number(this.carryNumber).toFixed(9).slice(0,-1)-0.0
+            })
+                  
             if(this.form.coinType==''){
                    this.$message({
 					          message: '币种不能为空',
@@ -241,6 +228,12 @@ export default {
             if(this.carryNumber==''){
                this.$message({
 					          message: '转出数量不能为空',
+					          type: 'warning'
+		        		});
+           }
+           if(this.form.password==''){
+               this.$message({
+					          message: '交易密码不能为空',
 					          type: 'warning'
 		        		});
            }
