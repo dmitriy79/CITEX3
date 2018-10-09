@@ -20,7 +20,7 @@
         <dd v-for="(item, index) in AskList.slice(0, maxNum)" @click='togglePrice(item.price)'>
           <span>卖{{ index + 1 }}</span>
           <span>{{ item.price }}</span>
-          <span>{{ item.count }}</span>
+          <span>{{ item.totalCount }}</span>
           <span>{{ item.dealCount }}</span>
         </dd>
       </dl>
@@ -31,7 +31,7 @@
         <dd v-for="(item, index) in BidList.slice(0, maxNum)" @click='togglePrice(item.price)'>
           <span>买{{ index + 1 }}</span>
           <span>{{ item.price }}</span>
-          <span>{{ item.count }}</span>
+          <span>{{ item.totalCount }}</span>
           <span>{{ item.dealCount }}</span>
         </dd>
       </dl>
