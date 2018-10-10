@@ -18,7 +18,7 @@
                      <!-- <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
-                    v-model="currentPrcie"> -->
+                    v-model="currentPrice"> -->
                     <span class="unit">{{zoneName}}</span>
                 </div>
                <div class="buy-num">
@@ -195,9 +195,9 @@ export default {
         this.sellNums = oldVal;
       }
     },
-    currentPrcie(val) {
-      this.buyPrice = val;
-      this.sellPrice = val;
+    currentPrice(val) {
+      this.buyPrice = val[0];
+      this.sellPrice = val[1];
     },
   },
   mounted() {
@@ -209,7 +209,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("trading", ["tradingAssets", "currentPrcie", "curbuyPrice", "cursellPrice"]),
+    ...mapState("trading", ["tradingAssets", "currentPrice", "curbuyPrice", "cursellPrice"]),
     ...mapState(["zoneName", 'marketInfo']),
   },
   methods: {

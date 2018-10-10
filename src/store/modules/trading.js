@@ -14,7 +14,7 @@ const state = {
     AskList: [], //卖单
     BidList: [], //买单 
     historyList: [],
-    currentPrcie: '', //交易区当前价格
+    currentPrice: '', //交易区当前价格
     klineCurrent: null,
     step: '1min',
     curbuyPrice: '',
@@ -129,7 +129,7 @@ const actions = {
         rootState,
         state
     }, params) {
-        state.currentPrcie = params.currentPrice
+        state.currentPrice = [params.currentPrice, params.currentPrice]
     },
     testClick({
         commit,
@@ -334,7 +334,7 @@ const mutations = {
                     state.AskList = res.ask || [];
                     state.BidList = res.bid || [];
                     state.BidList.reverse();
-                    state.currentPrcie = res.bid[0].price;
+                    state.currentPrice = [res.bid[0].price, res.ask[0].price];
                 },
                 fail: (res) => {
                     createAskBid();
