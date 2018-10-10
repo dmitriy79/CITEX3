@@ -196,8 +196,8 @@ export default {
       }
     },
     currentPrice(val) {
-      this.buyPrice = val[0];
-      this.sellPrice = val[1];
+      this.buyPrice = val[1];
+      this.sellPrice = val[0];
     },
   },
   mounted() {
