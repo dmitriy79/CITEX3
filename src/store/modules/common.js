@@ -1,5 +1,28 @@
 import api from '../../api'
 import Axios from 'axios'
+const webSocket = api.socket
+function guid() {    
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
+        return v.toString(16);   
+    });
+}
+function coinStarFilter(data) {
+  let token = localStorage.getItem('token');
+  if (!token) {
+    let star = localStorage.getItem('star') || '[]';
+    star = JSON.parse(star);
+    data.map(zone => {
+      zone.list.map(coin => {
+        let index = star.findIndex(item => item.id == coin.id);
+        if (index >= 0) {
+          coin.collect = true;
+        }
+      });
+    });
+  }
+  return data;
+}
 export default {
   state: {
     pageLoading: false,
@@ -19,21 +42,7 @@ export default {
       api.getTradeInfo().then(res=>{
         let datas = res.datas
         if (datas) {
-          // allCoin 的本地处理
-          let token = localStorage.getItem('token');
-          if (!token) {
-            let star = localStorage.getItem('star') || '[]';
-            star = JSON.parse(star);
-            datas.map(zone => {
-              zone.list.map(coin => {
-                let index = star.findIndex(item => item.id == coin.id);
-                if (index >= 0) {
-                  coin.collect = true;
-                }
-              });
-            });
-          }
-          state.allCoin = datas;
+          state.allCoin = coinStarFilter(datas);
           if (params.pair) {
             var [coinName, zoneName] = params.pair.split('_');
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
@@ -54,6 +63,15 @@ export default {
           // })
         }
       });
+      new webSocket({
+        url: `websocketDealPrice?uuid=${guid()}`,
+        data: 'sendParams',
+        success: (datas) => {
+          state.allCoin = coinStarFilter(datas);
+        },
+        fail: (res) => {
+        }
+      })
     },
     //收藏币种
     favoriteCoin({

@@ -695,7 +695,10 @@ export default {
           }
           this_vue.$store.dispatch('trading/getKline', {
             resolution,
-            callback: (result) => onHistoryCallback(result)
+            callback: (result) => {
+              onHistoryCallback(result);
+              this_vue.chart.activeChart().resetData();
+            }
           })
         } else {
           onHistoryCallback([], {

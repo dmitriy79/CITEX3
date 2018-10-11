@@ -24,6 +24,13 @@ const state = {
 const getters = {
 
 }
+
+function guid() {    
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
+        return v.toString(16);   
+    });
+}
 // id 指的交易对 id, coinId 指币种id
 const actions = {
     //initTrading
@@ -384,12 +391,6 @@ const mutations = {
             state.klineHistory = kline;
             callback && callback(kline);
         });
-        function guid() {    
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {     
-                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);       
-                return v.toString(16);   
-            });
-        }
         var uuid = guid();
 
         function createKline() {
@@ -402,18 +403,23 @@ const mutations = {
                     var currentkline = []
                     if (res.list.length) {
                         res.list.forEach(function(bar) {
-                            currentkline.push({
+                            let lastBar = state.klineHistory[state.klineHistory.length - 1];
+                            let currentBar = {
                                 time: Number(bar.startTime),
                                 open: Number(bar.openPrice),
                                 close: Number(bar.closePrice),
                                 high: Number(bar.topPrice),
                                 low: Number(bar.floorPrice),
                                 volume: Number(bar.total)
-                            });
+                            };
+                            if (lastBar.time == currentBar.time) {
+                                state.klineHistory[state.klineHistory.length - 1] = currentBar;
+                            } else {
+                                state.klineHistory.push(currentBar)
+                            }
                         });
                     }
-                    state.klineCurrent = currentkline[0];
-                    state.klineHistory.push(currentkline[0]);
+                    state.klineCurrent = state.klineHistory[state.klineHistory.length - 1];
                     callback && callback(state.klineHistory);
                 },
                 fail: (res) => {

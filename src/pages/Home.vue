@@ -82,9 +82,6 @@ export default {
   },
   created() {
     this.$store.dispatch("initTradingList", {});
-    this.interval = setInterval(() => {
-      this.$store.dispatch("initTradingList", {});
-    }, 10000);
     this.$store.dispatch("home/initHome")
     this.$store.dispatch("home/officaliCycle")
   },
