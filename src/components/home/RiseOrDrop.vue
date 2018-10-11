@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     jumpToTrade(item) {
-      this.$router.push(`/transaction/${item.trade_coin_short_name}_${item.unit_coin_short_name}`)
+      this.$router.push(`/transaction/${item.name}_${item.zoneCoinName}`)
     }
   }
 }
