@@ -7,8 +7,8 @@
         </div>
         <ul>
       <li v-for="(item,index) in dealOrder.up" v-if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type" @click="jumpToTrade(item)">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
-            <div class="rate green">{{item.range | decimal(2)}}%<i class="ico-ups"></i></div>
+            <div class="type" @click="jumpToTrade(item)">{{item.name}}/{{item.zoneCoinName}}</div>
+            <div class="rate green">{{item.increase_24H | decimal(2)}}%<i class="ico-ups"></i></div>
           </li>
         </ul>
       </div>
@@ -18,8 +18,8 @@
         </div>
         <ul>
            <li v-for="(item,index) in dealOrder.fall" v-if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type" @click="jumpToTrade(item)">{{item.trade_coin_short_name}}/{{item.unit_coin_short_name}}</div>
-            <div class="rate red">-{{item.range | decimal(2)}}%<i class="ico-downs"></i></div>
+            <div class="type" @click="jumpToTrade(item)">{{item.name}}/{{item.zoneCoinName}}</div>
+            <div class="rate red">-{{item.increase_24H | decimal(2)}}%<i class="ico-downs"></i></div>
           </li>
          
         </ul>
