@@ -18,17 +18,19 @@
                       <th>未成交数量</th>
                       <th v-if="this.active==0">操作</th>
                     </tr>
-                    <tr v-for='item of orderData.list'>
-                      <td>{{item.updateTime | dateTime-format }}</td>
-                      <td>{{item.bidOrSell==0?'卖':'买'}}</td>
-                      <td>{{status[item.matchStatus]}}</td>
-                      <td>{{item.price}}</td>
-                      <td>{{item.amount}}</td>
-                      <td>{{item.leftAmount}}</td>
-                      <td v-if="active==0">
-                        <span class="button-min" @click='cancelOrder(item.id, item.bidOrSell)'>撤单</span>
-                      </td>
-                    </tr>
+                    <template v-if="orderData && orderData.list">
+                      <tr v-for='item of orderData.list'>
+                        <td>{{item.updateTime | dateTime-format }}</td>
+                        <td>{{item.bidOrSell==0?'卖':'买'}}</td>
+                        <td>{{status[item.matchStatus]}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.leftAmount}}</td>
+                        <td v-if="active==0">
+                          <span class="button-min" @click='cancelOrder(item.id, item.bidOrSell)'>撤单</span>
+                        </td>
+                      </tr>
+                    </template>
                 </table>
                 
             </dl>

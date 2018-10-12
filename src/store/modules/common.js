@@ -39,30 +39,6 @@ export default {
       commit,
       state
     }, params) {
-      api.getTradeInfo().then(res=>{
-        let datas = res.datas
-        if (datas) {
-          state.allCoin = coinStarFilter(datas);
-          if (params.pair) {
-            var [coinName, zoneName] = params.pair.split('_');
-            let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
-            let [coin] = zone.list.filter( item => item.name == coinName);
-            var coinId = coin.id;
-            state.marketInfo = coin;
-            state.zoneName = zone.zoneCoinName;
-            state.zoneCoinId = zone.zoneCoinId;
-          } else {
-            state.marketInfo = datas[0].list[0];
-            state.zoneName = datas[0].zoneCoinName;
-            state.zoneCoinId = datas[0].zoneCoinId;
-          }
-          params.callback && params.callback();
-          // commit('toggleTrading', {
-          //   id: coinId,
-          //   callback: params.callback
-          // })
-        }
-      });
       new webSocket({
         url: `websocketDealPrice?uuid=${guid()}`,
         data: 'sendParams',
@@ -73,9 +49,14 @@ export default {
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
             let [coin] = zone.list.filter( item => item.name == coinName);
             state.marketInfo = coin;
+            state.zoneName = zone.zoneCoinName;
+            state.zoneCoinId = zone.zoneCoinId;
           } else {
             state.marketInfo = datas[0].list[0];
+            state.zoneName = datas[0].zoneCoinName;
+            state.zoneCoinId = datas[0].zoneCoinId;
           }
+          params.callback && params.callback();
         },
         fail: (res) => {
         }
