@@ -7,8 +7,7 @@
             <div class="coin-type">
               <span class="type" @click="jumpToTrade(item.name)">{{item.name}}</span>
               <span class="rate red" :class="{green : item.increase}">
-                {{item.increase ? '+' : '-'}}
-                {{item.increaseNum | decimal(2)}}%
+                {{item.increase ? '+' : '-'}}{{item.increaseNum | decimal(2)}}%
               </span>
             </div>
             <div class="price">{{item.price}}</div>
