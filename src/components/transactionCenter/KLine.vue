@@ -770,9 +770,9 @@ export default {
     }
   },
   watch: {
-    marketInfo: function(newVal, oldVal) {
-      this.currency1 = newVal[0];
-      this.currency2 = newVal[1];
+    '$route.params.pair': function(newVal, oldVal) {
+      this.currency1 = newVal.split('_')[0];
+      this.currency2 = newVal.split('_')[1];
       this.createKline();
       // this.changePair();
     },

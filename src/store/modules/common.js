@@ -68,6 +68,14 @@ export default {
         data: 'sendParams',
         success: (datas) => {
           state.allCoin = coinStarFilter(datas);
+          if (params.pair) {
+            var [coinName, zoneName] = params.pair.split('_');
+            let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
+            let [coin] = zone.list.filter( item => item.name == coinName);
+            state.marketInfo = coin;
+          } else {
+            state.marketInfo = datas[0].list[0];
+          }
         },
         fail: (res) => {
         }
