@@ -83,18 +83,22 @@ const mutations = {
     let indexData = [
       api.listByType({type: 1}), //banner
       api.list({pageNum: 1,pageSize: 10}), //公告列表
-      api.getTopTradeCoinPairs({}) //首页排行
     ]
     axios.all(indexData)
       .then(res => {
         console.log(res,'首页list========》》》》')
         state.banner = res[0].datas
         state.official = res[1].datas.list
-        state.coinList = res[2].datas
         return res
       }).catch(error => {
         console.log("error===>", error)
       })
+    new webSocket({
+      url: 'websocketTopTradePairs',
+      success: (res) => {
+        state.coinList = res;
+      }
+    })
   }
 }
 export default {
