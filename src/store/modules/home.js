@@ -72,12 +72,8 @@ const mutations = {
     let rankList = new webSocket({
       url:'websocketRankingList',
       data:'',
-      success:(res)=>{
-        console.log(res)
-        let dealOrder = {}
-        dealOrder.fall = JSON.parse(res.fall)
-        dealOrder.up = JSON.parse(res.up)
-        state.dealOrder = dealOrder
+      success:(data)=>{
+        state.dealOrder = data
       }
     })
     let indexData = [
