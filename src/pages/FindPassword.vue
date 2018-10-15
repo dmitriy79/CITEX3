@@ -144,7 +144,13 @@
         });
         return;
       }
-      
+      if(this.code==''){
+          this.$message({
+          message: '邮箱验证码不能为空',
+          type: 'warning'
+        });
+        return;
+      }
       let passMsg = valid.isPasswordValid(this.passWord);
       if (passMsg) {
         this.$message({
@@ -155,7 +161,8 @@
       }
 
       this.blurConfirmPassword()
-      this.$api.forgetPassword({email: this.email,
+      if(this.email&&this.passWord&&this.code){
+         this.$api.forgetPassword({email: this.email,
         passWord: this.passWord,
         code: this.code,
       }).then(res=>{
@@ -164,6 +171,8 @@
           this.$router.push({ path: "/Login" });
         }
       })
+      }
+     
     }
   }
 }

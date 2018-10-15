@@ -1,7 +1,7 @@
 const valid = {
   isEmailValid(email) {
     if (email) {
-      var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      var regEmail =/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
       return regEmail.test(email) ? '' : '请输入正确的邮箱';
     }
     return '请输入邮箱';

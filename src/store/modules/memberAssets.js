@@ -45,7 +45,7 @@ const mutations = {
                 element.state='待确认'
             }
             else if(element.state==1){
-                element.state='已确认'
+                element.state='充值成功'
             }
             else{
                 element.state='无主'
@@ -58,21 +58,21 @@ const mutations = {
     },
     //提币记录
     carrycoinRecord(state,params){
-        api.wrlistByUserId({pageNum:params,pageSize:12})
+        api.wrlistByUserIdTwo({pageNum:params,pageSize:12})
         .then(res=>{
             res.datas.list.forEach(element=>{
                 // element.createTime = element.createTime| date-format
-                if(element.state==-1){
-                    element.status='未通过' 
+                if(element.status==-1){
+                    element.status='驳回' 
                 }
-                if(element.state==0){
-                    element.status='未审核'
+                if(element.status==0||element.status==1){
+                    element.status='审核中'
                 }
-                else if(element.state==1){
-                    element.status='已审核'
+                else if(element.status==2){
+                    element.status='提币成功'
                 }
                 else{
-                    element.status='已确认'
+                    element.status='已撤销'
                 }
             })
           

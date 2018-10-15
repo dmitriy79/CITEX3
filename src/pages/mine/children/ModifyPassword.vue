@@ -106,7 +106,7 @@ export default {
                 type: 'warning'
                 });
             } 
-           if(this.oldPassword&&this.newPassword&&(this.confirmPassword==this.newPassword)&&this.code){
+           if(regExp.test(this.oldPassword)&&this.oldPassword&&regExp.test(this.newPassword)&&this.newPassword&&(this.confirmPassword==this.newPassword)&&this.code){
                this.$api.reset({userPassword:this.newPassword,oldUserPassword:this.oldPassword,code:this.code}).then(res=>{
                  if(res.message=='成功'){
                     localStorage.removeItem("token")

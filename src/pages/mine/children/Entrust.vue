@@ -191,7 +191,7 @@
       </template>
     </el-table-column>
   </el-table>
-                <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage" :current-page.sync="pageIndex"
+                <el-pagination v-show="currentTotal || currentTotal>0"	@current-change="Changepage_" :current-page.sync="pageIndex_"
        		 :page-size="pageSize" :total="currentTotal"  background layout="total,prev, pager, next" >	</el-pagination>
                 </div>
             </div>
@@ -209,6 +209,7 @@ export default {
       pageIndex_:1,//历史委托默认显示页数
       historyTotal:0,
       currentTotal: 0, //当前委托分页总数
+      historytTotal:0,//历史委托分页总数
       currentIndex: 1, //当前委托 还是历史委托
     bidOrAsk_:0,//当前方向 买或者卖 历史委托
       bidOrAsk:0,//当前方向 买或者卖 当前委托
@@ -282,9 +283,11 @@ export default {
         searchCoin(){
           if(this.currentIndex==1){
         this.bidOrAsk=this.bidOrAsk
+        this.pageIndex=this.pageIndex
       }
       else{
         this.bidOrAsk=this.bidOrAsk_
+        this.pageIndex_=this.pageIndex_
       }
       this.$api
         .listBidOrders({ type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk,unCoinId:this.tradeCoinPairId ,tradeCoinNameShort:this.form.name})
@@ -324,12 +327,18 @@ export default {
       this.$api
         .listBidOrders({ type: this.currentIndex, pageNum: this.pageIndex, pageSize: 10,bidOrAsk:this.bidOrAsk })
         .then(res => {
-          var EntrustList = res.datas.list;
-          this.currentTotal=EntrustList.total
+          console.log(res,this.currentIndex,'-========>res======>')
+   
           this.currentEntrust = res.datas.list;
           this.historyEntrust=res.datas.list;
-          this.currentTotal = res.datas.total;
-          console.log(res, "我的委托");
+          
+            this.currentTotal = res.datas.total;
+          
+     
+            this.historyTotal = res.datas.total;
+          
+       
+          console.log(res, this.currentTotal,this.historyTotal,"我的委托");
         });
     },
     setClassName1({ row, index }) {

@@ -211,7 +211,7 @@ form: {
             }
 
            
-            if(this.form.loginPassword&&this.form.tranPassword&&(this.form.confirmPassword==this.form.tranPassword)){
+            if(this.form.loginPassword&&regExp.test(this.form.loginPassword)&&this.form.tranPassword&&regExp.test(this.form.tranPassword)&&(this.form.confirmPassword==this.form.tranPassword)){
                     this.$api.setTradePassword({userPassword:this.form.loginPassword,tradePassword:this.form.tranPassword}).then(res=>{
                 if(res.message=='成功'){
                     this.tradeDialog=true
@@ -259,7 +259,7 @@ form: {
                 type: 'warning'
                 });
             } 
-            if(this.form.newPassword&&(this.form.newPassword==this.form.confirmPassword_)){
+            if(this.form.code&&this.form.newPassword&&regExp.test(this.form.newPassword)&&(this.form.newPassword==this.form.confirmPassword_)){
                 this.$api.reset({tradePassword:this.form.newPassword,code:this.form.code}).then(res=>{
                 console.log(res,'我是修改后的交易密码')
                 if(res.message=='成功'){

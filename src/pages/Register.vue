@@ -85,6 +85,7 @@ export default {
     },
     //邮箱验证
     sendEmail() {
+      
       let msg = valid.isEmailValid(this.email);
       if (msg) {
         this.$message({
@@ -95,6 +96,7 @@ export default {
       }
       this.$refs.sendEmail.setAttribute('disabled', 'disabled')
       this.$refs.sendEmail.style.cursor = "not-allowed"
+      
       this.$api.emailCode({email: this.email}).then(res=>{
          if (res.message == '成功') {
           //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'

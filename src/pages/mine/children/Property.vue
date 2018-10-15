@@ -51,16 +51,16 @@
                                 <span>限额：<b>{{singleMax}}</b></span>
                             </div>
                         </div>
-                        <input type="number" v-model="coinNum" @keyup="getfee">
+                        <input type="number" v-model="coinNum" @keyup="getfee" step="0.01">
                     </div>
                     <div class="item"> 
                         <div class="item-input">
                             <div class="rate-text"><label class="name">手续费</label></div>
-                            <input type="number" v-model="finalfee" readonly>
+                            <input type="number" step="0.01" v-model="finalfee" readonly>
                         </div>
                          <div class="item-input">
                             <label class="name">到账数量</label>
-                            <input type="number" v-model="realNum" readonly>
+                            <input type="number" step="0.01" v-model="realNum" readonly>
                         </div>
 
                     </div>
@@ -216,7 +216,7 @@ export default {
       console.log(this.searchList)
     },
     coinNum(newVal, oldVal) {
-      const numReg = /^\d+(?:\.\d{1,4})?$/;
+      const numReg = /^\d+(?:\.\d{1,8})?$/;
       if (numReg.test(newVal) && newVal.toString().length <= 15) {
         this.coinNum = Math.min(this.toNumber(newVal), this.ableNum);
       } else if (newVal == '') {
@@ -289,9 +289,8 @@ export default {
     },
 
     getfee(){
-   
-        this.finalfee=this.feeValue*this.coinNum
-        this.realNum=this.coinNum- this.finalfee
+        this.finalfee=(this.feeValue*this.coinNum).toFixed(10)
+        this.realNum=(this.coinNum- this.finalfee).toFixed(10)
         if(this.coinNum==''){
            this.finalfee=''
            this.realNum=''

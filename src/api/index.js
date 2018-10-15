@@ -28,6 +28,7 @@ const apiList = [
   '/payment/userProperty/uplistByUserId', //我的资产
   '/payment/rechargeRecord/rrlistByUserId', //充币记录
   '/payment/withdrawRecord/wrlistByUserId', //提币记录
+  '/payment/withdrawRecord/wrlistByUserIdTwo', //提币记录
   '/payment/withdrawAddr/walistByUserId', //根据用户获取提币地址列表
   '/payment/withdrawAddr/add', //新增提币地址
   '/payment/withdrawAddr/update', //更新提币地址
