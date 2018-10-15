@@ -441,6 +441,7 @@ export default {
       display: flex;
           height: 32px;
     line-height: 32px;
+    margin-bottom: 20px;
       .left {
         span {
           padding: 3px 4px;
