@@ -31,6 +31,7 @@ import 'swiper/dist/css/swiper.css'
 import './assets/css/font.css'
 import './assets/css/iconfont.css'
 import './assets/css/common.less'
+import "./assets/css/reset.css" 
 
 
 import './utils/axios'
