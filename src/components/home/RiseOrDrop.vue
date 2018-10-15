@@ -8,7 +8,7 @@
         <ul>
       <li v-for="(item,index) in dealOrder.up" v-if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
             <div class="type" @click="jumpToTrade(item)">{{item.name}}/{{item.zoneCoinName}}</div>
-            <div class="rate green">{{item.increase_24H | decimal(2)}}%<i class="ico-ups"></i></div>
+            <div class="rate green">+{{item.increase_24H | decimal(2)}}%<i class="ico-ups"></i></div>
           </li>
         </ul>
       </div>
