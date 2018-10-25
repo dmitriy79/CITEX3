@@ -73,6 +73,7 @@ const mutations = {
       url:'websocketRankingList',
       data:'',
       success:(data)=>{
+        console.log(data,'我是涨跌幅排行。。。。。')
         state.dealOrder = data
       }
     })
