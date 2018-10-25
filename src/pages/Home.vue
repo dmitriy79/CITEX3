@@ -26,12 +26,18 @@
               <div class="img-wrap">
                 <img src="../assets/images/bottom.png" alt="">
               </div>
-              <div class="item-title">{{$t("home.col1title")}}</div>
-              <div class="info">{{$t("home.col1cont")}}
-                <!-- <p>使用用户遍布全球</p>
-                <p>支持多语言切换，多国家、地区使用</p>
-                <p>多个国家、地区组建团队运营</p> -->
+              <!-- <div class="item-title">{{$t("home.col1title")}}</div>
+              <p class="info">{{$t("home.col1cont")}}
+               
+              </p> -->
+              <div class="item-title">
+                <p>使用用户遍布全球</p>
               </div>
+                <div class="info">
+                    <p>支持多语言切换，多国家、地区使用</p>
+                    <p>多个国家、地区组建团队运营</p>
+                </div>
+                
             </div>
             <div class="item">
               <div class="img-wrap">
