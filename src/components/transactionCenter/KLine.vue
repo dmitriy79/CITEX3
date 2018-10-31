@@ -744,7 +744,6 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-
         if (!Object.keys(this_vue.klineCurrent).length === 0) {
           console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
           onRealtimeCallback(this_vue.klineCurrent)

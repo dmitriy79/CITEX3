@@ -39,6 +39,7 @@ export default {
       commit,
       state
     }, params) {
+      let inited = false;
       new webSocket({
         url: `websocketDealPrice?uuid=${guid()}`,
         data: 'sendParams',
@@ -57,7 +58,10 @@ export default {
             state.zoneName = datas[0].zoneCoinName;
             state.zoneCoinId = datas[0].zoneCoinId;
           }
-          params.callback && params.callback();
+          if (!inited) {
+            inited = true;
+            params.callback && params.callback();
+          }
         },
         fail: (res) => {
         }
