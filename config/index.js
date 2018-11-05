@@ -10,19 +10,19 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/coin": {
-        target: 'http://47.93.194.146/'
+        target: 'http://47.93.14.128/'
         // target: 'https://api.punchvip.cn/'
       },
       "/payment": {
-        target: 'http://47.93.194.146/'
+        target: 'http://47.93.14.128/'
         // target: 'https://api.punchvip.cn/'
       },
       "/trade": {
-        target: 'http://47.93.194.146/'
+        target: 'http://47.93.14.128/'
         // target: 'https://api.punchvip.cn/'
       },
       "/user": {
-        target: 'http://47.93.194.146/'
+        target: 'http://47.93.14.128/'
         // target: 'https://api.punchvip.cn/'
       }
     },

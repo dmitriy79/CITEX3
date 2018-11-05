@@ -13,12 +13,18 @@ export default class {
 			this.error('Error: WebSocket is not supported..')
       return
     }
-    let wsUri = `${process.env.WS_API}/scheduling/${arg.url}`
+    // let wsUri = `${process.env.WS_API}/scheduling/${arg.url}`
+    let wsUri = `${process.env.WS_API}/${arg.url}`
     this.websock = new WebSocket(wsUri)
     this.websock.onmessage = (resp = {}) => {
       try {
-        arg.success(JSON.parse(resp.data || "{}"))
+        if(resp.data){
+          arg.success(JSON.parse(resp.data || "{}"))
+        }
+        
+        console.log(resp.data,'resp.data====')
       } catch (e) {
+        // debugger
         console.error('json 解析失败, 数据为', resp)
       }
       console.log(wsUri, "====>WebSocket接收数据")
