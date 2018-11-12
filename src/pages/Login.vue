@@ -104,11 +104,12 @@
           });
           return;
         }
+       
         // var url = `/api/user/login`
         this.$api.login({
           userName: this.userName,
           passWord: this.passWord,
-          NECaptchaValidate: localStorage.getItem('registerYanzhengma')
+          // NECaptchaValidate: localStorage.getItem('registerYanzhengma')
         }).then(res => {
           var returnData = res.message
          

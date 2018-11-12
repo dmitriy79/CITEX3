@@ -24,7 +24,6 @@ export default class {
         
         console.log(resp.data,'resp.data====')
       } catch (e) {
-        // debugger
         console.error('json 解析失败, 数据为', resp)
       }
       console.log(wsUri, "====>WebSocket接收数据")

@@ -131,11 +131,12 @@ export default {
   },
 
   mounted() {
+    console.log(this.$route.params,'this.$route.params===111')
     this.$store.dispatch("initTradingList", {
       pair: this.$route.params.pair,
       callback: () => {
         this.inited = true;
-        this.$store.dispatch("trading/initTradings")
+        this.$store.dispatch("trading/initTradings",pair)
       }
     })
   },

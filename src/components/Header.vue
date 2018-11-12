@@ -19,8 +19,9 @@
       <li>
         <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">公告中心</a>
       </li>
-      <li v-if="this.token">
-        <router-link to="/mine/property" tag="div" v-if="this.token">{{userName}} </router-link>
+      <li v-if="this.token" >
+        <span @click="validate">{{userName}}</span>
+        <!-- <router-link to="/mine/property" tag="div" v-if="this.token">{{userName}} </router-link> -->
       </li>
       <!-- <li>
           <router-link to="/mine" tag="div"  v-if="this.token">{{userName}}</router-link>
@@ -66,6 +67,16 @@ export default {
     };
   },
   methods: {
+    validate(){
+       let token =localStorage.getItem("token")
+      if(token){
+       
+        this.$router.push({path:'/mine/property'})
+      }
+      else{
+         this.$router.push({path:'/'})
+      }
+    },
     //退出
     loginOut() {
       this.token = localStorage.removeItem("token");
@@ -103,7 +114,8 @@ export default {
 <style lang="less" scoped>
 .header-nav-right {
   li {
-    margin-right: 20px
+    margin-right: 20px;
+    cursor: pointer;
   }
 }
 

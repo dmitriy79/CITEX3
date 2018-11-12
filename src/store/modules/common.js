@@ -44,9 +44,10 @@ export default {
         url: `websocketDealPrice?uuid=${guid()}`,
         data: 'sendParams',
         success: (datas) => {
-          console.log(datas,params.pair,'websocketDealPrice=====>')
+          console.log(datas,params,params.pair,'websocketDealPrice33333=====>')
           state.allCoin = coinStarFilter(datas);
           if (params.pair) {
+           
             var [coinName, zoneName] = params.pair.split('_');
             let [zone] = state.allCoin.filter( item => item.zoneCoinName == zoneName);
             let [coin] = zone.list.filter( item => item.name == coinName);

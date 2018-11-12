@@ -170,6 +170,13 @@
         if (returnData == '成功') {
           this.$router.push({ path: "/Login" });
         }
+        else{
+           this.$message({
+          message: returnData,
+          type: 'warning'
+        });
+        }
+       
       })
       }
      
