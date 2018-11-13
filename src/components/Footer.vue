@@ -8,10 +8,10 @@
             </dl>
             <dl class="footer-nav-block">
                 <dt>联系我们</dt>
-                <dd>客服  support@ib.top</dd>
-                <dd>商务  business@ib.top</dd>
-                <dd>上币  listingcn@ib.top</dd>
-                <dd>QQ: 交流群3：300035855</dd>
+                <dd>客服  service@fortunebus.com</dd>
+                <dd>商务  service@fortunebus.com</dd>
+                <dd>上币  service@fortunebus.com</dd>
+                <dd>负责人: 杨少彬 13522592057</dd>
             </dl>
           </div>
           <div class="footer-bar">
@@ -25,7 +25,7 @@
                   </a>
                 </div>
               </div>
-              <div class="copyright">© 2017-2018 IBtop.com All rights reserved</div>
+              <div class="copyright">© 2018-2020 https://fortunebus.com/ All rights reserved</div>
           </div>
         </div>
     </div>
@@ -55,10 +55,15 @@ export default {
         [
         //  {title:'新手指引',id:1},
         //  {title:'币种资料',id:1,path:'/'},
-        
-         {title:'法律文件',id:2,path:'/'},
-           {title:'使用条款',id:3,path:'/'},
-        {title:'隐私政策',id:4,path:'/'},
+       
+ {title:'法律文件',id:1,path:'https://zbex-vip.zendesk.com/hc/zh-cn/articles/360012081993-%E6%B3%95%E5%BE%8B%E5%A3%B0%E6%98%8E'},
+        {title:'使用条款',id:3,path:'https://zbex-vip.zendesk.com/hc/zh-cn/articles/360012082253-%E7%94%A8%E6%88%B7%E5%8D%8F%E8%AE%AE'},
+        {title:'隐私政策',id:4,path:'https://zbex-vip.zendesk.com/hc/zh-cn/articles/360012082113-%E9%9A%90%E7%A7%81%E6%9D%A1%E6%AC%BE'},
+     ],
+        [
+        //  {title:'新手指引',id:1},
+        //  {title:'币种资料',id:1,path:'/'},
+
        ],
      /* [
          {title:'最新动态',id:1},
@@ -70,7 +75,7 @@ export default {
          {title:'帮助中心',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001012532-%E5%B8%AE%E5%8A%A9%E4%B8%AD%E5%BF%83'},
          {title:'问题反馈',id:1,path:'/'},
          {title:'API 文档',id:1,path:'/'},
-         {title:'公告中心',id:1,path:'', href: 'https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83'},
+         {title:'公告中心',id:1,path:'', href: 'https://zbex-vip.zendesk.com/hc/zh-cn/categories/360001116934-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83'},
       ]],
       currentCode:null,
     }

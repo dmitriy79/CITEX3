@@ -212,7 +212,7 @@
          <img src="@/assets/images/assess.png" alt="">
           <div class="text-o">
             <span>您提交的个人信息已经通过审核</span> 
-            <div class="tips">您已成功成为ib.top交易平台的实名认证，并拥有平台提币的资质。为构建健康、和谐、安全的平台环境，请您务必遵守《ibtop.com渠道服务商服务协议》</div>
+            <div class="tips">您已成功成为FBExp交易平台的实名认证，并拥有平台提币的资质。为构建健康、和谐、安全的平台环境，请您务必遵守《fbex.fortunebus.com/渠道服务商服务协议》</div>
           <div  class="bottom-btn" ><router-link to="/transaction" tag="div">去交易</router-link></div>
 
           </div>
