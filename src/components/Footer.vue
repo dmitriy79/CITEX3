@@ -54,7 +54,7 @@ export default {
         [
         //  {title:'新手指引',id:1},
          {title:'币种资料',id:1,path:'/'},
-         {title:'常见问题',id:1,path:'/'},
+         {title:'常见问题',id:1,path:'https://zbex-vip.zendesk.com/hc/zh-cn/categories/360001117394-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98'},
          {title:'法律文件',id:1,path:'/'},
        ],
      /* [
