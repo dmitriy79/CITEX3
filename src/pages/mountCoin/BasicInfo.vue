@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <label><i class="mark">*</i>代币是否已在除ib.top的其他交易平台上线</label>
+                        <label><i class="mark">*</i>代币是否已在除FBEx的其他交易平台上线</label>
                         <div class="check-wrapper">
                             <span class="check-info" :class="{checked:!this.checked}">
                                 <i></i> <span>是</span>

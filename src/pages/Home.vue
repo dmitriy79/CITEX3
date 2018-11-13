@@ -6,7 +6,7 @@
     <section v-else>
       <home-swiper :list="banner"></home-swiper>
       <div class="container notice">
-        <a class="notice-title" href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">公告：IB.TOP上线公告</a>
+        <a class="notice-title" href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">公告：FBEx上线公告</a>
 
         <!-- <transition name="fade">
           <a @click="noticeDetail" v-if="official.length>0">{{official[officialIndex].title}}</a>
