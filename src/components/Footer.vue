@@ -8,10 +8,10 @@
             </dl>
             <dl class="footer-nav-block">
                 <dt>联系我们</dt>
-                <dd>客服  support@ib.top</dd>
-                <dd>商务  business@ib.top</dd>
-                <dd>上币  listingcn@ib.top</dd>
-                <dd>QQ: 交流群3：300035855</dd>
+                <dd>客服  service@fortunebus.com</dd>
+                <dd>商务  service@fortunebus.com</dd>
+                <dd>上币  service@fortunebus.com</dd>
+                <dd>负责人: 杨少彬 13522592057</dd>
             </dl>
           </div>
           <div class="footer-bar">
@@ -25,7 +25,7 @@
                   </a>
                 </div>
               </div>
-              <div class="copyright">© 2017-2018 IBtop.com All rights reserved</div>
+              <div class="copyright">© 2018-2020 https://fortunebus.com/ All rights reserved</div>
           </div>
         </div>
     </div>
