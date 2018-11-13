@@ -9,25 +9,48 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/user': {
+        target: 'http://47.93.14.128:13010',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/user': ''
+        }
+      },
       "/coin": {
-        target: 'http://47.93.14.128/'
+        target: 'http://47.93.194.146:13020',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/coin': ''
+        }
         // target: 'https://api.punchvip.cn/'
       },
       "/payment": {
-        target: 'http://47.93.14.128/'
+        target: 'http://47.93.194.146:13030',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/payment': ''
+        }
         // target: 'https://api.punchvip.cn/'
       },
       "/trade": {
-        target: 'http://47.93.14.128/'
+        target: 'http://47.93.194.146',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/trade': ''
+        }
         // target: 'https://api.punchvip.cn/'
       },
-      "/user": {
-        target: 'http://47.93.14.128/'
-        // target: 'https://api.punchvip.cn/'
-      }
+      // "/api": {
+      //   target: 'http://47.93.194.146:13010',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': ''
+      //   }
+      //   // target: 'https://api.punchvip.cn/'
+      // }
     },
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

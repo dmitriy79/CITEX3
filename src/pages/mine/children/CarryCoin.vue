@@ -123,6 +123,7 @@ export default {
                 message: "提币数量不能大于最大提币数量",
                 type: "warning"
               });
+              return
             }
             this.form.poundage=this.carryNumber*this.feeValue
             console.log(this.form.poundage,'this.form.poundage')
@@ -179,6 +180,7 @@ export default {
         getCoinId(val){
             this.form.address=''
              this.carryNumber=''
+             this.form.poundage=''
             var coinInfo = val.toString().split(',')
             this.coinId = coinInfo[0] 
             this.coinName = coinInfo[1]
@@ -211,35 +213,40 @@ export default {
                this.$message({
 					          message: '币种不能为空',
 					          type: 'warning'
-		        		});
+                        });
+                        return
            }
            if(this.form.code==''){
                this.$message({
 					          message: '谷歌验证码不能为空',
 					          type: 'warning'
-		        		});
+                        });
+                         return
            }
             if(this.form.address==''){
                this.$message({
 					          message: '转出地址不能为空',
 					          type: 'warning'
-		        		});
+                        });
+                         return
            }
             if(this.carryNumber==''){
                this.$message({
 					          message: '转出数量不能为空',
 					          type: 'warning'
-		        		});
+                        });
+                         return
            }
            if(this.form.password==''){
                this.$message({
 					          message: '交易密码不能为空',
 					          type: 'warning'
-		        		});
+                        });
+                         return
            }
            if(this.coinId&&this.form.code&&this.form.password&&this.form.address&&this.carryNumber){
                          this.$api.withdraw({coin_id:this.coinId,code:this.form.code,tradePassword:this.form.password,to:this.form.address,amount:this.carryNumber}).then(res=>{
-               console.log(res,'88888++++++转出')
+               
                if(res.message=='成功'){
                   window.location.reload();
                }

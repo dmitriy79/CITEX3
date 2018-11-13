@@ -44,18 +44,21 @@ export default {
         // {name:'qq',img:'http://sdlf.jpg'},
       ],
 
-      links:['关于','帮助','服务'],
+      links:['关于','条款','服务'],
       footLink:[[
        {title:'关于我们',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/articles/360016545951'},
         {title:'加入我们',id:2,path:'/join-us'},
-        {title:'使用条款',id:3,path:'/'},
-        {title:'隐私政策',id:4,path:'/'},
+         {title:'常见问题',id:3,path:'',href:"https://zbex-vip.zendesk.com/hc/zh-cn/categories/360001117394-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"},
+        // {title:'使用条款',id:3,path:'/'},
+        // {title:'隐私政策',id:4,path:'/'},
      ],
         [
         //  {title:'新手指引',id:1},
-         {title:'币种资料',id:1,path:'/'},
-         {title:'常见问题',id:1,path:'/'},
-         {title:'法律文件',id:1,path:'/'},
+        //  {title:'币种资料',id:1,path:'/'},
+        
+         {title:'法律文件',id:2,path:'/'},
+           {title:'使用条款',id:3,path:'/'},
+        {title:'隐私政策',id:4,path:'/'},
        ],
      /* [
          {title:'最新动态',id:1},

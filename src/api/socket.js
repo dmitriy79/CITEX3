@@ -22,7 +22,6 @@ export default class {
           arg.success(JSON.parse(resp.data || "{}"))
         }
         
-        console.log(resp.data,'resp.data====')
       } catch (e) {
         console.error('json 解析失败, 数据为', resp)
       }

@@ -46,6 +46,7 @@ export default {
         success: (datas) => {
 
           state.allCoin = coinStarFilter(datas);
+          
           let pair = location.hash.split('/transaction')[1];
           if (pair) {
             pair = pair.replace('/', '');
