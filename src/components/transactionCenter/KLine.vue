@@ -204,40 +204,40 @@ export default {
           "mainSeriesProperties.priceAxisProperties.percentageDisabled": false,
           "mainSeriesProperties.priceAxisProperties.log": false,
           "mainSeriesProperties.priceAxisProperties.logDisabled": false,
-          "mainSeriesProperties.candleStyle.upColor": "#3fcfb4",
-          "mainSeriesProperties.candleStyle.downColor": "#fe4761",
+          "mainSeriesProperties.candleStyle.upColor": "#5DC176",
+          "mainSeriesProperties.candleStyle.downColor": "#EF6E59",
           "mainSeriesProperties.candleStyle.drawWick": true,
           "mainSeriesProperties.candleStyle.drawBorder": true,
-          "mainSeriesProperties.candleStyle.borderColor": "#3fcfb4",
-          "mainSeriesProperties.candleStyle.borderUpColor": "#3fcfb4",
-          "mainSeriesProperties.candleStyle.borderDownColor": "#fe4761",
+          "mainSeriesProperties.candleStyle.borderColor": "#5DC176",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#5DC176",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#EF6E59",
           "mainSeriesProperties.candleStyle.wickColor": "#737375",
-          "mainSeriesProperties.candleStyle.wickUpColor": "#3fcfb4",
-          "mainSeriesProperties.candleStyle.wickDownColor": "#fe4761",
+          "mainSeriesProperties.candleStyle.wickUpColor": "#5DC176",
+          "mainSeriesProperties.candleStyle.wickDownColor": "#EF6E59",
           "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
           "mainSeriesProperties.hollowCandleStyle.upColor": "#5DC176", //k线柱涨颜色
           "mainSeriesProperties.hollowCandleStyle.downColor": "#EF6E59", //k线柱跌颜色
           "mainSeriesProperties.hollowCandleStyle.drawWick": true,
           "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
-          "mainSeriesProperties.hollowCandleStyle.borderColor": "#3fcfb4",
-          "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#3fcfb4",
+          "mainSeriesProperties.hollowCandleStyle.borderColor": "#5DC176",
+          "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#5DC176",
           "mainSeriesProperties.hollowCandleStyle.borderDownColor": "#EF6E59",
           "mainSeriesProperties.hollowCandleStyle.wickColor": "#737375",
           "mainSeriesProperties.hollowCandleStyle.wickUpColor": "#5DC176", //k线柱竖线涨颜色
           "mainSeriesProperties.hollowCandleStyle.wickDownColor": "#EF6E59",
-          "mainSeriesProperties.haStyle.upColor": "#3fcfb4",
-          "mainSeriesProperties.haStyle.downColor": "#fe4761",
+          "mainSeriesProperties.haStyle.upColor": "#5DC176",
+          "mainSeriesProperties.haStyle.downColor": "#EF6E59",
           "mainSeriesProperties.haStyle.drawWick": true,
           "mainSeriesProperties.haStyle.drawBorder": true,
-          "mainSeriesProperties.haStyle.borderColor": "#3fcfb4",
-          "mainSeriesProperties.haStyle.borderUpColor": "#3fcfb4",
-          "mainSeriesProperties.haStyle.borderDownColor": "#fe4761",
+          "mainSeriesProperties.haStyle.borderColor": "#5DC176",
+          "mainSeriesProperties.haStyle.borderUpColor": "#5DC176",
+          "mainSeriesProperties.haStyle.borderDownColor": "#EF6E59",
           "mainSeriesProperties.haStyle.wickColor": "#737375",
-          "mainSeriesProperties.haStyle.wickUpColor": "#3fcfb4",
-          "mainSeriesProperties.haStyle.wickDownColor": "#fe4761",
+          "mainSeriesProperties.haStyle.wickUpColor": "#5DC176",
+          "mainSeriesProperties.haStyle.wickDownColor": "#EF6E59",
           "mainSeriesProperties.haStyle.barColorsOnPrevClose": false,
-          "mainSeriesProperties.barStyle.upColor": "#3fcfb4",
-          "mainSeriesProperties.barStyle.downColor": "#fe4761",
+          "mainSeriesProperties.barStyle.upColor": "#5DC176",
+          "mainSeriesProperties.barStyle.downColor": "#EF6E59",
           "mainSeriesProperties.barStyle.barColorsOnPrevClose": false,
           "mainSeriesProperties.barStyle.dontDrawOpen": false,
           "mainSeriesProperties.lineStyle.color": "#0cbef3",
@@ -744,10 +744,13 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-        if (!Object.keys(this_vue.klineCurrent).length === 0) {
+        if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){
+           if (!Object.keys(this_vue.klineCurrent).length === 0) {
           console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
           onRealtimeCallback(this_vue.klineCurrent)
         }
+        }
+       
 
       };
 

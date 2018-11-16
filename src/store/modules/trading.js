@@ -106,9 +106,9 @@ const actions = {
             let [zone] = rootState.allCoin.filter( item => item.zoneCoinName == zoneName);
             let [coin] = zone.list.filter( item => item.name == coinName);
             const { id, coinId } = coin;
-            console.log(coin,'coin=====')
+  
             rootState.marketInfo = coin
-            console.log(rootState.marketInfo,'rootState.marketInfo=======.>>>>>>>')   
+           
             commit("getAssets", {
                 coinId: coinId,
                 zoneCoinId: rootState.zoneCoinId

@@ -400,6 +400,7 @@ export default {
           message: "护照不能为空",
           type: "warning"
         });
+        return
       }
       }
        
@@ -409,30 +410,35 @@ export default {
           message: "身份证号填写有误",
           type: "warning"
         });
+        return
       }
           if(this.form.number==''&&this.reginVal==1){
           this.$message({
           message: "身份证号不能为空",
           type: "warning"
         });
+        return
       }
        if(this.form.name==''){
           this.$message({
           message: "名字不能为空",
           type: "warning"
         });
+        return
       }
       if(this.form.surname==''){
           this.$message({
           message: "姓氏不能为空",
           type: "warning"
         });
+        return
       }
      if(this.countryType==0&&this.reginVal==2){
           this.$message({
           message: "请选择国籍",
           type: "warning"
         });
+        return
      }
      
      
@@ -449,7 +455,6 @@ export default {
            this.$api.audit(
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.number,document_type:this.type}
          ).then(res=>{
-             console.log(res,'我是实名认证1111')
               if(res.message=='成功'){
                 this.$message({
                 message: "提交成功",
@@ -472,7 +477,6 @@ export default {
            this.$api.audit(
          {user_real_name:this.realName,country_id:this.countryType,document_id:this.form.passportId,document_type:this.type}
          ).then(res=>{
-             console.log(res,'我是实名认证1111')
               if(res.message=='成功'){
                 this.$message({
                 message: "提交成功",

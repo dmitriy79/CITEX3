@@ -1,8 +1,11 @@
 <template>
   <div class="header header-top" id="header">
     <h1 class="header-logo">
-        <a href="/" class="ico-logo">
-          <span>fbex.fortunebus.com/</span>
+        <!-- <a href="/" class="ico-logo">
+          <span>ibtop.com</span>
+        </a> -->
+        <a href="/">
+          <img src="../assets/images/logo.png" alt="" class="logo">
         </a>
       </h1>
     <div class="header-nav">
@@ -120,6 +123,7 @@ export default {
   background: #181f27;
   position: relative;
   transition: .5s;
+  .logo{    margin-top: 10px;}
   &-top {
     position: fixed;
     left: 0;
