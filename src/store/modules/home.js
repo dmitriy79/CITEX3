@@ -79,7 +79,7 @@ const mutations = {
     })
     let indexData = [
       api.listByType({type: 1}), //banner
-      api.list({pageNum: 1,pageSize: 10}), //公告列表
+      //api.list({pageNum: 1,pageSize: 10}), //公告列表
     ]
     axios.all(indexData)
       .then(res => {

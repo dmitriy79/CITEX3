@@ -9,6 +9,22 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      // "/coin": {
+      //   target: 'http://47.93.194.146/'
+      //   // target: 'https://api.punchvip.cn/'
+      // },
+      // "/payment": {
+      //   target: 'http://47.93.194.146/'
+      //   // target: 'https://api.punchvip.cn/'
+      // },
+      // "/trade": {
+      //   target: 'http://47.93.194.146/'
+      //   // target: 'https://api.punchvip.cn/'
+      // },
+      // "/user": {
+      //   target: 'http://47.93.194.146/'
+      //   // target: 'https://api.punchvip.cn/'
+      // }
       '/user': {
         target: 'http://47.93.14.128:13010',
         changeOrigin: true,
@@ -17,7 +33,7 @@ module.exports = {
         }
       },
       "/coin": {
-        target: 'http://47.93.194.146:13020',
+        target: 'http://47.93.14.128:13020',
         changeOrigin: true,
         pathRewrite: {
           '^/coin': ''
@@ -25,7 +41,7 @@ module.exports = {
         // target: 'https://api.punchvip.cn/'
       },
       "/payment": {
-        target: 'http://47.93.194.146:13030',
+        target: 'http://47.93.14.128:13030',
         changeOrigin: true,
         pathRewrite: {
           '^/payment': ''
@@ -33,21 +49,14 @@ module.exports = {
         // target: 'https://api.punchvip.cn/'
       },
       "/trade": {
-        target: 'http://47.93.194.146',
+        target: 'http://47.93.14.128:13040',
         changeOrigin: true,
         pathRewrite: {
           '^/trade': ''
         }
         // target: 'https://api.punchvip.cn/'
       },
-      // "/api": {
-      //   target: 'http://47.93.194.146:13010',
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api': ''
-      //   }
-      //   // target: 'https://api.punchvip.cn/'
-      // }
+      
     },
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

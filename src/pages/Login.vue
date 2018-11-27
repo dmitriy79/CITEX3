@@ -127,7 +127,8 @@
             this.$router.push({
               path: "/"
             });
-            window.location.reload();
+           
+            setTimeout(function(){  window.location.reload();},10)
                var datasList = res.datas.split("|")
           var token = datasList[0];
           localStorage.setItem("token", token)

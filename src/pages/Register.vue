@@ -486,8 +486,8 @@ export default {
         top:0;
         bottom:0;
         &:hover{
-          background:#2286FF;
-          color:#fff;
+          // background:#2286FF;
+          // color:#fff;
         }
       }
       input {

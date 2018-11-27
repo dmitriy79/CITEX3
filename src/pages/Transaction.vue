@@ -135,7 +135,7 @@ export default {
     this.$store.dispatch("initTradingList", {
       callback: () => {
         this.inited = true;
-        this.$store.dispatch("trading/initTradings",pair)
+        this.$store.dispatch("trading/initTradings")
       }
     })
   },

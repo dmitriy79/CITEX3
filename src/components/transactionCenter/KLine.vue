@@ -169,7 +169,7 @@ export default {
           "mainSeriesProperties.lockScale": false,
           "mainSeriesProperties.minTick": "default",
           "mainSeriesProperties.extendedHours": false,
-          volumePaneSize: "large", //调整纵坐标间距
+          volumePaneSize: "medium", //调整面积图和k线图纵向比例
           editorFontsList: [
             "Lato",
             "Arial",
@@ -697,7 +697,7 @@ export default {
             resolution,
             callback: (result) => {
               onHistoryCallback(result);
-              this_vue.chart.activeChart().resetData();
+              // this_vue.chart.activeChart().resetData();
             }
           })
         } else {
