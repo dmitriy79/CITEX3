@@ -11,7 +11,6 @@
                 <dd>客服  service@fortunebus.com</dd>
                 <dd>商务  service@fortunebus.com</dd>
                 <dd>上币  service@fortunebus.com</dd>
-                <dd>负责人: 杨少彬 13522592057</dd>
             </dl>
           </div>
           <div class="footer-bar">
