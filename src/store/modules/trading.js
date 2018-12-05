@@ -468,7 +468,7 @@ const mutations = {
     },
     //币种资产
     getAssets(state, params) {
-        console.log(params, '=========.......///////')
+        console.log(params, '=========.......///////getAssets')
         let indexData = [
             api.uplistByUserId({
                 pageNum: 1,
@@ -483,11 +483,21 @@ const mutations = {
         ]
         axios.all(indexData).then(res => {
             if (Object.keys(res[1].datas.list).length == 0) {
-                state.cursellPrice = 0.00000000
-            } else {
-                state.curbuyPrice = res[0].datas.list[0].able
+                state.cursellPrice = 0.00000000 
+            } 
+            else{
                 state.cursellPrice = res[1].datas.list[0].able
             }
+            if(Object.keys(res[0].datas.list).length == 0){
+                state.curbuyPrice = 0.00000000
+            }
+            else{
+                state.curbuyPrice = res[0].datas.list[0].able
+            }
+            // else {
+            //     state.curbuyPrice = res[0].datas.list[0].able
+            //     state.cursellPrice = res[1].datas.list[0].able
+            // }
         }).catch(error => {
             console.log("error===>", error)
         })

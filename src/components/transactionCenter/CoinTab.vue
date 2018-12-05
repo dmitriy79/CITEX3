@@ -127,13 +127,20 @@ export default {
       }
     },
     togglePrice() {
+      
       this.searchList = this.allCoin[this.selectedZoneIndex].list;
       if (this.sort == 'price_down') {
         this.sort = 'price_up';
-        this.searchList.sort((a, b) => a.deal_price > b.deal_price);
+        this.searchList.sort((a, b) => {return a.deal_price - b.deal_price});
+        localStorage.setItem('price_up', true)        
+        console.log(this.searchList,'this.searchList======>')
       } else {
         this.sort = 'price_down'
-        this.searchList.sort((a, b) => b.deal_price > a.deal_price);
+        this.searchList.sort((a, b) => {return b.deal_price - a.deal_price});
+        console.log(this.searchList,'this.searchList222222======>')
+
+        localStorage.setItem('price_down', true)        
+
       }
     },
     toggleRate() {
