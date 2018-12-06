@@ -48,18 +48,39 @@ export default {
           datas.sort((a,b)=>{
             return a.zoneSort-b.zoneSort
           })
-          let price_down=localStorage.getItem("price_down")
-          let price_up=localStorage.getItem("price_up")
-          console.log(price_down,price_up,'price_down======<<<price_down')
-          if(price_down==null&&price_up==null){
+          let price_down=sessionStorage.getItem("price_down")
+          let price_up=sessionStorage.getItem("price_up")
+          
+           if(price_down==null&&price_up==null){
+             console.log('1111111111111=========>>>>>')
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
               return a.sortId-b.sortId
             })
             }
-          }
-          
+           }
+           if(price_down){
+            console.log('22222222=========>>>>>')
+
+            for (var i=0,len=datas.length; i<len; i++)
+            {
+            datas[i].list.sort((a,b)=>{
+              return b.deal_price-a.deal_price
+            })
+            }
+           }
+           if(price_up){
+            console.log('333333333=========>>>>>')
+
+            for (var i=0,len=datas.length; i<len; i++)
+            {
+            datas[i].list.sort((a,b)=>{
+              return a.deal_price-b.deal_price
+            })
+            }
+           }
+          console.log(datas,'websocketDealPrice22222========>>>>>>')
           state.allCoin = coinStarFilter(datas);
           
           let pair = location.hash.split('/transaction')[1];
@@ -73,9 +94,16 @@ export default {
             state.zoneName = zone.zoneCoinName;
             state.zoneCoinId = zone.zoneCoinId;
           } else {
-            state.marketInfo = datas[0].list[0];
-            state.zoneName = datas[0].zoneCoinName;
-            state.zoneCoinId = datas[0].zoneCoinId;
+            
+            if(price_down==null||price_up==null){
+              console.log(price_down,'price_down========')
+              state.marketInfo = datas[0].list[0];
+              state.zoneName = datas[0].zoneCoinName;
+              state.zoneCoinId = datas[0].zoneCoinId;
+            }
+            else{
+              return
+            }
           }
           if (!inited) {
             inited = true;

@@ -132,14 +132,17 @@ export default {
       if (this.sort == 'price_down') {
         this.sort = 'price_up';
         this.searchList.sort((a, b) => {return a.deal_price - b.deal_price});
-        localStorage.setItem('price_up', true)        
+        sessionStorage.setItem('price_up', true)    
+        sessionStorage.removeItem('price_down');    
         console.log(this.searchList,'this.searchList======>')
       } else {
         this.sort = 'price_down'
         this.searchList.sort((a, b) => {return b.deal_price - a.deal_price});
         console.log(this.searchList,'this.searchList222222======>')
 
-        localStorage.setItem('price_down', true)        
+        sessionStorage.setItem('price_down', true)   
+        sessionStorage.removeItem('price_up');    
+
 
       }
     },
@@ -237,7 +240,7 @@ export default {
 }
 .coin-list-wrap {
   background: #292f37;
-  height: 561px;
+  height: 427px;
   & > div {
     padding: 0 15px;
   }

@@ -386,6 +386,7 @@ const mutations = {
                     });
                 });
             }
+            console.log(kline[0],kline,'kline[0]======>>>>>>>>>')
             state.klineCurrent = kline[0]
             state.klineHistory = kline;
             callback && callback(kline);
@@ -419,6 +420,7 @@ const mutations = {
                         });
                     }
                     state.klineCurrent = state.klineHistory[state.klineHistory.length - 1];
+                    
                     callback && callback(state.klineHistory);
                 },
                 fail: (res) => {

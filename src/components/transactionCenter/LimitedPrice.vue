@@ -158,7 +158,10 @@ export default {
         this.buyPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
         this.buyPrice = 0;
-      } else {
+      } else if(newVal&&newVal!==oldVal){
+        this.buyPrice=this.buyPrice
+      }
+      else {
         this.buyPrice = oldVal;
       }
       this.ableTotal = this.curbuyPrice / this.buyPrice;
@@ -196,6 +199,7 @@ export default {
       }
     },
     currentPrice(val) {
+      console.log(val,"currentPrice======>>>>>>>>>>")
       this.buyPrice = val[1];
       this.sellPrice = val[0];
     },

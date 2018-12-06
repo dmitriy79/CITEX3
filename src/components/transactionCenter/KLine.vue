@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
   <div class="hello">
-    <div id="chart_container" class="f-fill" style="height:610px;display:block;border:none"></div>
+    <div id="chart_container" class="f-fill" style="height:480px;display:block;border:none"></div>
   </div>
 </template>
 
@@ -697,7 +697,7 @@ export default {
             resolution,
             callback: (result) => {
               onHistoryCallback(result);
-              // this_vue.chart.activeChart().resetData();
+               this_vue.chart.activeChart().resetData();
             }
           })
         } else {
@@ -744,9 +744,10 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
+        console.log(this_vue.klineCurrent,'88888======99999===1000')
         if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){
            if (!Object.keys(this_vue.klineCurrent).length === 0) {
-          console.log(this_vue.klineCurrent,'this_vue.klineCurrent')
+          
           onRealtimeCallback(this_vue.klineCurrent)
         }
         }
