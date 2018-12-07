@@ -32,6 +32,7 @@ export default {
     zoneCoinId: '',
     allCoin: null,
      coinList:'',//排序之后的交易区列表t:'',//排序之后的交易区列表
+     isReload:false,//交易页面是否刷新
   },
   actions: {
 
@@ -51,14 +52,14 @@ export default {
           let price_down=sessionStorage.getItem("price_down")
           let price_up=sessionStorage.getItem("price_up")
           
-           if(price_down==null&&price_up==null){
+          //  if(price_down==null&&price_up==null){
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
               return a.sortId-b.sortId
             })
             }
-           }
+          //  }
            if(price_down){
             for (var i=0,len=datas.length; i<len; i++)
             {
@@ -118,6 +119,8 @@ export default {
 
       state.coinList = params.coinList
   },
+
+  
     //收藏币种
     favoriteCoin({
       commit,

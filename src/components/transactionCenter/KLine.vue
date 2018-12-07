@@ -742,7 +742,7 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-        
+        console.log(this_vue,sessionStorage.getItem("reload"),'this_vue.klineCurrent=====>>>>')
         if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){
            if (!Object.keys(this_vue.klineCurrent).length === 0) {
           
@@ -779,7 +779,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["marketInfo"]),
+    ...mapState(["marketInfo","isReload"]),
     ...mapState("trading", ["klineCurrent"]),
   },
 

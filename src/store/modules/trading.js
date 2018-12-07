@@ -59,7 +59,10 @@ const actions = {
             type: 1, // 当前
             tradeCoinPairId: id
         })
-
+        
+    },
+    saveCoinId({ commit, rootState, state }, params){
+        rootState.marketInfo.id= params.getcoinId
     },
     //k线图
     getKline({ commit, rootState, state }, params){
@@ -69,6 +72,7 @@ const actions = {
             step: state.step,
             callback: params.callback
         })  //币种
+        console.log(rootState.marketInfo.id,'rootState.marketInfo.id====>>>>>')
     },
     tradingBuy({
         commit,
@@ -363,6 +367,7 @@ const mutations = {
     },
     //k线历史数据
     getKline(state, params) {
+        console.log(params,'//k线历史数据=====>>>>>>>>')
         const { step, id, callback } = params;
         api.getKDatas2({
             step,
