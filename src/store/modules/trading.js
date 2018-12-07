@@ -20,6 +20,7 @@ const state = {
     curbuyPrice: '',
     cursellPrice: '',
     entrustList: [], //委托订单
+ 
 }
 const getters = {
 
@@ -40,7 +41,6 @@ const actions = {
         rootState
     }, arg) {
         const { id, coinId } = rootState.marketInfo;
-        console.log(rootState.marketInfo,'marketInfo=========999999>')
         // commit("initMarketInfo",rootState.tradingList)
         commit("getAssets", {
             coinId: coinId,
@@ -100,7 +100,6 @@ const actions = {
         rootState,
         state
     }, params) {
-        console.log("交易对ID====>", state, rootState, params)
         if (params) {
             let { coinName, zoneName } = params;
             let [zone] = rootState.allCoin.filter( item => item.zoneCoinName == zoneName);
@@ -137,6 +136,7 @@ const actions = {
     }, params) {
         state.currentPrice = [params.currentPrice, params.currentPrice]
     },
+    
     testClick({
         commit,
         rootState,
@@ -163,7 +163,6 @@ const actions = {
         state,
         rootState
     }, obj) {
-        //  console.log(obj,rootState,'++++我是params++++））000=======》')
         commit('tradingAskBid', obj)
     },
     tradeCoinPairMaxMinPrice({
@@ -205,7 +204,6 @@ const mutations = {
             pageNum: 1,
             pageSize: params.size || 10
         }).then(res => {
-            console.log(res.datas,'listBidOrders====>')
             state.orderData = res.datas
         })
     },
@@ -272,7 +270,6 @@ const mutations = {
             tradeCoinPairId: params.tradeCoinPairId,
             price: params.obj.Nums
         }).then(res => {
-            console.log(res, '这里是交易限额-----------')
             if (res.datas.trueOrFalse) {
                 Vue.prototype.$prompt('请输入交易密码', '提示', {
                     confirmButtonText: '确定',
@@ -289,7 +286,6 @@ const mutations = {
                         price: params.obj.Price,
                         amount: params.obj.Nums
                     }, "POST").then(res => {
-                        console.log(res, '009999===我是卖单')
                         if (res.message === '成功') {
 
                             Vue.prototype.$message({
@@ -336,7 +332,6 @@ const mutations = {
                 url: `websocketAskBid?pairId=${id}`,
                 data: 'sendParams',
                 success: (res) => {
-                    console.log(res,'websocketAskBid')
                     state.AskList = res.ask || [];
                     state.BidList = res.bid || [];
                     state.BidList.reverse();
@@ -386,7 +381,6 @@ const mutations = {
                     });
                 });
             }
-            console.log(kline[0],kline,'kline[0]======>>>>>>>>>')
             state.klineCurrent = kline[0]
             state.klineHistory = kline;
             callback && callback(kline);
@@ -399,7 +393,6 @@ const mutations = {
                 url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
                 data: 'sendParams',
                 success: (res) => {
-                    console.log(res,'websocketKline====>res')
                     var currentkline = []
                     if (res.list.length) {
                         res.list.forEach(function(bar) {
@@ -442,10 +435,8 @@ const mutations = {
             amount: params.params.buyNums,
             tradeCoinPairId: params.tradeId
         }
-        console.log(param, '我是买单--------》》》》》》》》》》》》》++++++')
 
         api.buy(param, "POST").then(res => {
-            console.log(res, '009999===我是买单')
             if (res.message === '成功') {
 
                 Vue.prototype.$message({
@@ -463,14 +454,11 @@ const mutations = {
     },
     //委托卖单
     tradingSell(state, params) {
-        // console.log(params)
         api.sell(params, "POST").then(res => {
-            console.log(res, '我是卖单========》》》》》》》')
         })
     },
     //币种资产
     getAssets(state, params) {
-        console.log(params, '=========.......///////getAssets')
         let indexData = [
             api.uplistByUserId({
                 pageNum: 1,
@@ -507,15 +495,12 @@ const mutations = {
     //交易记录
     orderRecord(state, params) {
         api.getUserTransactionRecord(params).then(res => {
-            // console.log("canceOrder====>", res)
         })
     },
 
     //获取币种资料
     getCoinInfo(state, id) {
-        // console.log(params.currentCoinId,'币种idd_________________________-d++++++')
         axios.get(`/coin/coin/info/${id}`).then(res => {
-            // console.log(res)
             let coninInfo = res.data.datas
             state.coinInfo = res.data.datas
         })

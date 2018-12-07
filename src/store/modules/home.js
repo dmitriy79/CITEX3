@@ -73,7 +73,6 @@ const mutations = {
       url:'websocketRankingList',
       data:'',
       success:(data)=>{
-        console.log(data,'我是涨跌幅排行。。。。。')
         state.dealOrder = data
       }
     })
@@ -83,7 +82,6 @@ const mutations = {
     ]
     axios.all(indexData)
       .then(res => {
-        console.log(res,'首页list========》》》》')
         state.banner = res[0].datas
         state.official = res[1].datas.list
         return res

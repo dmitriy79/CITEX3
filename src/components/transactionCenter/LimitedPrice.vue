@@ -14,7 +14,7 @@
                     <span class="name">价格</span>
                     <input type="number"
                     name="buyPrice"
-                    v-model="buyPrice" :class="{border1:hasBorder}">
+                    v-model="buyPrice" :class="{border1:hasBorder}" @keyup="inputKeyup">
                      <!-- <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
@@ -70,7 +70,7 @@
                     <span  class="name">价格</span>
                     <input type="number" 
                     name="sellPrice" 
-                    v-model="sellPrice"> 
+                    v-model="sellPrice" @keyup="inputKeyup"> 
                     <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
@@ -133,10 +133,12 @@ export default {
       buyAmount: 0,
       ableTotal: '', //可买入总数
       buyPrice: '', //买入价
+      curBuyPrice:'',
       buyNums: 0, //买入数量
       sellPrice: '', //买入价格
       sellNums: 0, //买入数量
       ableSellTotal: '', //可卖总数
+      inputPress:false,
       buyParams: {
         tradeCoinPairId: 1,
         //code: 13422,
@@ -151,6 +153,7 @@ export default {
       sellNumIndex: -1
     }
   },
+  
   watch: {
     buyPrice(newVal, oldVal) {
       if (coinReg.test(newVal) && newVal.toString().length <= 15) {
@@ -166,16 +169,18 @@ export default {
       }
       this.ableTotal = this.curbuyPrice / this.buyPrice;
       this.buyNums = Math.min(this.toFixedDecimal(this.ableTotal, 4), this.buyNums);
+     
       this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4);
     },
     buyNums(newVal, oldVal) {
+ 
       if (numReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('buy');
         this.buyNums = this.toNumber(newVal);
       } else if (newVal == '') {
         this.buyNums = 0;
       } else {
-        this.buyNums = oldVal;
+        // this.buyNums = oldVal;
       }
     },
     sellPrice(newVal, oldVal) {
@@ -199,13 +204,18 @@ export default {
       }
     },
     currentPrice(val) {
-      console.log(val,"currentPrice======>>>>>>>>>>")
-      this.buyPrice = val[1];
+      
+      if(!this.inputPress){
+    this.buyPrice=val[1];
       this.sellPrice = val[0];
+      }
+       
     },
   },
+  
   mounted() {
     this.token = localStorage.getItem("token")
+    
     if (this.token) {
       this.isDisabled = false
     } else {
@@ -217,6 +227,12 @@ export default {
     ...mapState(["zoneName", 'marketInfo']),
   },
   methods: {
+    inputKeyup(){
+      console.log(this.inputPress,'inputKeyup')
+      this.inputPress=true
+      this.buyNumIndex = -1
+      this.sellNumIndex = -1
+    },
     toggleBuyIndex() {
       this.buyNumIndex = -1
     },
@@ -231,14 +247,17 @@ export default {
     },
     selectPercentage(e) {
       let target = e.target.dataset
-      console.log(target, '====00000target')
       if (target.id == "buyPre") {
         let params = this.buyParams;
         this.buyNumIndex = target.index;
+   
         this.$nextTick(() => {
-          this.ableTotal = this.curbuyPrice / this.buyPrice;
-          this.buyNums = this.toFixedDecimal(target.num / 100 * this.ableTotal, 4);
-          this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4);
+              
+          this.ableTotal = this.curbuyPrice /parseFloat(this.buyPrice) 
+       
+          this.buyNums=this.toFixedDecimal(target.num / 100 * this.ableTotal, 4) 
+          //this.buyAmount = this.toFixedDecimal(this.buyNums * this.buyPrice, 4); 原来
+          this.buyAmount = this.toFixedDecimal(this.curbuyPrice * target.num / 100, 4);
         })
       } else if (target.id == "sellPre") {
         let params = this.sellParams;

@@ -43,7 +43,6 @@
       this.loadYanzhengma()
       // 获取浏览器可视区域高度
       this.clientHeight = `${document.documentElement.clientHeight}` //document.body.clientWidth;
-      //console.log(self.clientHeight);
       window.onresize = function temp() {
         this.clientHeight = `${document.documentElement.clientHeight}`;
       };
@@ -70,7 +69,6 @@
           width: 400,
           onVerify: function(err, ret) {
             if (!err) {
-              console.log(ret)
               localStorage.setItem('registerYanzhengma', ret.validate)
               // ret['validate'] 获取二次校验数据
             }

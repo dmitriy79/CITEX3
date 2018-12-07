@@ -234,7 +234,7 @@ export default {
         width: 500,
         onVerify: function(err, ret) {
           if (!err) {
-            console.log(ret)
+        
             localStorage.setItem('registerYanzhengma', ret.validate)
 
             // ret['validate'] 获取二次校验数据
@@ -367,7 +367,7 @@ export default {
           type: 'warning'
         });
       }
-      console.log(localStorage.getItem('registerYanzhengma'),'222')
+    
       if(this.email!==''&&this.code!==''&&this.$refs.isAgree.className!==''){
               this.$api.register({email: this.email,
           passWord: this.passWord,

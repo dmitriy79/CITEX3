@@ -31,6 +31,7 @@ export default {
     zoneName: '', //交易区类型
     zoneCoinId: '',
     allCoin: null,
+     coinList:'',//排序之后的交易区列表t:'',//排序之后的交易区列表
   },
   actions: {
 
@@ -44,7 +45,6 @@ export default {
         url: `websocketDealPrice?uuid=${guid()}`,
         data: 'sendParams',
         success: (datas) => {
-          console.log(datas,'websocketDealPrice========>>>>>>')
           datas.sort((a,b)=>{
             return a.zoneSort-b.zoneSort
           })
@@ -52,7 +52,6 @@ export default {
           let price_up=sessionStorage.getItem("price_up")
           
            if(price_down==null&&price_up==null){
-             console.log('1111111111111=========>>>>>')
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
@@ -61,8 +60,6 @@ export default {
             }
            }
            if(price_down){
-            console.log('22222222=========>>>>>')
-
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
@@ -71,8 +68,7 @@ export default {
             }
            }
            if(price_up){
-            console.log('333333333=========>>>>>')
-
+      
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
@@ -80,7 +76,7 @@ export default {
             })
             }
            }
-          console.log(datas,'websocketDealPrice22222========>>>>>>')
+         
           state.allCoin = coinStarFilter(datas);
           
           let pair = location.hash.split('/transaction')[1];
@@ -96,7 +92,6 @@ export default {
           } else {
             
             if(price_down==null||price_up==null){
-              console.log(price_down,'price_down========')
               state.marketInfo = datas[0].list[0];
               state.zoneName = datas[0].zoneCoinName;
               state.zoneCoinId = datas[0].zoneCoinId;
@@ -114,6 +109,15 @@ export default {
         }
       })
     },
+    //获取点击排序
+    getcoinList({
+      commit,
+      rootState,
+      state
+  }, params) {
+
+      state.coinList = params.coinList
+  },
     //收藏币种
     favoriteCoin({
       commit,
@@ -177,7 +181,6 @@ export default {
   getters: {
     //搜索过滤币种
     filterCoin: (state, getters) => (value) => {
-      console.log(getters.tradingList)
       return state.tradingList.filter(item => item.name.indexOf(value) != '-1')
     },
     tradingList(state) {
@@ -219,7 +222,7 @@ export default {
     },
     //搜索币种
     searchTradingCoin(state, params) {
-      console.log("state")
+      
     }
 
   }

@@ -77,7 +77,6 @@ export default {
   methods: {
          //下拉选择币种
         selectCoin(val){
-          console.log(val,'val selectCoin')
           this.tradeCoinId=val
           
         },
@@ -85,7 +84,6 @@ export default {
     searchCoin(val){
       this.tradeCoinPairId=val
       this.$api.getUserTransactionRecord({pageNum:this.pageNum,pageSize:14,type:this.currentIndex,tradeCoinId:this.tradeCoinId,tradeCoinNameShort:this.form.name}).then(res => {
-        console.log(res, "交易记录9999getUserTransactionRecord");
         if (res.message == "success") {
           var content = res.datas.list;
           this.total=res.datas.total
@@ -96,14 +94,12 @@ export default {
        //获取交易区
     classificationList(){
       this.$api.classificationList().then(res=>{
-        console.log(res,'classificationList')
         this.coinList=res.datas
       })
     },
     //获取交易记录
     getUserTransactionRecord() {
       this.$api.getUserTransactionRecord({pageNum:this.pageNum,pageSize:14,type:this.currentIndex}).then(res => {
-        console.log(res, "交易记录9999");
         if (res.message == "success") {
           var content = res.datas.list;
           this.total=res.datas.total

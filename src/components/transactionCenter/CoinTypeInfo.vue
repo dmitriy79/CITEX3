@@ -23,14 +23,14 @@
                     <li>
                         众筹价格<span>约0.2USD</span>
                     </li> -->
-                    <li>
-                        白皮书<a :href="coinInfo.wihtePaperUrl">{{coinInfo.wihtePaperUrl}}</a>
+                    <li class="address">
+                        白皮书<a :href="coinInfo.wihtePaperUrl" target="_blank">{{coinInfo.wihtePaperUrl}}</a>
                     </li>
-                     <li>
-                        官网<span> <a :href='coinInfo.coinPortal'>{{coinInfo.coinPortal}}</a></span>
+                     <li class="address">
+                        官网 <a :href='coinInfo.coinPortal' target="_blank">{{coinInfo.coinPortal}}</a>
                     </li>
-                     <li>
-                        区块查询<span>{{coinInfo.blockExplorerUrl}}</span>
+                     <li class="address">
+                        区块查询<a :href="coinInfo.blockExplorerUrl" target="_blank">{{coinInfo.blockExplorerUrl}}</a>
                     </li>
                 </ul>
             </div>
@@ -71,6 +71,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .coinTypeInfo {
   background: #292f37;
   height: 448px;
@@ -113,6 +114,15 @@ export default {
         }
       }
       .list {
+          .address{
+              a{
+                  width: 80%;
+                    overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+    
+}
         li {
           font-family: "PingFangSC-Regular";
           font-size: 12px;
@@ -121,10 +131,10 @@ export default {
           height: 50px;
           line-height: 50px;
           color: #7f8287;
-          span {
+          a,span {
             color: #e9eaeb;
             position: absolute;
-            left: 80px;
+            left: 70px;
           }
           &:last-child {
             border-bottom: none;

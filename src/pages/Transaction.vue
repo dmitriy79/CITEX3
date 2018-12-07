@@ -131,7 +131,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$route.params,'this.$route.params===111')
     this.$store.dispatch("initTradingList", {
       callback: () => {
         this.inited = true;

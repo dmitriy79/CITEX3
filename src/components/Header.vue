@@ -91,7 +91,6 @@ export default {
       }
     },
     changeLanguage(e) {
-      console.log(e)
       this.currentLanguage = e.target.innerText;
       this.$i18n.locale = e.target.dataset.id;
 
@@ -100,7 +99,6 @@ export default {
   mounted() {
     this.token = localStorage.getItem("token")
     this.userName = localStorage.getItem("userName")
-    // console.log(this.token, this.userName, '999992202020200')
     // window.onscroll = e => {
     //   this.isTop = (window.scrollY > 50) ? true : false
     // }

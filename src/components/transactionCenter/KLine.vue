@@ -341,7 +341,6 @@ export default {
             )
             .html("<span>" + item.label + "</span>")
             .on("click", function() {
-              console.log('111111111')
               if (!this_vue.chart.changingInterval &&
                 !button.hasClass("selected")
               ) {
@@ -386,9 +385,8 @@ export default {
       let this_vue = this;
       let Datafeed = {};
       var currentCoinId = this_vue.marketInfo.coinId;
-      // console.log(this_vue,this_vue.currentCoinId,'-========<<<<<<<<<<<<<<<this_vue')
+      
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
-        // console.log(updateFrequency, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
         this._datafeed = datafeed;
         this._subscribers = {};
 
@@ -661,7 +659,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-         console.log(firstDataRequest,'resolution====================================>>>>>>>>')
+  
         if (firstDataRequest) {
           if (resolution == 1) {
             resolution = '1min'
@@ -744,7 +742,7 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-        console.log(this_vue.klineCurrent,'88888======99999===1000')
+        
         if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){
            if (!Object.keys(this_vue.klineCurrent).length === 0) {
           

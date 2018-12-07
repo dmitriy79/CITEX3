@@ -134,12 +134,15 @@ export default {
         this.searchList.sort((a, b) => {return a.deal_price - b.deal_price});
         sessionStorage.setItem('price_up', true)    
         sessionStorage.removeItem('price_down');    
-        console.log(this.searchList,'this.searchList======>')
+        let coinList=this.searchList
+        this.$store.dispatch('getcoinList', { coinList })
+       
       } else {
         this.sort = 'price_down'
         this.searchList.sort((a, b) => {return b.deal_price - a.deal_price});
-        console.log(this.searchList,'this.searchList222222======>')
 
+        let coinList=this.searchList
+        this.$store.dispatch('getcoinList', { coinList })
         sessionStorage.setItem('price_down', true)   
         sessionStorage.removeItem('price_up');    
 

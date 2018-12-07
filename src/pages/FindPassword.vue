@@ -130,7 +130,6 @@
     },
 
     changeFixed(clientHeight){                        //动态修改样式
-      console.log(clientHeight,'w9999999');
       this.$refs.content.style.height = (clientHeight)+'px';
 
     },

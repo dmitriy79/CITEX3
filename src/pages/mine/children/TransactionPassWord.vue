@@ -261,7 +261,6 @@ form: {
             } 
             if(this.form.code&&this.form.newPassword&&regExp.test(this.form.newPassword)&&(this.form.newPassword==this.form.confirmPassword_)){
                 this.$api.reset({tradePassword:this.form.newPassword,code:this.form.code}).then(res=>{
-                console.log(res,'我是修改后的交易密码')
                 if(res.message=='成功'){
                    this.$message({
                 message: '交易密码修改成功',
