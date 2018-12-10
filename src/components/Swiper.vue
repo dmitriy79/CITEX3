@@ -76,14 +76,14 @@ export default {
 </script>
 <style lang="less">
 .swiper {
-  height:540px;
+  // height:540px;
   background: red;
   &-container{
-    height:540px;
+    // height:540px;
   }
   a.link_ {
     display: block;
-    height:540px;
+    // height:540px;
     width:100%;
   }
   &-container-horizontal {}

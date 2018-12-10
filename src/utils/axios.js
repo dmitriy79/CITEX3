@@ -18,6 +18,19 @@ axios.interceptors.response.use((resp) => {
   NProgress.done();
   return resp;
 }, (error) => {
+  console.log(error,'我是用户未登录拦截====》》》》》》》》')
+  if (error.data) {
+    switch (error.data.status) {
+      case 400: 
+        // 返回 400 清除token信息并跳转到登录页面
+        console.log('清除token信息并跳转到登录页面====....')
+        localStorage.removeItem("token")
+        router.replace({
+          path: '/login',
+          query: {redirect: router.currentRoute.fullPath}
+        })
+    }
+  }
   NProgress.done();
   return Promise.reject(error);
 });

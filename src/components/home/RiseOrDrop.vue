@@ -111,6 +111,7 @@ export default {
         background: #31373e;
         display: flex;
         align-items: center;
+        cursor: pointer;
         .type {
           color: #d4d5d7;
           flex: 1;

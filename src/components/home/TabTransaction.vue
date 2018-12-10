@@ -97,12 +97,12 @@ export default {
     background: #1f252d;
     height: 38px;
     line-height: 38px;
+    display: flex;
     span {
       width: 130px;
       cursor: pointer;
       text-align: center;
       color: #999ea4;
-      display: inline-block;
       font-size: 15px;
       transition: 0.4s;
       &:hover {

@@ -81,9 +81,6 @@ const i18n = new VueI18n({
 
 
 router.beforeEach((to, from, next) => {
-  if(to.path=='/transaction'){
-	 sessionStorage.setItem("reload",true)
-  }
   NProgress.start();
 	window.scrollTo(0,0);
   next();

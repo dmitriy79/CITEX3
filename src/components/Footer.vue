@@ -9,8 +9,8 @@
             <dl class="footer-nav-block">
                 <dt>联系我们</dt>
                 <dd>客服  service@fortunebus.com</dd>
-                <dd>商务  service@fortunebus.com</dd>
-                <dd>上币  service@fortunebus.com</dd>
+                <!-- <dd>商务  service@fortunebus.com</dd>
+                <dd>上币  service@fortunebus.com</dd> -->
             </dl>
           </div>
           <div class="footer-bar">

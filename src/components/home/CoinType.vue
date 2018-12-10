@@ -66,6 +66,7 @@ export default {
       width: 25%;
       margin: 0 1%;
       height: 109px;
+      cursor: pointer;
       .top-wrapper {
         padding: 13px 0 0 9px;
       } 

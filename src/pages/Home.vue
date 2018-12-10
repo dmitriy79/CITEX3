@@ -11,9 +11,9 @@
         <!-- <transition name="fade">
           <a @click="noticeDetail" v-if="official.length>0">{{official[officialIndex].title}}</a>
         </transition> -->
-        <div class="notice-more">
+        <!-- <div class="notice-more">
           <a href="https://ibtop-vip.zendesk.com/hc/zh-cn/categories/360001014091-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83" target="_blank">更多</a>
-        </div>
+        </div> -->
       </div>
       <coin-type :coinList="coinList"></coin-type>
       <rise-drop :dealOrder="dealOrder"></rise-drop>
