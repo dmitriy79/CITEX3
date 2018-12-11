@@ -126,12 +126,13 @@
               path: "/"
             });
            
-            // setTimeout(function(){  window.location.reload();},10)
+            
                var datasList = res.datas.split("|")
           var token = datasList[0];
           localStorage.setItem("token", token)
           localStorage.setItem("userName", this.userName)
-          window.location.reload()
+           setTimeout(function(){  window.location.reload();},10)
+          // window.location.reload()
           }
           
         })
