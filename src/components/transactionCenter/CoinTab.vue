@@ -89,7 +89,7 @@ export default {
     // 默认打开选中的交易区
     this.selectedZoneIndex = this.allCoin.findIndex( item => item.zoneCoinName == this.zoneName);
     this.selectedId = this.marketInfo.id;
-    console.log(this.marketInfo.id,'this.marketInfo.idla啦啦啦====>>>>>')
+   
     let getcoinId=this.marketInfo.id
     this.$store.dispatch('trading/saveCoinId',{getcoinId})
     

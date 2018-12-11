@@ -113,7 +113,7 @@ module.exports = {
       area: {
         pointStart: 0,
         series: {
-          fillOpacity: 1
+          fillOpacity: 1,animation: false
         },
         marker: {
           enabled: !1,
@@ -129,6 +129,7 @@ module.exports = {
     },
     series: [{
       name: '累积',
+      animation: false,
       data: [
         // [214, 99],
         // [289, 78],
@@ -141,6 +142,7 @@ module.exports = {
       // data:[]买盘
     }, {
       name: '累积',
+      animation: false,
       data: [
         // [910, 8],
         // [1000, 14],

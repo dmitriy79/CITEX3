@@ -72,7 +72,7 @@ const actions = {
             step: state.step,
             callback: params.callback
         })  //币种
-        console.log(rootState.marketInfo.id,'rootState.marketInfo.id====>>>>>')
+        
     },
     tradingBuy({
         commit,
@@ -367,7 +367,6 @@ const mutations = {
     },
     //k线历史数据
     getKline(state, params) {
-        console.log(params,'//k线历史数据=====>>>>>>>>')
         const { step, id, callback } = params;
         api.getKDatas2({
             step,
@@ -391,8 +390,8 @@ const mutations = {
             callback && callback(kline);
         });
         var uuid = guid();
-
-        function createKline() {
+        function createKline() {  
+            var uuid = guid();
             window.createKline && window.createKline.closeSocket();
             window.createKline = new webSocket({
                 url: `websocketKline?pairId=${id}&uuid=${uuid}&step=${step}`,
@@ -410,16 +409,17 @@ const mutations = {
                                 low: Number(bar.floorPrice),
                                 volume: Number(bar.total)
                             };
-                            if (lastBar.time == currentBar.time) {
-                                state.klineHistory[state.klineHistory.length - 1] = currentBar;
-                            } else {
-                                state.klineHistory.push(currentBar)
-                            }
+                            window.onRealtimeCallback(currentBar)
+
+                            // if (lastBar.time == currentBar.time) {
+                            //     state.klineHistory[state.klineHistory.length - 1] = currentBar;
+                            // } else {
+                            //     state.klineHistory.push(currentBar)
+                            // }
                         });
                     }
-                    state.klineCurrent = state.klineHistory[state.klineHistory.length - 1];
-                    
-                    callback && callback(state.klineHistory);
+                    //  state.klineCurrent = state.klineHistory[state.klineHistory.length - 1];
+                    //  callback && callback(state.klineHistory);
                 },
                 fail: (res) => {
                     createKline();
@@ -427,6 +427,7 @@ const mutations = {
             })
         }
         createKline();
+
     },
     //当前or历史 卖单 记录
     listAskOrders(state, params) {
@@ -464,38 +465,42 @@ const mutations = {
     },
     //币种资产
     getAssets(state, params) {
-        let indexData = [
-            api.uplistByUserId({
-                pageNum: 1,
-                pageSize: 1,
-                coinId: params.zoneCoinId
-            }),
-            api.uplistByUserId({
-                pageNum: 1,
-                pageSize: 1,
-                coinId: params.coinId
-            })
-        ]
-        axios.all(indexData).then(res => {
-            if (Object.keys(res[1].datas.list).length == 0) {
-                state.cursellPrice = 0.00000000 
-            } 
-            else{
-                state.cursellPrice = res[1].datas.list[0].able
-            }
-            if(Object.keys(res[0].datas.list).length == 0){
-                state.curbuyPrice = 0.00000000
-            }
-            else{
-                state.curbuyPrice = res[0].datas.list[0].able
-            }
-            // else {
-            //     state.curbuyPrice = res[0].datas.list[0].able
-            //     state.cursellPrice = res[1].datas.list[0].able
-            // }
-        }).catch(error => {
-            console.log("error===>", error)
-        })
+        
+            let indexData = [
+                api.uplistByUserId({
+                    pageNum: 1,
+                    pageSize: 1,
+                    coinId: params.zoneCoinId
+                }),
+                api.uplistByUserId({
+                    pageNum: 1,
+                    pageSize: 1,
+                    coinId: params.coinId
+                })
+            ]
+        
+            axios.all(indexData).then(res => {
+                if (Object.keys(res[1].datas.list).length == 0) {
+                    state.cursellPrice = 0.00000000 
+                } 
+                else{
+                    state.cursellPrice = res[1].datas.list[0].able
+                }
+                if(Object.keys(res[0].datas.list).length == 0){
+                    state.curbuyPrice = 0.00000000
+                }
+                else{
+                    state.curbuyPrice = res[0].datas.list[0].able
+                }
+                // else {
+                //     state.curbuyPrice = res[0].datas.list[0].able
+                //     state.cursellPrice = res[1].datas.list[0].able
+                // }
+            }).catch(error => {
+                console.log("error===>", error)
+            })   
+        
+        
     },
     //交易记录
     orderRecord(state, params) {

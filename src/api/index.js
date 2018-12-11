@@ -1,7 +1,7 @@
 import axios from 'axios'
 import webSocket from './socket'
 import qs from 'qs'
-
+import router from '../router'
 const apiList = [
   '/user/banner/listByType', //公告列表
   '/user/notice/list', //公告列表
@@ -25,7 +25,7 @@ const apiList = [
   '/coin/coin/info/all', //GET 查询全部币种列表
 
   '/payment/withdraw', //提币
-  '/payment/userProperty/uplistByUserId', //我的资产
+ // '/payment/userProperty/uplistByUserId', //我的资产
   '/payment/rechargeRecord/rrlistByUserId', //充币记录
   '/payment/withdrawRecord/wrlistByUserId', //提币记录
   '/payment/withdrawRecord/wrlistByUserIdTwo', //提币记录
@@ -69,6 +69,20 @@ let res = (res) => {
     if (res.data.status == '200') {
       return res.data
     } else {
+     
+      //  router.beforeEach((to, from, next) => {
+     
+      //   if(to.path=='/mine/property'&&res.data.message=='no login'){
+      //     // if(res.data.message=='no login'){
+      //     // router.push({ path: '/login'})
+      //       // console.log(res,router.matched,"用户未登录3333==========>>>>>>>>>")
+            
+      //     // }
+           
+          
+      //   }
+      // });
+      
       console.log("ERROR========>", res.data.message)
       return res.data
     }

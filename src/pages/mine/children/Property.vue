@@ -467,7 +467,9 @@ this.showlist1 = index;
 .dialog-wrapper .el-input .el-input__inner{
  color: #000 !important;
 }
-
+.el-select .el-input.is-focus .el-input__inner,.el-select .el-input__inner:focus {
+   border-color: #a5bbd5!important; 
+}
 .el-select {
     width: 100%!important;
 }

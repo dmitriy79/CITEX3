@@ -4,7 +4,7 @@
             <div class="title"><span>我要充币</span></div>
             <div class="select-coin">
                 <el-form ref="form" :model="form" label-width="80px" :inline="true"> 
-                    <el-form-item label="OEX：">
+                    <el-form-item label="FBEx：">
                         <el-select v-model="value" placeholder="请选择" @change="selectCoin">
                         <el-option v-for="item in list" :label="item.name"  :value="item.id" 
      :key="item.id"></el-option>
@@ -15,7 +15,7 @@
             </div>
             <!-- <div id="qrcode"></div> -->
             <div class="address-wrapper">
-                <div class="tips">这是您的钱包地址，请将您的OEX币转入此地址</div>
+                <div class="tips">这是您的钱包地址，请将您的FBEx币转入此地址</div>
                 <div class="address">
                     
                     钱包地址：<span>{{address}}</span> <button class="copy-btn btn"  v-clipboard="copyData" ref="btns"   @success="handleSuccess">复制</button><button ref="btns" class="ewm-btn btn" @click="showEwm">二维码</button>

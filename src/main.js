@@ -51,6 +51,7 @@ Vue.use(VueClipboards);
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$http = axios
 Vue.prototype.$api = api
+Vue.prototype.router=router
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
