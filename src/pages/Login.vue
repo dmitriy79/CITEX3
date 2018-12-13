@@ -127,12 +127,12 @@
             });
            
             
-               var datasList = res.datas.split("|")
+          var datasList = res.datas.split("|")
           var token = datasList[0];
           localStorage.setItem("token", token)
           localStorage.setItem("userName", this.userName)
            setTimeout(function(){  window.location.reload();},10)
-          // window.location.reload()
+           window.location.reload()
           }
           
         })

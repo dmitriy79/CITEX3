@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     togglePrice(currentPrice) {
+       sessionStorage.setItem('isTabChange',false)
       this.$store.dispatch('trading/togglePrice', { currentPrice })
     },
     changeType(showType) {

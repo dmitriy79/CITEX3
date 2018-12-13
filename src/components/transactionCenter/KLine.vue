@@ -742,10 +742,10 @@ export default {
         if (resolution == 'W') {
           resolution = '10080min'
         }
-        console.log(this_vue,this_vue.klineCurrent,'this_vue.klineCurrent=====>>>>')
+        //console.log(this_vue,this_vue.klineCurrent,'this_vue.klineCurrent=====>>>>')
         // if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){
         //    if (!Object.keys(this_vue.klineCurrent).length === 0) {
-          console.log('onRealtimeCallback=====99999999')
+          //console.log('onRealtimeCallback=====99999999')
           // onRealtimeCallback(this_vue.klineCurrent)
           window.onRealtimeCallback = onRealtimeCallback;
         // }

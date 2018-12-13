@@ -177,6 +177,8 @@ export default {
       this.selectedZoneIndex = index;
     },
     selectCoin(item) {
+      
+      sessionStorage.setItem('isTabChange',false)
       let zone = this.allCoin[this.selectedZoneIndex];
       this.selectedId = item.id;
       this.$store.dispatch('setZone', zone);

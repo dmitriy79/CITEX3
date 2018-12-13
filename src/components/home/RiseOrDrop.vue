@@ -6,8 +6,8 @@
           <div>涨幅排行榜</div>
         </div>
         <ul>
-      <li v-for="(item,index) in dealOrder.up" v-if="index<10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type" @click="jumpToTrade(item)">{{item.name}}/{{item.zoneCoinName}}</div>
+      <li v-for="(item,index) in dealOrder.up" v-if="index<10"  @click="jumpToTrade(item)"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+            <div class="type">{{item.name}}/{{item.zoneCoinName}}</div>
             <div class="rate green">+{{item.increase_24H | decimal(2)}}%<i class="ico-ups"></i></div>
           </li>
         </ul>
@@ -17,8 +17,8 @@
           <div>跌幅排行榜</div>
         </div>
         <ul>
-           <li v-for="(item,index) in dealOrder.fall" v-if="index < 10"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
-            <div class="type" @click="jumpToTrade(item)">{{item.name}}/{{item.zoneCoinName}}</div>
+           <li v-for="(item,index) in dealOrder.fall" v-if="index < 10" @click="jumpToTrade(item)"><i class="ranking" :class="{active:index<=2}">{{index+1}}</i>
+            <div class="type" >{{item.name}}/{{item.zoneCoinName}}</div>
             <div class="rate red">-{{item.increase_24H | decimal(2)}}%<i class="ico-downs"></i></div>
           </li>
          
@@ -99,6 +99,9 @@ export default {
       padding: 10px 5px 11px 15px;
 
       li {
+         &:hover{
+            background: #1f252d;
+      }
         height: 50px;
         width: 48.1%;
         float: left;

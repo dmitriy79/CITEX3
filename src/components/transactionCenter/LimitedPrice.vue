@@ -12,9 +12,9 @@
                 <span class="label">买入<i ></i></span>
                 <div class="buy-price">
                     <span class="name">价格</span>
-                    <input type="number"
+                    <input  type="number"   @mousewheel.prevent
                     name="buyPrice"
-                    v-model="buyPrice" :class="{border1:hasBorder}" @keyup="inputKeyup">
+                    v-model="buyPrice" :class="{border1:hasBorder}" @keyup="inputKeyup" >
                      <!-- <input type="number"
                     name="buyPrice"
                     @keyup="checkNumber"
@@ -24,7 +24,7 @@
                <div class="buy-num">
                     <span class="name">数量</span>
                     <input type="number" :class="{border2:hasBorder}"
-                    name="buyAmount"
+                    name="buyAmount" @mousewheel.prevent
                     v-model="buyNums"
                     @keydown="toggleBuyIndex"
                     >
@@ -68,14 +68,14 @@
                 <span class="label">卖出<i></i></span>
                 <div class="buy-price">
                     <span  class="name">价格</span>
-                    <input type="number" 
+                    <input type="number" @mousewheel.prevent
                     name="sellPrice" 
                     v-model="sellPrice" @keyup="inputKeyup"> 
                     <span class="unit">{{zoneName}}</span>
                 </div>
                 <div class="buy-num">
                     <span  class="name">数量</span>
-                    <input type="number" 
+                    <input type="number" @mousewheel.prevent
                     name="sellAmount"
                      v-model="sellNums"
                     @keydown="toggleSellIndex">
@@ -123,6 +123,7 @@ const numReg = /^\d+(?:\.\d{1,4})?$/;
 const coinReg = /^\d+(?:\.\d{1,8})?$/;
 export default {
   name: "LimitedPrice",
+
   data() {
     return {
       token: "",
@@ -156,6 +157,7 @@ export default {
   
   watch: {
     buyPrice(newVal, oldVal) {
+      
       if (coinReg.test(newVal) && newVal.toString().length <= 15) {
         this.totalAmout('buy');
         this.buyPrice = this.toNumber(newVal);;
@@ -204,32 +206,66 @@ export default {
       }
     },
     currentPrice(val) {
-      
-      if(!this.inputPress){
-    this.buyPrice=val[1];
-      this.sellPrice = val[0];
+      let isTabChange=sessionStorage.getItem('isTabChange')
+      if(isTabChange=='false'){
+        isTabChange=false
       }
-       
+      else{
+        isTabChange=true
+      }
+      this.inputPress=isTabChange
+      console.log(typeof sessionStorage.getItem('isTabChange'),!this.inputPress,'9999=====')
+      if(!this.inputPress){
+     this.buyNums=0
+     this.sellNums=0
+      this.buyPrice=val[1];
+      this.sellPrice = val[0];
+       sessionStorage.setItem('isTabChange',true)
+      }
+     
     },
   },
   
   mounted() {
     this.token = localStorage.getItem("token")
-    
+     sessionStorage.setItem('isTabChange',false)
     if (this.token) {
       this.isDisabled = false
     } else {
       this.isDisabled = true
     }
+    
+    
   },
   computed: {
     ...mapState("trading", ["tradingAssets", "currentPrice", "curbuyPrice", "cursellPrice"]),
     ...mapState(["zoneName", 'marketInfo']),
   },
+  created () {
+   
+  },
   methods: {
+    stopMousewheel(){
+      console.log("99992o2kjjj+++++")
+    },
+    stopScrollFun(evt){
+      evt = evt || window.event;  
+    if(evt.preventDefault) {  
+    // Firefox  
+      evt.preventDefault();  
+      evt.stopPropagation();  
+    } else {  
+      // IE  
+      evt.cancelBubble=true;  
+      evt.returnValue = false;  
+  }  
+  return false;  
+      console.log("sstopScrollFun====>>>>88828828---")
+    },
     inputKeyup(){
       console.log(this.inputPress,'inputKeyup')
-      this.inputPress=true
+       sessionStorage.setItem('isTabChange',true)
+      //  this.inputPress=true
       this.buyNumIndex = -1
       this.sellNumIndex = -1
     },
@@ -274,6 +310,8 @@ export default {
     },
     //买币
     buyCoin() {
+      sessionStorage.setItem('isTabChange',true)
+      
       if (this.buyNums == '') {
         this.hasBorder = true
         this.$message({

@@ -14,7 +14,7 @@ function coinStarFilter(data) {
     star = JSON.parse(star);
     data.map(zone => {
       zone.list.map(coin => {
-        let index = star.findIndex(item => item.id == coin.id);
+        let index = star.findIndex(item => item.id == coin.id ,console.log(item,'hhahah哈哈哈哈哈======='));
         if (index >= 0) {
           coin.collect = true;
         }
@@ -46,6 +46,7 @@ export default {
         url: `websocketDealPrice?uuid=${guid()}`,
         data: 'sendParams',
         success: (datas) => {
+         // console.log(datas,'websocketDealPrice====>>>>>>>>>>33333==============')
           datas.sort((a,b)=>{
             return a.zoneSort-b.zoneSort
           })
@@ -56,6 +57,7 @@ export default {
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
+             
               return a.sortId-b.sortId
             })
             }
@@ -64,15 +66,18 @@ export default {
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
+              console.log("3333333333333333333333=====》》》》》》》")
               return b.deal_price-a.deal_price
             })
             }
            }
+          
            if(price_up){
       
             for (var i=0,len=datas.length; i<len; i++)
             {
             datas[i].list.sort((a,b)=>{
+         
               return a.deal_price-b.deal_price
             })
             }
@@ -217,7 +222,7 @@ export default {
 
     //交易对切换
     toggleTrading(state, params) {
-      api.getTradeInfo().then(res=>{
+      api.getTradeInfo({type:1}).then(res=>{
         if (res.datas) {
           state.allCoin = res.datas
         }

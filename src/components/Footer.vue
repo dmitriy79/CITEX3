@@ -36,10 +36,10 @@ export default {
     return {
       ico:[
         // {name:'weibo',img:'../assets/images/logo.png'},
-        {name:'telegram',img:'http://sdlf.jpg',href:'https://t.me/ibtopofficial'},
-        {name:'facebook',img:'http://sdlf.jpg',href:'https://www.facebook.com/ibtopofficial/'},
+        {name:'telegram',img:'http://sdlf.jpg'},
+        {name:'facebook',img:'http://sdlf.jpg'},
         // {name:'wechat',img:'http://sdlf.jpg'},
-        {name:'twitter',img:'http://sdlf.jpg',href:'https://twitter.com/ibtopofficial'},
+        {name:'twitter',img:'http://sdlf.jpg'},
         // {name:'qq',img:'http://sdlf.jpg'},
       ],
 
@@ -62,7 +62,7 @@ export default {
         [
          {title:'帮助中心',id:1,path:'',href:'https://zbex-vip.zendesk.com/hc/zh-cn'},
          {title:'问题反馈',id:1,path:'/'},
-         {title:'API 文档',id:1,path:'/'},
+        //  {title:'API 文档',id:1,path:'/'},
          {title:'公告中心',id:1,href:'', href: 'https://zbex-vip.zendesk.com/hc/zh-cn/categories/360001116934-%E5%85%AC%E5%91%8A%E4%B8%AD%E5%BF%83'},
        ],
      /* [

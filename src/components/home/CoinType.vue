@@ -2,10 +2,10 @@
   <div class="coin-type-wrapper">
     <div class="container">
       <div class="coin-block">
-        <div class="item" v-for="(item,index) in coinList">
+        <div class="item" v-for="(item,index) in coinList" @click="jumpToTrade(item.name)">
           <div class="top-wrapper">
             <div class="coin-type">
-              <span class="type" @click="jumpToTrade(item.name)">{{item.name}}</span>
+              <span class="type" >{{item.name}}</span>
               <span class="rate red" :class="{green : item.increase}">
                 {{item.increase ? '+' : '-'}}{{item.increaseNum | decimal(2)}}%
               </span>
@@ -62,6 +62,9 @@ export default {
     display: flex;
     margin: 0 -1%;
     .item {
+      &:hover{
+            background: #1f252d;
+      }
       background: #2c323a;
       width: 25%;
       margin: 0 1%;

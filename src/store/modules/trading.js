@@ -339,7 +339,9 @@ const mutations = {
                     state.AskList = res.ask || [];
                     state.BidList = res.bid || [];
                     state.BidList.reverse();
-                    state.currentPrice = [res.bid[0].price, res.ask[0].price];
+                   state.currentPrice = [res.bid[0].price, res.ask[0].price];
+                   
+                    
                 },
                 fail: (res) => {
                     createAskBid();

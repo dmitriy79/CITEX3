@@ -84,6 +84,15 @@ export default {
       this.$router.push(`/transaction/${name}_${zone}`)
     },
     selectZone(index) {
+      // if(index==-1){
+      //   this.$api.getTradeInfo({type:1}).then(res=>{
+      //   if (res.datas) {
+      //     state.allCoin = res.datas
+      //     // this.searchList=res.datas[0].list
+          
+      //   }
+      // });
+      // }
       this.selectedZoneIndex = index;
     },
   }

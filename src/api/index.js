@@ -67,21 +67,23 @@ let res = (res) => {
 
   if (res.status == '200') {
     if (res.data.status == '200') {
+      
       return res.data
     } else {
      
-      //  router.beforeEach((to, from, next) => {
-     
-      //   if(to.path=='/mine/property'&&res.data.message=='no login'){
-      //     // if(res.data.message=='no login'){
-      //     // router.push({ path: '/login'})
-      //       // console.log(res,router.matched,"用户未登录3333==========>>>>>>>>>")
-            
-      //     // }
+       router.beforeEach((to, from, next) => {
+        if(to.path.indexOf('/mine')&&(res.data.message=='no login'||res.data.message=='用户未登录')){
+        // if(to.path=='/mine/property'&&res.data.message=='no login'){
+          // if(res.data.message=='no login'){
+          router.push({ path: '/login'})
+          localStorage.removeItem("token")
+          window.location.reload()
+          // }
            
           
-      //   }
-      // });
+        }
+        next()
+      });
       
       console.log("ERROR========>", res.data.message)
       return res.data

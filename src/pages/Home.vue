@@ -146,7 +146,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
+  padding: 15px 0;
   a {
     font-size: 13px;
     cursor: pointer;
