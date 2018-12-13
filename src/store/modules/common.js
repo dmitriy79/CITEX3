@@ -14,7 +14,7 @@ function coinStarFilter(data) {
     star = JSON.parse(star);
     data.map(zone => {
       zone.list.map(coin => {
-        let index = star.findIndex(item => item.id == coin.id ,console.log(item,'hhahah哈哈哈哈哈======='));
+        let index = star.findIndex(item => item.id == coin.id );
         if (index >= 0) {
           coin.collect = true;
         }
