@@ -27,7 +27,9 @@
                             class="ico ico-star-fill" 
                             :class="{'ico-star':!item.collect}">
                           </i>
-                          <span>{{item.name}}</span>
+                          <span  v-if="selectedZoneIndex!==-1">{{item.name}}</span>
+                          <span v-if="selectedZoneIndex==-1&&localStorage.getItem('token')">{{item.name}}/{{item.unit_coin_name}}</span>
+                          <span v-if="selectedZoneIndex==-1&&(!localStorage.getItem('token'))">{{item.name}}/{{item.zoneCoinName}}</span>
                         </div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">
@@ -58,22 +60,38 @@ export default {
     selectedZoneIndex() {
       this.searchList = this.getCoinList();
     },
-    allCoin() {
-      this.searchList = this.getCoinList();
-    }
+    // allCoin() {
+    //   this.searchList = this.getCoinList();
+    // }
   },
   computed: {
-    ...mapState(["allCoin"]),
+    ...mapState(["allCoin","isCollect"]),
   },
   methods: {
     getCoinList() {
-      if (this.selectedZoneIndex == -1) {
+        let token = localStorage.getItem('token');
         let list = [];
+      if (this.selectedZoneIndex == -1) {
+        if(token){
+            this.$api.getTradeInfo({type:1}).then(res=>{
+            if (res.datas) {
+            //   res.datas.map( zone => {
+            //   zone.list.map( coin => {
+            //     coin.collect && list.push(coin);
+            //   });
+            // });
+            }
+          });
+        }
+        else{
+          let list = [];
         this.allCoin.map( zone => {
           zone.list.map( coin => {
             coin.collect && list.push(coin);
           });
         });
+        }
+       
         return list;
       } else {
         return this.allCoin[this.selectedZoneIndex].list;
@@ -84,15 +102,6 @@ export default {
       this.$router.push(`/transaction/${name}_${zone}`)
     },
     selectZone(index) {
-      // if(index==-1){
-      //   this.$api.getTradeInfo({type:1}).then(res=>{
-      //   if (res.datas) {
-      //     state.allCoin = res.datas
-      //     // this.searchList=res.datas[0].list
-          
-      //   }
-      // });
-      // }
       this.selectedZoneIndex = index;
     },
   }

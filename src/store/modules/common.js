@@ -30,6 +30,7 @@ export default {
     marketInfo: {}, // 当前交易区信息 coinId：币种id，id：交易对 id
     zoneName: '', //交易区类型
     zoneCoinId: '',
+    isCollect:false,
     allCoin: null,
      coinList:'',//排序之后的交易区列表t:'',//排序之后的交易区列表
      isReload:false,//交易页面是否刷新
@@ -84,7 +85,7 @@ export default {
            }
          
           state.allCoin = coinStarFilter(datas);
-          
+          console.log(state.allCoin,'state.allCoin====>>>>>>9299929299')
           let pair = location.hash.split('/transaction')[1];
           if (pair) {
             pair = pair.replace('/', '');
@@ -134,6 +135,7 @@ export default {
       let token = localStorage.getItem('token');
       const { trade_coin_pair_id, collect } = params;
       if (token) {
+        state.isCollect=true
         api.collect(params).then(res => {
           commit('toggleTrading', { id: trade_coin_pair_id }) //刷新列表
         })
@@ -157,6 +159,7 @@ export default {
         } else {
           // 取消收藏逻辑
           let index = star.findIndex( item => item.id == trade_coin_pair_id);
+          
           star.splice(index, 1);
           state.allCoin.map(zone => {
             zone.list.map(item => {
@@ -221,7 +224,7 @@ export default {
     },
 
     //交易对切换
-    toggleTrading(state, params) {
+    toggleTrading(state, params) { 
       api.getTradeInfo({type:1}).then(res=>{
         if (res.datas) {
           state.allCoin = res.datas

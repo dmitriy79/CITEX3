@@ -53,7 +53,9 @@
               :class="{'active': item.id == selectedId }"
               @click='selectCoin(item, index)'
             >
-              <div class="coin-type">{{item.name}}</div>
+              <div v-if="selectedZoneIndex!==-1" class="coin-type">{{item.name}}</div>
+              <div v-if="selectedZoneIndex==-1" class="coin-type">{{item.name}}/{{item.zoneCoinName}}</div>
+              
               <div class="price">{{item.deal_price}}</div>
               <div class="rate" :class="{ red: !item.increase, green: item.increase}">
                 {{item.increase ? '+' : '-'}}{{item.increase_24H | decimal(2)}}%
