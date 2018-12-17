@@ -73,7 +73,14 @@ form: {
         }
     },
     mounted () {
-        this.getUserInfo()
+        // this.getUserInfo()
+        let trade_password=sessionStorage.getItem("trade_password")
+        if(trade_password){
+            this.show=false
+        }
+        else{
+            this.show=true
+        }
     //    this.loginPassword=localStorage.getItem('loginPassword') 
     },
     methods: {
@@ -113,21 +120,21 @@ form: {
             }
             this.inputType2='password'
         },
-        getUserInfo(){
-            this.$api.getValidateById().then(res=>{
-                console.log(res,'我是用户信息')
-                var content =res.datas
-                // this.tradePassword=content.user_password;
+        // getUserInfo(){
+        //     this.$api.getValidateById().then(res=>{
+        //         console.log(res,'我是用户信息')
+        //         var content =res.datas
+        //         // this.tradePassword=content.user_password;
              
-                if(!content.trade_password){
-                    this.show=false
-                }
-                else{
-                   this.show=true 
-                }
+        //         if(!content.trade_password){
+        //             this.show=false
+        //         }
+        //         else{
+        //            this.show=true 
+        //         }
                
-            })
-        },
+        //     })
+        // },
       validatePassword(ele){
             var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
             if(!regExp.test(ele)){ 

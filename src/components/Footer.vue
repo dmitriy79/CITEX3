@@ -45,7 +45,7 @@ export default {
 
       links:['关于','条款','服务'],
       footLink:[[
-       {title:'关于我们',id:1,path:'',href:'https://ibtop-vip.zendesk.com/hc/zh-cn/articles/360016545951'},
+       {title:'关于我们',id:1,path:'/about-us'},
         {title:'加入我们',id:2,path:'/join-us'},
          {title:'常见问题',id:3,path:'',href:"https://zbex-vip.zendesk.com/hc/zh-cn/categories/360001117394-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"},
         // {title:'使用条款',id:3,path:'/'},

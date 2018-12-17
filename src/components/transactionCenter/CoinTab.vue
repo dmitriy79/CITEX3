@@ -9,7 +9,7 @@
         </div>
         <ul class="nav-bar">
             <li
-              v-for="(item, index) of allCoin"
+              v-for="(item, index) of allCoin" 
               @click="selectZone(index)"
               :class="{ active: index == selectedZoneIndex}"
             >

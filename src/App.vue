@@ -13,6 +13,8 @@
 <script>
 import VHeader from "@/components/Header";
 import VFooter from "@/components/Footer";
+import router from './router'
+
 export default {
   name: 'App',
   data(){
@@ -20,6 +22,7 @@ export default {
     
     }
   },
+  
   components: {
     VHeader, VFooter
   },

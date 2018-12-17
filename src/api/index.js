@@ -72,8 +72,8 @@ let res = (res) => {
     } else {
      
        router.beforeEach((to, from, next) => {
-        if(to.path.indexOf('/mine')&&(res.data.message=='no login'||res.data.message=='用户未登录')){
-        // if(to.path=='/mine/property'&&res.data.message=='no login'){
+       // if(to.path.indexOf('/mine')&&(res.data.message=='no login'||res.data.message=='用户未登录')){
+         if(to.path=='/mine/property'&&res.data.message=='no login'){
           // if(res.data.message=='no login'){
           router.push({ path: '/login'})
           localStorage.removeItem("token")

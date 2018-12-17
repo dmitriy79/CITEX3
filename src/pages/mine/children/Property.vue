@@ -247,6 +247,12 @@ export default {
   mounted() {
     this.getAddress();
     this.getUserTotalProperty();
+     this.$api.getValidateById().then(res=>{
+       let data=res.datas
+       sessionStorage.setItem('google_auth_secret',data.google_auth_secret)
+       sessionStorage.setItem('trade_password',data.trade_password)
+       sessionStorage.setItem('user_password',data.user_password)
+        })
   },
   watch: {
     searchValue(val) {

@@ -1,33 +1,34 @@
 <template>
   <div class="header header-top" id="header">
     <h1 class="header-logo">
-        <!-- <a href="/" class="ico-logo">
+      <!-- <a href="/" class="ico-logo">
           <span>ibtop.com</span>
-        </a> -->
-        <a href="/">
-          <img src="../assets/images/logo.png" alt="" class="logo">
-        </a>
-      </h1>
+      </a>-->
+      <a href="/">
+        <img src="../assets/images/logo.png" alt="" class="logo">
+      </a>
+    </h1>
     <div class="header-nav">
       <router-link v-if="showLi" to="/" tag="div">首页</router-link>
       <router-link v-if="showLi" to="/transaction" tag="div">币币交易</router-link>
+      <div @click="fbTrade">法币交易</div>
+      <!-- <a id="mylink" href="http://localhost:8084/buy" target="_blank">法币交易</a> -->
       <!-- <router-link  @click="showli" to="/ApplyChannel" tag="div" >渠道商</router-link> -->
       <router-link v-if="!showLi" to="/" tag="div">项目评论区</router-link>
       <router-link v-if="!showLi" to="/ApplyMountCoin" tag="div">上币申请</router-link>
     </div>
     <ul class="header-nav-right">
-      <li v-if="this.token" >
+      <li v-if="this.token">
         <span @click="validate">{{userName}}</span>
         <!-- <router-link to="/mine/property" tag="div" v-if="this.token">{{userName}} </router-link> -->
       </li>
       <!-- <li>
           <router-link to="/mine" tag="div"  v-if="this.token">{{userName}}</router-link>
-        </li>  -->
-      <li v-if="this.token" @click="loginOut" class="login-out">
-        退出
-      </li>
+      </li>-->
+
+      <li v-if="this.token" @click="loginOut" class="login-out">退出</li>
       <li class="nav-right">
-        <router-link to="/Register" tag="div" v-if="!this.token">注册 </router-link>
+        <router-link to="/Register" tag="div" v-if="!this.token">注册</router-link>
       </li>
       <li class="split" v-if="!this.token">或</li>
       <li class="nav-right" v-if="!this.token">
@@ -38,10 +39,7 @@
         <div class="language">{{currentLanguage}}</div>
         <transition name="fade">
           <div class="dropdown" v-if="isShow">
-            <div @click="changeLanguage" v-for='(item,index) in lang' :data-id='index'>
-              {{item}}
-
-            </div>
+            <div @click="changeLanguage" v-for="(item,index) in lang" :data-id="index">{{item}}</div>
           </div>
         </transition>
       </li>
@@ -57,30 +55,37 @@ export default {
       currentLanguage: "中文",
       isActive: false,
       showLi: true,
-      token: '',
-      userName: '',
+      token: "",
+      userName: "",
       isTop: false,
-      lang: { 'zh_cn': '中文', 'en': 'English' }
+      lang: { zh_cn: "中文", en: "English" }
     };
   },
   methods: {
-    validate(){
-       let token =localStorage.getItem("token")
-      if(token){
-       
-        this.$router.push({path:'/mine/property'})
-      }
-      else{
-         this.$router.push({path:'/'})
+    fbTrade() {
+      var win = window.open("http://localhost:8084/buy");
+      setTimeout(function() {
+        win.postMessage(
+          {token:'99999',name:'jjshhshj'},
+          "http://localhost:8084/buy"
+        );
+      }, 2000);
+    },
+    validate() {
+      let token = localStorage.getItem("token");
+      if (token) {
+        this.$router.push({ path: "/mine/property" });
+      } else {
+        this.$router.push({ path: "/" });
       }
     },
     //退出
     loginOut() {
       this.token = localStorage.removeItem("token");
-      this.$router.push({ path: "/" })
+      this.$router.push({ path: "/" });
     },
     showli() {
-      this.showLi = false
+      this.showLi = false;
     },
     selectLanguage() {
       this.isShow = !this.isShow;
@@ -93,18 +98,16 @@ export default {
     changeLanguage(e) {
       this.currentLanguage = e.target.innerText;
       this.$i18n.locale = e.target.dataset.id;
-
     }
   },
   mounted() {
-    this.token = localStorage.getItem("token")
-    this.userName = localStorage.getItem("userName")
+    this.token = localStorage.getItem("token");
+    this.userName = localStorage.getItem("userName");
     // window.onscroll = e => {
     //   this.isTop = (window.scrollY > 50) ? true : false
     // }
   }
 };
-
 </script>
 <style lang="less" scoped>
 .header-nav-right {
@@ -115,22 +118,25 @@ export default {
 }
 
 @h: 50px;
-@c: #0D141C;
+@c: #0d141c;
 .header {
   height: @h;
   background: #181f27;
   position: relative;
-  transition: .5s;
-  .logo{    margin-top: 10px;}
+  transition: 0.5s;
+  .logo {
+    margin-top: 10px;
+  }
   &-top {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     z-index: 90;
-    box-shadow: 0 4px 40px rgba(0, 0, 0, .1);
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
   }
-  .container {}
+  .container {
+  }
   &-logo {
     color: #fff;
     width: 110px;
@@ -154,20 +160,20 @@ export default {
     height: 50px;
     padding-left: 120px;
     display: flex;
-    &>div {
+    & > div {
       line-height: @h;
       line-height: 50px;
       padding: 0 28px;
       cursor: pointer;
       font-size: 14px;
-      transition: .5s;
-      color: lighten(#0D141C, 80%);
+      transition: 0.5s;
+      color: lighten(#0d141c, 80%);
       &:hover {
-        color: lighten(#0D141C, 80%);
-        background: @c
+        color: lighten(#0d141c, 80%);
+        background: @c;
       }
       &.link.active {
-        background: #292F37;
+        background: #292f37;
         color: #fff;
       }
     }
@@ -184,7 +190,7 @@ export default {
           line-height: @h;
           cursor: pointer;
           &:hover {
-            color: lighten(#0D141C, 90%);
+            color: lighten(#0d141c, 90%);
           }
         }
       }
@@ -205,12 +211,12 @@ export default {
     background: #181f27;
     width: 120px;
     text-align: center;
-    &>div {
+    & > div {
       text-align: left;
       padding: 14px 20px;
       line-height: normal;
       &:hover {
-        transition: .2s;
+        transition: 0.2s;
         background: @c;
       }
     }
@@ -221,5 +227,4 @@ export default {
   margin-left: 20px;
   cursor: pointer;
 }
-
 </style>

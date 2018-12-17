@@ -85,6 +85,7 @@
       },
       //登陆
       login() {
+        
         let msg = valid.isEmailValid(this.userName);
         if (msg) {
           this.$message({
@@ -131,7 +132,7 @@
           var token = datasList[0];
           localStorage.setItem("token", token)
           localStorage.setItem("userName", this.userName)
-           setTimeout(function(){  window.location.reload();},10)
+           setTimeout(function(){  window.location.reload();},30)
            window.location.reload()
           }
           

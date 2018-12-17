@@ -163,12 +163,13 @@ export default {
         this.buyPrice = this.toNumber(newVal);;
       } else if (newVal == '') {
         this.buyPrice = 0;
-      } else if(newVal&&newVal!==oldVal){
-        this.buyPrice=this.buyPrice
+      } 
+      else if(newVal&&newVal!==oldVal){
+        this.buyPrice=oldVal
       }
-      else {
-        this.buyPrice = oldVal;
-      }
+      // else {
+      //   this.buyPrice = oldVal;
+      // }
       this.ableTotal = this.curbuyPrice / this.buyPrice;
       this.buyNums = Math.min(this.toFixedDecimal(this.ableTotal, 4), this.buyNums);
      
@@ -182,7 +183,7 @@ export default {
       } else if (newVal == '') {
         this.buyNums = 0;
       } else {
-        // this.buyNums = oldVal;
+      this.buyNums = oldVal;
       }
     },
     sellPrice(newVal, oldVal) {
@@ -245,25 +246,8 @@ export default {
    
   },
   methods: {
-    stopMousewheel(){
-      console.log("99992o2kjjj+++++")
-    },
-    stopScrollFun(evt){
-      evt = evt || window.event;  
-    if(evt.preventDefault) {  
-    // Firefox  
-      evt.preventDefault();  
-      evt.stopPropagation();  
-    } else {  
-      // IE  
-      evt.cancelBubble=true;  
-      evt.returnValue = false;  
-  }  
-  return false;  
-      console.log("sstopScrollFun====>>>>88828828---")
-    },
+    
     inputKeyup(){
-      console.log(this.inputPress,'inputKeyup')
        sessionStorage.setItem('isTabChange',true)
       //  this.inputPress=true
       this.buyNumIndex = -1

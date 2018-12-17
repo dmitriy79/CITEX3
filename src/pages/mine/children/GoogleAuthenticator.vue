@@ -77,9 +77,15 @@ export default {
     };
   },
   mounted() {
-   this.getValidateById()
+  //  this.getValidateById()
     this.setGooleAutu();
-
+    let google_auth_secret=sessionStorage.getItem("google_auth_secret")
+    if(google_auth_secret){
+       this.show=true
+    }
+     else{
+       this.show=false
+     }
   },
   methods: {
       //停用谷歌验证码
@@ -135,15 +141,15 @@ export default {
         this.setGooleAutu();
       
     },
-    getValidateById(){
-        this.$api.getValidateById().then(res=>{
-            console.log(res,'ajjajajjajjajj_+++++')
-            if(res.datas.google_auth_secret){
-                console.log('shsjsjsjj++++++')
-                this.show=true
-            }
-        })
-    },
+    // getValidateById(){
+    //     this.$api.getValidateById().then(res=>{
+    //         console.log(res,'ajjajajjajjajj_+++++')
+    //         if(res.datas.google_auth_secret){
+    //             console.log('shsjsjsjj++++++')
+    //             this.show=true
+    //         }
+    //     })
+    // },
     //获取谷歌验证码
     setGooleAutu() {
       this.$api.setGooleAutu().then(res => {

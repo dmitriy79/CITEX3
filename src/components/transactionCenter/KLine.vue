@@ -688,8 +688,8 @@ export default {
           if (resolution == '1D') {
             resolution = '1day'
           }
-          if (resolution == 'W') {
-            resolution = '10080min'
+          if (resolution == 'D') {
+            resolution = '7day'
           }
           this_vue.$store.dispatch('trading/getKline', {
             resolution,
@@ -739,8 +739,8 @@ export default {
         if (resolution == '1D') {
           resolution = '1day'
         }
-        if (resolution == 'W') {
-          resolution = '10080min'
+        if (resolution == 'D') {
+          resolution = '7day'
         }
         //console.log(this_vue,this_vue.klineCurrent,'this_vue.klineCurrent=====>>>>')
         // if(this_vue.klineCurrent!==''||this_vue.klineCurrent!==undefined){

@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import FindPassword from '@/pages/FindPassword'
 import JoinUs from '@/pages/JoinUs'
+import AboutUs from '@/pages/AboutUs'
 // import ApplyChannel from  '@/components/channel/ApplyChannel'
 // import ApplyChannelText from  '@/components/channel/ApplyChannelText'
 // import ApplyMountCoin from '@/components/mountCoin/ApplyMountCoin'
@@ -31,6 +32,11 @@ const router =  new Router({
       path: '/join-us',
       name: 'JoinUs',
       component: JoinUs
+    },
+    {
+      path: '/about-us',
+      name: 'AboutUs',
+      component: AboutUs
     },
     {
       path: '/login',

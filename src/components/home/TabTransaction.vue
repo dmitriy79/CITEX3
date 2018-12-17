@@ -27,7 +27,13 @@
                             class="ico ico-star-fill" 
                             :class="{'ico-star':!item.collect}">
                           </i>
-                          <span>{{item.name}}</span>
+                          <span v-if="selectedZoneIndex!==-1">{{item.name}}</span>
+                          <span v-if="!token">
+                              <span v-if="selectedZoneIndex==-1">{{item.name}}/{{item.zoneCoinName}}</span>
+                          </span>
+                          <span v-if="token">
+                              <span v-if="selectedZoneIndex==-1">{{item.name}}/{{item.unit_coin_name}}</span>
+                          </span>
                         </div>
                         <div>{{item.deal_price}}</div>
                         <div class="red" :class="{green : item.increase}">
@@ -49,10 +55,12 @@ export default {
   data() {
     return {
       searchList: null,
-      selectedZoneIndex: 0
+      selectedZoneIndex: 0,
+      token:'',
     };
   },
   created() {
+    this.token=localStorage.getItem("token")
   },
   watch: {
     selectedZoneIndex() {
@@ -67,7 +75,9 @@ export default {
   },
   methods: {
     getCoinList() {
-      if (this.selectedZoneIndex == -1) {
+      
+      if (this.selectedZoneIndex == -1&&(!this.token)) {
+       
         let list = [];
         this.allCoin.map( zone => {
           zone.list.map( coin => {
@@ -76,7 +86,10 @@ export default {
         });
         return list;
       } else {
-        return this.allCoin[this.selectedZoneIndex].list;
+        if(!this.token){
+          return this.allCoin[this.selectedZoneIndex].list;
+        }
+        
       }
     },
     jumpToTrade(name) {
@@ -84,15 +97,16 @@ export default {
       this.$router.push(`/transaction/${name}_${zone}`)
     },
     selectZone(index) {
-      // if(index==-1){
-      //   this.$api.getTradeInfo({type:1}).then(res=>{
-      //   if (res.datas) {
-      //     state.allCoin = res.datas
-      //     // this.searchList=res.datas[0].list
+      if(index==-1&&this.token){
+        this.$api.getTradeInfo({type:1}).then(res=>{
+          console.log(res,'wwww====>>>>>>>')
+        if (res.datas) {
+          // this.allCoin = res.datas
+          this.searchList=res.datas[0].list
           
-      //   }
-      // });
-      // }
+        }
+      });
+      }
       this.selectedZoneIndex = index;
     },
   }
