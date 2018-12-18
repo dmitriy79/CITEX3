@@ -134,22 +134,6 @@ export default {
       let token = localStorage.getItem('token');
       const { trade_coin_pair_id, collect } = params;
       if (token) {
-        
-        if (collect == '1') {
-          // 收藏逻辑
-          let coin = null;
-          state.allCoin.map(zone => {
-            zone.list.map(item => {
-              if (item.id == trade_coin_pair_id) {
-                coin = item;
-                item.collect = true;
-              }
-            });
-          });
-          state.allCoin = JSON.parse(JSON.stringify(state.allCoin));
-          
-        }
-
         api.collect(params).then(res => {
           commit('toggleTrading', { id: trade_coin_pair_id }) //刷新列表
         })
@@ -173,7 +157,6 @@ export default {
         } else {
           // 取消收藏逻辑
           let index = star.findIndex( item => item.id == trade_coin_pair_id);
-          
           star.splice(index, 1);
           state.allCoin.map(zone => {
             zone.list.map(item => {

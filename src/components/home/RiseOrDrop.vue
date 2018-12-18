@@ -1,7 +1,7 @@
 <template>
   <div class="rise">
     <div class="container">
-      <div class="rise-list" v-if="dealOrder">
+      <div class="rise-list" >
         <div class="title">
           <div>涨幅排行榜</div>
         </div>
@@ -52,7 +52,7 @@ export default {
 <style lang="less" scoped>
 .rise {
   display: flex;
-  margin-top: 33px;
+  margin-top: 18px;
   .container {
     display: flex;
     justify-content: space-between;

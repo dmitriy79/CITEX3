@@ -11,8 +11,7 @@
     <div class="header-nav">
       <router-link v-if="showLi" to="/" tag="div">首页</router-link>
       <router-link v-if="showLi" to="/transaction" tag="div">币币交易</router-link>
-      <div @click="fbTrade">法币交易</div>
-      <!-- <a id="mylink" href="http://localhost:8084/buy" target="_blank">法币交易</a> -->
+      <!-- <div @click="fbTrade">法币交易</div> -->
       <!-- <router-link  @click="showli" to="/ApplyChannel" tag="div" >渠道商</router-link> -->
       <router-link v-if="!showLi" to="/" tag="div">项目评论区</router-link>
       <router-link v-if="!showLi" to="/ApplyMountCoin" tag="div">上币申请</router-link>
