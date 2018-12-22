@@ -64,10 +64,13 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      searchList: null,
+      searchList: [],
       selectedZoneIndex: 0,
       token:'',
     };
+  },
+  mounted () {
+   
   },
   created() {
     this.token = localStorage.getItem("token");
@@ -75,10 +78,10 @@ export default {
   watch: {
     selectedZoneIndex() {
       this.searchList = this.getCoinList();
+    },
+    allCoin() {
+      this.searchList = this.getCoinList();
     }
-    // allCoin() {
-    //   this.searchList = this.getCoinList();
-    // }
   },
   computed: {
     ...mapState(["allCoin"])
