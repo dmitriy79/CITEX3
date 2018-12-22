@@ -110,7 +110,6 @@ export default {
     selectZone(index) {
       if (index == -1 && this.token) {
         this.$api.getTradeInfo({ type: 1 }).then(res => {
-          console.log(res, "wwww====>>>>>>>");
           if (res.datas) {
             // this.allCoin = res.datas
             this.searchList = res.datas[0].list;

@@ -17,20 +17,20 @@
       <router-link v-if="!showLi" to="/ApplyMountCoin" tag="div">上币申请</router-link>
     </div>
     <ul class="header-nav-right">
-      <li v-if="this.token">
-        <span @click="validate">{{userName}}</span>
+      <li v-if="validate_login.token">
+        <span @click="validate">{{validate_login.name}}</span>
         <!-- <router-link to="/mine/property" tag="div" v-if="this.token">{{userName}} </router-link> -->
       </li>
       <!-- <li>
           <router-link to="/mine" tag="div"  v-if="this.token">{{userName}}</router-link>
       </li>-->
 
-      <li v-if="this.token" @click="loginOut" class="login-out">退出</li>
+      <li v-if="validate_login.token" @click="loginOut" class="login-out">退出</li>
       <li class="nav-right">
-        <router-link to="/Register" tag="div" v-if="!this.token">注册</router-link>
+        <router-link to="/Register" tag="div" v-if="!validate_login.token">注册</router-link>
       </li>
-      <li class="split" v-if="!this.token">或</li>
-      <li class="nav-right" v-if="!this.token">
+      <li class="split" v-if="!validate_login.token">或</li>
+      <li class="nav-right" v-if="!validate_login.token">
         <router-link to="/Login" tag="div">登录</router-link>
       </li>
       <li class="change-btn" @click="selectLanguage">
@@ -60,6 +60,17 @@ export default {
       lang: { zh_cn: "中文", en: "English" }
     };
   },
+  computed:{
+      validate_login(){
+          
+          return{
+             name:this.$store.state.name,
+            token:this.$store.state.token
+          } 
+      },
+     
+  },
+
   methods: {
     fbTrade() {
       var params={
@@ -84,8 +95,11 @@ export default {
     },
     //退出
     loginOut() {
-      this.token = localStorage.removeItem("token");
-      this.$router.push({ path: "/" });
+      // this.token = localStorage.removeItem("token");
+      // this.$router.push({ path: "/" });
+      this.$store.dispatch("FedLogOut").then(res => {
+                //  location.reload()
+             })
     },
     showli() {
       this.showLi = false;
@@ -104,6 +118,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.token,'00hjhjashhsssks====288288288')
     this.token = localStorage.getItem("token");
     this.userName = localStorage.getItem("userName");
     console.log( this.token, this.userName,'99999====>>>>>')

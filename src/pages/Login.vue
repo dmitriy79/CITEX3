@@ -103,16 +103,12 @@
           });
           return;
         }
-       
-        // var url = `/api/user/login`
-        this.$api.login({
+       var loginForm={
           userName: this.userName,
           passWord: this.passWord,
-          // NECaptchaValidate: localStorage.getItem('registerYanzhengma')
-        }).then(res => {
+       }
+       this.$store.dispatch("Login", loginForm).then(res => {
           var returnData = res.message
-         
-          console.log(returnData !== '成功','returnData !')
           if (returnData !== '成功') {
             this.$message({
               message: returnData,
@@ -130,10 +126,9 @@
             
           var datasList = res.datas.split("|")
           var token = datasList[0];
-          localStorage.setItem("token", token)
-          localStorage.setItem("userName", this.userName)
-           setTimeout(function(){  window.location.reload();},30)
-           window.location.reload()
+          // localStorage.setItem("token", token)
+          // localStorage.setItem("userName", this.userName)
+           
           }
           
         })

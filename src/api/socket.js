@@ -25,7 +25,7 @@ export default class {
       } catch (e) {
         // console.error('json 解析失败, 数据为', resp.data)
       }
-      console.log(wsUri, "====>WebSocket接收数据")
+      // console.log(wsUri, "====>WebSocket接收数据")
     }
     this.websock.onclose = (e) => {
       if (e.code != 1000) {

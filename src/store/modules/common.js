@@ -34,9 +34,41 @@ export default {
     allCoin: null,
      coinList:'',//排序之后的交易区列表t:'',//排序之后的交易区列表
      isReload:false,//交易页面是否刷新
+     name:localStorage.getItem("userName"),
+     token:localStorage.getItem("token")
   },
   actions: {
-
+    FedLogOut({ commit }) {
+      return new Promise(resolve => {
+        localStorage.removeItem("userName")
+        localStorage.removeItem("token")
+        commit('SET_NAME', '');
+        commit('SET_TOKEN', '');
+        resolve()
+      })
+    },
+    // 登录
+    Login({ commit }, userInfo) {
+      const userName = userInfo.userName.trim();
+      const passWord = userInfo.passWord.trim();
+      return new Promise((resolve, reject) => {
+        let param = {
+          userName: userName,
+          passWord:passWord
+        }
+        api.login(param).then(response => {
+          const token = response.datas;
+          if(response.message=='成功'){
+            commit('SET_NAME', userName);
+          commit('SET_TOKEN', token);
+          localStorage.setItem("token", token)
+          localStorage.setItem("userName", userName)
+          }
+          // location.reload()
+          resolve(response);
+        }).catch(error => { reject(error) })
+      })
+    },
     //初始化交易对列表
     initTradingList({
       commit,
@@ -199,6 +231,12 @@ export default {
     },
   },
   mutations: {
+    SET_NAME: (state, name) => {
+      state.name = name;
+    },
+    SET_TOKEN: (state, token) => {
+      state.token = token;
+    },
     showLoading(state) {
       state.pageLoading = true
     },

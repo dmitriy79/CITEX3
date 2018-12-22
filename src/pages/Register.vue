@@ -266,11 +266,7 @@ export default {
       }
       this.$refs.sendEmail.setAttribute('disabled', 'disabled')
       this.$refs.sendEmail.style.cursor = "not-allowed"
-      
-      this.$api.emailCode({email: this.email}).then(res=>{
-         if (res.message == '成功') {
-          //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
-          if (!this.canClick) return
+      if (!this.canClick) return
           this.canClick = false
           this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
           let clock = window.setInterval(() => {
@@ -285,6 +281,24 @@ export default {
             this.$refs.sendEmail.style.cursor = "pointer"
             }
           }, 1000)
+      this.$api.emailCode({email: this.email}).then(res=>{
+         if (res.message == '成功') {
+          //  this.$refs.sendEmail.innerHTML='邮件发送，注意查收'
+          // if (!this.canClick) return
+          // this.canClick = false
+          // this.content = this.wait + 's后重新发送' //这里解决60秒不见了的问题
+          // let clock = window.setInterval(() => {
+          //   this.wait--
+          //     this.content = this.wait + 's后重新发送'
+          //   if (this.wait < 0) { //当倒计时小于0时清除定时器
+          //     window.clearInterval(clock)
+          //     this.content = '获取邮箱验证码'
+          //     this.wait = 60
+          //     this.canClick = true
+          //     this.$refs.sendEmail.removeAttribute('disabled')
+          //   this.$refs.sendEmail.style.cursor = "pointer"
+          //   }
+          // }, 1000)
         }
       })
 
