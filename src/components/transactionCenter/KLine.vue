@@ -659,8 +659,7 @@ export default {
         onErrorCallback,
         firstDataRequest
       ) {
-  
-        if (firstDataRequest) {
+        // if (firstDataRequest) {
           if (resolution == 1) {
             resolution = '1min'
           }
@@ -692,17 +691,24 @@ export default {
             resolution = '7day'
           }
           this_vue.$store.dispatch('trading/getKline', {
-            resolution,
+            resolution,from,to,
             callback: (result) => {
               onHistoryCallback(result);
+              if(result==''||result==undefined){
+                onHistoryCallback([], {
+            noData: true
+          });
+              }
                //this_vue.chart.activeChart().resetData();
             }
           })
-        } else {
-          onHistoryCallback([], {
-            noData: true
-          });
-        }
+          
+         
+        // } else {
+        //   // onHistoryCallback([], {
+        //   //   noData: true
+        //   // });
+        // }
       };
 
       Datafeed.Container.prototype.subscribeBars = function(

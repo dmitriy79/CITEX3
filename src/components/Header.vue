@@ -9,7 +9,7 @@
       </a>
     </h1>
     <div class="header-nav">
-      <router-link v-if="showLi" to="/" tag="div">首页</router-link>
+      <router-link v-if="showLi" to="/" tag="div" >首页</router-link>
       <router-link v-if="showLi" to="/transaction" tag="div">币币交易</router-link>
       <!-- <div @click="fbTrade">法币交易</div> -->
       <!-- <router-link  @click="showli" to="/ApplyChannel" tag="div" >渠道商</router-link> -->
@@ -62,11 +62,15 @@ export default {
   },
   methods: {
     fbTrade() {
-      var win = window.open("http://localhost:8084/buy");
+      var params={
+        token: this.token,
+        name: this.userName
+      }
+      var win = window.open("http://localhost:8084/trade/buy");
       setTimeout(function() {
         win.postMessage(
-          {token:'99999',name:'jjshhshj'},
-          "http://localhost:8084/buy"
+          params,
+          "http://localhost:8084/trade/buy"
         );
       }, 2000);
     },
@@ -102,6 +106,7 @@ export default {
   mounted() {
     this.token = localStorage.getItem("token");
     this.userName = localStorage.getItem("userName");
+    console.log( this.token, this.userName,'99999====>>>>>')
     // window.onscroll = e => {
     //   this.isTop = (window.scrollY > 50) ? true : false
     // }

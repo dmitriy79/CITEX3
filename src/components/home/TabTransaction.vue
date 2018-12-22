@@ -67,7 +67,6 @@ export default {
       searchList: null,
       selectedZoneIndex: 0,
       token:'',
-      isCollect:false,
     };
   },
   created() {
@@ -82,7 +81,7 @@ export default {
     // }
   },
   computed: {
-    ...mapState(["allCoin", "isCollect"])
+    ...mapState(["allCoin"])
   },
   methods: {
       favorite(id,collect){

@@ -70,6 +70,8 @@ const actions = {
         commit('getKline',{
             id: rootState.marketInfo.id,
             step: state.step,
+            starttime:params.from,
+            endtime:params.to,
             callback: params.callback
         })  //币种
         
@@ -369,10 +371,13 @@ const mutations = {
     },
     //k线历史数据
     getKline(state, params) {
-        const { step, id, callback } = params;
+       
+        const { step, id,starttime,endtime, callback, } = params;
         api.getKDatas2({
             step,
-            tradeCoinPariId: id
+            tradeCoinPariId: id,
+            starttime:starttime,
+            endtime:endtime,
         }).then(res => {
             var kline = []
             if (res.datas.list.length>0) {
