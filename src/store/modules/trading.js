@@ -216,7 +216,7 @@ const mutations = {
     tradeCoinPairMaxMinPrice(state, params) {
         api.tradeCoinPairMaxMinPrice({
             tradeCoinPairId: params.tradeCoinPairId,
-            price: params.obj.Nums
+            amount: params.obj.Nums
         }).then(res => {
             if (res.datas.trueOrFalse) {
                 Vue.prototype.$prompt('请输入交易密码', '提示', {
@@ -274,7 +274,7 @@ const mutations = {
     tradeCoinPairMaxMinPrice1(state, params) {
         api.tradeCoinPairMaxMinPrice({
             tradeCoinPairId: params.tradeCoinPairId,
-            price: params.obj.Nums
+            amount: params.obj.Nums
         }).then(res => {
             if (res.datas.trueOrFalse) {
                 Vue.prototype.$prompt('请输入交易密码', '提示', {
